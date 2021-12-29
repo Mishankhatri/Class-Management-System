@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 import Logo from '../assets/Image_Logo.png';
 import CampusLogo from '../assets/campusLogo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 function Login() {
+  const [passwordShown, setPasswordShow] = useState(false);
+
+  const handleSubmit = () => {
+    setPasswordShow(!passwordShown);
+  };
+
   return (
     <div className='main'>
       <div id='logo'>
@@ -31,12 +37,16 @@ function Login() {
           <div className='input-field password'>
             <label htmlFor='password'>Password</label>
             <input
-              type='password'
+              type={passwordShown ? 'text' : 'password'}
               name='password'
               id='password'
               placeholder='Enter password'
             />
-            <FontAwesomeIcon icon={faEye} className='icons' />
+            <FontAwesomeIcon
+              icon={passwordShown ? faEyeSlash : faEye}
+              className='icons'
+              onClick={handleSubmit}
+            />
           </div>
           <div className='section'>
             <span className='section__remember'>
