@@ -1,7 +1,14 @@
 import './App.css';
 
 function App() {
-  return <div className='App'></div>;
+  return (
+    <div>
+      <ol>
+        <li>Login</li>
+        <li>Teacher Dashboard</li>
+      </ol>
+    </div>
+  );
 }
 
 export default App;
