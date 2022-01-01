@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import './Login.css';
 import Logo from '../assets/Image_Logo.png';
 import CampusLogo from '../assets/campusLogo.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function Login() {
   const [passwordShown, setPasswordShow] = useState(false);
@@ -25,7 +24,7 @@ function Login() {
         </div>
         <form>
           <div className='input-field'>
-            <label htmlFor='email'>Email or Username</label>
+            <label>Email or Username</label>
             <input
               type='text'
               name='email'
@@ -35,25 +34,25 @@ function Login() {
           </div>
 
           <div className='input-field password'>
-            <label htmlFor='password'>Password</label>
+            <label>Password</label>
             <input
               type={passwordShown ? 'text' : 'password'}
               name='password'
               id='password'
               placeholder='Enter password'
             />
-            <FontAwesomeIcon
-              icon={passwordShown ? faEyeSlash : faEye}
-              className='icons'
-              onClick={handleSubmit}
-            />
+            {passwordShown ? (
+              <FaEyeSlash className='icons' onClick={handleSubmit} />
+            ) : (
+              <FaEye className='icons' onClick={handleSubmit} />
+            )}
           </div>
           <div className='section'>
             <span className='section__remember'>
               <input type='checkbox' name='remember' id='remember' />
               <label htmlFor='remember'>Remember Me</label>
             </span>
-            <a href='/#' className='section__forget'>
+            <a href='/#' className='links'>
               Forget Password?
             </a>
           </div>
@@ -61,7 +60,7 @@ function Login() {
           <div className='account'>
             <span>
               Don't have an account?{' '}
-              <a href='/#' className='account__contact'>
+              <a href='/#' className='links'>
                 Contact Us
               </a>
             </span>
