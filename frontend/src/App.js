@@ -13,14 +13,14 @@ import AddClass from './components/adminpanel/pages/class/AddClass';
 import AddSection from './components/adminpanel/pages/class/AddSection';
 import ViewClass from './components/adminpanel/pages/class/ViewClass';
 import AddSubjects from './components/adminpanel/pages/subject/AddSubjects';
-import ViewSubject from './components/adminpanel/pages/subject/ViewSubjects';
+import ViewSubjects from './components/adminpanel/pages/subject/ViewSubjects';
 import CreateTimetables from './components/adminpanel/pages/timetables/CreateTimetables';
 import ViewTimetables from './components/adminpanel/pages/timetables/ViewTimeTables';
 import Attendance from './components/adminpanel/pages/reports/Attendance';
 import Marks from './components/adminpanel/pages/reports/Marks';
 import CreateID from './components/adminpanel/pages/CreateId';
-import Settings from './components/adminpanel/pages/users/UserProfile';
-import UserProfile from './components/adminpanel/pages/users/Settings';
+import Settings from './components/adminpanel/pages/users/Settings';
+import UserProfile from './components/adminpanel/pages/users/UserProfile';
 
 function App() {
   const [showSideBar, setSideBar] = useState(true);
@@ -58,7 +58,7 @@ function App() {
 
             {/* Subject  */}
             <Route path='/subject/add' element={<AddSubjects />} />
-            <Route path='/subject/view' element={<ViewSubject />} />
+            <Route path='/subject/view' element={<ViewSubjects />} />
 
             {/* Timetables  */}
             <Route path='/timetables/create' element={<CreateTimetables />} />

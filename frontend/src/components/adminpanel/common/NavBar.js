@@ -4,11 +4,13 @@ import * as BsIcons from 'react-icons/bs';
 import * as BiIcons from 'react-icons/bi';
 import * as RiIcons from 'react-icons/ri';
 import ProfileImage from '../../assets/profiles/PrabinGautam.jpg';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigationType } from 'react-router-dom';
 import './NavBar.css';
+import Login from '../../forms/Login';
 
 function NavBar({ onClickHandler, username }) {
   const [showDropDown, setDropDown] = useState(false);
+  const navigation = useNavigationType();
   return (
     <>
       <div className='navigation'>

@@ -1,7 +1,13 @@
 import React from 'react';
+import InnerHeader from './../../common/InnerHeader';
+import * as MdIcons from 'react-icons/md';
 
-function ViewSubject() {
-  return <div>View Subject</div>;
+function ViewSubjects() {
+  return (
+    <div>
+      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'View Subject'} />
+    </div>
+  );
 }
 
-export default ViewSubject;
+export default ViewSubjects;

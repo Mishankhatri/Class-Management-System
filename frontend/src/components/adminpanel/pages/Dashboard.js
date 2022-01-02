@@ -1,6 +1,7 @@
 import React from 'react';
 import InnerHeader from '../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
+
 import * as FaIcons from 'react-icons/fa';
 import DisplayData from './../../common/DisplayData';
 import '../../common/DisplayData.css';
@@ -28,9 +29,9 @@ function Dashboard() {
             icon={<FaIcons.FaFlag style={{ color: '#009DDC' }} />}
           />
           <DisplayData
-            number={89}
-            name={'Announcements'}
-            icon={<FaIcons.FaBullhorn style={{ color: '#27AE60' }} />}
+            number={9}
+            name={'Classes'}
+            icon={<FaIcons.FaFile style={{ color: '#27AE60' }} />}
           />
         </div>
         <div className='announcement-section'>
@@ -40,6 +41,7 @@ function Dashboard() {
             </span>
             <span className='title'>ANNOUNCEMENT</span>
           </div>
+
           <div className='new-announcement'>
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam
             aliquam impedit ipsam, qui neque corporis hic iusto eaque laudantium
@@ -51,6 +53,15 @@ function Dashboard() {
             aliquam impedit ipsam, qui neque corporis hic iusto eaque laudantium
             quis sed veniam assumenda, debitis praesentium maiores beatae eius.
             Illo, ad!
+          </div>
+          <div className='new-announcement'>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam
+            aliquam impedit ipsam, qui neque corporis hic iusto eaque laudantium
+            quis sed veniam assumenda, debitis praesentium maiores beatae eius.
+            Illo, ad! Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+            Magnam aliquam impedit ipsam, qui neque corporis hic iusto eaque
+            laudantium quis sed veniam assumenda, debitis praesentium maiores
+            beatae eius. Illo, ad!
           </div>
           <div className='new-announcement'>
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam

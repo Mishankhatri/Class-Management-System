@@ -1,8 +1,13 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import InnerHeader from './../../common/InnerHeader';
+import * as MdIcons from 'react-icons/md';
 
 function AddTeacher() {
-  return <div>Add Teacher</div>;
+  return (
+    <div>
+      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'Add Teacher'} />
+    </div>
+  );
 }
 
 export default AddTeacher;

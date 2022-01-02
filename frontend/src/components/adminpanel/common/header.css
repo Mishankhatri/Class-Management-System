@@ -11,7 +11,7 @@
 .IconName {
   margin-left: 40px;
   display: grid;
-  width: 7.9rem;
+  /* width: 7.9rem; */
   grid-template-columns: 24px auto;
   grid-gap: 10px;
 }
@@ -31,6 +31,7 @@
   position: relative;
   top: 10px;
   left: 40px;
+  z-index: 100;
 }
 
 .main-content {

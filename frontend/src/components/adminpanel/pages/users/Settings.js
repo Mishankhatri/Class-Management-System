@@ -1,7 +1,13 @@
 import React from 'react';
+import InnerHeader from './../../common/InnerHeader';
+import * as MdIcons from 'react-icons/md';
 
-function UserProfile() {
-  return <div>UserProfile</div>;
+function Settings() {
+  return (
+    <div>
+      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'Settings'} />
+    </div>
+  );
 }
 
-export default UserProfile;
+export default Settings;
