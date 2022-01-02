@@ -1,10 +1,11 @@
 .main-container {
-  margin-left: 17rem;
+  margin-left: 15.3rem;
   transition: margin-left 0.5s;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
+  margin-right: 40px;
 }
 
 .main-container.close {
-  margin-left: 3rem;
+  margin-left: 0rem;
   transition: margin-left 0.5s;
 }

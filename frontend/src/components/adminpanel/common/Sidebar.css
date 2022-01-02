@@ -82,76 +82,7 @@ li {
 
 /* Submenu styling end  */
 
-/* Navbar styling */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 20px;
-  border-bottom: 1px solid #c8cbd9;
-  background-color: #ffffff;
-}
 
-/* /* Left section of Navbar styling */
-.left-section {
-  display: flex;
-  justify-content: space-between;
-  width: 13rem;
-  align-items: center;
-}
-
-.left-section .title {
-  font: bold 23px 'Poppins', sans-serif;
-  letter-spacing: 0.5px;
-  color: #5a67ba;
-}
-
-.left-section .backbtn {
-  font-size: 25px;
-  cursor: pointer;
-  color: #141414;
-  display: flex;
-  align-items: center;
-}
-/* /* Left section of Navbar styling END*/
-
-/* /* RIght section of Navbar styling Start*/
-
-.right-section {
-  display: flex;
-  justify-content: space-between;
-  font-size: 20px;
-  width: 11rem;
-  align-items: center;
-}
-
-.right-section .profile-image {
-  width: 40px;
-  height: 45px;
-  border-radius: 50%;
-}
-
-.user-name {
-  display: flex;
-  font: bold 16px 'Poppins', sans-serif;
-  letter-spacing: 0.5px;
-}
-
-.notification__icon,
-.arrow {
-  font-size: 25px;
-  cursor: pointer;
-  /* color: #b0c3cc; */
-}
-
-.notification__symbol {
-  width: 10px;
-  height: 10px;
-  background-color: #ec5252;
-  border-radius: 50%;
-  position: relative;
-  left: 15px;
-  top: 7px;
-}
 
 .active-link {
   color: #5a6acf;

@@ -19,6 +19,8 @@ import ViewTimetables from './components/adminpanel/pages/timetables/ViewTimeTab
 import Attendance from './components/adminpanel/pages/reports/Attendance';
 import Marks from './components/adminpanel/pages/reports/Marks';
 import CreateID from './components/adminpanel/pages/CreateId';
+import Settings from './components/adminpanel/pages/users/UserProfile';
+import UserProfile from './components/adminpanel/pages/users/Settings';
 
 function App() {
   const [showSideBar, setSideBar] = useState(true);
@@ -30,7 +32,7 @@ function App() {
   return (
     <>
       <div>
-        <NavBar onClickHandler={SideBarHandler} />
+        <NavBar onClickHandler={SideBarHandler} username={'PRABIN'} />
         <Sidebar show={showSideBar} />
         <div className={`main-container ${!showSideBar ? 'close' : null}`}>
           <Routes>
@@ -68,6 +70,10 @@ function App() {
 
             {/* Create Id  */}
             <Route path='/createid' element={<CreateID />} />
+
+            {/* UserProfile Option  */}
+            <Route path='/settings' element={<Settings />} />
+            <Route path='/profiles' element={<UserProfile />} />
           </Routes>
         </div>
       </div>
