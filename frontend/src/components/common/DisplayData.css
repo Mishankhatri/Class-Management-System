@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+.cards {
+  /* min-width: 15rem; */
+  height: 9rem;
+  background-color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.name-details .number {
+  font: bold 35px 'Open Sans', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.name-details .name {
+  font: normal 18px 'Open Sans', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.card-icons {
+  font-weight: 900;
+  font-size: 70px;
+  display: flex;
+  align-items: center;
+}
+
+/*Dashboard Element */
+.cardelement {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-gap: 20px;
+}
+
+@media only screen and (max-width: 1250px) {
+  .cardelement {
+    grid-template-columns: repeat(2, auto);
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .cardelement {
+    grid-template-columns: repeat(1, auto);
+  }
+}
+
+.announcement-section {
+  margin: 40px 0;
+  font: normal 16px 'Open Sans', sans-serif;
+  width: 100%;
+  min-height: 25rem;
+  background-color: white;
+  overflow: hidden;
+}
+
+.announcement-section .announcement {
+  padding: 15px;
+  border-bottom: 0.7px solid #c8cbd9;
+}
+
+.announcement-icon {
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.new-announcement {
+  margin: 30px 15px 30px 40px;
+  padding-bottom: 20px;
+  border-bottom: 0.7px solid #c8cbd9;
+}
+
+.morebutton {
+  width: 15rem;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  top: -10px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #009ddc;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.morebutton:hover {
+  background-color: #1b90be;
+}
+
+.load-more {
+  text-decoration: none;
+  color: white;
+}

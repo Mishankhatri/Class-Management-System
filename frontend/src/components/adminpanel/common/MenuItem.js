@@ -1,27 +1,50 @@
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import * as BiIcons from 'react-icons/bi';
 
-function MenuItem({ name, submenus, icons, hasSubMenus }) {
+function NavLink({
+  to,
+  className,
+  activeClassName,
+  inactiveClassName,
+  ...rest
+}) {
+  //determine based on current location and to
+  const location = useLocation();
+
+  let isActive = location.pathname === `/${to}`;
+
+  let allClassName =
+    className + (isActive ? ` ${activeClassName}` : ` ${inactiveClassName}`);
+
+  // className to remove text-decoration
+  // activeClassName to show active link
+  //inactiveClassName to show inactive lik
+
+  return <Link className={allClassName} to={to} {...rest} />;
+}
+
+//Function to generate Sidebar
+function MenuItem({ name, submenus, icons, hasSubMenus, toLink }) {
+  //State fot expanding submenus
   const [expandMenu, setExpandMenu] = useState(false);
 
   return (
     <div>
+      {/* Creating menu with icons and name */}
       <li>
         <NavLink
-          to={name.replace(' ', '').toLowerCase()}
-          style={{
-            textDecoration: 'none',
-          }}
+          to={toLink}
           onClick={() => setExpandMenu(!expandMenu)}
-          className={(props) => {
-            return `${
-              props.isActive ? 'isActive active-link' : 'inactive-link'
-            }`;
-          }}>
+          activeClassName='active-link'
+          inactiveClassName='inactive-link'
+          className='linktext'>
+          {/* Part of menu */}
           <div className='submenuitems'>
             <div className='icon'>{icons}</div>
             {name}
+
+            {/* Submenu icon  */}
             {hasSubMenus && (
               <div className='submenuicon'>
                 {expandMenu ? (
@@ -34,26 +57,19 @@ function MenuItem({ name, submenus, icons, hasSubMenus }) {
           </div>
         </NavLink>
 
+        {/* Creating menu with icons and name */}
         {submenus && submenus.length > 0 ? (
           <ul className={`submenu ${expandMenu ? 'active' : 'collapse'}`}>
+            {/* Mapping Submenu obtained from array */}
             {submenus.map((value, index) => {
-              const splitname = value.replace(' ', '');
-
-              const finalUrl = `${name.toLowerCase()}/${splitname.toLowerCase()}`;
-
               return (
                 <li key={index}>
                   <NavLink
-                    to={finalUrl}
-                    style={{ textDecoration: 'none' }}
-                    className={(props) => {
-                      return `${
-                        props.isActive
-                          ? 'isActive active-link active-sublink'
-                          : 'inactive-link'
-                      }`;
-                    }}>
-                    {value}
+                    to={value.to}
+                    className='linktext'
+                    activeClassName='active-link active-sublink'
+                    inactiveClassName='inactive-link'>
+                    {value.name}
                   </NavLink>
                 </li>
               );
