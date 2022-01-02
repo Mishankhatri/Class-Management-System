@@ -1,63 +1,11 @@
 import React from 'react';
 import MenuItem from './MenuItem';
 import './Sidebar.css';
-import * as MdIcons from 'react-icons/md';
-import * as FaIcons from 'react-icons/fa';
+
+import { getValues } from './SideMenuValue';
 
 function Sidebar({ show }) {
-  const sidebarValue = [
-    {
-      name: 'Dashboard',
-      hasSubMenu: false,
-      icon: <MdIcons.MdDashboard />,
-    },
-    {
-      name: 'Student',
-      hasSubMenu: true,
-      submenus: ['Add', 'All Student'],
-      icon: <FaIcons.FaUserGraduate />,
-    },
-    {
-      name: 'Teacher',
-      hasSubMenu: true,
-      submenus: ['Add', 'All Teacher'],
-      icon: <FaIcons.FaUserTie />,
-    },
-    {
-      name: 'Announcements',
-      hasSubMenu: false,
-      icon: <FaIcons.FaBullhorn />,
-    },
-    {
-      name: 'Classes',
-      hasSubMenu: true,
-      submenus: ['Add Classes', 'Add Section', 'View Class'],
-      icon: <FaIcons.FaFile />,
-    },
-    {
-      name: 'Subject',
-      hasSubMenu: true,
-      submenus: ['Add Subjects', 'View Subjects'],
-      icon: <FaIcons.FaBook />,
-    },
-    {
-      name: 'Timetables',
-      hasSubMenu: true,
-      submenus: ['Create', 'View'],
-      icon: <FaIcons.FaCalendar />,
-    },
-    {
-      name: 'Reports',
-      hasSubMenu: true,
-      submenus: ['Attendance', 'Marks'],
-      icon: <FaIcons.FaAddressCard />,
-    },
-    {
-      name: 'Create Id',
-      hasSubMenu: false,
-      icon: <FaIcons.FaUser />,
-    },
-  ];
+  const sidebarValue = getValues();
   return (
     <div className={show ? 'sidemenu active' : 'sidemenu'}>
       <ul>
@@ -70,6 +18,7 @@ function Sidebar({ show }) {
                 key={index}
                 icons={values.icon}
                 hasSubMenus={values.hasSubMenu}
+                toLink={values.to}
               />
             );
           } else {
@@ -79,6 +28,7 @@ function Sidebar({ show }) {
                 key={index}
                 icons={values.icon}
                 hasSubMenus={values.hasSubMenu}
+                toLink={values.to}
               />
             );
           }
