@@ -2,6 +2,9 @@
   margin-left: 15.3rem;
   transition: margin-left 0.5s;
   margin-top: 1.5rem;
+}
+
+.main-content {
   margin-right: 40px;
 }
 

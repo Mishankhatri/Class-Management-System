@@ -10,7 +10,6 @@ import Login from '../../forms/Login';
 
 function NavBar({ onClickHandler, username }) {
   const [showDropDown, setDropDown] = useState(false);
-  const navigation = useNavigationType();
   return (
     <>
       <div className='navigation'>
@@ -63,22 +62,22 @@ function NavBar({ onClickHandler, username }) {
         <div className={showDropDown ? 'menu active' : 'menu inactive'}>
           <ul>
             <li>
-              <Link to='settings' className='menu-link'>
+              <a href='/settings' className='menu-link'>
                 <RiIcons.RiSettings5Fill className='menu-icon' />
                 Settings
-              </Link>
+              </a>
             </li>
             <li>
-              <Link to='profiles' className='menu-link'>
+              <a href='/profiles' className='menu-link'>
                 <BiIcons.BiUser className='menu-icon' />
                 User Profile
-              </Link>
+              </a>
             </li>
             <li>
-              <Link to='logout' className='menu-link'>
+              <a href='/logout' className='menu-link'>
                 <BiIcons.BiLogOut className='menu-icon' />
                 Logout
-              </Link>
+              </a>
             </li>
           </ul>
         </div>

@@ -45,37 +45,52 @@
   }
 }
 
-.announcement-section {
+.card-section {
   margin: 40px 0;
   font: normal 16px 'Open Sans', sans-serif;
   width: 100%;
-  min-height: 25rem;
+  padding-bottom: 30px;
   background-color: white;
   overflow: hidden;
 }
 
-.announcement-section .announcement {
+.card-section .heading {
   padding: 15px;
   border-bottom: 0.7px solid #c8cbd9;
 }
 
-.announcement-icon {
+.title-icon {
   margin-right: 10px;
   vertical-align: middle;
 }
 
+.title {
+  font-weight: bold;
+}
+
+/* Announcement Section in Dashboadr  */
+
+.content-section {
+  margin: 0 40px;
+}
+
+.mid-content {
+  margin-top: 30px;
+}
+
 .new-announcement {
-  margin: 30px 15px 30px 40px;
-  padding-bottom: 20px;
   border-bottom: 0.7px solid #c8cbd9;
+  padding-bottom: 20px;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 .morebutton {
-  width: 15rem;
-  position: relative;
-  left: 50%;
-  transform: translate(-50%);
-  top: -10px;
+  width: 6rem;
+  /* position: relative; */
+  /* left: 50%; */
+  /* transform: translate(-50%); */
+  border-radius: 5px;
   text-align: center;
   vertical-align: middle;
   background-color: #009ddc;
@@ -91,4 +106,11 @@
 .load-more {
   text-decoration: none;
   color: white;
+  margin: 5px;
+}
+
+.btn {
+  border: none;
+  color: white;
+  font: inherit;
 }
