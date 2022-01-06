@@ -12,3 +12,13 @@
   margin-left: 0rem;
   transition: margin-left 0.5s;
 }
+
+.errors {
+  color: #ba3939;
+  font: bold 14.5px 'Open Sans', sans-serif;
+  /* background: #ffe0e0;
+  border: 1px solid #a33a3a;
+  padding: 2px; */
+  margin-left: 20px;
+  vertical-align: middle;
+}

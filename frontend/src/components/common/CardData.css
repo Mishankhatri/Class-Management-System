@@ -33,30 +33,22 @@
   grid-gap: 20px;
 }
 
-@media only screen and (max-width: 1250px) {
-  .cardelement {
-    grid-template-columns: repeat(2, auto);
-  }
-}
-
-@media only screen and (max-width: 800px) {
-  .cardelement {
-    grid-template-columns: repeat(1, auto);
-  }
-}
-
 .card-section {
   margin: 40px 0;
   font: normal 16px 'Open Sans', sans-serif;
-  width: 100%;
+  /* width: 15rem; */
+  /* width: fit-content; */
   padding-bottom: 30px;
   background-color: white;
   overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
 }
 
 .card-section .heading {
   padding: 15px;
   border-bottom: 0.7px solid #c8cbd9;
+  width: auto;
 }
 
 .title-icon {
@@ -74,6 +66,22 @@
   margin: 0 40px;
 }
 
+.content-section.custom-content {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+}
+
+.custom-width .custom-input {
+  width: 500px;
+  margin-bottom: 20px;
+  margin-right: 30px;
+  transition: width 0.5s;
+}
+
+.custom-width .textarea {
+  resize: none;
+}
+
 .mid-content {
   margin-top: 30px;
 }
@@ -87,8 +95,9 @@
 
 .morebutton {
   width: 6rem;
-  /* position: relative; */
+  position: relative;
   /* left: 50%; */
+  /* top: -15px; */
   /* transform: translate(-50%); */
   border-radius: 5px;
   text-align: center;
@@ -112,5 +121,37 @@
 .btn {
   border: none;
   color: white;
-  font: inherit;
+  font: normal 16px 'Poppins', sans-serif;
+}
+
+@media only screen and (max-width: 1350px) {
+  .cardelement {
+    grid-template-columns: repeat(2, auto);
+  }
+
+  .custom-width .custom-input {
+    width: 420px;
+    transition: width 0.5s;
+  }
+}
+
+@media only screen and (max-width: 1250px) {
+  .cardelement {
+    grid-template-columns: repeat(2, auto);
+  }
+
+  .custom-width .custom-input {
+    width: 300px;
+    transition: width 0.5s;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .cardelement {
+    grid-template-columns: repeat(1, auto);
+  }
+
+  .custom-content {
+    grid-template-columns: repeat(1, auto);
+  }
 }

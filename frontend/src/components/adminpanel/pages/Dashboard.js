@@ -69,6 +69,12 @@ function Dashboard() {
               laudantium quis sed veniam assumenda, debitis praesentium maiores
               beatae eius. Illo, ad!
             </div>
+            <div className='mid-content new-announcement'>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam
+              aliquam impedit ipsam, qui neque corporis hic iusto eaque
+              laudantium quis sed veniam assumenda, debitis praesentium maiores
+              beatae eius. Illo, ad!ajhfiuafiug
+            </div>
 
             <Link to='/announcements' className='load-more'>
               <div className='morebutton'>Load More</div>

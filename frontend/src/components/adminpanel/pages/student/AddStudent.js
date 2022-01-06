@@ -2,86 +2,84 @@ import React, { useState, useEffect } from 'react';
 import InnerHeader from './../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 import * as FaIcons from 'react-icons/fa';
-import InputField from '../../common/InputField';
+import InputField from '../../common//InputField/InputField';
 import {
   getParentInfoValues,
   getStudentInputValues,
+  getAcademicValues,
 } from './StudentInputField';
+
+import { useForm, Controller, useFormContext } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
+
+// student obtained values
+const studentInitialValue = {
+  //Student Info
+  studentFirstName: '',
+  studentMiddleName: '',
+  studentLastName: '',
+  studentGender: '',
+  studentDOB: '',
+  studentPhone: '',
+  studentEmail: '',
+  studentLocation: '',
+  studentPhoto: '',
+
+  //Parent Info
+  studentFatherName: '',
+  studentMotherName: '',
+  parentAddress: '',
+  parentState: '',
+  parentContact: '',
+  parentAdditionalContact: '',
+  parentEmail: '',
+  parentPhoto: '',
+
+  //Academic Info
+  studentClass: '',
+  studentSection: '',
+  studentRoll: '',
+};
 
 function AddStudent() {
   const addStudentValues = getStudentInputValues();
   const addParentValues = getParentInfoValues();
+  const addAcademicValues = getAcademicValues();
 
-  // student obtained values
-  const studentInitialValue = {
-    studentFirstName: '',
-    studentMiddleName: '',
-    studentLastName: '',
-    studentGender: '',
-    studentDate: '',
-    studentPhone: '',
-    studentEmail: '',
-    studentLocation: '',
-    studentPhoto: '',
-  };
+  //For Reseting Select Options while Submitting
+  const [selectRefStudent, setSelectRefStudent] = useState(null);
+  const [selectRefParent, setSelectRefParent] = useState(null);
+  const [selectRefAcademic, setSelectRefAcademic] = useState(null);
 
-  //teachers obtains value
-  const ParentInitialValue = {
-    parentFatherName: '',
-    parentMotherName: '',
-    parentAddress: '',
-    parentState: '',
-    parentContact: '',
-    parentAdditionalContact: '',
-    parentEmail: '',
-    parentPhoto: '',
-  };
-
-  //To see and set parents value as obtained from input
-  const [formStudentValues, setFormStudentValues] =
-    useState(studentInitialValue);
-
-  //To see and set parents value as obtained from input
-  const [formParentValues, setFormParentValues] = useState(ParentInitialValue);
-
-  //Merge Final Values
-  const [finalValues, setFinalValus] = useState();
-
-  //To check is Submit or not
-  const [isSubmit, setIsSubmit] = useState(false);
-
-  //Student Input Handling function
-  const inputStudentEventHandler = (event) => {
-    const { name, value } = event.target;
-    setFormStudentValues({ ...formStudentValues, [name]: value });
-  };
-
-  //Parent Input Handling function
-  const inputParentEventHandler = (event) => {
-    const { name, value } = event.target;
-    setFormParentValues({ ...formParentValues, [name]: value });
-  };
-
-  //On submit handler
-  const submitHandler = function (event) {
-    event.preventDefault();
-    setIsSubmit(true);
-    setFinalValus({ ...setFormStudentValues, ...setFormParentValues });
-  };
-
-  //To fetch add data properly ()
-  useEffect(() => {
-    if (isSubmit) {
-      console.log(formStudentValues);
-      console.log(formParentValues);
-    }
+  //Define requirements from useform
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    studentInitialValue,
   });
+
+  //Reset Value using ref for Select Options
+  const refClearStudent = (ref) => setSelectRefStudent(ref);
+  const refClearParent = (ref) => setSelectRefParent(ref);
+  const refClearAcademic = (ref) => setSelectRefAcademic(ref);
+
+  const onSubmitForm = (data, e) => {
+    console.log(data);
+
+    //CLear Input Field Value
+    e.target.reset();
+    selectRefStudent.clearValue();
+    selectRefParent.clearValue();
+    selectRefAcademic.clearValue();
+  };
 
   return (
     <div>
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'Add Student'} />
       <div className='main-content'>
-        <form onSubmit={submitHandler}>
+        <form onSubmit={handleSubmit(onSubmitForm)}>
           {/* Student Info  */}
           <div className='card-section'>
             <div className='heading'>
@@ -94,17 +92,34 @@ function AddStudent() {
               <div className='allinputfield'>
                 {addStudentValues.map((value, index) => {
                   return (
-                    <InputField
-                      classes={'mid-content'}
-                      title={value.title}
-                      input={value.input}
-                      icon={value.icon}
-                      placeholder={value?.placeholder}
-                      name={'student' + value.name}
-                      options={value?.options}
+                    <Controller
+                      name={value.name}
+                      control={control}
                       key={index}
-                      onChangeHandler={inputStudentEventHandler}
-                      isRequired={value.isRequired}
+                      rules={{
+                        required: {
+                          value: value.isRequired,
+                          message: `${value.title} is required`,
+                        },
+                      }}
+                      defaultValue=''
+                      render={({ field }) => (
+                        <InputField
+                          title={value.title.toUpperCase()}
+                          input={value.input}
+                          icon={value.icon}
+                          placeholder={value?.placeholder}
+                          name={value.name}
+                          onChangeHandler={field.onChange}
+                          isCustomInput={value.isCustomField}
+                          isTextArea={value?.isTextarea}
+                          isRequired={value.isRequired}
+                          options={value?.options}
+                          errors={errors}
+                          refClear={refClearStudent}
+                          ErrorMessage={ErrorMessage}
+                        />
+                      )}
                     />
                   );
                 })}
@@ -124,17 +139,80 @@ function AddStudent() {
               <div className='allinputfield'>
                 {addParentValues.map((value, index) => {
                   return (
-                    <InputField
-                      classes={'mid-content'}
-                      title={value.title}
-                      input={value.input}
-                      icon={value.icon}
-                      placeholder={value?.placeholder}
-                      options={value?.options}
+                    <Controller
+                      name={value.name}
+                      control={control}
                       key={index}
-                      onChangeHandler={inputParentEventHandler}
-                      isRequired={value.isRequired}
-                      name={'parent' + value.name}
+                      rules={{
+                        required: {
+                          value: value.isRequired,
+                          message: `${value.title} is required`,
+                        },
+                      }}
+                      defaultValue=''
+                      render={({ field }) => (
+                        <InputField
+                          title={value.title.toUpperCase()}
+                          input={value.input}
+                          icon={value.icon}
+                          placeholder={value?.placeholder}
+                          name={value.name}
+                          onChangeHandler={field.onChange}
+                          isCustomInput={value.isCustomField}
+                          isTextArea={value?.isTextarea}
+                          isRequired={value.isRequired}
+                          options={value?.options}
+                          errors={errors}
+                          refClear={refClearParent}
+                          ErrorMessage={ErrorMessage}
+                        />
+                      )}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+          {/* Parent Info  */}
+          <div className='card-section'>
+            <div className='heading'>
+              <span className='title-icon'>
+                <FaIcons.FaBook />
+              </span>
+              <span className='title'>ACADEMIC INFO</span>
+            </div>
+            <div className='content-section'>
+              <div className='allinputfield'>
+                {addAcademicValues.map((value, index) => {
+                  return (
+                    <Controller
+                      name={value.name}
+                      control={control}
+                      key={index}
+                      rules={{
+                        required: {
+                          value: value.isRequired,
+                          message: `${value.title} is required`,
+                        },
+                      }}
+                      defaultValue=''
+                      render={({ field }) => (
+                        <InputField
+                          title={value.title.toUpperCase()}
+                          input={value.input}
+                          icon={value.icon}
+                          placeholder={value?.placeholder}
+                          name={value.name}
+                          onChangeHandler={field.onChange}
+                          isCustomInput={value.isCustomField}
+                          isTextArea={value?.isTextarea}
+                          isRequired={value.isRequired}
+                          options={value?.options}
+                          errors={errors}
+                          refClear={refClearAcademic}
+                          ErrorMessage={ErrorMessage}
+                        />
+                      )}
                     />
                   );
                 })}

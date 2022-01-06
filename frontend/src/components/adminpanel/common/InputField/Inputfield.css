@@ -13,8 +13,9 @@
 }
 
 .mid-title {
-  font: bold 15px 'Open Sans', sans-serif;
+  font: bold 14.5px 'Open Sans', sans-serif;
   vertical-align: middle;
+  letter-spacing: 0.5px;
 }
 
 .input {
