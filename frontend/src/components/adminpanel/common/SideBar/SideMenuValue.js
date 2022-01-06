@@ -40,12 +40,7 @@ const menuValue = [
     icon: <FaIcons.FaUserTie />,
     to: 'teacher/add',
   },
-  {
-    name: 'Announcements',
-    hasSubMenu: false,
-    icon: <FaIcons.FaBullhorn />,
-    to: 'announcements',
-  },
+
   {
     name: 'Classes',
     hasSubMenu: true,
@@ -114,11 +109,18 @@ const menuValue = [
     icon: <FaIcons.FaAddressCard />,
     to: 'reports/attendance',
   },
+
   {
     name: 'Create Id',
     hasSubMenu: false,
     icon: <FaIcons.FaUser />,
     to: 'createid',
+  },
+  {
+    name: 'Announcements',
+    hasSubMenu: false,
+    icon: <FaIcons.FaBullhorn />,
+    to: 'announcements',
   },
 ];
 

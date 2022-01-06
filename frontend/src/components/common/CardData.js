@@ -1,7 +1,6 @@
 import React from 'react';
 
-
-function DisplayData({ number, name, icon }) {
+function CardData({ number, name, icon }) {
   return (
     <>
       <div className='cards'>
@@ -15,4 +14,4 @@ function DisplayData({ number, name, icon }) {
   );
 }
 
-export default DisplayData;
+export default CardData;

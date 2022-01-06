@@ -1,5 +1,5 @@
 import './App.css';
-import Sidebar from './components/adminpanel/common/Sidebar';
+import Sidebar from './components/adminpanel/common/SideBar/Sidebar';
 import React, { useState } from 'react';
 import NavBar from './components/adminpanel/common/NavBar';
 import { Route, Routes } from 'react-router-dom';
