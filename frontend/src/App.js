@@ -32,7 +32,11 @@ function App() {
   return (
     <>
       <div>
-        <NavBar onClickHandler={SideBarHandler} username={'PRABIN'} />
+        <NavBar
+          onClickHandler={SideBarHandler}
+          username={'PRABIN'}
+          show={showSideBar}
+        />
         <Sidebar show={showSideBar} />
         <div className={`main-container ${!showSideBar ? 'close' : null}`}>
           <Routes>

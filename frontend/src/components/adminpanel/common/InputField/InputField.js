@@ -66,6 +66,11 @@ function InputField({
             menuPlacement={'auto'}
           />
         )}
+        <ErrorMessage
+          errors={errors}
+          name={name}
+          render={({ message }) => <span className='errors'>{message}</span>}
+        />
       </div>
     </div>
   );

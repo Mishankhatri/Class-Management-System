@@ -8,7 +8,7 @@ import { Link, Navigate, useNavigationType } from 'react-router-dom';
 import './NavBar.css';
 import Login from '../../forms/Login';
 
-function NavBar({ onClickHandler, username }) {
+function NavBar({ onClickHandler, username, show }) {
   const [showDropDown, setDropDown] = useState(false);
   return (
     <>
@@ -28,8 +28,14 @@ function NavBar({ onClickHandler, username }) {
                 Admin Panel
               </Link>
             </div>
-            <div className={'backbtn'}>
-              <GiIcons.GiHamburgerMenu onClick={onClickHandler} />
+            <div className='backbtn'>
+              <div
+                className={show ? 'hamburger' : 'hamburger is-active'}
+                onClick={onClickHandler}>
+                <span className='line'></span>
+                <span className='line'></span>
+                <span className='line'></span>
+              </div>
             </div>
           </div>
 

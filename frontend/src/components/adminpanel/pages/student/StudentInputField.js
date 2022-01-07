@@ -3,7 +3,7 @@ import * as FaIcons from 'react-icons/fa';
 
 const StudentFieldValue = [
   {
-    title: 'FIRST NAME',
+    title: 'First Name',
     input: 'text',
     icon: <FaIcons.FaUser className='mid-icon' />,
     placeholder: 'First Name',
@@ -11,7 +11,7 @@ const StudentFieldValue = [
     isRequired: true,
   },
   {
-    title: 'MIDDLE NAME',
+    title: 'Middle Name',
     input: 'text',
     icon: <FaIcons.FaUser className='mid-icon' />,
     placeholder: 'Middle Name',
@@ -19,7 +19,7 @@ const StudentFieldValue = [
     isRequired: false,
   },
   {
-    title: 'LAST NAME',
+    title: 'Last Name',
     input: 'text',
     icon: <FaIcons.FaUser className='mid-icon' />,
     placeholder: 'Last Name',
@@ -27,7 +27,7 @@ const StudentFieldValue = [
     isRequired: true,
   },
   {
-    title: 'GENDER',
+    title: 'Gender',
     input: 'dropdown',
     icon: <FaIcons.FaVenus className='mid-icon' />,
     placeholder: 'Gender',
@@ -41,14 +41,14 @@ const StudentFieldValue = [
     ],
   },
   {
-    title: 'DATE OF BIRTH',
+    title: 'Date Of Birth',
     input: 'date',
     icon: <FaIcons.FaCalendar className='mid-icon' />,
     isRequired: true,
     name: 'studentDOB',
   },
   {
-    title: 'PHONE',
+    title: 'Phone',
     input: 'number',
     icon: <FaIcons.FaPhone className='mid-icon' />,
     placeholder: '98********',
@@ -56,7 +56,7 @@ const StudentFieldValue = [
     name: 'studentPhone',
   },
   {
-    title: 'EMAIL',
+    title: 'Email',
     input: 'email',
     icon: <FaIcons.FaEnvelope className='mid-icon' />,
     placeholder: 'example@example.com',
@@ -64,7 +64,7 @@ const StudentFieldValue = [
     name: 'studentEmail',
   },
   {
-    title: 'LOCATION',
+    title: 'Location',
     input: 'text',
     icon: <FaIcons.FaLocationArrow className='mid-icon' />,
     placeholder: 'Enter Location',
@@ -72,7 +72,7 @@ const StudentFieldValue = [
     name: 'studentLocation',
   },
   {
-    title: 'UPLOAD PHOTO',
+    title: 'Upload Photo',
     input: 'file',
     icon: <FaIcons.FaPhotoVideo className='mid-icon' />,
     isRequired: true,
@@ -82,7 +82,7 @@ const StudentFieldValue = [
 
 const ParentInfoField = [
   {
-    title: 'FATHER NAME',
+    title: 'Father Name',
     input: 'text',
     icon: <FaIcons.FaUser className='mid-icon' />,
     placeholder: 'Father Name',
@@ -90,7 +90,7 @@ const ParentInfoField = [
     name: 'studentFatherName',
   },
   {
-    title: 'MOTHER NAME',
+    title: 'Mother Name',
     input: 'text',
     icon: <FaIcons.FaUser className='mid-icon' />,
     placeholder: 'Mother Name',
@@ -98,7 +98,7 @@ const ParentInfoField = [
     name: 'studentMotherName',
   },
   {
-    title: 'ADDRESS',
+    title: 'Address',
     input: 'text',
     icon: <FaIcons.FaLocationArrow className='mid-icon' />,
     placeholder: 'Enter Location',
@@ -106,7 +106,7 @@ const ParentInfoField = [
     name: 'parentAddress',
   },
   {
-    title: 'STATE',
+    title: 'State',
     input: 'dropdown',
     icon: <FaIcons.FaLocationArrow className='mid-icon' />,
     options: [
@@ -122,7 +122,7 @@ const ParentInfoField = [
     name: 'parentState',
   },
   {
-    title: 'CONTACT NO',
+    title: 'Contact No',
     input: 'number',
     icon: <FaIcons.FaPhone className='mid-icon' />,
     placeholder: '98********',
@@ -130,7 +130,7 @@ const ParentInfoField = [
     name: 'parentContact',
   },
   {
-    title: 'ALTERNATE CONTACT',
+    title: 'Alternate Contact',
     input: 'number',
     icon: <FaIcons.FaPhone className='mid-icon' />,
     placeholder: '98********',
@@ -153,7 +153,7 @@ const ParentInfoField = [
   // },
 
   {
-    title: 'EMAIL',
+    title: 'Email',
     input: 'email',
     icon: <FaIcons.FaEnvelope className='mid-icon' />,
     placeholder: 'example@domain.com',
@@ -162,7 +162,7 @@ const ParentInfoField = [
   },
 
   {
-    title: 'UPLOAD PHOTO',
+    title: 'Upload Photo',
     input: 'file',
     icon: <FaIcons.FaPhotoVideo className='mid-icon' />,
     isRequired: false,
@@ -189,7 +189,7 @@ const AcademicInfoField = [
     ],
   },
   {
-    title: 'SECTION',
+    title: 'Section',
     input: 'dropdown',
     icon: <FaIcons.FaPhotoVideo className='mid-icon' />,
     // isRequired: true,
@@ -201,7 +201,7 @@ const AcademicInfoField = [
     ],
   },
   {
-    title: 'ROLL NO',
+    title: 'Roll No',
     input: 'text',
     icon: <FaIcons.FaPhotoVideo className='mid-icon' />,
     // isRequired: true,
