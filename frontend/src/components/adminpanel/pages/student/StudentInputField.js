@@ -8,7 +8,7 @@ const StudentFieldValue = [
     icon: <FaIcons.FaUser className='mid-icon' />,
     placeholder: 'First Name',
     name: 'studentFirstName',
-    // isRequired: true,
+    isRequired: true,
   },
   {
     title: 'MIDDLE NAME',
@@ -24,7 +24,7 @@ const StudentFieldValue = [
     icon: <FaIcons.FaUser className='mid-icon' />,
     placeholder: 'Last Name',
     name: 'studentLastName',
-    // isRequired: true,
+    isRequired: true,
   },
   {
     title: 'GENDER',
@@ -32,7 +32,7 @@ const StudentFieldValue = [
     icon: <FaIcons.FaVenus className='mid-icon' />,
     placeholder: 'Gender',
     name: 'studentGender',
-    // isRequired: true,
+    isRequired: true,
 
     options: [
       { value: 'male', label: 'Male' },
@@ -44,7 +44,7 @@ const StudentFieldValue = [
     title: 'DATE OF BIRTH',
     input: 'date',
     icon: <FaIcons.FaCalendar className='mid-icon' />,
-    // isRequired: true,
+    isRequired: true,
     name: 'studentDOB',
   },
   {
@@ -52,7 +52,7 @@ const StudentFieldValue = [
     input: 'number',
     icon: <FaIcons.FaPhone className='mid-icon' />,
     placeholder: '98********',
-    // isRequired: true,
+    isRequired: true,
     name: 'studentPhone',
   },
   {
@@ -60,7 +60,7 @@ const StudentFieldValue = [
     input: 'email',
     icon: <FaIcons.FaEnvelope className='mid-icon' />,
     placeholder: 'example@example.com',
-    // isRequired: true,
+    isRequired: true,
     name: 'studentEmail',
   },
   {
@@ -68,14 +68,14 @@ const StudentFieldValue = [
     input: 'text',
     icon: <FaIcons.FaLocationArrow className='mid-icon' />,
     placeholder: 'Enter Location',
-    // isRequired: true,
+    isRequired: true,
     name: 'studentLocation',
   },
   {
     title: 'UPLOAD PHOTO',
     input: 'file',
     icon: <FaIcons.FaPhotoVideo className='mid-icon' />,
-    // isRequired: true,
+    isRequired: true,
     name: 'studentPhoto',
   },
 ];
@@ -86,7 +86,7 @@ const ParentInfoField = [
     input: 'text',
     icon: <FaIcons.FaUser className='mid-icon' />,
     placeholder: 'Father Name',
-    // isRequired: true,
+    isRequired: true,
     name: 'studentFatherName',
   },
   {
@@ -94,7 +94,7 @@ const ParentInfoField = [
     input: 'text',
     icon: <FaIcons.FaUser className='mid-icon' />,
     placeholder: 'Mother Name',
-    // isRequired: true,
+    isRequired: true,
     name: 'studentMotherName',
   },
   {
@@ -102,7 +102,7 @@ const ParentInfoField = [
     input: 'text',
     icon: <FaIcons.FaLocationArrow className='mid-icon' />,
     placeholder: 'Enter Location',
-    // isRequired: true,
+    isRequired: true,
     name: 'parentAddress',
   },
   {
@@ -118,7 +118,7 @@ const ParentInfoField = [
       { value: 'Karnali', label: 'Karnali' },
       { value: 'Sudurpashchim', label: 'Sudurpashchim' },
     ],
-    // isRequired: true,
+    isRequired: true,
     name: 'parentState',
   },
   {
@@ -126,7 +126,7 @@ const ParentInfoField = [
     input: 'number',
     icon: <FaIcons.FaPhone className='mid-icon' />,
     placeholder: '98********',
-    // isRequired: true,
+    isRequired: true,
     name: 'parentContact',
   },
   {
@@ -134,7 +134,7 @@ const ParentInfoField = [
     input: 'number',
     icon: <FaIcons.FaPhone className='mid-icon' />,
     placeholder: '98********',
-    // isRequired: false,
+    isRequired: false,
     name: 'parentAdditionalContact',
   },
   // {

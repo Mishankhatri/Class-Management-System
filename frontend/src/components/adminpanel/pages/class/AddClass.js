@@ -11,7 +11,7 @@ const addClassInitialValue = {
   className: '',
   classCode: '',
   classDescription: '',
-};  
+};
 
 function AddClass() {
   const classValue = getCLassValue();

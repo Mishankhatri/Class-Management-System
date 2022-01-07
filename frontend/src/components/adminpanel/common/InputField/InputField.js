@@ -21,7 +21,6 @@ function InputField({
   errors,
 }) {
   const isDropdown = input === 'dropdown';
-  let selectRef = null;
 
   return (
     <div className={'mid-content'}>
@@ -58,12 +57,13 @@ function InputField({
           )
         ) : (
           <Select
+            menuPortalTarget={document.body}
             ref={refClear}
             options={options}
             className='input-select custom-input'
-            maxMenuHeight={'120px'}
             onChange={onChangeHandler}
-            // isRequired={isRequired}
+            maxMenuHeight={200}
+            menuPlacement={'auto'}
           />
         )}
       </div>

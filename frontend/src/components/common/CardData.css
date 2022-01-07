@@ -62,26 +62,6 @@
 
 /* Announcement Section in Dashboadr  */
 
-.content-section {
-  margin: 0 40px;
-}
-
-.content-section.custom-content {
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-}
-
-.custom-width .custom-input {
-  width: 500px;
-  margin-bottom: 20px;
-  margin-right: 30px;
-  transition: width 0.5s;
-}
-
-.custom-width .textarea {
-  resize: none;
-}
-
 .mid-content {
   margin-top: 30px;
 }
