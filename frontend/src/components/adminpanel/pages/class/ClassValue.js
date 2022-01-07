@@ -3,7 +3,7 @@ import * as FaIcons from 'react-icons/fa';
 
 const addClassValue = [
   {
-    title: 'CLASS',
+    title: 'Class',
     input: 'text',
     icon: <FaIcons.FaBook className='mid-icon' />,
     isRequired: true,
@@ -12,7 +12,7 @@ const addClassValue = [
     placeholder: 'Enter Class',
   },
   {
-    title: 'CLASS CODE',
+    title: 'Class Code',
     input: 'text',
     icon: <FaIcons.FaCode className='mid-icon' />,
     isRequired: false,
@@ -21,7 +21,7 @@ const addClassValue = [
     placeholder: 'Enter Class Code',
   },
   {
-    title: 'DESCRIPTION',
+    title: 'Description',
     input: 'textarea',
     icon: <FaIcons.FaFile className='mid-icon' />,
     isRequired: true,
@@ -34,7 +34,7 @@ const addClassValue = [
 
 const sectionValue = [
   {
-    title: 'SECTION',
+    title: 'Section',
     input: 'text',
     icon: <FaIcons.FaBook className='mid-icon' />,
     isRequired: true,
@@ -44,7 +44,7 @@ const sectionValue = [
     placeholder: 'Enter Class Section',
   },
   {
-    title: 'SECTION CLASS',
+    title: 'Section Class',
     input: 'dropdown',
     icon: <FaIcons.FaFile className='mid-icon' />,
     isRequired: true,
@@ -63,7 +63,7 @@ const sectionValue = [
     ],
   },
   {
-    title: 'SECTION CODE',
+    title: 'Section Code',
     input: 'text',
     icon: <FaIcons.FaCode className='mid-icon' />,
     isRequired: false,
@@ -73,7 +73,7 @@ const sectionValue = [
     placeholder: 'Enter Section Code',
   },
   {
-    title: 'DESCRIPTION',
+    title: 'Description',
     input: 'textarea',
     icon: <FaIcons.FaFile className='mid-icon' />,
     isRequired: true,
@@ -86,7 +86,7 @@ const sectionValue = [
 
 const subjectsValue = [
   {
-    title: 'NAME',
+    title: 'Name',
     input: 'text',
     icon: <FaIcons.FaBook className='mid-icon' />,
     isRequired: true,
@@ -95,7 +95,7 @@ const subjectsValue = [
     placeholder: 'Write Subjects Name',
   },
   {
-    title: 'SUBJECT CODE',
+    title: 'Subject Code',
     input: 'text',
     icon: <FaIcons.FaCode className='mid-icon' />,
     isRequired: true,
@@ -104,7 +104,7 @@ const subjectsValue = [
     placeholder: 'Subjects Code',
   },
   {
-    title: 'CLASS',
+    title: 'Class',
     input: 'dropdown',
     icon: <FaIcons.FaCode className='mid-icon' />,
     isRequired: true,
@@ -123,7 +123,7 @@ const subjectsValue = [
     ],
   },
   {
-    title: 'TEACHER',
+    title: 'Teacher',
     input: 'dropdown',
     icon: <FaIcons.FaCode className='mid-icon' />,
     isRequired: true,
@@ -138,7 +138,7 @@ const subjectsValue = [
     ],
   },
   {
-    title: 'DESCRIPTION',
+    title: 'Description',
     input: 'textarea',
     icon: <FaIcons.FaFile className='mid-icon' />,
     isRequired: true,

@@ -13,7 +13,8 @@ export function HeaderInputField({
       {icon}
       <label className='mid-title'>{title}</label>
       {isRequired && <span className='required'> *</span>}
-      {/* <ErrorMessage
+      {/* <br />
+      <ErrorMessage
         errors={errors}
         name={name}
         render={({ message }) => <span className='errors'>{message}</span>}

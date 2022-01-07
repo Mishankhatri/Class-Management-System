@@ -32,11 +32,19 @@ function App() {
   return (
     <>
       <div>
-        <NavBar onClickHandler={SideBarHandler} username={'PRABIN'} />
+        <NavBar
+          onClickHandler={SideBarHandler}
+          username={'PRABIN'}
+          show={showSideBar}
+        />
         <Sidebar show={showSideBar} />
         <div className={`main-container ${!showSideBar ? 'close' : null}`}>
           <Routes>
             <Route path='/' element={<Dashboard />} />
+            <Route
+              path='/*'
+              element={<div className='main-content'>Not Found</div>}
+            />
             {/* Dashboard */}
             <Route path='/dashboard' element={<Dashboard />} />
 

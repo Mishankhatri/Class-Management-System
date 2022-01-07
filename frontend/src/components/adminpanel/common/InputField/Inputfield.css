@@ -24,8 +24,9 @@
   box-sizing: border-box;
   /* height: 38px; */
   padding: 7px 12px;
-  width: 15rem;
-  min-width: 10rem;
+  /* width: 15rem; */
+  width: 100%;
+  /* min-width: 10rem; */
   border-radius: 4px;
   outline: none;
   line-height: 38px;
@@ -37,9 +38,14 @@
 }
 
 .input-select {
-  width: 15rem;
+  width: 100%;
   margin-left: 5px;
+  transition: width 0.5s;
 }
+
+/* .label-input {
+  width: 49%;
+} */
 
 input[type='file'] {
   color: #83889c;
@@ -51,29 +57,34 @@ input[type='file'] {
 
 .allinputfield {
   display: grid;
-  grid-template-columns: repeat(4, auto);
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 15px 40px;
 }
 
-@media only screen and (max-width: 1300px) {
+.content-section {
+  margin: 0 40px;
+}
+
+.content-section.custom-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px 40px;
+}
+
+.custom-width .textarea {
+  resize: none;
+}
+
+@media only screen and (max-width: 1350px) {
   .allinputfield {
     display: grid;
-    grid-template-columns: repeat(3, auto);
-  }
-
-  .input,
-  .input-select {
-    width: 13rem;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 850px) {
   .allinputfield {
     display: grid;
-    grid-template-columns: repeat(2, auto);
-  }
-
-  .input,
-  .input-select {
-    width: 15rem;
+    grid-template-columns: repeat(1, 1fr);
   }
 }

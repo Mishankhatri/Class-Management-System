@@ -28,13 +28,40 @@
   color: #5a67ba;
 }
 
+/* Hamburger Button CSS  */
 .left-section .backbtn {
-  font-size: 25px;
   cursor: pointer;
-  color: #141414;
-  display: flex;
-  align-items: center;
 }
+
+.hamburger .line {
+  width: 30px;
+  height: 4px;
+  background-color: #000;
+  display: block;
+  margin: 3px auto;
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger {
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger.is-active {
+  transform: rotate(90deg);
+}
+
+.hamburger.is-active .line {
+  background-color: #2974d5;
+}
+
+.hamburger.is-active .line:nth-child(1) {
+  width: 18px;
+}
+
+.hamburger.is-active .line:nth-child(2) {
+  width: 22px;
+}
+
 /* /* Left section of Navbar styling END*/
 
 /* /* RIght section of Navbar styling Start*/
