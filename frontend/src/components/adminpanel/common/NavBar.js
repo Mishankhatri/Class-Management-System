@@ -28,10 +28,8 @@ function NavBar({ onClickHandler, username, show }) {
                 Admin Panel
               </Link>
             </div>
-            <div className='backbtn'>
-              <div
-                className={show ? 'hamburger' : 'hamburger is-active'}
-                onClick={onClickHandler}>
+            <div className='backbtn' onClick={onClickHandler}>
+              <div className={show ? 'hamburger' : 'hamburger is-active'}>
                 <span className='line'></span>
                 <span className='line'></span>
                 <span className='line'></span>
