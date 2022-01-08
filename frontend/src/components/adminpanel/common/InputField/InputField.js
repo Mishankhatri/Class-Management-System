@@ -1,5 +1,4 @@
 import React from 'react';
-import './Inputfield.css';
 import Select from 'react-select';
 import TextAreaInput from './TextAreaInput';
 import NormalInputField from './NormalInputField';

@@ -4,7 +4,6 @@ import * as MdIcons from 'react-icons/md';
 
 import * as FaIcons from 'react-icons/fa';
 import CardData from '../../common/CardData';
-import '../../common/CardData.css';
 import { Link } from 'react-router-dom';
 
 function Dashboard() {
@@ -76,7 +75,7 @@ function Dashboard() {
               beatae eius. Illo, ad!ajhfiuafiug
             </div>
 
-            <Link to='/announcements' className='load-more'>
+            <Link to='/announcements' className='btn-text'>
               <div className='morebutton'>Load More</div>
             </Link>
           </div>

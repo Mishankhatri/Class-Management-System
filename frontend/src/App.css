@@ -1,20 +1,289 @@
-body {
-  font-family: 'Open Sans', sans-serif;
-}
+/*
+Consists Styling of
+  => Main Container : Main Container for showing the details of components lie Dashboard COntent, Add Students Content
+          => Consists InnerHeader and Main- conetent
+  => Card Section
+  => Input Field
+*/
 
+/* *******************************************Main Container Starts********************************************************* */
 .main-container {
   margin-left: 15.3rem;
   transition: margin-left 0.5s;
   margin-top: 1.5rem;
 }
 
-.main-content {
-  margin-right: 40px;
+.main-container .main-content {
+  margin: 20px 40px 20px 40px;
 }
 
 .main-container.close {
   margin-left: 0rem;
   transition: margin-left 0.5s;
+}
+
+/* Inner Header CSS Code  */
+
+.main-container .header {
+  font: normal 16px 'Poppins', sans-serif;
+  padding-bottom: 10px;
+  border-bottom: 0.7px solid #c8cbd9;
+}
+
+.main-container .header .IconName {
+  margin-left: 40px;
+  display: grid;
+  /* width: 7.9rem; */
+  grid-template-columns: 24px auto;
+  grid-gap: 10px;
+}
+
+.main-container .header .IconName .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: #707fdd;
+}
+
+.main-container .header .reference {
+  width: 72px;
+  height: 8px;
+  background: #27ae60;
+  position: relative;
+  top: 10px;
+  left: 40px;
+  z-index: 100;
+}
+/* Inner Header CSS Code  End*/
+
+/* *******************************************Main Container Ends********************************************************* */
+
+/* *******************************************Card Section Start********************************************************* */
+
+/*Dashboard Element */
+
+.main-content .cardelement {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-gap: 20px;
+}
+
+.main-content .cardelement .cards {
+  /* min-width: 15rem; */
+  height: 9rem;
+  background-color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.cards .name-details .number {
+  font: bold 35px 'Open Sans', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.cards .name-details .name {
+  font: normal 18px 'Open Sans', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.cards .card-icons {
+  font-weight: 900;
+  font-size: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.card-section {
+  margin: 40px 0;
+  font: normal 16px 'Open Sans', sans-serif;
+  /* width: 15rem; */
+  /* width: fit-content; */
+  padding-bottom: 30px;
+  background-color: white;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.card-section .heading {
+  padding: 15px;
+  border-bottom: 0.7px solid #c8cbd9;
+  width: auto;
+}
+
+.card-section .heading .title-icon {
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.card-section .heading .title {
+  font-weight: bold;
+}
+
+.content-section {
+  margin: 0 40px;
+}
+
+.content-section .mid-content {
+  margin-top: 30px;
+}
+
+.content-section .new-announcement {
+  border-bottom: 0.7px solid #c8cbd9;
+  padding-bottom: 20px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.morebutton {
+  width: 6rem;
+  position: relative;
+  /* left: 50%; */
+  /* top: -15px; */
+  /* transform: translate(-50%); */
+  border-radius: 5px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #009ddc;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.morebutton:hover {
+  background-color: #1b90be;
+}
+
+.btn-text {
+  text-decoration: none;
+  color: white;
+  margin: 5px;
+}
+
+.btn {
+  border: none;
+  color: white;
+  font: normal 16px 'Poppins', sans-serif;
+}
+
+@media only screen and (max-width: 1350px) {
+  .main-content .cardelement {
+    grid-template-columns: repeat(2, auto);
+  }
+
+  .custom-width .custom-input {
+    width: 420px;
+    transition: width 0.5s;
+  }
+}
+
+@media only screen and (max-width: 1250px) {
+  .main-content .cardelement {
+    grid-template-columns: repeat(2, auto);
+  }
+
+  .custom-width .custom-input {
+    width: 300px;
+    transition: width 0.5s;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .main-content .cardelement {
+    grid-template-columns: repeat(1, auto);
+  }
+
+  .custom-content {
+    grid-template-columns: repeat(1, auto);
+  }
+}
+
+/**************************************Input Field Styling Starts**************************************/
+/* Input Field Css Styling  */
+
+.allinputfield {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 15px 40px;
+}
+
+.label-title {
+  color: #81878c;
+  margin-bottom: 10px;
+}
+
+.mid-icon {
+  font-size: 12px;
+  vertical-align: middle;
+  margin-right: 5px;
+  border: 1px solid #c8cbd9;
+  border-radius: 50%;
+  padding: 3px;
+}
+
+.mid-title {
+  font: bold 14.5px 'Open Sans', sans-serif;
+  vertical-align: middle;
+  letter-spacing: 0.5px;
+}
+
+.input {
+  margin-left: 5px;
+  border: 1px solid #c8cbd9;
+  box-sizing: border-box;
+  /* height: 38px; */
+  padding: 7px 12px;
+  /* width: 15rem; */
+  width: 100%;
+  /* min-width: 10rem; */
+  border-radius: 4px;
+  outline: none;
+  line-height: 38px;
+  font: normal 16px 'Open Sans', sans-serif;
+}
+
+.input:focus {
+  border: 2px solid #2684ff;
+}
+
+.input-select {
+  width: 100%;
+  margin-left: 5px;
+  transition: width 0.5s;
+}
+
+input[type='file'] {
+  color: #83889c;
+}
+
+.required {
+  color: red;
+}
+
+.content-section.custom-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px 40px;
+}
+
+.custom-width .textarea {
+  resize: none;
+}
+
+@media only screen and (max-width: 1350px) {
+  .allinputfield {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .allinputfield {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .errors {
