@@ -30,7 +30,7 @@ Consists Styling of
 }
 
 .navigation .navbar .left-section .title {
-  font: bold 23px 'Poppins', sans-serif;
+  font: normal 23px 'PoppinsBold', sans-serif;
   letter-spacing: 0.5px;
   color: #5a67ba;
 }
