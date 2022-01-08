@@ -1,5 +1,4 @@
 import React from 'react';
-import '../common/InnerHeader.css';
 
 function InnerHeader({ icon, name }) {
   return (

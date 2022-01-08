@@ -3,8 +3,7 @@ import InnerHeader from '../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 
 import * as FaIcons from 'react-icons/fa';
-import CardData from '../../common/CardData';
-import '../../common/CardData.css';
+import CardData from '../../common/DashboardCardData';
 import { Link } from 'react-router-dom';
 
 function Dashboard() {
@@ -63,20 +62,8 @@ function Dashboard() {
               hic iusto eaque laudantium quis sed veniam assumenda, debitis
               praesentium maiores beatae eius. Illo, ad!
             </div>
-            <div className='mid-content new-announcement'>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam
-              aliquam impedit ipsam, qui neque corporis hic iusto eaque
-              laudantium quis sed veniam assumenda, debitis praesentium maiores
-              beatae eius. Illo, ad!
-            </div>
-            <div className='mid-content new-announcement'>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam
-              aliquam impedit ipsam, qui neque corporis hic iusto eaque
-              laudantium quis sed veniam assumenda, debitis praesentium maiores
-              beatae eius. Illo, ad!ajhfiuafiug
-            </div>
 
-            <Link to='/announcements' className='load-more'>
+            <Link to='/announcements' className='btn-text'>
               <div className='morebutton'>Load More</div>
             </Link>
           </div>

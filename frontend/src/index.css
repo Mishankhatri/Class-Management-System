@@ -1,1 +1,250 @@
+/*
+Consists Styling of
+  => NavBar
+  => SideBar
 
+/* *******************************************NavBar Styling Starts********************************************************* */
+
+/* Navbar styling */
+.navigation {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 101;
+}
+
+.navigation .navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-bottom: 1px solid #c8cbd9;
+  background-color: #ffffff;
+}
+
+/* /* Left section of Navbar styling */
+.navigation .navbar .left-section {
+  display: flex;
+  justify-content: space-between;
+  width: 13rem;
+  align-items: center;
+}
+
+.navigation .navbar .left-section .title {
+  font: normal 23px 'PoppinsBold', sans-serif;
+  letter-spacing: 0.5px;
+  color: #5a67ba;
+}
+
+.navigation .navbar .backbtn {
+  cursor: pointer;
+}
+
+/* Hamburger Button CSS  */
+
+.navigation .navbar .hamburger .line {
+  width: 30px;
+  height: 4px;
+  background-color: #000;
+  display: block;
+  margin: 3px auto;
+  transition: all 0.3s ease-in-out;
+}
+
+.navigation .navbar .hamburger {
+  transition: all 0.3s ease-in-out;
+}
+
+.navigation .navbar .hamburger.is-active {
+  transform: rotate(90deg);
+}
+
+.navigation .navbar .hamburger.is-active .line {
+  background-color: #2974d5;
+}
+
+.hamburger.is-active .line:nth-child(1) {
+  width: 18px;
+}
+
+.hamburger.is-active .line:nth-child(2) {
+  width: 22px;
+}
+
+/* /* Left section of Navbar styling END*/
+
+/* /* RIght section of Navbar styling Start*/
+
+.navigation .navbar .right-section {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  width: 11rem;
+  align-items: center;
+}
+
+.navigation .navbar .right-section .profile-image {
+  width: 40px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+.user-name {
+  display: flex;
+  font: bold 16px 'Poppins', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.navigation .navbar .notification__icon,
+.navigation .navbar .arrow {
+  font-size: 25px;
+  cursor: pointer;
+  /* color: #b0c3cc; */
+}
+
+.navigation .navbar .notification__symbol {
+  width: 10px;
+  height: 10px;
+  background-color: #ec5252;
+  border-radius: 50%;
+  position: relative;
+  left: 15px;
+  top: 7px;
+}
+
+.navigation .menu {
+  position: absolute;
+  left: 89.5%;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  width: 8rem;
+}
+
+.navigation .menu.inactive {
+  visibility: hidden;
+  transition: visibility 0.1s;
+}
+
+.navigation .menu.active {
+  visibility: visible;
+  transition: visibility 0.5s;
+}
+
+.navigation .menu .menu-icon {
+  vertical-align: middle;
+  font-size: 18px;
+  margin-right: 10px;
+  color: #a6abc8;
+}
+
+.navigation .menu .menu-link {
+  text-decoration: none;
+  color: #273240;
+}
+
+/* *******************************************NavBar Styling Ends********************************************************* */
+
+/* *******************************************SideBar Styling Starts********************************************************* */
+/* SideBar Content CSS Code Start*/
+
+/* Sidemenu STyling */
+.sidemenu {
+  position: fixed;
+  background-color: #f1f2f7;
+  width: 11.5rem;
+  height: calc(100vh - 100px);
+  padding: 20px 30px;
+  left: -15rem;
+  transition: all 0.5s;
+  overflow-y: auto;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
+}
+
+.sidemenu li {
+  list-style-type: none;
+  padding: 8px 0;
+  font: normal 15px 'Poppins', sans-serif;
+}
+
+/* Custom ScrollBar */
+.sidemenu::-webkit-scrollbar {
+  width: 20px;
+}
+
+.sidemenu::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.sidemenu::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+.sidemenu::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
+
+/* Custom Scrollbar End*/
+
+.sidemenu.active {
+  left: 0;
+}
+
+/* Submenu of SIdebar STyling */
+.sidemenu .submenu {
+  padding-left: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+  margin: 10px 0;
+  border-left: 2px solid #5a6acf;
+}
+
+.sidemenu .submenu.collapse {
+  margin: 0;
+}
+
+.submenu.active {
+  max-height: 200px;
+  transition: max-height 1s ease-in-out;
+}
+
+/* Submenu styling end  */
+
+.sidemenu .active-link {
+  color: #5a6acf;
+  border-radius: 5px;
+}
+
+.sidemenu .linktext {
+  text-decoration: none;
+}
+
+.sidemenu .active-sublink {
+  background-color: rgba(112, 127, 221, 0.1);
+  padding: 5px;
+}
+
+.sidemenu .inactive-link {
+  color: black;
+}
+
+.sidemenu .submenuitems {
+  display: grid;
+  grid-template-columns: 2rem auto 0.9rem;
+  line-height: 20px;
+}
+
+.sidemenu .submenuitems .icon,
+.submenuitems .submenuicon {
+  line-height: 24px;
+}
+
+/* SideBar Content CSS Code End*/
+
+/* *******************************************SideBar Styling Ends********************************************************* */

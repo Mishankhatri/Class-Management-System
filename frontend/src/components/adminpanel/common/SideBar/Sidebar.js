@@ -1,6 +1,5 @@
 import React from 'react';
 import MenuItem from './MenuItem';
-import './Sidebar.css';
 
 import { getValues } from './SideMenuValue';
 
