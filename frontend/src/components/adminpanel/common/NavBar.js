@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as BsIcons from 'react-icons/bs';
 import * as BiIcons from 'react-icons/bi';
 import * as RiIcons from 'react-icons/ri';
-import ProfileImage from '../../assets/profiles/PrabinGautam.jpg';
+import ProfileImage from '../../../assets/profiles/PrabinGautam.jpg';
 import { Link } from 'react-router-dom';
 
 function NavBar({ onClickHandler, username, show }) {
