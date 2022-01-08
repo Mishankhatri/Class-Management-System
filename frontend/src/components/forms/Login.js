@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
-import Logo from '../assets/Image_Logo.png';
-import CampusLogo from '../assets/campusLogo.png';
+import Logo from '../assets/logo/Image_Logo.png';
+import CampusLogo from '../assets/logo/campusLogo.png';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function Login() {
