@@ -61,7 +61,7 @@ function NavBar({ onClickHandler, username, show }) {
           </div>
         </div>
         <div className={showDropDown ? 'menu active' : 'menu inactive'}>
-          <ul>
+          <ul className='profile-options'>
             <li>
               <a href='/settings' className='menu-link'>
                 <RiIcons.RiSettings5Fill className='menu-icon' />

@@ -138,7 +138,7 @@ Consists Styling of
 }
 
 .morebutton {
-  width: 6rem;
+  width: 8rem;
   position: relative;
   /* left: 50%; */
   /* top: -15px; */
@@ -160,10 +160,12 @@ Consists Styling of
   text-decoration: none;
   color: white;
   margin: 5px;
+  width: 100%;
 }
 
 .btn {
   border: none;
+  width: 6rem;
   color: white;
   font: normal 16px 'Poppins', sans-serif;
 }
