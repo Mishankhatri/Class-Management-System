@@ -65,7 +65,7 @@ body {
 }
 
 .navigation .navbar .hamburger.is-active {
-  transform: rotate(90deg);
+  transform: rotate(45deg);
 }
 
 .navigation .navbar .hamburger.is-active .line {
@@ -77,7 +77,7 @@ body {
 }
 
 .hamburger.is-active .line:nth-child(2) {
-  width: 22px;
+  width: 24px;
 }
 
 /* /* Left section of Navbar styling END*/
@@ -181,7 +181,7 @@ body {
 .sidemenu li {
   list-style-type: none;
   padding: 8px 0;
-  font: normal 15px 'Poppins', sans-serif;
+  font: normal 16px 'Poppins', sans-serif;
 }
 
 /* Custom ScrollBar */

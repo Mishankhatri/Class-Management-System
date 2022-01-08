@@ -12,7 +12,7 @@ export default function TextAreaInput({
       rows='4'
       cols='50'
       name={name}
-      // required={isRequired}
+      required={isRequired}
       placeholder={placeholder}
       onChange={onChangeHandler}
       className={
