@@ -31,59 +31,60 @@ function App() {
 
   return (
     <>
-      <div>
-        <NavBar
-          onClickHandler={SideBarHandler}
-          username={'PRABIN'}
-          show={showSideBar}
-        />
-        <Sidebar show={showSideBar} />
-        <div className={`main-container ${!showSideBar ? 'close' : null}`}>
-          <Routes>
-            <Route path='/' element={<Dashboard />} />
-            <Route
-              path='/*'
-              element={<div className='main-content'>Not Found</div>}
-            />
-            {/* Dashboard */}
-            <Route path='/dashboard' element={<Dashboard />} />
+      <NavBar
+        onClickHandler={SideBarHandler}
+        username={'PRABIN'}
+        show={showSideBar}
+      />
+      <Sidebar show={showSideBar} />
+      <div className={`main-container ${!showSideBar ? 'close' : null}`}>
+        <Routes>
+          <Route path='/' element={<Dashboard />} />
+          <Route
+            path='/*'
+            element={<div className='main-content'>Not Found</div>}
+          />
+          {/* Dashboard */}
+          <Route path='/admin/dashboard' element={<Dashboard />} />
 
-            {/* Student  */}
-            <Route path='/student/add' element={<AddStudent />} />
-            <Route path='/student/view' element={<ViewStudent />} />
+          {/* Student  */}
+          <Route path='/admin/student/add' element={<AddStudent />} />
+          <Route path='/admin/student/view' element={<ViewStudent />} />
 
-            {/* Teacher  */}
-            <Route path='/teacher/add' element={<AddTeacher />} />
-            <Route path='/teacher/view' element={<ViewTeacher />} />
+          {/* Teacher  */}
+          <Route path='/admin/teacher/add' element={<AddTeacher />} />
+          <Route path='/admin/teacher/view' element={<ViewTeacher />} />
 
-            {/* Announcements  */}
-            <Route path='/announcements' element={<Announcement />} />
+          {/* Announcements  */}
+          <Route path='/admin/announcements' element={<Announcement />} />
 
-            {/* Classes  */}
-            <Route path='/classes/addclass' element={<AddClass />} />
-            <Route path='/classes/addsection' element={<AddSection />} />
-            <Route path='/classes/view' element={<ViewClass />} />
+          {/* Classes  */}
+          <Route path='/admin/classes/addclass' element={<AddClass />} />
+          <Route path='/admin/classes/addsection' element={<AddSection />} />
+          <Route path='/admin/classes/view' element={<ViewClass />} />
 
-            {/* Subject  */}
-            <Route path='/subject/add' element={<AddSubjects />} />
-            <Route path='/subject/view' element={<ViewSubjects />} />
+          {/* Subject  */}
+          <Route path='/admin/subject/add' element={<AddSubjects />} />
+          <Route path='/admin/subject/view' element={<ViewSubjects />} />
 
-            {/* Timetables  */}
-            <Route path='/timetables/create' element={<CreateTimetables />} />
-            <Route path='/timetables/view' element={<ViewTimetables />} />
+          {/* Timetables  */}
+          <Route
+            path='/admin/timetables/create'
+            element={<CreateTimetables />}
+          />
+          <Route path='/admin/timetables/view' element={<ViewTimetables />} />
 
-            {/* Reports  */}
-            <Route path='/reports/attendance' element={<Attendance />} />
-            <Route path='/reports/marks' element={<Marks />} />
+          {/* Reports  */}
+          <Route path='/admin/reports/attendance' element={<Attendance />} />
+          <Route path='/admin/reports/marks' element={<Marks />} />
 
-            {/* Create Id  */}
-            <Route path='/createid' element={<CreateID />} />
+          {/* Create Id  */}
+          <Route path='/admin/createid' element={<CreateID />} />
 
-            {/* UserProfile Option  */}
-            <Route path='/settings' element={<Settings />} />
-            <Route path='/profiles' element={<UserProfile />} />
-          </Routes>
-        </div>
+          {/* UserProfile Option  */}
+          <Route path='/admin/settings' element={<Settings />} />
+          <Route path='/admin/profiles' element={<UserProfile />} />
+        </Routes>
       </div>
     </>
   );

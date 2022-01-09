@@ -5,7 +5,17 @@ Consists Styling of
 
 /* *******************************************NavBar Styling Starts********************************************************* */
 
-/* Navbar styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f8f9fc;
+  font-family: 'Open Sans', sans-serif;
+}
+
 .navigation {
   position: sticky;
   top: 0;
@@ -55,7 +65,7 @@ Consists Styling of
 }
 
 .navigation .navbar .hamburger.is-active {
-  transform: rotate(90deg);
+  transform: rotate(45deg);
 }
 
 .navigation .navbar .hamburger.is-active .line {
@@ -67,7 +77,7 @@ Consists Styling of
 }
 
 .hamburger.is-active .line:nth-child(2) {
-  width: 22px;
+  width: 24px;
 }
 
 /* /* Left section of Navbar styling END*/
@@ -113,13 +123,13 @@ Consists Styling of
 
 .navigation .menu {
   position: absolute;
-  left: 89.5%;
+  right: 2%;
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   padding: 10px;
   margin-top: 10px;
-  width: 8rem;
+  width: 9rem;
 }
 
 .navigation .menu.inactive {
@@ -132,6 +142,12 @@ Consists Styling of
   transition: visibility 0.5s;
 }
 
+.profile-options li {
+  list-style-type: none;
+  padding: 8px 0;
+  font: normal 15px 'Poppins', sans-serif;
+}
+
 .navigation .menu .menu-icon {
   vertical-align: middle;
   font-size: 18px;
@@ -142,18 +158,19 @@ Consists Styling of
 .navigation .menu .menu-link {
   text-decoration: none;
   color: #273240;
+  cursor: pointer;
 }
 
-/* *******************************************NavBar Styling Ends********************************************************* */
+/* *******************************************NavBar Styling Ends************************* */
 
-/* *******************************************SideBar Styling Starts********************************************************* */
+/* *******************************************SideBar Styling Starts************************* */
 /* SideBar Content CSS Code Start*/
 
 /* Sidemenu STyling */
 .sidemenu {
   position: fixed;
   background-color: #f1f2f7;
-  width: 11.5rem;
+  width: 15.25rem;
   height: calc(100vh - 100px);
   padding: 20px 30px;
   left: -15rem;
@@ -165,7 +182,7 @@ Consists Styling of
 .sidemenu li {
   list-style-type: none;
   padding: 8px 0;
-  font: normal 15px 'Poppins', sans-serif;
+  font: normal 16px 'Poppins', sans-serif;
 }
 
 /* Custom ScrollBar */
@@ -192,6 +209,10 @@ Consists Styling of
 
 .sidemenu.active {
   left: 0;
+}
+
+.submenu-parents {
+  cursor: pointer;
 }
 
 /* Submenu of SIdebar STyling */

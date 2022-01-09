@@ -16,7 +16,7 @@ function NormalInputField({
       className={isCustomInput ? 'input custom-input' : 'input'}
       placeholder={placeholder}
       onChange={onChangeHandler}
-      // required={isRequired}
+      required={isRequired}
       name={name}
       accept='image/*'
     />
@@ -26,7 +26,7 @@ function NormalInputField({
       className={isCustomInput ? 'input custom-input' : 'input'}
       placeholder={placeholder}
       onChange={onChangeHandler}
-      // required={isRequired}
+      required={isRequired}
       name={name}
     />
   );
