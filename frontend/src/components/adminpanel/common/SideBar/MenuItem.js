@@ -7,27 +7,22 @@ function NavLink({
   className,
   activeClassName,
   inactiveClassName,
+  name,
   ...rest
 }) {
   //determine based on current location and to
   const location = useLocation();
-  let isActive = location.pathname === `/${to}`;
+
+  let isActive = location.pathname.includes(name) || location.pathname === `/${to}`;
 
   let allClassName =
     className + (isActive ? ` ${activeClassName}` : ` ${inactiveClassName}`);
+
+  // className to remove text-decoration
+  // activeClassName to show active link
+  //inactiveClassName to show inactive lik
 
   return <Link className={allClassName} to={to} {...rest} />;
-}
-
-function Label({ to, className, activeClassName, inactiveClassName, ...rest }) {
-  const location = useLocation();
-
-  const isActive = location.pathname.includes(to);
-
-  let allClassName =
-    className + (isActive ? ` ${activeClassName}` : ` ${inactiveClassName}`);
-
-  return <label className={allClassName} {...rest} />;
 }
 
 //Function to generate Sidebar
@@ -39,44 +34,30 @@ function MenuItem({ name, submenus, icons, hasSubMenus, toLink }) {
     <div>
       {/* Creating menu with icons and name */}
       <li>
-        {!hasSubMenus ? (
-          <NavLink
-            to={toLink}
-            onClick={() => setExpandMenu(!expandMenu)}
-            activeClassName='active-link'
-            inactiveClassName='inactive-link'
-            className='linktext'>
-            {/* Part of menu */}
-            <div className='submenuitems'>
-              <div className='icon'>{icons}</div>
-              {name}
-            </div>
-          </NavLink>
-        ) : (
-          <Label
-            onClick={() => setExpandMenu(!expandMenu)}
-            to={toLink}
-            activeClassName='active-link'
-            className='submenu-parents'
-            inactiveClassName='inactive-link'>
-            <div className='submenuitems'>
-              <div className='icon'>{icons}</div>
-              {name}
+        <NavLink
+          to={toLink}
+          name = {name.toLowerCase()}
+          onClick={() => setExpandMenu(!expandMenu)}
+          activeClassName='active-link'
+          inactiveClassName='inactive-link'
+          className='linktext'>
+          {/* Part of menu */}
+          <div className='submenuitems'>
+            <div className='icon'>{icons}</div>
+            {name}
 
-              {/* Submenu icon  */}
-              {hasSubMenus && (
-                <div className='submenuicon'>
-                  {expandMenu ? (
-                    <BiIcons.BiDownArrow />
-                  ) : (
-                    <BiIcons.BiRightArrow />
-                  )}
-                </div>
-              )}
-            </div>
-          </Label>
-        )}
-
+            {/* Submenu icon  */}
+            {hasSubMenus && (
+              <div className='submenuicon'>
+                {expandMenu ? (
+                  <BiIcons.BiDownArrow />
+                ) : (
+                  <BiIcons.BiRightArrow />
+                )}
+              </div>
+            )}
+          </div>
+        </NavLink>
         {/* Creating menu with icons and name */}
         {submenus && submenus.length > 0 ? (
           <ul className={`submenu ${expandMenu ? 'active' : 'collapse'}`}>

@@ -3,24 +3,24 @@ import Sidebar from './components/adminpanel/common/SideBar/Sidebar';
 import React, { useState } from 'react';
 import NavBar from './components/adminpanel/common/NavBar';
 import { Route, Routes } from 'react-router-dom';
-import Dashboard from './components/adminpanel/pages/Dashboard';
-import Announcement from './components/adminpanel/pages/Announcement';
-import AddTeacher from './components/adminpanel/pages/teacher/AddTeacher';
-import ViewTeacher from './components/adminpanel/pages/teacher/ViewTeacher';
-import AddStudent from './components/adminpanel/pages/student/AddStudent';
-import ViewStudent from './components/adminpanel/pages/student/ViewStudent';
-import AddClass from './components/adminpanel/pages/class/AddClass';
-import AddSection from './components/adminpanel/pages/class/AddSection';
-import ViewClass from './components/adminpanel/pages/class/ViewClass';
-import AddSubjects from './components/adminpanel/pages/subject/AddSubjects';
-import ViewSubjects from './components/adminpanel/pages/subject/ViewSubjects';
-import CreateTimetables from './components/adminpanel/pages/timetables/CreateTimetables';
-import ViewTimetables from './components/adminpanel/pages/timetables/ViewTimeTables';
-import Attendance from './components/adminpanel/pages/reports/Attendance';
-import Marks from './components/adminpanel/pages/reports/Marks';
-import CreateID from './components/adminpanel/pages/CreateId';
-import Settings from './components/adminpanel/pages/users/Settings';
-import UserProfile from './components/adminpanel/pages/users/UserProfile';
+const Dashboard = React.lazy(() => import('./components/adminpanel/pages/Dashboard'));
+const Announcement = React.lazy(() => import('./components/adminpanel/pages/Announcement'));
+const AddTeacher = React.lazy(() => import('./components/adminpanel/pages/teacher/AddTeacher'));
+const ViewTeacher = React.lazy(() => import('./components/adminpanel/pages/teacher/ViewTeacher'));
+const AddStudent = React.lazy(() => import('./components/adminpanel/pages/student/AddStudent'));
+const ViewStudent = React.lazy(() => import('./components/adminpanel/pages/student/ViewStudent'));
+const AddClass = React.lazy(() => import('./components/adminpanel/pages/class/AddClass'));
+const AddSection = React.lazy(() => import('./components/adminpanel/pages/class/AddSection'));
+const ViewClass = React.lazy(() => import('./components/adminpanel/pages/class/ViewClass'));
+const AddSubjects = React.lazy(() => import('./components/adminpanel/pages/subject/AddSubjects'));
+const ViewSubjects = React.lazy(() => import('./components/adminpanel/pages/subject/ViewSubjects'));
+const CreateTimetables = React.lazy(() => import('./components/adminpanel/pages/timetables/CreateTimetables'));
+const ViewTimetables = React.lazy(() => import('./components/adminpanel/pages/timetables/ViewTimeTables'));
+const Attendance = React.lazy(() => import('./components/adminpanel/pages/reports/Attendance'));
+const Marks = React.lazy(() => import('./components/adminpanel/pages/reports/Marks'));
+const CreateID = React.lazy(() => import('./components/adminpanel/pages/CreateId'));
+const Settings = React.lazy(() => import('./components/adminpanel/pages/users/Settings'));
+const UserProfile = React.lazy(() => import('./components/adminpanel/pages/users/UserProfile'));
 
 function App() {
   const [showSideBar, setSideBar] = useState(true);
@@ -38,6 +38,7 @@ function App() {
       />
       <Sidebar show={showSideBar} />
       <div className={`main-container ${!showSideBar ? 'close' : null}`}>
+        <React.Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path='/' element={<Dashboard />} />
           <Route
@@ -85,6 +86,7 @@ function App() {
           <Route path='/admin/settings' element={<Settings />} />
           <Route path='/admin/profiles' element={<UserProfile />} />
         </Routes>
+        </React.Suspense>
       </div>
     </>
   );

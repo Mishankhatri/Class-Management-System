@@ -13,38 +13,42 @@ const menuValue = [
     hasSubMenu: true,
     submenus: [
       {
-        name: 'Add',
-        to: 'admin/student/add',
-      },
-      {
         name: 'View Student',
         to: 'admin/student/view',
       },
+      {
+        name: 'Add',
+        to: 'admin/student/add',
+      },
     ],
     icon: <FaIcons.FaUserGraduate />,
-    to: 'student',
+    to: 'admin/student/view',
   },
   {
     name: 'Teacher',
     hasSubMenu: true,
     submenus: [
       {
-        name: 'Add',
-        to: 'admin/teacher/add',
-      },
-      {
         name: 'View Teacher',
         to: 'admin/teacher/view',
       },
+      {
+        name: 'Add',
+        to: 'admin/teacher/add',
+      },
     ],
     icon: <FaIcons.FaUserTie />,
-    to: 'teacher',
+    to: 'admin/teacher/view',
   },
 
   {
     name: 'Classes',
     hasSubMenu: true,
     submenus: [
+      {
+        name: 'View Class',
+        to: 'admin/classes/view',
+      },
       {
         name: 'Add Classes',
         to: 'admin/classes/addclass',
@@ -53,45 +57,41 @@ const menuValue = [
         name: 'Add Section',
         to: 'admin/classes/addsection',
       },
-      {
-        name: 'View Class',
-        to: 'admin/classes/view',
-      },
     ],
     icon: <FaIcons.FaFile />,
-    to: 'classes',
+    to: 'admin/classes/view',
   },
   {
     name: 'Subject',
     hasSubMenu: true,
     submenus: [
       {
-        name: 'Add Subjects',
-        to: 'admin/subject/add',
-      },
-      {
         name: 'View Subjects',
         to: 'admin/subject/view',
       },
+      {
+        name: 'Add Subjects',
+        to: 'admin/subject/add',
+      },
     ],
     icon: <FaIcons.FaBook />,
-    to: 'subject',
+    to: 'admin/subject/view',
   },
   {
     name: 'Timetables',
     hasSubMenu: true,
     submenus: [
       {
-        name: 'Create',
-        to: 'admin/timetables/create',
-      },
-      {
         name: 'View',
         to: 'admin/timetables/view',
       },
+      {
+        name: 'Create',
+        to: 'admin/timetables/create',
+      },
     ],
     icon: <FaIcons.FaCalendar />,
-    to: 'timetables',
+    to: 'admin/timetables/view',
   },
   {
     name: 'Reports',
@@ -107,7 +107,7 @@ const menuValue = [
       },
     ],
     icon: <FaIcons.FaAddressCard />,
-    to: 'reports',
+    to: 'admin/reports/attendance',
   },
 
   {
