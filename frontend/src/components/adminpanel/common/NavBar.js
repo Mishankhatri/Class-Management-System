@@ -3,10 +3,12 @@ import * as BsIcons from 'react-icons/bs';
 import * as BiIcons from 'react-icons/bi';
 import * as RiIcons from 'react-icons/ri';
 import ProfileImage from '../../../assets/profiles/PrabinGautam.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function NavBar({ onClickHandler, username, show }) {
   const [showDropDown, setDropDown] = useState(false);
+  const navigate = useNavigate();
+
   return (
     <>
       <div className='navigation'>
@@ -63,19 +65,19 @@ function NavBar({ onClickHandler, username, show }) {
         <div className={showDropDown ? 'menu active' : 'menu inactive'}>
           <ul className='profile-options'>
             <li>
-              <a href='/settings' className='menu-link'>
+              <a href='/admin/settings' className='menu-link'>
                 <RiIcons.RiSettings5Fill className='menu-icon' />
                 Settings
               </a>
             </li>
             <li>
-              <a href='/profiles' className='menu-link'>
+              <a href='/admin/profiles' className='menu-link'>
                 <BiIcons.BiUser className='menu-icon' />
                 User Profile
               </a>
             </li>
             <li>
-              <a href='/logout' className='menu-link'>
+              <a className='menu-link' onClick={() => navigate('/login')}>
                 <BiIcons.BiLogOut className='menu-icon' />
                 Logout
               </a>
