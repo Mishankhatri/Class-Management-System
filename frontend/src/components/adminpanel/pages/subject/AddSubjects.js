@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import InnerHeader from './../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 import * as FaIcons from 'react-icons/fa';
-import InputField from './../../common//InputField/InputField';
+
 import { getAddSubjectsValue } from './../class/ClassValue';
-import { useForm, Controller, useFormContext } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
+import CustomController from '../../../common/Controller';
 
 const addSubjectsInitialValue = {
   subjectsName: '',
@@ -16,8 +17,6 @@ const addSubjectsInitialValue = {
 };
 
 function AddSubjects() {
-  const subjectsValue = getAddSubjectsValue();
-
   //For Reseting Select Options while Submitting
   const [selectRef, setSelectRef] = useState(null);
 
@@ -46,50 +45,17 @@ function AddSubjects() {
         <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'Add Subjects'} />
         <div className='main-content'>
           <form onSubmit={handleSubmit(onSubmitForm)}>
-            <div className='card-section custom-width'>
-              <div className='heading'>
-                <span className='title-icon'>
-                  <FaIcons.FaUser />
-                </span>
-                <span className='title'>ADD SECTION</span>
-              </div>
-
-              <div className='content-section custom-content'>
-                {subjectsValue.map((value, index) => {
-                  return (
-                    <Controller
-                      name={value.name}
-                      control={control}
-                      key={index}
-                      rules={{
-                        required: {
-                          value: value.isRequired,
-                          message: `${value.title} is required`,
-                        },
-                      }}
-                      defaultValue=''
-                      render={({ field }) => (
-                        <InputField
-                          title={value.title.toUpperCase()}
-                          input={value.input}
-                          icon={value.icon}
-                          placeholder={value?.placeholder}
-                          name={value.name}
-                          onChangeHandler={field.onChange}
-                          isCustomInput={value.isCustomField}
-                          isTextArea={value?.isTextarea}
-                          isRequired={value.isRequired}
-                          options={value?.options}
-                          errors={errors}
-                          refClear={refClear}
-                          ErrorMessage={ErrorMessage}
-                        />
-                      )}
-                    />
-                  );
-                })}
-              </div>
-            </div>
+            <CustomController
+              title={'ADD SUBJECT'}
+              icon={<FaIcons.FaUser />}
+              ValueArray={getAddSubjectsValue()}
+              refClear={refClear}
+              control={control}
+              Controller={Controller}
+              errors={errors}
+              ErrorMessage={ErrorMessage}
+              isCustom={true}
+            />
             <button className='morebutton btn'>Submit</button>
           </form>
         </div>

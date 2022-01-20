@@ -3,6 +3,8 @@ import InnerHeader from './../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 import * as FaIcons from 'react-icons/fa';
 import InputField from '../../common//InputField/InputField';
+import CustomController from '../../../common/Controller';
+
 import {
   getParentInfoValues,
   getStudentInputValues,
@@ -42,8 +44,6 @@ const studentInitialValue = {
 };
 
 function AddStudent() {
-  const addStudentValues = getStudentInputValues();
-  const addParentValues = getParentInfoValues();
   const addAcademicValues = getAcademicValues();
 
   //For Reseting Select Options while Submitting
@@ -90,98 +90,31 @@ function AddStudent() {
       <div className='main-content'>
         <form onSubmit={handleSubmit(onSubmitForm)}>
           {/* Student Info  */}
-          <div className='card-section'>
-            <div className='heading'>
-              <span className='title-icon'>
-                <FaIcons.FaUser />
-              </span>
-              <span className='title'>STUDENT INFO</span>
-            </div>
-            <div className='content-section'>
-              <div className='allinputfield'>
-                {addStudentValues.map((value, index) => {
-                  return (
-                    <Controller
-                      name={value.name}
-                      control={control}
-                      key={index}
-                      rules={{
-                        required: {
-                          value: value.isRequired,
-                          message: `${value.title} is required`,
-                        },
-                      }}
-                      defaultValue=''
-                      render={({ field }) => (
-                        <InputField
-                          title={value.title.toUpperCase()}
-                          input={value.input}
-                          icon={value.icon}
-                          placeholder={value?.placeholder}
-                          name={value.name}
-                          onChangeHandler={field.onChange}
-                          isCustomInput={value.isCustomField}
-                          isTextArea={value?.isTextarea}
-                          isRequired={value.isRequired}
-                          options={value?.options}
-                          errors={errors}
-                          refClear={refClearStudent}
-                          ErrorMessage={ErrorMessage}
-                        />
-                      )}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+          <CustomController
+            title={'ADD STUDENT'}
+            icon={<FaIcons.FaUser />}
+            ValueArray={getStudentInputValues()}
+            refClear={refClearStudent}
+            control={control}
+            Controller={Controller}
+            errors={errors}
+            ErrorMessage={ErrorMessage}
+            isCustom={false}
+          />
 
           {/* Parent Info  */}
-          <div className='card-section'>
-            <div className='heading'>
-              <span className='title-icon'>
-                <FaIcons.FaUser />
-              </span>
-              <span className='title'>PARENT INFO</span>
-            </div>
-            <div className='content-section'>
-              <div className='allinputfield'>
-                {addParentValues.map((value, index) => {
-                  return (
-                    <Controller
-                      name={value.name}
-                      control={control}
-                      key={index}
-                      rules={{
-                        required: {
-                          value: value.isRequired,
-                          message: `${value.title} is required`,
-                        },
-                      }}
-                      defaultValue=''
-                      render={({ field }) => (
-                        <InputField
-                          title={value.title.toUpperCase()}
-                          input={value.input}
-                          icon={value.icon}
-                          placeholder={value?.placeholder}
-                          name={value.name}
-                          onChangeHandler={field.onChange}
-                          isCustomInput={value.isCustomField}
-                          isTextArea={value?.isTextarea}
-                          isRequired={value.isRequired}
-                          options={value?.options}
-                          errors={errors}
-                          refClear={refClearParent}
-                          ErrorMessage={ErrorMessage}
-                        />
-                      )}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+          <CustomController
+            title={'ADD PARENT'}
+            icon={<FaIcons.FaUser />}
+            ValueArray={getParentInfoValues()}
+            refClear={refClearParent}
+            control={control}
+            Controller={Controller}
+            errors={errors}
+            ErrorMessage={ErrorMessage}
+            isCustom={false}
+          />
+
           {/* Parent Info  */}
           <div className='card-section'>
             <div className='heading'>
