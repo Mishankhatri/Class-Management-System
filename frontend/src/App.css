@@ -171,6 +171,11 @@ Consists Styling of
   font: normal 16px 'Poppins', sans-serif;
 }
 
+.btn-custom-selection {
+  margin-top: 20px;
+  width: 10rem;
+}
+
 /**************************************Input Field Styling Starts**************************************/
 /* Input Field Css Styling  */
 
@@ -230,7 +235,8 @@ input[type='file'] {
   color: red;
 }
 
-.content-section.custom-content {
+.content-section.custom-content,
+.custom-selection {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px 40px;

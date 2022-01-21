@@ -4,6 +4,7 @@ import './index.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import App from './App';
 import Login from './forms/Login';
+import './forms/Table.css';
 
 ReactDOM.render(
   <BrowserRouter>

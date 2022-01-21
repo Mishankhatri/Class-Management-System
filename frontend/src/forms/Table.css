@@ -1,0 +1,50 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1rem;
+  margin-top: 20px;
+  color: #212529;
+  border: 1px solid #dee2e6;
+}
+
+table td,
+table th {
+  padding: 0.5rem 0.75rem;
+  border-top: 1px solid #dee2e6;
+  border: 1px solid #dee2e6;
+}
+
+table thead th {
+  border-bottom: 3px solid #000;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.table-striped tbody tr:hover {
+  color: #212529;
+  background-color: #d6d8db;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #dc3545;
+}
+
+.btn-custom {
+  padding: 4px 6px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+.btn-1 {
+  margin-right: 10px;
+}

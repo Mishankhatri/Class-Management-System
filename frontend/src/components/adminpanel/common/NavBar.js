@@ -23,7 +23,9 @@ function NavBar({ onClickHandler, username, show }) {
 
           <div className='left-section'>
             <div className='title'>
-              <Link to={'/'} style={{ textDecoration: 'none' }}>
+              <Link
+                to={'/'}
+                style={{ textDecoration: 'none', color: '#551ABB' }}>
                 Admin Panel
               </Link>
             </div>

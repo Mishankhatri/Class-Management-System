@@ -115,7 +115,7 @@ function AddStudent() {
             isCustom={false}
           />
 
-          {/* Parent Info  */}
+          {/* Academic Info  */}
           <div className='card-section'>
             <div className='heading'>
               <span className='title-icon'>
