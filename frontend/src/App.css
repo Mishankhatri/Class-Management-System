@@ -171,36 +171,9 @@ Consists Styling of
   font: normal 16px 'Poppins', sans-serif;
 }
 
-@media only screen and (max-width: 1350px) {
-  .main-content .cardelement {
-    grid-template-columns: repeat(2, auto);
-  }
-
-  .custom-width .custom-input {
-    width: 420px;
-    transition: width 0.5s;
-  }
-}
-
-@media only screen and (max-width: 1250px) {
-  .main-content .cardelement {
-    grid-template-columns: repeat(2, auto);
-  }
-
-  .custom-width .custom-input {
-    width: 300px;
-    transition: width 0.5s;
-  }
-}
-
-@media only screen and (max-width: 800px) {
-  .main-content .cardelement {
-    grid-template-columns: repeat(1, auto);
-  }
-
-  .custom-content {
-    grid-template-columns: repeat(1, auto);
-  }
+.btn-custom-selection {
+  margin-top: 20px;
+  width: 10rem;
 }
 
 /**************************************Input Field Styling Starts**************************************/
@@ -218,7 +191,7 @@ Consists Styling of
 }
 
 .mid-icon {
-  font-size: 12px;
+  font-size: 20px;
   vertical-align: middle;
   margin-right: 5px;
   border: 1px solid #c8cbd9;
@@ -236,11 +209,8 @@ Consists Styling of
   margin-left: 5px;
   border: 1px solid #c8cbd9;
   box-sizing: border-box;
-  /* height: 38px; */
   padding: 7px 12px;
-  /* width: 15rem; */
   width: 100%;
-  /* min-width: 10rem; */
   border-radius: 4px;
   outline: none;
   line-height: 38px;
@@ -265,7 +235,8 @@ input[type='file'] {
   color: red;
 }
 
-.content-section.custom-content {
+.content-section.custom-content,
+.custom-selection {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px 40px;
@@ -273,20 +244,6 @@ input[type='file'] {
 
 .custom-width .textarea {
   resize: none;
-}
-
-@media only screen and (max-width: 1350px) {
-  .allinputfield {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media only screen and (max-width: 850px) {
-  .allinputfield {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-  }
 }
 
 .errors {
@@ -297,4 +254,44 @@ input[type='file'] {
   padding: 2px 8px;
   margin: 30px 10px;
   vertical-align: middle;
+}
+
+@media only screen and (max-width: 1100px) {
+  /* .content-section.custom-content {
+    display: grid;
+    grid-template-columns: 1fr;
+  } */
+}
+
+@media only screen and (max-width: 1350px) {
+  .main-content .cardelement {
+    grid-template-columns: repeat(2, auto);
+  }
+
+  .allinputfield {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (max-width: 1250px) {
+  .main-content .cardelement {
+    grid-template-columns: repeat(2, auto);
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .main-content .cardelement {
+    grid-template-columns: repeat(1, auto);
+  }
+
+  .custom-content {
+    grid-template-columns: repeat(1, auto);
+  }
+
+  .allinputfield,
+  .content-section.custom-content {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 }

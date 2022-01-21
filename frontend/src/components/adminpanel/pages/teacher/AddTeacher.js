@@ -3,9 +3,10 @@ import InnerHeader from './../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 import * as FaIcons from 'react-icons/fa';
 import { getTeacherInputValues } from './TeacherInputField';
-import InputField from '../../common//InputField/InputField';
+
 import { useForm, Controller, useFormContext } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
+import CustomController from './../../../common/Controller';
 
 // teacher obtained values
 const teacherInitialValue = {
@@ -21,8 +22,6 @@ const teacherInitialValue = {
 };
 
 function AddTeacher() {
-  const addTeacherValues = getTeacherInputValues();
-
   //For Reseting Select Options while Submitting
   const [selectRef, setSelectRef] = useState(null);
 
@@ -51,52 +50,17 @@ function AddTeacher() {
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'Add Teacher'} />
       <div className='main-content'>
         <form onSubmit={handleSubmit(onSubmitForm)}>
-          <div className='card-section'>
-            <div className='heading'>
-              <span className='title-icon'>
-                <FaIcons.FaUser />
-              </span>
-              <span className='title'>TEACHER INFO</span>
-            </div>
-
-            <div className='content-section'>
-              <div className='allinputfield'>
-                {addTeacherValues.map((value, index) => {
-                  return (
-                    <Controller
-                      name={value.name}
-                      control={control}
-                      key={index}
-                      rules={{
-                        required: {
-                          value: value.isRequired,
-                          message: `${value.title} is required`,
-                        },
-                      }}
-                      defaultValue=''
-                      render={({ field }) => (
-                        <InputField
-                          title={value.title.toUpperCase()}
-                          input={value.input}
-                          icon={value.icon}
-                          placeholder={value?.placeholder}
-                          name={value.name}
-                          onChangeHandler={field.onChange}
-                          isCustomInput={value.isCustomField}
-                          isTextArea={value?.isTextarea}
-                          isRequired={value.isRequired}
-                          options={value?.options}
-                          errors={errors}
-                          refClear={refClear}
-                          ErrorMessage={ErrorMessage}
-                        />
-                      )}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+          <CustomController
+            title={'ADD TEACHER'}
+            icon={<FaIcons.FaUser />}
+            ValueArray={getTeacherInputValues()}
+            refClear={refClear}
+            control={control}
+            Controller={Controller}
+            errors={errors}
+            ErrorMessage={ErrorMessage}
+            isCustom={false}
+          />
           <button className='morebutton btn' type='submit'>
             Submit
           </button>

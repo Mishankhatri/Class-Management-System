@@ -7,7 +7,7 @@ function Sidebar({ show }) {
   const sidebarValue = getValues();
   return (
     <div className={show ? 'sidemenu active' : 'sidemenu'}>
-      <ul>
+      <ul className='sidebar-ul'>
         {sidebarValue.map((values, index) => {
           if (values.hasSubMenu) {
             return (
