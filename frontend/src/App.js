@@ -82,6 +82,10 @@ function App() {
               element={<Navigate replace to='/admin/dashboard' />}
             />
             <Route
+              path='/admin'
+              element={<Navigate replace to='/admin/dashboard' />}
+            />
+            <Route
               path='/*'
               element={<div className='main-content'>Not Found</div>}
             />
