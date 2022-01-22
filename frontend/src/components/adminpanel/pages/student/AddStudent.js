@@ -9,7 +9,7 @@ import {
   getParentInfoValues,
   getStudentInputValues,
   getAcademicValues,
-} from './StudentInputField';
+} from '../../../values/AdminPanel/StudentInputField';
 
 import { useForm, Controller, useFormContext } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';

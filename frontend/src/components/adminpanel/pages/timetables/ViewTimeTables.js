@@ -6,8 +6,8 @@ import InputField from '../../common//InputField/InputField';
 
 import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { getAcademicValues } from '../student/StudentInputField';
-import { timeTable_value } from './TimetableValues';
+import { timeTable_value } from '../../../values/AdminPanel/TimetableValues';
+import { getAcademicValues } from '../../../values/AdminPanel/StudentInputField';
 
 function ViewTimetables() {
   const addAcademicValues = getAcademicValues();
@@ -109,7 +109,7 @@ function ViewTimetables() {
                 <span className='title'>All Slots</span>
               </div>
               <div className='content-section'>
-                <table className='mt-4 table-striped' striped bordered hover>
+                <table className='table-striped'>
                   <thead>
                     <tr>
                       <th>Timings</th>
@@ -132,6 +132,7 @@ function ViewTimetables() {
                           <td>{value.section}</td>
                           <td>{value.subject}</td>
                           <td>{value.teacher}</td>
+
                           <td>
                             <div>Lecture: BIO</div>
                             <div>Room: 302</div>

@@ -1,6 +1,6 @@
 import React from 'react';
-import InnerHeader from './../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
+import InnerHeader from '../../common/InnerHeader';
 
 function ViewClass() {
   return (

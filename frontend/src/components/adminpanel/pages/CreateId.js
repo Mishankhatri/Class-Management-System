@@ -5,9 +5,9 @@ import * as FaIcons from 'react-icons/fa';
 
 import { useForm, Controller, useFormContext } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { getCreateIdInputField } from './CreateIdInputField';
-import CustomController from './../../common/Controller';
-import Loading from './../../common/Loading';
+import CustomController from '../../common/Controller';
+import Loading from '../../common/Loading';
+import { getCreateIdInputField } from '../../values/AdminPanel/CreateIdInputField';
 
 // // teacher obtained values For references
 // const createIdInitialValue = {
@@ -44,6 +44,10 @@ function CreateID() {
     e.target.reset();
     selectRef.clearValue(); // Clear Select Value
   };
+
+  setTimeout(() => {
+    setisLoading(false);
+  }, 2000);
 
   return (
     <div>

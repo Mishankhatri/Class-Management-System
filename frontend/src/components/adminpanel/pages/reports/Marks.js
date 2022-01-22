@@ -6,6 +6,9 @@ function Marks() {
   return (
     <div>
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'View Marks'} />
+      <div className='main-content'>
+        <form></form>
+      </div>
     </div>
   );
 }
