@@ -43,7 +43,7 @@ table tbody tr.active-row {
 
 table tbody tr:hover {
   color: #212529;
-  background-color: #d6d8db;
+  background-color: #dee2e6;
   transition: background-color 0.5s;
 }
 

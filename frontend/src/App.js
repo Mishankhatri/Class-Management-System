@@ -3,13 +3,19 @@ import Sidebar from './components/adminpanel/common/SideBar/Sidebar';
 import React, { useState } from 'react';
 import NavBar from './components/adminpanel/common/NavBar';
 import { Route, Routes, Navigate } from 'react-router-dom';
+import Loading from './components/common/Loading';
 
 const Dashboard = React.lazy(() =>
   import('./components/adminpanel/pages/Dashboard')
 );
-const Announcement = React.lazy(() =>
-  import('./components/adminpanel/pages/Announcement')
+const CreateAnnouncement = React.lazy(() =>
+  import('./components/adminpanel/pages/CreateAnnouncement')
 );
+
+const ViewAnnouncement = React.lazy(() =>
+  import('./components/adminpanel/pages/ViewAnnouncement')
+);
+
 const AddTeacher = React.lazy(() =>
   import('./components/adminpanel/pages/teacher/AddTeacher')
 );
@@ -75,7 +81,7 @@ function App() {
       />
       <Sidebar show={showSideBar} />
       <div className={`main-container ${!showSideBar ? 'close' : null}`}>
-        <React.Suspense fallback={<div>Loading...</div>}>
+        <React.Suspense fallback={<Loading />}>
           <Routes>
             <Route
               path='/'
@@ -91,6 +97,7 @@ function App() {
             />
             {/* Dashboard */}
             <Route path='/admin/dashboard' element={<Dashboard />} />
+            <Route path='/loading' element={<Loading />} />
 
             {/* Student  */}
             <Route path='/admin/student/add' element={<AddStudent />} />
@@ -101,7 +108,14 @@ function App() {
             <Route path='/admin/teacher/view' element={<ViewTeacher />} />
 
             {/* Announcements  */}
-            <Route path='/admin/announcements' element={<Announcement />} />
+            <Route
+              path='/admin/announcements/create'
+              element={<CreateAnnouncement />}
+            />
+            <Route
+              path='/admin/announcements/view'
+              element={<ViewAnnouncement />}
+            />
 
             {/* Classes  */}
             <Route path='/admin/classes/addclass' element={<AddClass />} />

@@ -53,6 +53,7 @@ function CustomController({
                   isCustomInput={value.isCustomField}
                   isTextArea={value?.isTextarea}
                   isRequired={value.isRequired}
+                  isImageFile={value?.isImageFile}
                   options={value?.options}
                   errors={errors}
                   refClear={refClear}

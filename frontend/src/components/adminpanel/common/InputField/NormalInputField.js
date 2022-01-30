@@ -7,19 +7,23 @@ function NormalInputField({
   onChangeHandler,
   name,
   isRequired,
+  isImageFile,
 }) {
   const isFile = input === 'file';
 
-  return isFile ? (
-    <input
-      type={input}
-      className={isCustomInput ? 'input custom-input' : 'input'}
-      placeholder={placeholder}
-      onChange={onChangeHandler}
-      required={isRequired}
-      name={name}
-      accept='image/*'
-    />
+  return isFile && isImageFile ? (
+    <>
+      {console.log()}
+      <input
+        type={input}
+        className={isCustomInput ? 'input custom-input' : 'input'}
+        placeholder={placeholder}
+        onChange={onChangeHandler}
+        required={isRequired}
+        name={name}
+        accept='image/*'
+      />
+    </>
   ) : (
     <input
       type={input}

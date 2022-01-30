@@ -118,9 +118,19 @@ const menuValue = [
   },
   {
     name: 'Announcements',
-    hasSubMenu: false,
+    hasSubMenu: true,
+    submenus: [
+      {
+        name: 'Create',
+        to: 'admin/announcements/create',
+      },
+      {
+        name: 'View',
+        to: 'admin/announcements/view',
+      },
+    ],
     icon: <FaIcons.FaBullhorn />,
-    to: 'admin/announcements',
+    to: 'admin/announcements/create',
   },
 ];
 

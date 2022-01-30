@@ -136,9 +136,9 @@ function ViewTimetables() {
                       <td>{value.teacher}</td>
 
                       <td>
-                        <div>Lecture: BIO</div>
-                        <div>Room: 302</div>
-                        <div>Teacher: John</div>
+                        <div>Lecture: AI</div>
+                        <div>Class: 12</div>
+                        <div>Teacher: Urbara Bhandari</div>
                       </td>
 
                       <td>

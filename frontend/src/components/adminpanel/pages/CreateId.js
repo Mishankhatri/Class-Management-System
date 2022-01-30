@@ -25,7 +25,6 @@ import { getCreateIdInputField } from '../../values/AdminPanel/CreateIdInputFiel
 function CreateID() {
   //For Reseting Select Options while Submitting
   const [selectRef, setSelectRef] = useState(null);
-  const [isLoading, setisLoading] = useState(true);
 
   //Define requirements from useform
   const {
@@ -45,36 +44,26 @@ function CreateID() {
     selectRef.clearValue(); // Clear Select Value
   };
 
-  setTimeout(() => {
-    setisLoading(false);
-  }, 2000);
-
   return (
     <div>
       <InnerHeader icon={<MdIcons.MdDashboard />} name={'Create ID'} />
       <div className='main-content'>
-        {isLoading ? (
-          <div style={{ height: '100%' }}>
-            <Loading />
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit(onSubmitForm)}>
-            <CustomController
-              title={'CREATE USER LOGIN ID'}
-              icon={<FaIcons.FaUser />}
-              ValueArray={getCreateIdInputField()}
-              refClear={refClear}
-              control={control}
-              Controller={Controller}
-              errors={errors}
-              ErrorMessage={ErrorMessage}
-              isCustom={true}
-            />
-            <button className='morebutton btn' type='submit'>
-              Submit
-            </button>
-          </form>
-        )}
+        <form onSubmit={handleSubmit(onSubmitForm)}>
+          <CustomController
+            title={'CREATE USER LOGIN ID'}
+            icon={<FaIcons.FaUser />}
+            ValueArray={getCreateIdInputField()}
+            refClear={refClear}
+            control={control}
+            Controller={Controller}
+            errors={errors}
+            ErrorMessage={ErrorMessage}
+            isCustom={true}
+          />
+          <button className='morebutton btn' type='submit'>
+            Submit
+          </button>
+        </form>
       </div>
     </div>
   );

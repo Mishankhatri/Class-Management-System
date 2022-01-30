@@ -74,6 +74,7 @@ const StudentFieldValue = [
   {
     title: 'Upload Photo',
     input: 'file',
+    isImageFile: true,
     icon: <FaIcons.FaPhotoVideo className='mid-icon' />,
     isRequired: true,
     name: 'studentPhoto',
@@ -164,6 +165,7 @@ const ParentInfoField = [
   {
     title: 'Upload Photo',
     input: 'file',
+    isImageFile: true,
     icon: <FaIcons.FaPhotoVideo className='mid-icon' />,
     isRequired: false,
     name: 'parentPhoto',
