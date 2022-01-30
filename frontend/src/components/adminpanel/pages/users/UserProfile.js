@@ -46,7 +46,12 @@ function UserProfile() {
           }}>
           <div className='modal-content'>
             <form onSubmit={onSubmit}>
-              <span className='close' onClick={() => setClick(!click)}>
+              <span
+                className='close'
+                onClick={() => {
+                  setClick(!click);
+                  setPreviosImage(BlankProfile);
+                }}>
                 &times;
               </span>
               <div className='content'>

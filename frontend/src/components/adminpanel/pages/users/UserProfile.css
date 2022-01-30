@@ -118,7 +118,7 @@
   width: 250px;
   margin-bottom: 20px;
   border: 1px solid hsl(0, 0%, 0%, 0.4);
-  padding-top: 20px;
+  /* padding-top: 20px; */
 }
 
 .content label {
