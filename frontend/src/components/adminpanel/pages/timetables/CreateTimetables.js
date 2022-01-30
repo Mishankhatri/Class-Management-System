@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import InnerHeader from './../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 import * as FaIcons from 'react-icons/fa';
-import { addSlot, timeTable_value } from './TimetableValues';
 
 import CustomController from '../../../common/Controller';
 import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
+import {
+  timeTables_Time,
+  addSlot,
+  timeTable_value,
+} from '../../../values/AdminPanel/TimetableValues';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import { Table, Button } from 'react-bootstrap';
 
@@ -60,7 +64,7 @@ function CreateTimetables() {
               <span className='title'>All Slots</span>
             </div>
             <div className='content-section'>
-              <table className='mt-4 table-striped' striped bordered hover>
+              <table className='table-striped'>
                 <thead>
                   <tr>
                     <th>Day</th>
@@ -87,7 +91,7 @@ function CreateTimetables() {
                             Edit
                           </button>
                           <button className='btn-custom btn-danger'>
-                            Update
+                            Delete
                           </button>
                         </td>
                       </tr>

@@ -138,6 +138,12 @@ Consists Styling of
   text-justify: inter-word;
 }
 
+.custom-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 8rem;
+}
+
 .morebutton {
   width: 8rem;
   position: relative;
@@ -242,7 +248,7 @@ input[type='file'] {
   grid-gap: 10px 40px;
 }
 
-.custom-width .textarea {
+.textarea {
   resize: none;
 }
 

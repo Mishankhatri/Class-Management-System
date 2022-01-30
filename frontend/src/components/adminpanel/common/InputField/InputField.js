@@ -18,11 +18,12 @@ function InputField({
   refClear,
   ErrorMessage,
   errors,
+  isImageFile,
 }) {
   const isDropdown = input === 'dropdown';
 
   return (
-    <div className={'mid-content'}>
+    <div className='mid-content'>
       {/* //Heading File  */}
       <HeaderInputField
         title={title}
@@ -52,6 +53,7 @@ function InputField({
               name={name}
               isCustomInput={isCustomInput}
               isRequired={isRequired}
+              isImageFile={isImageFile}
             />
           )
         ) : (

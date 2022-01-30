@@ -3,7 +3,7 @@ import InnerHeader from './../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 import * as FaIcons from 'react-icons/fa';
 
-import { getAddSubjectsValue } from './../class/ClassValue';
+import { getAddSubjectsValue } from '../../../values/AdminPanel/ClassValue';
 import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import CustomController from '../../../common/Controller';

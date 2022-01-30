@@ -6,8 +6,8 @@ import InputField from '../../common//InputField/InputField';
 
 import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { getAcademicValues } from '../student/StudentInputField';
-import { timeTable_value } from './TimetableValues';
+import { timeTable_value } from '../../../values/AdminPanel/TimetableValues';
+import { getAcademicValues } from '../../../values/AdminPanel/StudentInputField';
 
 function ViewTimetables() {
   const addAcademicValues = getAcademicValues();
@@ -101,60 +101,61 @@ function ViewTimetables() {
                 <span>Select</span>
               </button>
             </div>
-            <div className='card-section'>
-              <div className='heading'>
-                <span className='title-icon'>
-                  <FaIcons.FaSlidersH />
-                </span>
-                <span className='title'>All Slots</span>
-              </div>
-              <div className='content-section'>
-                <table className='mt-4 table-striped' striped bordered hover>
-                  <thead>
-                    <tr>
-                      <th>Timings</th>
-                      <th>Sunday</th>
-                      <th>Monday</th>
-                      <th>Tuesday</th>
-                      <th>Wednesday</th>
-                      <th>Thurday</th>
-                      <th>Friday</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {timeTable_value.map((value, index) => {
-                      return (
-                        <tr key={index}>
-                          <td>{value.day}</td>
-                          <td>{value.time}</td>
-                          <td>{value.classes}</td>
-                          <td>{value.section}</td>
-                          <td>{value.subject}</td>
-                          <td>{value.teacher}</td>
-                          <td>
-                            <div>Lecture: BIO</div>
-                            <div>Room: 302</div>
-                            <div>Teacher: John</div>
-                          </td>
-
-                          <td>
-                            <button className='btn-custom btn-primary btn-1'>
-                              Edit
-                            </button>
-                            <button className='btn-custom btn-danger'>
-                              Update
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
           </div>
         </form>
+        <div className='card-section'>
+          <div className='heading'>
+            <span className='title-icon'>
+              <FaIcons.FaSlidersH />
+            </span>
+            <span className='title'>All Slots</span>
+          </div>
+          <div className='content-section'>
+            <table className='table-striped'>
+              <thead>
+                <tr>
+                  <th>Timings</th>
+                  <th>Sunday</th>
+                  <th>Monday</th>
+                  <th>Tuesday</th>
+                  <th>Wednesday</th>
+                  <th>Thurday</th>
+                  <th>Friday</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {timeTable_value.map((value, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{value.day}</td>
+                      <td>{value.time}</td>
+                      <td>{value.classes}</td>
+                      <td>{value.section}</td>
+                      <td>{value.subject}</td>
+                      <td>{value.teacher}</td>
+
+                      <td>
+                        <div>Lecture: AI</div>
+                        <div>Class: 12</div>
+                        <div>Teacher: Urbara Bhandari</div>
+                      </td>
+
+                      <td>
+                        <button className='btn-custom btn-primary btn-1'>
+                          Edit
+                        </button>
+                        <button className='btn-custom btn-danger'>
+                          Update
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );

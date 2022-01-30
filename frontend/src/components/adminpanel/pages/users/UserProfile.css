@@ -1,0 +1,159 @@
+.main-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 50px;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding: 30px;
+}
+
+.profile .image {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.profile img {
+  width: 150px;
+  border-radius: 50%;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+.profile .camera {
+  font-size: 2rem;
+  border: 2px solid #6764b3;
+  border-radius: 50%;
+  padding: 4px;
+  position: relative;
+  top: -40px;
+  left: -40px;
+  cursor: pointer;
+  background-color: #242526;
+  color: rgba(255, 255, 255, 1);
+}
+
+.profile .profile-name {
+  font: bold 1.5rem 'Roboto';
+  text-transform: uppercase;
+  color: #858796;
+  margin-bottom: 10px;
+}
+
+.profile .role {
+  color: #858796;
+  font-size: 1.1rem;
+}
+
+.profile-info {
+  background-color: white;
+  padding: 10px 20px;
+}
+
+.profile-info__inner {
+  border-bottom: 1px solid #e3e6f0;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  font: normal 1.1rem 'Poppins';
+  color: #858796;
+  padding: 10px;
+}
+
+/* The Modal (background) */
+.model-section {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.model-section.visible {
+  display: block;
+}
+
+.upload-image {
+  text-align: center;
+}
+
+/* Modal Content */
+.model-section .modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.model-section .close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.model-section .close:hover,
+.model-section .close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.content h2 {
+  margin-bottom: 20px;
+}
+
+.content .imageholder img {
+  width: 250px;
+  margin-bottom: 20px;
+  border: 1px solid hsl(0, 0%, 0%, 0.4);
+  /* padding-top: 20px; */
+}
+
+.content label {
+  margin-bottom: 20px;
+  background-color: #e3e6f0;
+  max-width: 20rem;
+  line-height: 1.5;
+  padding: 9px 20px 8px;
+  margin-right: 20px;
+}
+
+.content label:hover {
+  cursor: pointer;
+  background-color: #e3eaff;
+}
+
+.content #file-upload {
+  display: none;
+}
+
+/* CSS */
+.content button {
+  background-color: #222;
+  border-radius: 4px;
+  border-style: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  width: 100px;
+  padding: 9px 20px 8px;
+}
+
+.content button:hover,
+.content button:focus {
+  opacity: 0.75;
+}

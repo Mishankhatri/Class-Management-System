@@ -3,11 +3,10 @@ import InnerHeader from './../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 import * as FaIcons from 'react-icons/fa';
 
-import { getSectionValue } from './ClassValue';
-
 import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import CustomController from '../../../common/Controller';
+import { getSectionValue } from '../../../values/AdminPanel/ClassValue';
 /*
 1) Added usestate to import
 2) Import React Hook Form
