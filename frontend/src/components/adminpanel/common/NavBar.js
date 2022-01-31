@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import * as BsIcons from 'react-icons/bs';
 import * as BiIcons from 'react-icons/bi';
 import * as RiIcons from 'react-icons/ri';
-import ProfileImage from '../../../assets/profiles/PrabinGautam.jpg';
+import ProfileImage from '../../../assets/profiles/pas075bct029.jpg';
 import { Link, useNavigate } from 'react-router-dom';
+import NavBarNotification from './NavBarNotification';
 
 function NavBar({ onClickHandler, username, show }) {
   const [showDropDown, setDropDown] = useState(false);
+  const [showDropDownNotification, setDropDownNotification] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -46,7 +48,11 @@ function NavBar({ onClickHandler, username, show }) {
           */}
 
           <div className='right-section'>
-            <div className='notification'>
+            <div
+              className='notification'
+              onClick={() =>
+                setDropDownNotification(!showDropDownNotification)
+              }>
               <div className='notification__symbol'></div>
               <BsIcons.BsBell className='notification__icon' />
             </div>
@@ -64,6 +70,7 @@ function NavBar({ onClickHandler, username, show }) {
             </div>
           </div>
         </div>
+        <NavBarNotification showDropDown={showDropDownNotification} />
         <div className={showDropDown ? 'menu active' : 'menu inactive'}>
           <ul className='profile-options'>
             <li>

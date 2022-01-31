@@ -63,7 +63,7 @@ function Dashboard() {
               praesentium maiores beatae eius. Illo, ad!
             </div>
 
-            <Link to='/announcements' className='btn-text'>
+            <Link to='/admin/announcements/view' className='btn-text'>
               <div className='morebutton'>Load More</div>
             </Link>
           </div>
