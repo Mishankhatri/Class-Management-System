@@ -191,6 +191,25 @@ Consists Styling of
   grid-gap: 15px 40px;
 }
 
+/* Settings CSS */
+.inputfield {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.main-contentsection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.headerinputfield {
+  justify-items: right;
+}
+
+/* Ends*/
 .label-title {
   color: #81878c;
   margin-bottom: 10px;
@@ -283,6 +302,12 @@ input[type='file'] {
 @media only screen and (max-width: 1250px) {
   .main-content .cardelement {
     grid-template-columns: repeat(2, auto);
+  }
+
+  .main-contentsection {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
 }
 

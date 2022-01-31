@@ -11,6 +11,14 @@ const createIdFieldValue = [
     isRequired: true,
   },
   {
+    title: 'Full Name',
+    input: 'text',
+    icon: <FaIcons.FaUser className='mid-icon' />,
+    placeholder: 'Enter FullName',
+    name: 'registerFullName',
+    isRequired: false,
+  },
+  {
     title: 'Username',
     input: 'text',
     icon: <FaIcons.FaUser className='mid-icon' />,
@@ -21,7 +29,7 @@ const createIdFieldValue = [
   {
     title: 'Password',
     input: 'password',
-    icon: <FaIcons.FaUser className='mid-icon' />,
+    icon: <FaIcons.FaCode className='mid-icon' />,
     placeholder: 'Enter Password',
     name: 'registerPassword',
     isRequired: true,
@@ -30,7 +38,7 @@ const createIdFieldValue = [
   {
     title: 'Re-enter Password',
     input: 'password',
-    icon: <FaIcons.FaUser className='mid-icon' />,
+    icon: <FaIcons.FaCode className='mid-icon' />,
     placeholder: 'ReEnter Password',
     name: 'registerReEnterPassword',
     isRequired: true,
