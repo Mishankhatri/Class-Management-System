@@ -4,23 +4,12 @@ import * as MdIcons from 'react-icons/md';
 import ProfileImage from '../../../../assets/profiles/pas075bct029.jpg';
 import BlankProfile from '../../../../assets/profiles/blank-profile.jpg';
 import './UserProfile.css';
+import ChangePhoto from '../../../common/Modal/ChangePhoto';
 
 function UserProfile() {
+  const [click, setClick] = useState(false);
   const [previousImage, setPreviosImage] = useState(BlankProfile);
   const [uploadedImage, setUploadedImage] = useState('');
-  const [click, setClick] = useState(false);
-
-  //To show preview of image
-  const imageHandler = (e) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setPreviosImage(reader.result);
-      }
-    };
-    reader.readAsDataURL(e.target.files[0]);
-    setUploadedImage(e.target.files[0]);
-  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -31,50 +20,14 @@ function UserProfile() {
 
   return (
     <React.Fragment>
-      <div className='modal'>
-        <div
-          className={
-            click
-              ? 'model-section upload-image visible'
-              : 'model-section upload-image'
-          }
-          //This for selecting outside modal
-          onClick={(event) => {
-            if (event.target.className.includes('model-section')) {
-              setClick(false);
-            }
-          }}>
-          <div className='modal-content'>
-            <form onSubmit={onSubmit}>
-              <span
-                className='close'
-                onClick={() => {
-                  setClick(!click);
-                  setPreviosImage(BlankProfile);
-                }}>
-                &times;
-              </span>
-              <div className='content'>
-                <h2>Choose Your Photo</h2>
-                <div className='imageholder'>
-                  <img src={previousImage} alt='Profile-Picture' />
-                </div>
-                <label htmlFor='file-upload' className='label'>
-                  <span> Upload Image</span>
-                </label>
-                <input
-                  type='file'
-                  name='uploadImage'
-                  id='file-upload'
-                  accept='image/*'
-                  onChange={imageHandler}
-                />
-                <button className='btn-submit'>Submit</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+      <ChangePhoto
+        click={click}
+        setClick={setClick}
+        onSubmit={onSubmit}
+        setPreviosImage={setPreviosImage}
+        setUploadedImage={setUploadedImage}
+        previousImage={previousImage}
+      />
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'UserProfile'} />
       <div className='main-content main-section'>
         <div className='profile'>
