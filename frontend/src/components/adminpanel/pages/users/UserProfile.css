@@ -126,7 +126,7 @@
   /* padding-top: 20px; */
 }
 
-.content label {
+.content .label {
   margin-bottom: 20px;
   background-color: #e3e6f0;
   max-width: 20rem;
@@ -135,7 +135,7 @@
   margin-right: 20px;
 }
 
-.content label:hover {
+.content .label:hover {
   cursor: pointer;
   background-color: #e3eaff;
 }
@@ -158,7 +158,18 @@
   padding: 9px 20px 8px;
 }
 
-.content button:hover,
-.content button:focus {
+.content button:hover {
   opacity: 0.75;
+}
+
+.modal h2 {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #bfc4d1;
+}
+
+.modal h3 {
+  margin: 20px 0;
+  background-color: #888;
+  color: #e3e6f0;
+  padding: 10px 20px;
 }

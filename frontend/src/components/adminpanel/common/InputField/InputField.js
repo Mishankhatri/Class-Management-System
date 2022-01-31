@@ -65,6 +65,7 @@ function InputField({
             onChange={onChangeHandler}
             maxMenuHeight={200}
             menuPlacement={'auto'}
+            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
           />
         )}
         {/* <ErrorMessage
