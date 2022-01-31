@@ -191,6 +191,12 @@ Consists Styling of
   grid-gap: 15px 40px;
 }
 
+.modal-inputfield {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 15px 40px;
+}
+
 /* Settings CSS */
 .inputfield {
   display: grid;
@@ -281,13 +287,6 @@ input[type='file'] {
   vertical-align: middle;
 }
 
-@media only screen and (max-width: 1100px) {
-  /* .content-section.custom-content {
-    display: grid;
-    grid-template-columns: 1fr;
-  } */
-}
-
 @media only screen and (max-width: 1350px) {
   .main-content .cardelement {
     grid-template-columns: repeat(2, auto);
@@ -296,6 +295,11 @@ input[type='file'] {
   .allinputfield {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .modal-inputfield {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -311,6 +315,13 @@ input[type='file'] {
   }
 }
 
+@media only screen and (max-width: 1000px) {
+  .modal-inputfield {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media only screen and (max-width: 850px) {
   .main-content .cardelement {
     grid-template-columns: repeat(1, auto);
@@ -321,7 +332,8 @@ input[type='file'] {
   }
 
   .allinputfield,
-  .content-section.custom-content {
+  .content-section.custom-content,
+  .modal-inputfield {
     display: grid;
     grid-template-columns: 1fr;
   }

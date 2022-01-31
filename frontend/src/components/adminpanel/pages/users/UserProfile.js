@@ -59,7 +59,7 @@ function UserProfile() {
                 <div className='imageholder'>
                   <img src={previousImage} alt='Profile-Picture' />
                 </div>
-                <label htmlFor='file-upload'>
+                <label htmlFor='file-upload' className='label'>
                   <span> Upload Image</span>
                 </label>
                 <input
