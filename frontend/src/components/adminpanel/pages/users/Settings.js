@@ -17,7 +17,9 @@ function Settings() {
     setValue: setPasswordValue,
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   const settingsInputValue = SettingsInput();
   const settingsPasswordValue = SettingsPasswordInput();
@@ -66,7 +68,7 @@ function Settings() {
           <div className='card-section'>
             <div className='heading'>
               <span className='title-icon'>
-                <MdIcons.MdVerifiedUser />
+                <MdIcons.MdSecurity />
               </span>
               <span className='title'>Change Password</span> {/*Custom  */}
             </div>

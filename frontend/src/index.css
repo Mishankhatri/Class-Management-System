@@ -141,6 +141,64 @@ body {
   width: 9rem;
 }
 
+.menu.notification {
+  right: 13%;
+  max-height: 20rem;
+  width: 20rem;
+  overflow: auto;
+}
+
+.menu.notification .heading {
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #a8bbbf;
+}
+
+.menu.notification .body-section {
+  display: grid;
+  grid-template-columns: 20px 1fr 40px;
+  gap: 5px;
+  border-bottom: 1px solid #c5c6ca;
+}
+
+.menu.notification .body-section .catagory {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #2172f2;
+  margin: 15px 0;
+}
+
+.body-section .breadcrumb {
+  margin: 0 5px;
+  font-weight: bold;
+}
+
+.body-section .photo img {
+  width: 40px;
+  border-radius: 50%;
+}
+
+.body-section .photo {
+  align-self: center;
+}
+
+.menu.notification .message {
+  padding: 10px 0;
+}
+
+.menu.notification .message_text {
+  font: bold 13px 'Poppins';
+  padding-bottom: 5px;
+}
+
+.menu.notification .createdBy {
+  display: flex;
+  font: bold 11.5px 'Open Sans';
+  color: #6c6c6c;
+}
+
 .navigation .menu.inactive {
   visibility: hidden;
   transition: visibility 0.1s;
