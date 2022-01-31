@@ -65,6 +65,14 @@ const UserProfile = React.lazy(() =>
   import('./components/adminpanel/pages/users/UserProfile')
 );
 
+const StudentFullDetail = React.lazy(() =>
+  import('./components/adminpanel/pages/student/StudentFullDetail')
+);
+
+const TeacherFullDetail = React.lazy(() =>
+  import('./components/adminpanel/pages/teacher/TeacherFullDetail')
+);
+
 function App() {
   const [showSideBar, setSideBar] = useState(true);
 
@@ -102,10 +110,18 @@ function App() {
             {/* Student  */}
             <Route path='/admin/student/add' element={<AddStudent />} />
             <Route path='/admin/student/view' element={<ViewStudent />} />
+            <Route
+              path='/admin/student/view/:id'
+              element={<StudentFullDetail />}
+            />
 
             {/* Teacher  */}
             <Route path='/admin/teacher/add' element={<AddTeacher />} />
             <Route path='/admin/teacher/view' element={<ViewTeacher />} />
+            <Route
+              path='/admin/teacher/view/:id'
+              element={<TeacherFullDetail />}
+            />
 
             {/* Announcements  */}
             <Route

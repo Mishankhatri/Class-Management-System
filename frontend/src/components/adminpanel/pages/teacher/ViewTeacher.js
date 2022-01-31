@@ -6,6 +6,7 @@ import { getTeacherInputValues } from './../../../values/AdminPanel/TeacherInput
 import { Controller, useForm } from 'react-hook-form';
 import InputField from './../../common/InputField/InputField';
 import { ErrorMessage } from '@hookform/error-message';
+import TeacherTableData from './TeacherTableData';
 
 function ViewTeacher() {
   const { handleSubmit, setValue, control, errors } = useForm();
@@ -68,6 +69,7 @@ function ViewTeacher() {
         </div>
       </div>
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'View Teacher'} />
+      <TeacherTableData />
     </div>
   );
 }
