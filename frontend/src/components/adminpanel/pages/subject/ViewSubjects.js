@@ -17,15 +17,17 @@ function ViewSubjects() {
   };
   return (
     <div>
-      <ChangeInput
-        onSubmit={onSubmit}
-        valueArray={getSubjectModal()}
-        click={click}
-        setClick={setClick}
-        heading={'View Class'}
-        isCustom1={false} //For showing grid 3
-        isCustom2={true} //For showing description
-      />
+      {click && (
+        <ChangeInput
+          onSubmit={onSubmit}
+          valueArray={getSubjectModal()}
+          click={click}
+          setClick={setClick}
+          heading={'View Class'}
+          isCustom1={false} //For showing grid 3
+          isCustom2={true} //For showing description
+        />
+      )}
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'View Subject'} />
       <SubjectDataTable click={click} setClick={setClick} />
     </div>

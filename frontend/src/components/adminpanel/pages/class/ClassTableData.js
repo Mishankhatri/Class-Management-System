@@ -48,7 +48,7 @@ const ClassTableData = ({ click, setClick }) => {
               <button
                 onClick={() => setClick(!click)}
                 className='btn-primary btn-1 btn-custom'>
-                Open
+                Edit
               </button>
               <button className='btn-danger btn-custom'>Delete</button>
             </>

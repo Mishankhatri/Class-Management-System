@@ -1,20 +1,9 @@
-import axios from 'axios';
 import React, { useEffect, useState, useMemo } from 'react';
 import TableContainer from '../../../common/Table/TableContainer';
+import { timeTable_value } from '../../../values/AdminPanel/TimetableValues';
 
-const SubjectDataTable = ({ click, setClick }) => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    doFetch();
-  }, []);
-
-  const doFetch = async () => {
-    const { data } = await axios.get(
-      'https://jsonplaceholder.typicode.com/users'
-    );
-    setData(data);
-  };
+const ViewTimetable_Table = ({ click, setClick }) => {
+  const data = timeTable_value;
 
   const columns = useMemo(
     () => [
@@ -25,20 +14,28 @@ const SubjectDataTable = ({ click, setClick }) => {
         },
       },
       {
+        Header: 'Day',
+        accessor: 'day',
+      },
+      {
+        Header: 'Time',
+        accessor: 'time',
+      },
+      {
         Header: 'Class',
-        accessor: 'username',
+        accessor: 'classes',
       },
       {
         Header: 'Section',
-        accessor: 'name',
+        accessor: 'section',
       },
       {
-        Header: 'Class Code',
-        accessor: 'phone',
+        Header: 'Subject',
+        accessor: 'subject',
       },
       {
-        Header: 'Description',
-        accessor: 'email',
+        Header: 'Teacher',
+        accessor: 'teacher',
       },
       {
         Header: 'Action',
@@ -48,7 +45,7 @@ const SubjectDataTable = ({ click, setClick }) => {
               <button
                 onClick={() => setClick(!click)}
                 className='btn-primary btn-1 btn-custom'>
-                Edit
+                Open
               </button>
               <button className='btn-danger btn-custom'>Delete</button>
             </>
@@ -68,4 +65,4 @@ const SubjectDataTable = ({ click, setClick }) => {
   );
 };
 
-export default SubjectDataTable;
+export default ViewTimetable_Table;

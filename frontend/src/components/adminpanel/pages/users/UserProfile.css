@@ -169,9 +169,10 @@
   border-bottom: 1px solid #bfc4d1;
 }
 
-.modal h3 {
+.modal h3,
+.h3 {
   margin: 20px 0;
-  background-color: #888;
+  background-color: rgba(0, 0, 0, 0.8);
   color: #e3e6f0;
   padding: 10px 20px;
 }
