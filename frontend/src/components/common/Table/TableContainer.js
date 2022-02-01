@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import {
   useTable,
   useSortBy,
@@ -7,10 +7,10 @@ import {
   useGlobalFilter,
 } from 'react-table';
 import { Filter, DefaultColumnFilter, GlobalFilter } from './filters';
-// import '../Table.css';
-import './../../forms/Table.css';
+import './../../../forms/Table.css';
+import NoDataFound from './Nodatafound';
 
-const TableContainer = ({ columns, data, getTrProps }) => {
+const TableContainer = ({ columns, data }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -20,6 +20,7 @@ const TableContainer = ({ columns, data, getTrProps }) => {
     canPreviousPage,
     canNextPage,
     pageOptions,
+    allColumns,
     gotoPage,
     nextPage,
     previousPage,
@@ -31,7 +32,7 @@ const TableContainer = ({ columns, data, getTrProps }) => {
       columns,
       data,
       defaultColumn: { Filter: DefaultColumnFilter },
-      initialState: { pageIndex: 0, pageSize: 5 },
+      initialState: { pageIndex: 0, pageSize: 10 },
     },
     useFilters,
     useGlobalFilter,
@@ -53,7 +54,7 @@ const TableContainer = ({ columns, data, getTrProps }) => {
   };
 
   return (
-    <Fragment>
+    <React.Fragment>
       <div className='table-heading'>
         <div className='select-entries'>
           <span>Show</span>
@@ -64,7 +65,7 @@ const TableContainer = ({ columns, data, getTrProps }) => {
               </option>
             ))}
           </select>
-          <span>Enties</span>
+          <span>Entries</span>
         </div>
         <div className='global-search'>
           <span>Search: </span>
@@ -84,7 +85,7 @@ const TableContainer = ({ columns, data, getTrProps }) => {
                     {column.render('Header')}
                     {generateSortingIndicator(column)}
                   </div>
-                  {/* <Filter column={column} /> */}
+                  <Filter column={column} />
                 </th>
               ))}
             </tr>
@@ -92,21 +93,28 @@ const TableContainer = ({ columns, data, getTrProps }) => {
         </thead>
 
         <tbody {...getTableBodyProps()}>
-          {page.map((row) => {
-            prepareRow(row);
-            return (
-              <Fragment key={row.getRowProps().key}>
-                {/* <tr onClick={() => getTrProps(row.original)}> */}
-                <tr>
-                  {row.cells.map((cell) => {
-                    return (
-                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                    );
-                  })}
-                </tr>
-              </Fragment>
-            );
-          })}
+          {page.length === 0 ? (
+            <tr>
+              <td colSpan={allColumns.length}>
+                <NoDataFound />
+              </td>
+            </tr>
+          ) : (
+            page.map((row) => {
+              prepareRow(row);
+              return (
+                <React.Fragment key={row.getRowProps().key}>
+                  <tr>
+                    {row.cells.map((cell) => {
+                      return (
+                        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                      );
+                    })}
+                  </tr>
+                </React.Fragment>
+              );
+            })
+          )}
         </tbody>
       </table>
 
@@ -120,6 +128,7 @@ const TableContainer = ({ columns, data, getTrProps }) => {
         <div>
           <label>Jump to: </label>
           <input
+            className='input-page'
             type='number'
             min={1}
             max={pageOptions.length}
@@ -133,7 +142,7 @@ const TableContainer = ({ columns, data, getTrProps }) => {
             onClick={previousPage}
             disabled={!canPreviousPage}
             className='table-btn'>
-            Previous
+            <span className=''> Previous </span>
           </button>
 
           <label onChange={onChangeInInput}>{pageIndex + 1}</label>
@@ -142,11 +151,11 @@ const TableContainer = ({ columns, data, getTrProps }) => {
             onClick={nextPage}
             disabled={!canNextPage}
             className='table-btn'>
-            Next
+            <span> Next </span>
           </button>
         </div>
       </div>
-    </Fragment>
+    </React.Fragment>
   );
 };
 

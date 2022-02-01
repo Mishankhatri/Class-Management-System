@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import InputField from './../../adminpanel/common/InputField/InputField';
+import * as FaIcons from 'react-icons/fa';
 
-function ChangeInput({ valueArray, onSubmit, click, setClick }) {
+function ChangeInput({
+  valueArray,
+  onSubmit,
+  click,
+  setClick,
+  heading,
+  isCustom1 = false,
+  isCustom2 = false,
+}) {
   const { handleSubmit, control } = useForm();
 
   return (
@@ -15,36 +24,60 @@ function ChangeInput({ valueArray, onSubmit, click, setClick }) {
               &times;
             </span>
             <div className='content'>
-              <h2>Update Student Info</h2>
-              <h3>Students Info</h3>
-              <div className='content-section allinputfield'>
-                {valueArray.map((value, index) => {
-                  return (
-                    value.input != 'file' && (
-                      <Controller
-                        name={value.name}
-                        control={control}
-                        key={index}
-                        defaultValue=''
-                        render={({ field }) => (
-                          <InputField
-                            title={value.title.toUpperCase()}
-                            input={value.input}
-                            icon={value.icon}
-                            placeholder={value?.placeholder}
-                            name={value.name}
-                            onChangeHandler={field.onChange}
-                            isCustomInput={value.isCustomField}
-                            isTextArea={value?.isTextarea}
-                            isRequired={value.isRequired}
-                            isImageFile={value?.isImageFile}
-                            options={value?.options}
-                          />
-                        )}
+              <h2>{heading}</h2>
+              <div className='content-section'>
+                <div
+                  className={
+                    isCustom1 ? 'custom-modal-input' : 'allinputfield'
+                  }>
+                  {valueArray.map((value, index) => {
+                    return (
+                      value.input != 'file' && (
+                        <Controller
+                          name={value.name}
+                          control={control}
+                          key={index}
+                          defaultValue=''
+                          render={({ field }) => (
+                            <InputField
+                              title={value.title.toUpperCase()}
+                              input={value.input}
+                              icon={value.icon}
+                              placeholder={value?.placeholder}
+                              name={value.name}
+                              onChangeHandler={field.onChange}
+                              isCustomInput={value.isCustomField}
+                              isTextArea={value?.isTextarea}
+                              isRequired={value.isRequired}
+                              isImageFile={value?.isImageFile}
+                              options={value?.options}
+                            />
+                          )}
+                        />
+                      )
+                    );
+                  })}
+                </div>
+                {isCustom2 && (
+                  <Controller
+                    name={'description'}
+                    control={control}
+                    defaultValue=''
+                    render={({ field }) => (
+                      <InputField
+                        title={'Description'.toUpperCase()}
+                        input={'textarea'}
+                        icon={<FaIcons.FaFile className='mid-icon' />}
+                        placeholder={'Write  description'}
+                        name={'description'}
+                        onChangeHandler={field.onChange}
+                        isTextArea={true}
+                        isRequired={true}
+                        isImageFile={false}
                       />
-                    )
-                  );
-                })}
+                    )}
+                  />
+                )}
               </div>
               <button
                 className='btn-submit'

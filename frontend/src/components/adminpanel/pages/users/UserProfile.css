@@ -175,3 +175,9 @@
   color: #e3e6f0;
   padding: 10px 20px;
 }
+
+.custom-modal-input {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}

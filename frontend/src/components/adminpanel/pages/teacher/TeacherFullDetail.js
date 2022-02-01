@@ -8,7 +8,7 @@ import BlankProfile from '../../../../assets/profiles/blank-profile.jpg';
 import Loading from './../../../common/Loading';
 import '../student/CustomView.css';
 import '../users/UserProfile.css';
-import ViewModal from '../../../common/ViewModal';
+import ViewModal from '../../../common/Modal/ViewModal';
 import ChangePhoto from '../../../common/Modal/ChangePhoto';
 import ChangeInput from '../../../common/Modal/ChangeInput';
 import { getTeacherInputValues } from './../../../values/AdminPanel/TeacherInputField';
@@ -54,21 +54,26 @@ function TeacherFullDetail() {
   };
   return teacherDetail ? (
     <React.Fragment>
-      <ChangePhoto
-        click={click}
-        setClick={setClick}
-        onSubmit={onSubmitTeacher}
-        setPreviosImage={setPreviosImage}
-        setUploadedImage={setUploadedImage}
-        previousImage={previousImage}
-      />
+      {click && (
+        <ChangePhoto
+          click={click}
+          setClick={setClick}
+          onSubmit={onSubmitTeacher}
+          setPreviosImage={setPreviosImage}
+          setUploadedImage={setUploadedImage}
+          previousImage={previousImage}
+        />
+      )}
 
-      <ChangeInput
-        onSubmit={onSubmitTeacherInput}
-        valueArray={getTeacherInputValues()}
-        click={clickTeacher}
-        setClick={setClickTeacher}
-      />
+      {clickTeacher && (
+        <ChangeInput
+          onSubmit={onSubmitTeacherInput}
+          valueArray={getTeacherInputValues()}
+          click={clickTeacher}
+          setClick={setClickTeacher}
+          heading={"View Teacher's Info"}
+        />
+      )}
 
       <InnerHeader
         icon={<MdIcons.MdPerson />}

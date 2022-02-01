@@ -62,26 +62,6 @@ const sectionValue = [
       { value: '5', label: '5' },
     ],
   },
-  {
-    title: 'Section Code',
-    input: 'text',
-    icon: <FaIcons.FaCode className='mid-icon' />,
-    isRequired: false,
-    name: 'sectionCode',
-    isCustomField: true,
-    isTextarea: false,
-    placeholder: 'Enter Section Code',
-  },
-  {
-    title: 'Description',
-    input: 'textarea',
-    icon: <FaIcons.FaFile className='mid-icon' />,
-    isRequired: true,
-    name: 'sectionDescription',
-    isCustomField: true,
-    isTextarea: true,
-    placeholder: 'Write Section description',
-  },
 ];
 
 const subjectsValue = [
@@ -145,7 +125,7 @@ const subjectsValue = [
     name: 'subjectsDescription',
     isCustomField: true,
     isTextarea: true,
-    placeholder: 'Write Section description',
+    placeholder: 'Write Subject description',
   },
 ];
 
@@ -159,4 +139,18 @@ export function getSectionValue() {
 
 export function getAddSubjectsValue() {
   return subjectsValue;
+}
+
+//Exporting for Modal
+export function getClassSectionMerge() {
+  return [addClassValue[0], addClassValue[1], sectionValue[0]];
+}
+
+export function getSubjectModal() {
+  return [
+    subjectsValue[0],
+    subjectsValue[1],
+    subjectsValue[2],
+    subjectsValue[3],
+  ];
 }

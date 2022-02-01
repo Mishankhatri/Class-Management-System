@@ -1,0 +1,50 @@
+@font-face {
+  font-family: 'Fontdiner Swanky';
+  src: url(../../../assets/fonts/Fontdiner/Fontdiner.ttf);
+}
+
+.error404 {
+  display: flex;
+  align-items: center;
+  height: 60vh;
+  width: calc(100% - 4rem);
+  margin: 0 auto;
+}
+
+.error404 img {
+  display: block;
+  height: auto;
+  width: 40rem;
+}
+.error404 main {
+  text-align: center;
+}
+.error404 main h1 {
+  font-family: 'Fontdiner Swanky', cursive;
+  font-size: 4rem;
+  color: #1096e9;
+  margin-bottom: 1rem;
+}
+.error404 main p {
+  margin-bottom: 2.5rem;
+}
+.error404 main p em {
+  font-style: italic;
+  color: #1096e9;
+}
+.error404 main button {
+  font-family: 'Fontdiner Swanky', cursive;
+  font-size: 1rem;
+  color: #383838;
+  border: none;
+  background-color: #956af3;
+  padding: 1rem 2.5rem;
+  transform: skew(-5deg);
+  transition: all 0.1s ease;
+  color: rgb(218, 218, 218);
+}
+.error404 main button:hover {
+  background-color: #1096e9;
+  transform: scale(1.15);
+  cursor: pointer;
+}

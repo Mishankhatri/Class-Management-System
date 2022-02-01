@@ -8,7 +8,7 @@ import BlankProfile from '../../../../assets/profiles/blank-profile.jpg';
 import Loading from './../../../common/Loading';
 import './CustomView.css';
 import '../users/UserProfile.css';
-import ViewModal from '../../../common/ViewModal';
+import ViewModal from '../../../common/Modal/ViewModal';
 import ChangePhoto from '../../../common/Modal/ChangePhoto';
 import ChangeInput from '../../../common/Modal/ChangeInput';
 import {
@@ -82,45 +82,58 @@ function StudentFullDetail() {
   return studentDetail ? (
     <React.Fragment>
       {/* Modal Section Image Start */}
-      <ChangePhoto
-        click={click}
-        setClick={setClick}
-        onSubmit={onSubmitStudent}
-        setPreviosImage={setPreviosImage}
-        setUploadedImage={setUploadedImage}
-        previousImage={previousImage}
-      />
-      <ChangePhoto
-        click={click1}
-        setClick={setClick1}
-        onSubmit={onSubmitParent}
-        setPreviosImage={setPreviosImage}
-        setUploadedImage={setUploadedImage}
-        previousImage={previousImage}
-      />
+      {click && (
+        <ChangePhoto
+          click={click}
+          setClick={setClick}
+          onSubmit={onSubmitStudent}
+          setPreviosImage={setPreviosImage}
+          setUploadedImage={setUploadedImage}
+          previousImage={previousImage}
+        />
+      )}
+      {click1 && (
+        <ChangePhoto
+          click={click1}
+          setClick={setClick1}
+          onSubmit={onSubmitParent}
+          setPreviosImage={setPreviosImage}
+          setUploadedImage={setUploadedImage}
+          previousImage={previousImage}
+        />
+      )}
       {/* Modal Section Image  End */}
 
       {/* Modal Section Input Start  */}
-      <ChangeInput
-        onSubmit={onSubmitStudentInput}
-        valueArray={getStudentInputValues()}
-        click={clickStudent}
-        setClick={setClickStudent}
-      />
+      {clickStudent && (
+        <ChangeInput
+          onSubmit={onSubmitStudentInput}
+          valueArray={getStudentInputValues()}
+          click={clickStudent}
+          setClick={setClickStudent}
+          heading={"View Student's Info"}
+        />
+      )}
 
-      <ChangeInput
-        onSubmit={onSubmitParentInput}
-        valueArray={getParentInfoValues()}
-        click={clickParent}
-        setClick={setClickParent}
-      />
+      {clickParent && (
+        <ChangeInput
+          onSubmit={onSubmitParentInput}
+          valueArray={getParentInfoValues()}
+          click={clickParent}
+          setClick={setClickParent}
+          heading={"View Student's Parent Info"}
+        />
+      )}
 
-      <ChangeInput
-        onSubmit={onSubmitAcademic}
-        valueArray={getAcademicValues()}
-        click={clickStudentAcademic}
-        setClick={setClickStudentAcademic}
-      />
+      {clickStudentAcademic && (
+        <ChangeInput
+          onSubmit={onSubmitAcademic}
+          valueArray={getAcademicValues()}
+          click={clickStudentAcademic}
+          setClick={setClickStudentAcademic}
+          heading={'View Student Academic Infos'}
+        />
+      )}
 
       {/* Modal Section Input End  */}
       <InnerHeader
@@ -141,14 +154,18 @@ function StudentFullDetail() {
             <div className='content-section'>
               <div className='custom-info-show'>
                 <div className='profile-image'>
-                  <div className='image' onClick={() => setClick(!click)}>
+                  <div className='image'>
                     <img
                       // src={studentDetail?.image}
                       src={ProfileImage}
                       alt='Profile-Image'
                       title='Change Profile Picture'
+                      onClick={() => setClick(!click)}
                     />
-                    <MdIcons.MdPhotoCamera className='camera' />
+                    <MdIcons.MdPhotoCamera
+                      className='camera'
+                      onClick={() => setClick(!click)}
+                    />
                   </div>
                 </div>
                 <div className='information'>
@@ -191,13 +208,17 @@ function StudentFullDetail() {
             <div className='content-section'>
               <div className='custom-info-show'>
                 <div className='profile-image'>
-                  <div className='image' onClick={() => setClick1(!click1)}>
+                  <div className='image'>
                     <img
                       src={BlankProfile}
                       alt='Profile-Image'
                       title='Change Profile Picture'
+                      onClick={() => setClick1(!click1)}
                     />
-                    <MdIcons.MdPhotoCamera className='camera' />
+                    <MdIcons.MdPhotoCamera
+                      className='camera'
+                      onClick={() => setClick1(!click1)}
+                    />
                   </div>
                 </div>
                 <div className='information'>

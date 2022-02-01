@@ -1,11 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import TableContainer from './../../../common/Table/TableContainer';
+import TableContainer from '../../../common/Table/TableContainer';
 
-const StudentTableData = () => {
+const SubjectDataTable = ({ click, setClick }) => {
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     doFetch();
@@ -18,10 +16,6 @@ const StudentTableData = () => {
     setData(data);
   };
 
-  const onOpen = (post) => {
-    navigate(`${post.id}`);
-  };
-
   const columns = useMemo(
     () => [
       {
@@ -31,24 +25,20 @@ const StudentTableData = () => {
         },
       },
       {
-        Header: 'Username',
+        Header: 'Class',
         accessor: 'username',
       },
       {
-        Header: 'Name',
+        Header: 'Section',
         accessor: 'name',
       },
       {
-        Header: 'Phone',
+        Header: 'Class Code',
         accessor: 'phone',
       },
       {
-        Header: 'Email',
+        Header: 'Description',
         accessor: 'email',
-      },
-      {
-        Header: 'City',
-        accessor: 'address.city',
       },
       {
         Header: 'Action',
@@ -56,7 +46,7 @@ const StudentTableData = () => {
           return (
             <>
               <button
-                onClick={() => onOpen(row.original)}
+                onClick={() => setClick(!click)}
                 className='btn-primary btn-1 btn-custom'>
                 Open
               </button>
@@ -78,4 +68,4 @@ const StudentTableData = () => {
   );
 };
 
-export default StudentTableData;
+export default SubjectDataTable;
