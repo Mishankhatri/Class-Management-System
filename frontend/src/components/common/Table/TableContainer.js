@@ -12,19 +12,19 @@ import NoDataFound from './Nodatafound';
 
 const TableContainer = ({ columns, data }) => {
   function dateBetweenFilterFn(rows, id, filterValues) {
-    const sd = filterValues[0] ? new Date(filterValues[0]) : undefined;
-    const ed = filterValues[1] ? new Date(filterValues[1]) : undefined;
+    const startDate = filterValues[0] ? new Date(filterValues[0]) : undefined;
+    const endDate = filterValues[1] ? new Date(filterValues[1]) : undefined;
 
-    if (ed || sd) {
+    if (endDate || startDate) {
       return rows.filter((r) => {
         const cellDate = new Date(r.values[id]);
 
-        if (ed && sd) {
-          return cellDate >= sd && cellDate <= ed;
-        } else if (sd) {
-          return cellDate >= sd;
-        } else if (ed) {
-          return cellDate <= ed;
+        if (endDate && startDate) {
+          return cellDate >= startDate && cellDate <= endDate;
+        } else if (startDate) {
+          return cellDate >= startDate;
+        } else if (endDate) {
+          return cellDate <= endDate;
         }
       });
     } else {
@@ -134,9 +134,9 @@ const TableContainer = ({ columns, data }) => {
                     {...column.getHeaderProps()}
                     className='secondary-heading'>
                     {column.canFilter
-                      ? column.Header === 'SN' || column.Header === 'Action'
-                        ? null
-                        : column.render('Filter')
+                      ? column.SearchAble
+                        ? column.render('Filter')
+                        : null
                       : null}
                   </th>
                 ))}

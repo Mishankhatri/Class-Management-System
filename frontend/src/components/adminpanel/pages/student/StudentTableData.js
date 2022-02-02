@@ -26,6 +26,7 @@ const StudentTableData = () => {
     () => [
       {
         Header: 'SN',
+        SearchAble: false,
         Cell: ({ row: { index } }) => {
           return index + 1;
         },
@@ -33,25 +34,31 @@ const StudentTableData = () => {
       {
         Header: 'Username',
         accessor: 'username',
+        SearchAble: true,
       },
       {
         Header: 'Name',
         accessor: 'name',
+        SearchAble: true,
       },
       {
         Header: 'Phone',
         accessor: 'phone',
+        SearchAble: true,
       },
       {
         Header: 'Email',
         accessor: 'email',
+        SearchAble: true,
       },
       {
         Header: 'City',
         accessor: 'address.city',
+        SearchAble: true,
       },
       {
         Header: 'Action',
+        SearchAble: false,
         Cell: ({ row }) => {
           return (
             <>

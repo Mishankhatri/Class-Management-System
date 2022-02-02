@@ -1,12 +1,12 @@
 import * as FaIcons from 'react-icons/fa';
 
-const attendanceValue = [
+const marksValue = [
   {
     title: 'Class',
     input: 'dropdown',
     icon: <FaIcons.FaBook className='mid-icon' />,
     isRequired: true,
-    name: 'classSelectionName',
+    name: 'studentClass',
     isCustomField: true,
     placeholder: 'Choose Class',
     options: [
@@ -23,9 +23,9 @@ const attendanceValue = [
   {
     title: 'Section',
     input: 'dropdown',
-    icon: <FaIcons.FaBook className='mid-icon' />,
+    icon: <FaIcons.FaCode className='mid-icon' />,
     isRequired: true,
-    name: 'sectionSelectionName',
+    name: 'studentSection',
     isCustomField: true,
     placeholder: 'Choose Section',
     options: [
@@ -35,13 +35,26 @@ const attendanceValue = [
     ],
   },
   {
-    title: 'Date',
-    input: 'date',
-    icon: <FaIcons.FaBook className='mid-icon' />,
+    title: 'Student Name',
+    input: 'text',
+    icon: <FaIcons.FaUser className='mid-icon' />,
     isRequired: true,
-    name: 'dateSelectionName',
+    name: 'studentName',
     isCustomField: true,
     placeholder: 'Choose Date',
+  },
+  {
+    title: 'Remarks',
+    input: 'dropdown',
+    icon: <FaIcons.FaList className='mid-icon' />,
+    isRequired: true,
+    name: 'studentRemarks',
+    isCustomField: true,
+    placeholder: 'Choose Remarks',
+    options: [
+      { value: 'Passed', label: 'Passed' },
+      { value: 'Failed', label: 'Failed' },
+    ],
   },
 ];
 
@@ -93,4 +106,4 @@ const attendanceDetail = [
   },
 ];
 
-export { attendanceValue, attendanceDetail };
+export { marksValue, attendanceDetail };

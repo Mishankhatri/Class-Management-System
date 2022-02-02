@@ -14,51 +14,44 @@ const AttendanceTableData = ({ click, setClick }) => {
         Cell: ({ row: { index } }) => {
           return index + 1;
         },
+        SearchAble: false,
       },
       {
         Header: 'Name',
         accessor: 'name',
+        SearchAble: true,
       },
       {
         Header: 'Rollno',
         accessor: 'roll',
+        SearchAble: true,
       },
       {
         Header: 'Class',
         accessor: 'class',
+        SearchAble: true,
       },
       {
         Header: 'Date',
         accessor: 'date',
         Filter: NumberRangeColumnFilter,
         filter: 'dateBetween',
+        SearchAble: true,
       },
       {
         Header: 'Attendance',
         accessor: 'attendance',
+        SearchAble: true,
       },
       {
         Header: 'Total Absent',
         accessor: 'totalAbsent',
+        SearchAble: true,
       },
       {
         Header: 'Total Present',
         accessor: 'totalPresent',
-      },
-      {
-        Header: 'Action',
-        Cell: ({ row }) => {
-          return (
-            <>
-              <button
-                onClick={() => setClick(!click)}
-                className='btn-primary btn-1 btn-custom'>
-                Edit
-              </button>
-              <button className='btn-danger btn-custom'>Delete</button>
-            </>
-          );
-        },
+        SearchAble: true,
       },
     ],
     []
