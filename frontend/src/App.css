@@ -25,6 +25,7 @@ Consists Styling of
 /* Inner Header CSS Code  */
 
 .main-container .header {
+  margin-top: 100px;
   font: normal 16px 'Poppins', sans-serif;
   padding-bottom: 10px;
   border-bottom: 0.7px solid #c8cbd9;

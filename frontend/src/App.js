@@ -9,11 +9,11 @@ const Dashboard = React.lazy(() =>
   import('./components/adminpanel/pages/Dashboard')
 );
 const CreateAnnouncement = React.lazy(() =>
-  import('./components/adminpanel/pages/CreateAnnouncement')
+  import('./components/adminpanel/pages/Announcement/CreateAnnouncement')
 );
 
 const ViewAnnouncement = React.lazy(() =>
-  import('./components/adminpanel/pages/ViewAnnouncement')
+  import('./components/adminpanel/pages/Announcement/ViewAnnouncement')
 );
 
 const AddTeacher = React.lazy(() =>

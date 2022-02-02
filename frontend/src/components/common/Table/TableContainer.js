@@ -160,7 +160,12 @@ const TableContainer = ({ columns, data }) => {
                   <tr>
                     {row.cells.map((cell) => {
                       return (
-                        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                        <td
+                          {...cell.getCellProps([
+                            { className: cell.column?.className },
+                          ])}>
+                          {cell.render('Cell')}
+                        </td>
                       );
                     })}
                   </tr>

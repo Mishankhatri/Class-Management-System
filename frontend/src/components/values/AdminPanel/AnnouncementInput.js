@@ -1,34 +1,66 @@
 import * as FaIcons from 'react-icons/fa';
 
+//  options: [
+//     { value: 'Academic', label: 'Academic' },
+//     { value: 'Admistration', label: 'Admistration' },
+//     { value: 'Admission', label: 'Admission' },
+//     { value: 'Others', label: 'Others' },
+//   ],
+
 const announcementValue = [
   {
-    title: 'Type',
-    input: 'dropdown',
-    icon: <FaIcons.FaCogs className='mid-icon' />,
-    isRequired: true,
-    name: 'announcementTypeName',
-    isCustomField: true,
-    placeholder: 'Select Topic',
-    options: [
-      { value: 'Academic', label: 'Academic' },
-      { value: 'Admistration', label: 'Admistration' },
-      { value: 'Admission', label: 'Admission' },
-      { value: 'Others', label: 'Others' },
-    ],
+    type: 'Academic',
+    for: 'All',
+    subject:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et quibusdam nulla sint praesentium necessitatibus, nobis, at ipsum eius esse officiis aliquam quas eaque odio fuga voluptatibus architecto labore a nesciunt',
+    file: 'Empty',
+    createdBy: 'PrabinGautam',
+    createdAt: '2022-01-03',
   },
   {
-    title: 'For',
-    input: 'dropdown',
-    icon: <FaIcons.FaUser className='mid-icon' />,
-    isRequired: true,
-    name: 'announcementFor',
-    isCustomField: true,
-    placeholder: 'Choose Options',
-    options: [
-      { value: 'All', label: 'All' },
-      { value: 'Teacher', label: 'Teacher' },
-      { value: 'Student', label: 'Student' },
-    ],
+    type: 'Other',
+    for: 'Teacher',
+    subject:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et quibusdam nulla sint praesentium necessitatibus, nobis, at ipsum eius esse officiis aliquam quas eaque odio fuga voluptatibus architecto labore a nesciunt',
+    file: 'Empty',
+    createdBy: 'PrabinGautam',
+    createdAt: '2022-01-03',
+  },
+  {
+    type: 'Academic',
+    for: 'All',
+    subject:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et quibusdam nulla sint praesentium necessitatibus, nobis, at ipsum eius esse officiis aliquam quas eaque odio fuga voluptatibus architecto labore a nesciunt',
+    file: 'Empty',
+    createdBy: 'PrabinGautam',
+    createdAt: '2022-01-03',
+  },
+  {
+    type: 'Adminstration',
+    for: 'Teacher',
+    subject:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et quibusdam nulla sint praesentium necessitatibus, nobis, at ipsum eius esse officiis aliquam quas eaque odio fuga voluptatibus architecto labore a nesciunt',
+    file: 'Empty',
+    createdBy: 'PrabinGautam',
+    createdAt: '2022-01-03',
+  },
+  {
+    type: 'Admission',
+    for: 'Student',
+    subject:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et quibusdam nulla sint praesentium necessitatibus, nobis, at ipsum eius esse officiis aliquam quas eaque odio fuga voluptatibus architecto labore a nesciunt',
+    file: 'Empty',
+    createdBy: 'PrabinGautam',
+    createdAt: '2022-01-03',
+  },
+  {
+    type: 'Adminstration',
+    for: 'Teacher',
+    subject:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Et quibusdam nulla sint praesentium necessitatibus, nobis, at ipsum eius esse officiis aliquam quas eaque odio fuga voluptatibus architecto labore a nesciunt',
+    file: 'Empty',
+    createdBy: 'PrabinGautam',
+    createdAt: '2022-01-03',
   },
 ];
 

@@ -186,3 +186,7 @@ table tbody tr:hover {
 .input-range span {
   text-align: center;
 }
+
+.subject-column {
+  min-width: 500px;
+}
