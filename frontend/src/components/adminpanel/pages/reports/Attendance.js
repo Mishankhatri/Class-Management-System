@@ -2,9 +2,6 @@ import React from 'react';
 import InnerHeader from './../../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 
-import { useForm, Controller } from 'react-hook-form';
-import { getAcademicValues } from '../../../values/AdminPanel/StudentInputField';
-
 import AttendanceTableData from './AttendanceTableData';
 
 function Attendance() {
