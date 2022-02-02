@@ -73,6 +73,14 @@ const TeacherFullDetail = React.lazy(() =>
   import('./components/adminpanel/pages/teacher/TeacherFullDetail')
 );
 
+// const ClassFullDetail = React.lazy(() =>
+//   import('./components/adminpanel/pages/classes/ClassFullDetail')
+// );
+
+// const SubjectFullDetail = React.lazy(() =>
+//   import('./components/adminpanel/pages/subject/SubjectFullDetail')
+// );
+
 function App() {
   const [showSideBar, setSideBar] = useState(true);
 
@@ -137,10 +145,18 @@ function App() {
             <Route path='/admin/classes/addclass' element={<AddClass />} />
             <Route path='/admin/classes/addsection' element={<AddSection />} />
             <Route path='/admin/classes/view' element={<ViewClass />} />
+            {/* <Route
+              path='/admin/classes/view/:id'
+              element={<ClassFullDetail />}
+            /> */}
 
             {/* Subject  */}
             <Route path='/admin/subject/add' element={<AddSubjects />} />
             <Route path='/admin/subject/view' element={<ViewSubjects />} />
+            {/* <Route
+              path='/admin/subject/view/:id'
+              element={<SubjectFullDetail />}
+            /> */}
 
             {/* Timetables  */}
             <Route

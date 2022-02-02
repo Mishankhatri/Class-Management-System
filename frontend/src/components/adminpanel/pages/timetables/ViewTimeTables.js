@@ -121,7 +121,6 @@ function ViewTimetables() {
                   <th>Wednesday</th>
                   <th>Thurday</th>
                   <th>Friday</th>
-                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -139,15 +138,6 @@ function ViewTimetables() {
                         <div>Lecture: AI</div>
                         <div>Class: 12</div>
                         <div>Teacher: Urbara Bhandari</div>
-                      </td>
-
-                      <td>
-                        <button className='btn-custom btn-primary btn-1'>
-                          Edit
-                        </button>
-                        <button className='btn-custom btn-danger'>
-                          Update
-                        </button>
                       </td>
                     </tr>
                   );

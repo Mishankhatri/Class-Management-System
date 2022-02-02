@@ -31,13 +31,17 @@ function UserProfile() {
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'UserProfile'} />
       <div className='main-content main-section'>
         <div className='profile'>
-          <div className='image' onClick={() => setClick(!click)}>
+          <div className='image'>
             <img
               src={ProfileImage}
               alt='Profile-Image'
               title='Change Profile Picture'
+              onClick={() => setClick(!click)}
             />
-            <MdIcons.MdPhotoCamera className='camera' />
+            <MdIcons.MdPhotoCamera
+              className='camera'
+              onClick={() => setClick(!click)}
+            />
           </div>
 
           <div className='profile-name'>Prabin Gautam</div>

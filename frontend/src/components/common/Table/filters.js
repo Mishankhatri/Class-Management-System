@@ -17,8 +17,8 @@ export const DefaultColumnFilter = ({ column: { filterValue, setFilter } }) => {
       onChange={(e) => {
         setFilter(e.target.value || undefined);
       }}
-      placeholder={`Search Globally...`}
-      className='global-filter'
+      placeholder={`Search ...`}
+      className='local-filter'
     />
   );
 };

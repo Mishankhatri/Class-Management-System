@@ -13,7 +13,7 @@ table {
   margin-top: 20px;
 }
 table thead tr {
-  height: 60px;
+  height: 70px;
   background: #36304a;
 }
 
@@ -58,9 +58,17 @@ table tbody tr:hover {
   border-color: #0d6efd;
 }
 
+.btn-primary:hover {
+  background-color: #0066ff;
+}
+
 .btn-danger {
   color: #fff;
   background-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #ff0f27;
 }
 
 .btn-custom {
@@ -70,6 +78,7 @@ table tbody tr:hover {
   border: none;
   outline: none;
   cursor: pointer;
+  margin: 5px;
 }
 
 .btn-1 {
@@ -95,10 +104,11 @@ table tbody tr:hover {
 .global-filter {
   border: 1px solid #aaa;
   border-radius: 3px;
-  padding: 5px;
+  padding: 4px 8px;
   background-color: transparent;
   margin-left: 3px;
   width: 150px;
+  font-size: 0.7rem;
 }
 
 .select-entries {
@@ -116,13 +126,7 @@ table tbody tr:hover {
   background-color: transparent;
   padding: 4px;
   width: 60px;
-}
-
-select {
-  font-family: Arial;
-  font-size: inherit;
-  font-weight: inherit;
-  *font-size: 100%;
+  font-size: 100%;
 }
 
 .bottom {
@@ -134,7 +138,37 @@ select {
 }
 
 .table-btn {
-  border: none;
+  /* border: none; */
   cursor: pointer;
   margin: 0 10px;
+  padding: 4px 10px;
+}
+
+.table-btn:hover {
+  background-color: #36304a;
+  color: #dee2e6;
+  font: 100%;
+}
+
+.input-page {
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  padding: 5px;
+  background-color: transparent;
+  padding: 4px;
+  width: 60px;
+  font-size: 100%;
+}
+
+.local-filter {
+  width: 80%;
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+.error404 td {
+  text-align: center;
+  font-size: 2rem;
+  padding: 5rem;
+  color: #dc3545;
 }

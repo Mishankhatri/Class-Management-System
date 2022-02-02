@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import TableContainer from './../../../common/TableContainer';
+import TableContainer from './../../../common/Table/TableContainer';
 
 const TeacherTableData = () => {
   const [data, setData] = useState([]);
@@ -26,7 +26,7 @@ const TeacherTableData = () => {
     () => [
       {
         Header: 'SN',
-        accessor: (row, index) => {
+        Cell: ({ row: { index } }) => {
           return index + 1;
         },
       },

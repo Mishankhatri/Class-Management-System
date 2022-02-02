@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderInputField } from './../adminpanel/common/InputField/HeaderInputField';
+import { HeaderInputField } from '../../adminpanel/common/InputField/HeaderInputField';
 
 function ViewModal({ title, value }) {
   return (
