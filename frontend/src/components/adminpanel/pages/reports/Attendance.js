@@ -12,6 +12,7 @@ import {
   attendanceValue,
   attendanceDetail,
 } from '../../../values/AdminPanel/AttendanceInput';
+import AttendanceTableData from './AttendanceTableData';
 
 function Attendance() {
   const addAcademicValues = getAcademicValues(); //For Selection Option
@@ -37,56 +38,7 @@ function Attendance() {
     <>
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'View Attendance'} />
       <div className='main-content'>
-        <form onSubmit={handleSubmit(onSubmitForm)}>
-          <CustomController
-            title={'MAKE SELECTION'}
-            icon={<FaIcons.FaUser />}
-            ValueArray={attendanceValue}
-            // refClear={refClearStudent}
-            control={control}
-            Controller={Controller}
-            errors={errors}
-            ErrorMessage={ErrorMessage}
-            isCustom={true}
-          />
-          <button className='morebutton btn'>Select</button>
-        </form>
-        <div className='card-section'>
-          <div className='heading'>
-            <span className='title-icon'>
-              <FaIcons.FaSearch />
-            </span>
-            <span className='title'>Attendance List</span> {/*Custom  */}
-          </div>
-          <div className='content-section'>
-            <table className='table-striped'>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Rollno</th>
-                  <th>Class</th>
-                  <th>Attendance</th>
-                  <th>Total Absent</th>
-                  <th>Total Present</th>
-                </tr>
-              </thead>
-              <tbody>
-                {attendanceDetail.map((value, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{value.name}</td>
-                      <td>{value.roll}</td>
-                      <td>{value.class}</td>
-                      <td>{value.attendance}</td>
-                      <td>{value.totalAbsent}</td>
-                      <td>{value.totalPresent}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <AttendanceTableData />
       </div>
     </>
   );

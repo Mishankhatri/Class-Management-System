@@ -53,6 +53,16 @@ const attendanceDetail = [
     attendance: 'Present',
     totalAbsent: '20',
     totalPresent: '46',
+    date: '2022-02-01',
+  },
+  {
+    name: 'Prabin Gautam',
+    roll: '29',
+    class: '12 A',
+    attendance: 'Absent',
+    totalAbsent: '20',
+    totalPresent: '46',
+    date: '2016-05-06',
   },
   {
     name: 'Prabin Gautam',
@@ -61,6 +71,7 @@ const attendanceDetail = [
     attendance: 'Present',
     totalAbsent: '20',
     totalPresent: '46',
+    date: '2015-05-06',
   },
   {
     name: 'Prabin Gautam',
@@ -69,22 +80,16 @@ const attendanceDetail = [
     attendance: 'Present',
     totalAbsent: '20',
     totalPresent: '46',
+    date: '2014-01-01',
   },
   {
     name: 'Prabin Gautam',
     roll: '29',
     class: '12 A',
-    attendance: 'Present',
+    attendance: 'Absent',
     totalAbsent: '20',
     totalPresent: '46',
-  },
-  {
-    name: 'Prabin Gautam',
-    roll: '29',
-    class: '12 A',
-    attendance: 'Present',
-    totalAbsent: '20',
-    totalPresent: '46',
+    date: '2014-05-06',
   },
 ];
 

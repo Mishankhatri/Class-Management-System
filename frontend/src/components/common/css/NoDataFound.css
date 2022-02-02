@@ -5,19 +5,20 @@
 
 .error404 {
   display: flex;
+  justify-content: space-around;
   align-items: center;
-  height: 60vh;
-  width: calc(100% - 4rem);
+  height: 25rem;
   margin: 0 auto;
 }
 
 .error404 img {
   display: block;
-  height: auto;
-  width: 40rem;
+  /* height: auto;   */
+  width: 25rem;
 }
 .error404 main {
   text-align: center;
+  max-width: 20rem;
 }
 .error404 main h1 {
   font-family: 'Fontdiner Swanky', cursive;

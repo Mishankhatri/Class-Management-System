@@ -5,9 +5,9 @@ function NotificationDummy() {
   return [
     {
       messageText:
-        'All Students are requested to send their information immediately to the college',
+        'All Students are requested to send their information immediately to the college. Hope you will submit soon',
       by: 'Prabin Gautam',
-      date: '2022-01-31T09:47:10.197Z',
+      date: '2022-02-02T06:52:13.735Z',
       ProfileImage,
     },
     {

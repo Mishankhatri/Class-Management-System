@@ -1,9 +1,11 @@
+import axios from 'axios';
 import React, { useEffect, useState, useMemo } from 'react';
 import TableContainer from '../../../common/Table/TableContainer';
-import { timeTable_value } from '../../../values/AdminPanel/TimetableValues';
+import { attendanceDetail } from '../../../values/AdminPanel/AttendanceInput';
+import { NumberRangeColumnFilter } from './../../../common/Table/filters';
 
-const ViewTimetable_Table = ({ click, setClick }) => {
-  const data = timeTable_value;
+const AttendanceTableData = ({ click, setClick }) => {
+  const data = attendanceDetail;
 
   const columns = useMemo(
     () => [
@@ -14,28 +16,34 @@ const ViewTimetable_Table = ({ click, setClick }) => {
         },
       },
       {
-        Header: 'Day',
-        accessor: 'day',
+        Header: 'Name',
+        accessor: 'name',
       },
       {
-        Header: 'Time',
-        accessor: 'time',
+        Header: 'Rollno',
+        accessor: 'roll',
       },
       {
         Header: 'Class',
-        accessor: 'classes',
+        accessor: 'class',
       },
       {
-        Header: 'Section',
-        accessor: 'section',
+        Header: 'Date',
+        accessor: 'date',
+        Filter: NumberRangeColumnFilter,
+        filter: 'dateBetween',
       },
       {
-        Header: 'Subject',
-        accessor: 'subject',
+        Header: 'Attendance',
+        accessor: 'attendance',
       },
       {
-        Header: 'Teacher',
-        accessor: 'teacher',
+        Header: 'Total Absent',
+        accessor: 'totalAbsent',
+      },
+      {
+        Header: 'Total Present',
+        accessor: 'totalPresent',
       },
       {
         Header: 'Action',
@@ -59,10 +67,10 @@ const ViewTimetable_Table = ({ click, setClick }) => {
   return (
     <>
       <div style={{ margin: '20px 30px', marginBottom: 50 }}>
-        <TableContainer columns={columns} data={data} />
+        <TableContainer columns={columns} data={data} isRangeSearch={true} />
       </div>
     </>
   );
 };
 
-export default ViewTimetable_Table;
+export default AttendanceTableData;
