@@ -1,5 +1,5 @@
 import React from 'react';
-import InputField from './../adminpanel/common/InputField/InputField';
+import InputField from './InputField/InputField';
 
 function CustomController({
   title,

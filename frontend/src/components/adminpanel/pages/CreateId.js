@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import InnerHeader from '../common/InnerHeader';
+import InnerHeader from '../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 import * as FaIcons from 'react-icons/fa';
 
 import { useForm, Controller, useFormContext } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import CustomController from '../../common/Controller';
-import Loading from '../../common/Loading';
 import { getCreateIdInputField } from '../../values/AdminPanel/CreateIdInputField';
 
 // // teacher obtained values For references

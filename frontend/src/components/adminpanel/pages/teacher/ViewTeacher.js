@@ -1,10 +1,10 @@
 import React from 'react';
-import InnerHeader from './../../common/InnerHeader';
+import InnerHeader from './../../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 import '../users/UserProfile.css';
 import { getTeacherInputValues } from './../../../values/AdminPanel/TeacherInputField';
 import { Controller, useForm } from 'react-hook-form';
-import InputField from './../../common/InputField/InputField';
+import InputField from './../../../common/InputField/InputField';
 import { ErrorMessage } from '@hookform/error-message';
 import TeacherTableData from './TeacherTableData';
 

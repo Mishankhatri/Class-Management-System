@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import * as MdIcons from 'react-icons/md';
 import * as FaIcons from 'react-icons/fa';
-import InnerHeader from '../../common/InnerHeader';
+import InnerHeader from '../../../common/InnerHeader';
 
 import AnnouncementTableData from './AnnouncementTableData';
 import { useForm, Controller } from 'react-hook-form';
 import './../users/UserProfile.css';
-import InputField from '../../common/InputField/InputField';
+import InputField from '../../../common/InputField/InputField';
 
 function ViewAnnouncements() {
   const [click, setClick] = useState(false);

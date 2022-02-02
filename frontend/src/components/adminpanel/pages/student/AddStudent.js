@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import InnerHeader from './../../common/InnerHeader';
+import InnerHeader from './../../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 import * as FaIcons from 'react-icons/fa';
-import InputField from '../../common//InputField/InputField';
+import InputField from '../../../common//InputField/InputField';
 import CustomController from '../../../common/Controller';
 
 import {

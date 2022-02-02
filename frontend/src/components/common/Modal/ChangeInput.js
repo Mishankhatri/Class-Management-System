@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import InputField from './../../adminpanel/common/InputField/InputField';
+
 import * as FaIcons from 'react-icons/fa';
+import InputField from '../InputField/InputField';
 
 function ChangeInput({
   valueArray,

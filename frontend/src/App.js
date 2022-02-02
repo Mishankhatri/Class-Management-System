@@ -1,7 +1,7 @@
 import './App.css';
-import Sidebar from './components/adminpanel/common/SideBar/Sidebar';
+import Sidebar from './components/common/SideBar/Sidebar';
 import React, { useState } from 'react';
-import NavBar from './components/adminpanel/common/NavBar';
+import NavBar from './components/common/NavBar/NavBar';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Loading from './components/common/Loading';
 

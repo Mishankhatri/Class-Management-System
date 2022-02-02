@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderInputField } from './../../common/InputField/HeaderInputField';
+import { HeaderInputField } from './../../../common/InputField/HeaderInputField';
 
 function CustomSettingsInput({
   title,

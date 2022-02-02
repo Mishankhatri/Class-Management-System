@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import InnerHeader from './../../common/InnerHeader';
+import InnerHeader from './../../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 import axios from 'axios';
 import ProfileImage from '../../../../assets/profiles/pas075bct029.jpg';
 import BlankProfile from '../../../../assets/profiles/blank-profile.jpg';
+
 import Loading from './../../../common/Loading';
 import './CustomView.css';
 import '../users/UserProfile.css';
