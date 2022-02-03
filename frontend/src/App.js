@@ -1,76 +1,77 @@
-import './App.css';
-import Sidebar from './components/common/SideBar/Sidebar';
-import React, { useState } from 'react';
-import NavBar from './components/common/NavBar/NavBar';
-import { Route, Routes, Navigate } from 'react-router-dom';
-import Loading from './components/common/Loading';
+import "./App.css";
+import Sidebar from "./components/common/SideBar/Sidebar";
+import React, { useState } from "react";
+import NavBar from "./components/common/NavBar/NavBar";
+import { Route, Routes, Navigate } from "react-router-dom";
+import Loading from "./components/common/Loading";
+import { useSelector } from "react-redux";
 
 const Dashboard = React.lazy(() =>
-  import('./components/adminpanel/pages/Dashboard')
+  import("./components/adminpanel/pages/Dashboard")
 );
 const CreateAnnouncement = React.lazy(() =>
-  import('./components/adminpanel/pages/Announcement/CreateAnnouncement')
+  import("./components/adminpanel/pages/Announcement/CreateAnnouncement")
 );
 
 const ViewAnnouncement = React.lazy(() =>
-  import('./components/adminpanel/pages/Announcement/ViewAnnouncement')
+  import("./components/adminpanel/pages/Announcement/ViewAnnouncement")
 );
 
 const AddTeacher = React.lazy(() =>
-  import('./components/adminpanel/pages/teacher/AddTeacher')
+  import("./components/adminpanel/pages/teacher/AddTeacher")
 );
 const ViewTeacher = React.lazy(() =>
-  import('./components/adminpanel/pages/teacher/ViewTeacher')
+  import("./components/adminpanel/pages/teacher/ViewTeacher")
 );
 const AddStudent = React.lazy(() =>
-  import('./components/adminpanel/pages/student/AddStudent')
+  import("./components/adminpanel/pages/student/AddStudent")
 );
 const ViewStudent = React.lazy(() =>
-  import('./components/adminpanel/pages/student/ViewStudent')
+  import("./components/adminpanel/pages/student/ViewStudent")
 );
 const AddClass = React.lazy(() =>
-  import('./components/adminpanel/pages/class/AddClass')
+  import("./components/adminpanel/pages/class/AddClass")
 );
 const AddSection = React.lazy(() =>
-  import('./components/adminpanel/pages/class/AddSection')
+  import("./components/adminpanel/pages/class/AddSection")
 );
 const ViewClass = React.lazy(() =>
-  import('./components/adminpanel/pages/class/ViewClass')
+  import("./components/adminpanel/pages/class/ViewClass")
 );
 const AddSubjects = React.lazy(() =>
-  import('./components/adminpanel/pages/subject/AddSubjects')
+  import("./components/adminpanel/pages/subject/AddSubjects")
 );
 const ViewSubjects = React.lazy(() =>
-  import('./components/adminpanel/pages/subject/ViewSubjects')
+  import("./components/adminpanel/pages/subject/ViewSubjects")
 );
 const CreateTimetables = React.lazy(() =>
-  import('./components/adminpanel/pages/timetables/CreateTimetables')
+  import("./components/adminpanel/pages/timetables/CreateTimetables")
 );
 const ViewTimetables = React.lazy(() =>
-  import('./components/adminpanel/pages/timetables/ViewTimeTables')
+  import("./components/adminpanel/pages/timetables/ViewTimeTables")
 );
 const Attendance = React.lazy(() =>
-  import('./components/adminpanel/pages/reports/Attendance')
+  import("./components/adminpanel/pages/reports/Attendance")
 );
 const Marks = React.lazy(() =>
-  import('./components/adminpanel/pages/reports/Marks')
+  import("./components/adminpanel/pages/reports/Marks")
 );
 const CreateID = React.lazy(() =>
-  import('./components/adminpanel/pages/CreateId')
+  import("./components/adminpanel/pages/CreateId")
 );
 const Settings = React.lazy(() =>
-  import('./components/adminpanel/pages/users/Settings')
+  import("./components/adminpanel/pages/users/Settings")
 );
 const UserProfile = React.lazy(() =>
-  import('./components/adminpanel/pages/users/UserProfile')
+  import("./components/adminpanel/pages/users/UserProfile")
 );
 
 const StudentFullDetail = React.lazy(() =>
-  import('./components/adminpanel/pages/student/StudentFullDetail')
+  import("./components/adminpanel/pages/student/StudentFullDetail")
 );
 
 const TeacherFullDetail = React.lazy(() =>
-  import('./components/adminpanel/pages/teacher/TeacherFullDetail')
+  import("./components/adminpanel/pages/teacher/TeacherFullDetail")
 );
 
 // const ClassFullDetail = React.lazy(() =>
@@ -82,6 +83,7 @@ const TeacherFullDetail = React.lazy(() =>
 // );
 
 function App() {
+  const user = useSelector((state) => state.auth.user);
   const [showSideBar, setSideBar] = useState(true);
 
   const SideBarHandler = () => {
@@ -93,66 +95,67 @@ function App() {
       <Sidebar show={showSideBar} />
       <NavBar
         onClickHandler={SideBarHandler}
-        username={'PRABIN'}
+        username={user.username}
+        image={user.profile_image}
         show={showSideBar}
       />
-      <div className={`main-container ${!showSideBar ? 'close' : null}`}>
+      <div className={`main-container ${!showSideBar ? "close" : null}`}>
         <React.Suspense fallback={<Loading />}>
           <Routes>
             <Route
-              path='/'
-              element={<Navigate replace to='/admin/dashboard' />}
+              path="/"
+              element={<Navigate replace to="/admin/dashboard" />}
             />
             <Route
-              path='/admin'
-              element={<Navigate replace to='/admin/dashboard' />}
+              path="/admin"
+              element={<Navigate replace to="/admin/dashboard" />}
             />
             <Route
-              path='/*'
-              element={<div className='main-content'>Not Found</div>}
+              path="/*"
+              element={<div className="main-content">Not Found</div>}
             />
             {/* Dashboard */}
-            <Route path='/admin/dashboard' element={<Dashboard />} />
-            <Route path='/loading' element={<Loading />} />
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/loading" element={<Loading />} />
 
             {/* Student  */}
-            <Route path='/admin/student/add' element={<AddStudent />} />
-            <Route path='/admin/student/view' element={<ViewStudent />} />
+            <Route path="/admin/student/add" element={<AddStudent />} />
+            <Route path="/admin/student/view" element={<ViewStudent />} />
             <Route
-              path='/admin/student/view/:id'
+              path="/admin/student/view/:id"
               element={<StudentFullDetail />}
             />
 
             {/* Teacher  */}
-            <Route path='/admin/teacher/add' element={<AddTeacher />} />
-            <Route path='/admin/teacher/view' element={<ViewTeacher />} />
+            <Route path="/admin/teacher/add" element={<AddTeacher />} />
+            <Route path="/admin/teacher/view" element={<ViewTeacher />} />
             <Route
-              path='/admin/teacher/view/:id'
+              path="/admin/teacher/view/:id"
               element={<TeacherFullDetail />}
             />
 
             {/* Announcements  */}
             <Route
-              path='/admin/announcements/create'
+              path="/admin/announcements/create"
               element={<CreateAnnouncement />}
             />
             <Route
-              path='/admin/announcements/view'
+              path="/admin/announcements/view"
               element={<ViewAnnouncement />}
             />
 
             {/* Classes  */}
-            <Route path='/admin/classes/addclass' element={<AddClass />} />
-            <Route path='/admin/classes/addsection' element={<AddSection />} />
-            <Route path='/admin/classes/view' element={<ViewClass />} />
+            <Route path="/admin/classes/addclass" element={<AddClass />} />
+            <Route path="/admin/classes/addsection" element={<AddSection />} />
+            <Route path="/admin/classes/view" element={<ViewClass />} />
             {/* <Route
               path='/admin/classes/view/:id'
               element={<ClassFullDetail />}
             /> */}
 
             {/* Subject  */}
-            <Route path='/admin/subject/add' element={<AddSubjects />} />
-            <Route path='/admin/subject/view' element={<ViewSubjects />} />
+            <Route path="/admin/subject/add" element={<AddSubjects />} />
+            <Route path="/admin/subject/view" element={<ViewSubjects />} />
             {/* <Route
               path='/admin/subject/view/:id'
               element={<SubjectFullDetail />}
@@ -160,21 +163,21 @@ function App() {
 
             {/* Timetables  */}
             <Route
-              path='/admin/timetables/create'
+              path="/admin/timetables/create"
               element={<CreateTimetables />}
             />
-            <Route path='/admin/timetables/view' element={<ViewTimetables />} />
+            <Route path="/admin/timetables/view" element={<ViewTimetables />} />
 
             {/* Reports  */}
-            <Route path='/admin/reports/attendance' element={<Attendance />} />
-            <Route path='/admin/reports/marks' element={<Marks />} />
+            <Route path="/admin/reports/attendance" element={<Attendance />} />
+            <Route path="/admin/reports/marks" element={<Marks />} />
 
             {/* Create Id  */}
-            <Route path='/admin/createid' element={<CreateID />} />
+            <Route path="/admin/createid" element={<CreateID />} />
 
             {/* UserProfile Option  */}
-            <Route path='/admin/settings' element={<Settings />} />
-            <Route path='/admin/profiles' element={<UserProfile />} />
+            <Route path="/admin/settings" element={<Settings />} />
+            <Route path="/admin/profiles" element={<UserProfile />} />
           </Routes>
         </React.Suspense>
       </div>
