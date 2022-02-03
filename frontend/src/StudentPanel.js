@@ -7,6 +7,8 @@ import Loading from './components/common/Loading';
 import { menuStudentValue } from './components/common/SideBar/SideMenuValue';
 import ProfileImage from './assets/profiles/pas075bct028.jpg';
 import Error404 from './components/common/Error404';
+import Settings from './components/studentpanel/users/Settings';
+import UserProfile from './components/studentpanel/users/Profile';
 
 const UploadAssignment = React.lazy(() =>
   import('./components/studentpanel/Assignment/UploadAssignment')
@@ -52,12 +54,14 @@ function StudentPanel() {
         show={showSideBar}
         title={'Student Panel'}
         menues={menuStudentValue}
+        name='student'
       />
       <NavBar
         onClickHandler={SideBarHandler}
         username={'Paras'}
         show={showSideBar}
         profilePhoto={ProfileImage}
+        name='student'
       />
       <div className={`main-container ${!showSideBar ? 'close' : null}`}>
         <React.Suspense fallback={<Loading />}>
@@ -85,6 +89,10 @@ function StudentPanel() {
               element={<ViewInternalMark />}
             />
             <Route path='/examination/final' element={<ViewFinalResults />} />
+
+            {/* UserProfile Option  */}
+            <Route path='/settings' element={<Settings />} />
+            <Route path='/profiles' element={<UserProfile />} />
           </Routes>
         </React.Suspense>
       </div>

@@ -7,7 +7,7 @@ import * as FaIcons from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import NavBarNotification from './NavBarNotification';
 
-function NavBar({ onClickHandler, username, show, profilePhoto }) {
+function NavBar({ onClickHandler, username, show, profilePhoto, name }) {
   const [showDropDown, setDropDown] = useState(false);
   const [showDropDownNotification, setDropDownNotification] = useState(false);
   const navigate = useNavigate();
@@ -51,13 +51,13 @@ function NavBar({ onClickHandler, username, show, profilePhoto }) {
         <div className={showDropDown ? 'menu active' : 'menu inactive'}>
           <ul className='profile-options'>
             <li>
-              <a href='/admin/settings' className='menu-link'>
+              <a href={`/${name}/settings`} className='menu-link'>
                 <RiIcons.RiSettings5Fill className='menu-icon' />
                 Settings
               </a>
             </li>
             <li>
-              <a href='/admin/profiles' className='menu-link'>
+              <a href={`/${name}/profiles`} className='menu-link'>
                 <BiIcons.BiUser className='menu-icon' />
                 User Profile
               </a>

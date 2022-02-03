@@ -201,11 +201,11 @@ const menuTeacherValue = [
     hasSubMenu: true,
     submenus: [
       {
-        name: 'Attendance',
+        name: 'View Reports',
         to: '/teacher/reports/view',
       },
       {
-        name: 'Marks',
+        name: 'Create Reports',
         to: '/teacher/reports/create',
       },
     ],

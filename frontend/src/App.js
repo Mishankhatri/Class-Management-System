@@ -89,12 +89,14 @@ function App() {
         show={showSideBar}
         title={'Admin Panel'}
         menues={getMenuValues()}
+        name='admin'
       />
       <NavBar
         onClickHandler={SideBarHandler}
         username={'PRABIN'}
         show={showSideBar}
         profilePhoto={ProfileImage}
+        name='admin'
       />
       <div className={`main-container ${!showSideBar ? 'close' : null}`}>
         <React.Suspense fallback={<Loading />}>

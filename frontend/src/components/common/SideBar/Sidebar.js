@@ -2,12 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import MenuItem from './MenuItem';
 
-function Sidebar({ show, title, menues }) {
+function Sidebar({ show, title, menues, name }) {
   return (
     <>
       <div className={show ? 'visible-sidemenu active' : 'visible-sidemenu'}>
         <div className='title'>
-          <Link to={'/'} style={{ textDecoration: 'none', color: '#fff' }}>
+          <Link
+            to={`/${name}/dashboard`}
+            style={{ textDecoration: 'none', color: '#fff' }}>
             {title}
           </Link>
         </div>

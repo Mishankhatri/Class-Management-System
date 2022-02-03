@@ -7,6 +7,8 @@ import Loading from './components/common/Loading';
 import { menuTeacherValue } from './components/common/SideBar/SideMenuValue';
 import ProfileImage from './assets/profiles/pas075bct022.jpg';
 import Error404 from './components/common/Error404';
+import Settings from './components/teacherpanel/user/Settings';
+import UserProfile from './components/teacherpanel/user/UserProfile';
 
 const Dashboard = React.lazy(() =>
   import('./components/teacherpanel/Dashboard')
@@ -64,12 +66,14 @@ function TeacherPanel() {
         show={showSideBar}
         title={'Teacher Panel'}
         menues={menuTeacherValue}
+        name='teacher'
       />
       <NavBar
         onClickHandler={SideBarHandler}
         username={'Mishan'}
         show={showSideBar}
         profilePhoto={ProfileImage}
+        name='teacher'
       />
       <div className={`main-container ${!showSideBar ? 'close' : null}`}>
         <React.Suspense fallback={<Loading />}>
@@ -103,6 +107,10 @@ function TeacherPanel() {
             <Route path='/notes' element={<LectureNotes />} />
             <Route path='/reports/create' element={<CreateMark />} />
             <Route path='/reports/view' element={<ViewMark />} />
+
+            {/* UserProfile Option  */}
+            <Route path='/settings' element={<Settings />} />
+            <Route path='/profiles' element={<UserProfile />} />
           </Routes>
         </React.Suspense>
       </div>

@@ -7,6 +7,8 @@ import Login from './forms/Login';
 import './forms/Table.css';
 import TeacherPanel from './TeacherPanel';
 import StudentPanel from './StudentPanel';
+import './components/adminpanel/pages/users/UserProfile.css';
+import './components/adminpanel/pages/student/CustomView.css';
 
 ReactDOM.render(
   <BrowserRouter>

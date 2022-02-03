@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import InnerHeader from './../../../common/InnerHeader';
+import InnerHeader from './../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 import axios from 'axios';
-import ProfileImage from '../../../../assets/profiles/pas075bct029.jpg';
-import BlankProfile from '../../../../assets/profiles/blank-profile.jpg';
+import ProfileImage from '../../../assets/profiles/pas075bct028.jpg';
+import BlankProfile from '../../../assets/profiles/blank-profile.jpg';
 
-import Loading from './../../../common/Loading';
-import ViewModal from '../../../common/Modal/ViewModal';
-import ChangePhoto from '../../../common/Modal/ChangePhoto';
-import ChangeInput from '../../../common/Modal/ChangeInput';
+import Loading from './../../common/Loading';
+import ChangeInput from '../../common/Modal/ChangeInput';
 import {
   getParentInfoValues,
   getStudentInputValues,
   getAcademicValues,
-} from './../../../values/AdminPanel/StudentInputField';
+} from './../../values/AdminPanel/StudentInputField';
+import ViewModal from '../../common/Modal/ViewModal';
+import ChangePhoto from '../../common/Modal/ChangePhoto';
 
-function StudentFullDetail() {
-  let { id } = useParams();
+function UserProfile() {
+  let id = 3;
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -40,9 +40,7 @@ function StudentFullDetail() {
 
   const [click, setClick] = useState(false);
   const [click1, setClick1] = useState(false);
-  const [clickStudent, setClickStudent] = useState(false);
   const [clickParent, setClickParent] = useState(false);
-  const [clickStudentAcademic, setClickStudentAcademic] = useState(false);
   const [previousImage, setPreviosImage] = useState(BlankProfile);
   const [uploadedImage, setUploadedImage] = useState('');
 
@@ -60,22 +58,10 @@ function StudentFullDetail() {
     console.log(uploadedImage);
   };
 
-  const onSubmitStudentInput = (data, e) => {
-    e.target.reset();
-    console.log(data);
-    setClickStudent(false);
-  };
-
   const onSubmitParentInput = (data, e) => {
     e.target.reset();
     console.log(data);
     setClickParent(false);
-  };
-
-  const onSubmitAcademic = (data, e) => {
-    e.target.reset();
-    console.log(data);
-    setClickStudentAcademic(false);
   };
 
   return studentDetail ? (
@@ -103,17 +89,6 @@ function StudentFullDetail() {
       )}
       {/* Modal Section Image  End */}
 
-      {/* Modal Section Input Start  */}
-      {clickStudent && (
-        <ChangeInput
-          onSubmit={onSubmitStudentInput}
-          valueArray={getStudentInputValues()}
-          click={clickStudent}
-          setClick={setClickStudent}
-          heading={"View Student's Info"}
-        />
-      )}
-
       {clickParent && (
         <ChangeInput
           onSubmit={onSubmitParentInput}
@@ -121,16 +96,6 @@ function StudentFullDetail() {
           click={clickParent}
           setClick={setClickParent}
           heading={"View Student's Parent Info"}
-        />
-      )}
-
-      {clickStudentAcademic && (
-        <ChangeInput
-          onSubmit={onSubmitAcademic}
-          valueArray={getAcademicValues()}
-          click={clickStudentAcademic}
-          setClick={setClickStudentAcademic}
-          heading={'View Student Academic Infos'}
         />
       )}
 
@@ -182,12 +147,6 @@ function StudentFullDetail() {
                       value={studentDetail.address.city}
                     />
                   </div>
-                  <button
-                    className='btn-edit'
-                    style={{ marginTop: 20 }}
-                    onClick={() => setClickStudent(!clickStudent)}>
-                    Edit
-                  </button>
                 </div>
               </div>
             </div>
@@ -256,36 +215,6 @@ function StudentFullDetail() {
             </div>
           </div>
         </div>
-
-        {/* Academic Info  */}
-        <div className='heading-section'>
-          <div className='card-section'>
-            <div className='heading'>
-              <span className='title-icon'>
-                <MdIcons.MdPerson />
-              </span>
-              <span className='title'>Students Academic Info</span>
-              {/*Custom  */}
-            </div>
-            <div className='content-section'>
-              <div className='information'>
-                <div className='information__info'>
-                  <ViewModal title={'Class'} value={12} />
-                  <ViewModal title={'Section'} value={'A'} />
-                  <ViewModal title={'Rollno'} value={29} />
-                </div>
-                <button
-                  className='btn-edit'
-                  style={{ marginTop: 20 }}
-                  onClick={() =>
-                    setClickStudentAcademic(!clickStudentAcademic)
-                  }>
-                  Edit
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </React.Fragment>
   ) : (
@@ -293,4 +222,4 @@ function StudentFullDetail() {
   );
 }
 
-export default StudentFullDetail;
+export default UserProfile;
