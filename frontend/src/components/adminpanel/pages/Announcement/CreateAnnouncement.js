@@ -6,6 +6,7 @@ import * as FaIcons from 'react-icons/fa';
 import { useForm, Controller } from 'react-hook-form';
 import InputField from '../../../common/InputField/InputField';
 import { ErrorMessage } from '@hookform/error-message';
+import { FileInput } from '../../../common/InputField/FileInput';
 
 function CreateAnnouncement() {
   const [selectRefType, setSelectRefType] = useState(null);
@@ -130,24 +131,19 @@ function CreateAnnouncement() {
               />
 
               <Controller
-                name={'studenannouncementFiletClass'}
+                name={'announcemntFile'}
                 control={control}
-                rules={{
-                  required: {
-                    value: false,
-                  },
-                }}
                 defaultValue=''
-                render={({ field }) => (
-                  <InputField
-                    title={'Files'.toUpperCase()}
-                    input={'file'}
+                render={(props) => (
+                  <FileInput
+                    name={'announcemntFile'}
+                    title={'Upload File'}
                     icon={<FaIcons.FaFile className='mid-icon' />}
-                    name={'announcementFile'}
-                    onChangeHandler={field.onChange}
-                    isRequired={false}
-                    errors={errors}
-                    ErrorMessage={ErrorMessage}
+                    isRequired={true}
+                    isImageFile={false}
+                    onChange={(event) =>
+                      props.field.onChange(event.target.files)
+                    }
                   />
                 )}
               />

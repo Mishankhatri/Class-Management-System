@@ -12,15 +12,25 @@ Consists Styling of
 }
 
 body {
-  background-color: #f8f9fc !important;
+  background-color: #f1f2f7 !important;
   font-family: 'Open Sans', sans-serif;
+  overflow-x: hidden;
 }
 
 .navigation {
-  position: fixed;
+  position: sticky;
   top: 0;
+  left: 15.25rem;
+  width: calc(100vw - 15.25rem);
+  margin-left: 15.25rem;
+  z-index: 10003;
+  transition: margin-left 0.5s, width 0.5s;
+}
+
+.navigation.close {
+  margin-left: 0;
   width: 100%;
-  z-index: 10000;
+  transition: margin-left 0.5s, width 0.5s;
 }
 
 .navigation .navbar {
@@ -39,54 +49,24 @@ body {
   align-items: center;
 }
 
-.navigation .navbar .left-section .title {
-  font: normal 23px 'PoppinsBold', sans-serif;
-  letter-spacing: 0.5px;
-  color: #5a67ba;
-}
-
 .navigation .navbar .backbtn {
+  border: 1px solid #17a2b8;
+  padding: 0.5rem 0.7rem;
+  font-size: 1.2rem;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   cursor: pointer;
 }
 
-/* Hamburger Button CSS  */
-
-.navigation .navbar .hamburger .line {
-  width: 30px;
-  height: 4px;
-  background-color: #000;
-  display: block;
-  margin: 3px auto;
-  transition: all 0.3s ease-in-out;
+.navigation .navbar .backbtn:hover {
+  background-color: #17a2b8;
+  color: white;
 }
 
-.navigation .navbar .hamburger {
-  transition: all 0.3s ease-in-out;
-}
-
-/* .navigation .navbar .hamburger.is-active {
-  transform: rotate(45deg);
-} */
-
-.navigation .navbar .hamburger.is-active .line {
-  background-color: #2974d5;
-}
-
-.hamburger.is-active .line:nth-child(1),
-.hamburger.is-active .line:nth-child(3) {
-  width: 22px;
-}
-
-.hamburger.is-active .line:nth-child(2) {
-  width: 18px;
-}
-
-.hamburger.is-active .line:nth-child(1) {
-  transform: translateX(10px) rotate(45deg);
-}
-
-.hamburger.is-active .line:nth-child(3) {
-  transform: translateX(10px) rotate(-45deg);
+.navigation .navbar .backbtn:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 /* /* Left section of Navbar styling END*/
@@ -234,18 +214,32 @@ body {
 /* SideBar Content CSS Code Start*/
 
 /* Sidemenu STyling */
-.sidemenu {
+
+.visible-sidemenu {
   position: fixed;
-  top: 66px;
-  background-color: #f1f2f7;
+  /* top: 66px; */
+  background-color: #f8f9fc;
   width: 15.25rem;
-  height: calc(100vh - 65px);
-  padding: 20px 30px;
+  height: 100vh;
   left: -15rem;
   transition: all 0.5s;
   overflow-y: auto;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
-  z-index: 10000;
+  z-index: 10004;
+}
+
+.visible-sidemenu .title {
+  font: normal 25px 'PoppinsBold', sans-serif;
+  letter-spacing: 0.5px;
+  color: #5a67ba;
+  background-color: #f1f2f7;
+  /* F1F2F7 */
+  padding: 30px 0;
+  text-align: center;
+}
+
+.sidemenu {
+  padding: 20px 30px;
 }
 
 .sidemenu li {
@@ -276,7 +270,7 @@ body {
 
 /* Custom Scrollbar End*/
 
-.sidemenu.active {
+.visible-sidemenu.active {
   left: 0;
 }
 

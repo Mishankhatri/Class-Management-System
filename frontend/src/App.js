@@ -90,12 +90,12 @@ function App() {
 
   return (
     <>
+      <Sidebar show={showSideBar} />
       <NavBar
         onClickHandler={SideBarHandler}
         username={'PRABIN'}
         show={showSideBar}
       />
-      <Sidebar show={showSideBar} />
       <div className={`main-container ${!showSideBar ? 'close' : null}`}>
         <React.Suspense fallback={<Loading />}>
           <Routes>

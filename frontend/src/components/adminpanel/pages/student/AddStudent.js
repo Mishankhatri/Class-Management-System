@@ -100,6 +100,10 @@ function AddStudent() {
             errors={errors}
             ErrorMessage={ErrorMessage}
             isCustom={false}
+            hasFile={true}
+            fileTitle={'Upload Photo'}
+            fileIcon={<FaIcons.FaPhotoVideo className='mid-icon' />}
+            fileName={'studentPhoto'}
           />
 
           {/* Parent Info  */}
@@ -113,6 +117,10 @@ function AddStudent() {
             errors={errors}
             ErrorMessage={ErrorMessage}
             isCustom={false}
+            hasFile={true}
+            fileTitle={'Upload Photo'}
+            fileIcon={<FaIcons.FaPhotoVideo className='mid-icon' />}
+            fileName={'parentPhoto'}
           />
 
           {/* Academic Info  */}

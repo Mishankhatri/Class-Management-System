@@ -71,14 +71,6 @@ const TeacherFieldValue = [
     isRequired: true,
     name: 'teacherLocation',
   },
-  {
-    title: 'UPLOAD PHOTO',
-    input: 'file',
-    isImageFile: true,
-    icon: <FaIcons.FaPhotoVideo className='mid-icon' />,
-    isRequired: true,
-    name: 'teacherPhoto',
-  },
 ];
 
 export function getTeacherInputValues() {

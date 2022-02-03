@@ -114,67 +114,69 @@ const TableContainer = ({ columns, data }) => {
           />
         </div>
       </div>
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map((headerGroup, index) => (
-            <React.Fragment key={index}>
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
-                    <div {...column.getSortByToggleProps()}>
-                      {column.render('Header')}
-                      {generateSortingIndicator(column)}
-                    </div>
-                  </th>
-                ))}
-              </tr>
-              <tr>
-                {headerGroup.headers.map((column) => (
-                  <th
-                    {...column.getHeaderProps()}
-                    className='secondary-heading'>
-                    {column.canFilter
-                      ? column.SearchAble
-                        ? column.render('Filter')
-                        : null
-                      : null}
-                  </th>
-                ))}
-              </tr>
-            </React.Fragment>
-          ))}
-        </thead>
+      <div style={{ overflow: 'auto' }}>
+        <table {...getTableProps()}>
+          <thead>
+            {headerGroups.map((headerGroup, index) => (
+              <React.Fragment key={index}>
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps()}>
+                      <div {...column.getSortByToggleProps()}>
+                        {column.render('Header')}
+                        {generateSortingIndicator(column)}
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+                <tr>
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps()}
+                      className='secondary-heading'>
+                      {column.canFilter
+                        ? column.SearchAble
+                          ? column.render('Filter')
+                          : null
+                        : null}
+                    </th>
+                  ))}
+                </tr>
+              </React.Fragment>
+            ))}
+          </thead>
 
-        <tbody {...getTableBodyProps()}>
-          {page.length === 0 ? (
-            <tr>
-              <td colSpan={allColumns.length}>
-                <NoDataFound />
-              </td>
-            </tr>
-          ) : (
-            page.map((row) => {
-              prepareRow(row);
-              return (
-                <React.Fragment key={row.getRowProps().key}>
-                  <tr>
-                    {row.cells.map((cell) => {
-                      return (
-                        <td
-                          {...cell.getCellProps([
-                            { className: cell.column?.className },
-                          ])}>
-                          {cell.render('Cell')}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                </React.Fragment>
-              );
-            })
-          )}
-        </tbody>
-      </table>
+          <tbody {...getTableBodyProps()}>
+            {page.length === 0 ? (
+              <tr>
+                <td colSpan={allColumns.length}>
+                  <NoDataFound />
+                </td>
+              </tr>
+            ) : (
+              page.map((row) => {
+                prepareRow(row);
+                return (
+                  <React.Fragment key={row.getRowProps().key}>
+                    <tr>
+                      {row.cells.map((cell) => {
+                        return (
+                          <td
+                            {...cell.getCellProps([
+                              { className: cell.column?.className },
+                            ])}>
+                            {cell.render('Cell')}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  </React.Fragment>
+                );
+              })
+            )}
+          </tbody>
+        </table>
+      </div>
 
       <div className='bottom'>
         <div>

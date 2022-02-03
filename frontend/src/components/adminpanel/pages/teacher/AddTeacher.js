@@ -60,6 +60,10 @@ function AddTeacher() {
             errors={errors}
             ErrorMessage={ErrorMessage}
             isCustom={false}
+            hasFile={true}
+            fileTitle={'Upload Photo'}
+            fileIcon={<FaIcons.FaPhotoVideo className='mid-icon' />}
+            fileName={'teacherPhoto'}
           />
           <button className='morebutton btn' type='submit'>
             Submit

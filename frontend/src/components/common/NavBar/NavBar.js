@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import * as BsIcons from 'react-icons/bs';
 import * as BiIcons from 'react-icons/bi';
 import * as RiIcons from 'react-icons/ri';
+import * as FaIcons from 'react-icons/fa';
 import ProfileImage from '../../../assets/profiles/pas075bct029.jpg';
 import { Link, useNavigate } from 'react-router-dom';
 import NavBarNotification from './NavBarNotification';
@@ -13,39 +14,13 @@ function NavBar({ onClickHandler, username, show }) {
 
   return (
     <>
-      <div className='navigation'>
+      <div className={show ? 'navigation' : 'navigation close'}>
         <div className='navbar'>
-          {/* 
-        NavBar consists of two section: Left section and right section
-
-        Left section of Navbar like title, and btn 
-        1) title => consists title of current logged in like admin panel
-        2) backbtn => consists icon, to show or hide sidebar
-          */}
-
           <div className='left-section'>
-            <div className='title'>
-              <Link
-                to={'/'}
-                style={{ textDecoration: 'none', color: '#551ABB' }}>
-                Admin Panel
-              </Link>
-            </div>
-            <div className='backbtn' onClick={onClickHandler}>
-              <div className={show ? 'hamburger' : 'hamburger is-active'}>
-                <span className='line'></span>
-                <span className='line'></span>
-                <span className='line'></span>
-              </div>
-            </div>
+            <button className='backbtn' onClick={onClickHandler}>
+              <FaIcons.FaAlignLeft className='btn-outline-info' />
+            </button>
           </div>
-
-          {/* 
-        Right section of Navbar like Notification icon, profile picture and name 
-        1) notification => notification symbol for red sign and bell icon
-        2) img => Profile image of current logged in user
-        3) user-name => consists current logged in names and arrow button
-          */}
 
           <div className='right-section'>
             <div
