@@ -13,7 +13,8 @@ function NavLink({
   //determine based on current location and to
   const location = useLocation();
 
-  let isActive = location.pathname.includes(name) || location.pathname === `/${to}`;
+  let isActive =
+    location.pathname.includes(name) || location.pathname === `${to}`;
 
   let allClassName =
     className + (isActive ? ` ${activeClassName}` : ` ${inactiveClassName}`);
@@ -36,7 +37,7 @@ function MenuItem({ name, submenus, icons, hasSubMenus, toLink }) {
       <li>
         <NavLink
           to={toLink}
-          name = {name.toLowerCase()}
+          name={name.toLowerCase()}
           onClick={() => setExpandMenu(!expandMenu)}
           activeClassName='active-link'
           inactiveClassName='inactive-link'

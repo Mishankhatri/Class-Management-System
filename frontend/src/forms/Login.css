@@ -30,18 +30,14 @@
 #logo img {
   width: 27rem;
   height: 26rem;
-  position: absolute;
-  transform: translate(50%, -50%);
-  left: 35px;
+  position: relative;
+  /* left: 35px; */
 }
 
 #forms {
   background: #ffffff;
   height: 37rem;
   width: 30rem;
-  padding-left: 2.5rem;
-  position: relative;
-  left: 6rem;
 
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
@@ -49,6 +45,10 @@
 
 #forms img {
   padding-top: 1.2rem;
+}
+
+#forms .form_input {
+  padding-left: 2.5rem;
 }
 
 .information {
@@ -152,4 +152,32 @@
   text-align: center;
   font-family: 'Poppins', sans-serif;
   font-size: 12px;
+}
+
+@media screen and (max-width: 1050px) {
+  #main {
+    display: inline-block;
+  }
+
+  #logo {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  #forms {
+    width: 20rem;
+  }
+
+  #forms .image-container {
+    text-align: center;
+  }
+
+  #forms .form_input {
+    padding-left: 1.5rem;
+  }
+
+  #forms img {
+    width: 17rem;
+  }
 }

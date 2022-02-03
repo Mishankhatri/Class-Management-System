@@ -2,21 +2,18 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import MenuItem from './MenuItem';
 
-import { getValues } from './SideMenuValue';
-
-function Sidebar({ show }) {
-  const sidebarValue = getValues();
+function Sidebar({ show, title, menues }) {
   return (
     <>
       <div className={show ? 'visible-sidemenu active' : 'visible-sidemenu'}>
         <div className='title'>
           <Link to={'/'} style={{ textDecoration: 'none', color: '#551ABB' }}>
-            Admin Panel
+            {title}
           </Link>
         </div>
         <div className='sidemenu'>
           <ul className='sidebar-ul'>
-            {sidebarValue.map((values, index) => {
+            {menues.map((values, index) => {
               if (values.hasSubMenu) {
                 return (
                   <MenuItem
