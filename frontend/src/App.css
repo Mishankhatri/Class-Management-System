@@ -188,6 +188,12 @@ Consists Styling of
   grid-gap: 15px 40px;
 }
 
+.custom-announcementCreate {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 5rem;
+}
+
 .modal-inputfield {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -331,6 +337,10 @@ input[type='file'] {
   .content-section.custom-content,
   .modal-inputfield {
     display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .custom-announcementCreate {
     grid-template-columns: 1fr;
   }
 }

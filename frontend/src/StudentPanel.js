@@ -14,6 +14,10 @@ const UploadAssignment = React.lazy(() =>
   import('./components/studentpanel/Assignment/UploadAssignment')
 );
 
+const LectureNotes = React.lazy(() =>
+  import('./components/studentpanel/LectureNotes')
+);
+
 const ViewAssignments = React.lazy(() =>
   import('./components/studentpanel/Assignment/ViewAssignments')
 );
@@ -84,6 +88,7 @@ function StudentPanel() {
             <Route path='/announcements' element={<Announcement />} />
             <Route path='/assignment/upload' element={<UploadAssignment />} />
             <Route path='/assignment/view' element={<ViewAssignments />} />
+            <Route path='/notes' element={<LectureNotes />} />
             <Route
               path='/examination/internal'
               element={<ViewInternalMark />}

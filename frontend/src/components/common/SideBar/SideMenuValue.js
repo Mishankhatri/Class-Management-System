@@ -279,6 +279,12 @@ const menuStudentValue = [
     icon: <FaIcons.FaExpand />,
     to: '/student/examination/internal',
   },
+  {
+    name: 'Lecture note',
+    hasSubMenu: false,
+    icon: <FaIcons.FaStickyNote />,
+    to: '/student/notes',
+  },
 ];
 
 export function getMenuValues() {

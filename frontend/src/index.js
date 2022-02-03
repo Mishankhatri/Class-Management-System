@@ -9,6 +9,7 @@ import TeacherPanel from './TeacherPanel';
 import StudentPanel from './StudentPanel';
 import './components/adminpanel/pages/users/UserProfile.css';
 import './components/adminpanel/pages/student/CustomView.css';
+import Error404 from './components/common/Error404';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -18,6 +19,7 @@ ReactDOM.render(
       <Route path={'/admin/*'} element={<App />} />
       <Route path={'/teacher/*'} element={<TeacherPanel />} />
       <Route path={'/student/*'} element={<StudentPanel />} />
+      <Route path={'/*'} element={<Error404 />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

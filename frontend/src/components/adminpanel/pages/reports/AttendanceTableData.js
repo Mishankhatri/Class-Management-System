@@ -39,18 +39,19 @@ const AttendanceTableData = ({ click, setClick }) => {
         SearchAble: true,
       },
       {
+        Header: 'Subject',
+        accessor: 'subject',
+        SearchAble: true,
+      },
+      {
         Header: 'Attendance',
         accessor: 'attendance',
         SearchAble: true,
       },
+
       {
-        Header: 'Total Absent',
-        accessor: 'totalAbsent',
-        SearchAble: true,
-      },
-      {
-        Header: 'Total Present',
-        accessor: 'totalPresent',
+        Header: 'Present/Absent',
+        accessor: 'P/A',
         SearchAble: true,
       },
     ],
