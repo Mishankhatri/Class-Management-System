@@ -20,6 +20,7 @@ const ClassTableData = ({ click, setClick }) => {
     () => [
       {
         Header: 'SN',
+        SearchAble: false,
         Cell: ({ row: { index } }) => {
           return index + 1;
         },
@@ -27,21 +28,26 @@ const ClassTableData = ({ click, setClick }) => {
       {
         Header: 'Class',
         accessor: 'username',
+        SearchAble: true,
       },
       {
         Header: 'Section',
         accessor: 'name',
+        SearchAble: true,
       },
       {
         Header: 'Class Code',
         accessor: 'phone',
+        SearchAble: true,
       },
       {
         Header: 'Description',
         accessor: 'email',
+        SearchAble: false,
       },
       {
         Header: 'Action',
+        SearchAble: false,
         Cell: ({ row }) => {
           return (
             <>

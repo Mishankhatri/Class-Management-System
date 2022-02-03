@@ -1,5 +1,6 @@
 import React from 'react';
-import InputField from './../adminpanel/common/InputField/InputField';
+import InputField from './InputField/InputField';
+import { FileInput } from './InputField/FileInput';
 
 function CustomController({
   title,
@@ -11,6 +12,10 @@ function CustomController({
   errors,
   ErrorMessage,
   isCustom,
+  hasFile = false,
+  fileName,
+  fileTitle,
+  fileIcon,
 }) {
   return (
     <div className={!isCustom ? 'card-section' : 'card-section custom-width'}>
@@ -27,9 +32,6 @@ function CustomController({
           !isCustom ? 'content-section allinputfield' : 'content-section' //custom-content
         }>
         {ValueArray.map((value, index) => {
-          {
-            /*Custom  */
-          }
           return (
             <Controller
               name={value.name}
@@ -63,6 +65,23 @@ function CustomController({
             />
           );
         })}
+        {hasFile && (
+          <Controller
+            name={fileName}
+            control={control}
+            defaultValue=''
+            render={(props) => (
+              <FileInput
+                name={fileName}
+                title={fileTitle}
+                icon={fileIcon}
+                isRequired={true}
+                isImageFile={true}
+                onChange={(event) => props.field.onChange(event.target.files)}
+              />
+            )}
+          />
+        )}
       </div>
     </div>
   );

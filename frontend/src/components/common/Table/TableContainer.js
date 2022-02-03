@@ -6,11 +6,49 @@ import {
   usePagination,
   useGlobalFilter,
 } from 'react-table';
-import { Filter, DefaultColumnFilter, GlobalFilter } from './filters';
+import { DefaultColumnFilter, GlobalFilter } from './filters';
 import './../../../forms/Table.css';
 import NoDataFound from './Nodatafound';
 
 const TableContainer = ({ columns, data }) => {
+  function dateBetweenFilterFn(rows, id, filterValues) {
+    const startDate = filterValues[0] ? new Date(filterValues[0]) : undefined;
+    const endDate = filterValues[1] ? new Date(filterValues[1]) : undefined;
+
+    if (endDate || startDate) {
+      return rows.filter((r) => {
+        const cellDate = new Date(r.values[id]);
+
+        if (endDate && startDate) {
+          return cellDate >= startDate && cellDate <= endDate;
+        } else if (startDate) {
+          return cellDate >= startDate;
+        } else if (endDate) {
+          return cellDate <= endDate;
+        }
+      });
+    } else {
+      return rows;
+    }
+  }
+
+  const filterTypes = React.useMemo(
+    () => ({
+      dateBetween: dateBetweenFilterFn,
+      text: (rows, id, filterValue) => {
+        return rows.filter((row) => {
+          const rowValue = row.values[id];
+          return rowValue !== undefined
+            ? String(rowValue)
+                .toLowerCase()
+                .startsWith(String(filterValue).toLowerCase())
+            : true;
+        });
+      },
+    }),
+    []
+  );
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -32,7 +70,8 @@ const TableContainer = ({ columns, data }) => {
       columns,
       data,
       defaultColumn: { Filter: DefaultColumnFilter },
-      initialState: { pageIndex: 0, pageSize: 10 },
+      filterTypes,
+      initialState: { pageIndex: 0, pageSize: 5 },
     },
     useFilters,
     useGlobalFilter,
@@ -59,7 +98,7 @@ const TableContainer = ({ columns, data }) => {
         <div className='select-entries'>
           <span>Show</span>
           <select value={pageSize} onChange={onChangeInSelect}>
-            {[10, 20, 30, 40, 50].map((pageSize) => (
+            {[5, 10, 20, 30, 40, 50].map((pageSize) => (
               <option key={pageSize} value={pageSize}>
                 {pageSize}
               </option>
@@ -75,48 +114,69 @@ const TableContainer = ({ columns, data }) => {
           />
         </div>
       </div>
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>
-                  <div {...column.getSortByToggleProps()}>
-                    {column.render('Header')}
-                    {generateSortingIndicator(column)}
-                  </div>
-                  <Filter column={column} />
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
+      <div style={{ overflow: 'auto' }}>
+        <table {...getTableProps()}>
+          <thead>
+            {headerGroups.map((headerGroup, index) => (
+              <React.Fragment key={index}>
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps()}>
+                      <div {...column.getSortByToggleProps()}>
+                        {column.render('Header')}
+                        {generateSortingIndicator(column)}
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+                <tr>
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps()}
+                      className='secondary-heading'>
+                      {column.canFilter
+                        ? column.SearchAble
+                          ? column.render('Filter')
+                          : null
+                        : null}
+                    </th>
+                  ))}
+                </tr>
+              </React.Fragment>
+            ))}
+          </thead>
 
-        <tbody {...getTableBodyProps()}>
-          {page.length === 0 ? (
-            <tr>
-              <td colSpan={allColumns.length}>
-                <NoDataFound />
-              </td>
-            </tr>
-          ) : (
-            page.map((row) => {
-              prepareRow(row);
-              return (
-                <React.Fragment key={row.getRowProps().key}>
-                  <tr>
-                    {row.cells.map((cell) => {
-                      return (
-                        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                      );
-                    })}
-                  </tr>
-                </React.Fragment>
-              );
-            })
-          )}
-        </tbody>
-      </table>
+          <tbody {...getTableBodyProps()}>
+            {page.length === 0 ? (
+              <tr>
+                <td colSpan={allColumns.length}>
+                  <NoDataFound />
+                </td>
+              </tr>
+            ) : (
+              page.map((row) => {
+                prepareRow(row);
+                return (
+                  <React.Fragment key={row.getRowProps().key}>
+                    <tr>
+                      {row.cells.map((cell) => {
+                        return (
+                          <td
+                            {...cell.getCellProps([
+                              { className: cell.column?.className },
+                            ])}>
+                            {cell.render('Cell')}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  </React.Fragment>
+                );
+              })
+            )}
+          </tbody>
+        </table>
+      </div>
 
       <div className='bottom'>
         <div>

@@ -1,18 +1,35 @@
-import React from 'react';
-import InnerHeader from './../../common/InnerHeader';
+import React, { useState } from 'react';
+import InnerHeader from './../../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 import * as FaIcons from 'react-icons/fa';
 
-import InputField from '../../common//InputField/InputField';
+import InputField from '../../../common//InputField/InputField';
 
 import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { timeTable_value } from '../../../values/AdminPanel/TimetableValues';
 import { getAcademicValues } from '../../../values/AdminPanel/StudentInputField';
-import { HeaderInputField } from '../../common/InputField/HeaderInputField';
+import MarksTableData from './MarksTableData';
+import { marksValue } from '../../../values/AdminPanel/AttendanceInput';
+import './../users/UserProfile.css';
+import ChangeInput from './../../../common/Modal/ChangeInput';
 
 function Marks() {
   const addAcademicValues = getAcademicValues();
+  const [click, setClick] = useState(false);
+
+  const onSubmitEdit = (data, e) => {
+    e.target.reset();
+    console.log(data);
+    setClick(false);
+  };
+
+  const [selectRefClass, setSelectRefClass] = useState(null);
+  const [selectRefSection, setSelectRefSection] = useState(null);
+  const [selectRefResults, setSelectRefResults] = useState(null);
+
+  const refClearClass = (ref) => setSelectRefClass(ref);
+  const refClearSection = (ref) => setSelectRefSection(ref);
+  const refClearResults = (ref) => setSelectRefResults(ref);
 
   //Define requirements from useform
   const {
@@ -30,10 +47,23 @@ function Marks() {
 
     //CLear Input Field Value
     e.target.reset();
+    selectRefClass.clearValue();
+    selectRefSection.clearValue();
+    selectRefResults.clearValue();
   };
 
   return (
     <div>
+      {click && (
+        <ChangeInput
+          onSubmit={onSubmitEdit}
+          valueArray={marksValue}
+          click={click}
+          setClick={setClick}
+          heading={'Edit Marks'}
+          isCustom1={false} //For showing grid 3
+        />
+      )}
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'Upload Marks'} />
       <div className='main-content'>
         {/* // custom-grid */}
@@ -66,7 +96,7 @@ function Marks() {
                     isRequired={true}
                     options={optionsClass}
                     errors={errors}
-                    // refClear={refClearAcademicFirst}
+                    refClear={refClearClass}
                     ErrorMessage={ErrorMessage}
                   />
                 )}
@@ -83,7 +113,7 @@ function Marks() {
                 defaultValue=''
                 render={({ field }) => (
                   <InputField
-                    title={'Class'.toUpperCase()}
+                    title={'Section'.toUpperCase()}
                     input={'dropdown'}
                     icon={<FaIcons.FaPhotoVideo className='mid-icon' />}
                     name={'studentClass'}
@@ -91,7 +121,7 @@ function Marks() {
                     isRequired={true}
                     options={optionsSection}
                     errors={errors}
-                    // refClear={refClearAcademicFirst}
+                    refClear={refClearSection}
                     ErrorMessage={ErrorMessage}
                   />
                 )}
@@ -116,7 +146,6 @@ function Marks() {
                     isRequired={true}
                     options={optionsSection}
                     errors={errors}
-                    // refClear={refClearAcademicFirst}
                     ErrorMessage={ErrorMessage}
                   />
                 )}
@@ -144,7 +173,7 @@ function Marks() {
                       { value: 'Failed', label: 'Failed' },
                     ]}
                     errors={errors}
-                    // refClear={refClearAcademicFirst}
+                    refClear={refClearResults}
                     ErrorMessage={ErrorMessage}
                   />
                 )}
@@ -164,38 +193,7 @@ function Marks() {
             <span className='title'>View Marks</span>
           </div>
           <div className='content-section'>
-            <table className='table-striped'>
-              <thead>
-                <tr>
-                  <th>Class</th>
-                  <th>Secction</th>
-                  <th>Name</th>
-                  <th>Results</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[1, 2, 3, 4, 5, 6].map((value, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>12</td>
-                      <td>A</td>
-                      <td>Prabin Gautam</td>
-                      <td>Passed</td>
-
-                      <td>
-                        <button className='btn-custom btn-primary btn-1'>
-                          Edit
-                        </button>
-                        <button className='btn-custom btn-danger'>
-                          Update
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <MarksTableData click={click} setClick={setClick} />
           </div>
         </div>
       </div>

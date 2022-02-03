@@ -1,5 +1,5 @@
 import React from 'react';
-import InnerHeader from './../../common/InnerHeader';
+import InnerHeader from './../../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 import { useForm } from 'react-hook-form';
 import {

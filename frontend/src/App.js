@@ -1,7 +1,7 @@
 import './App.css';
-import Sidebar from './components/adminpanel/common/SideBar/Sidebar';
+import Sidebar from './components/common/SideBar/Sidebar';
 import React, { useState } from 'react';
-import NavBar from './components/adminpanel/common/NavBar';
+import NavBar from './components/common/NavBar/NavBar';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Loading from './components/common/Loading';
 
@@ -9,11 +9,11 @@ const Dashboard = React.lazy(() =>
   import('./components/adminpanel/pages/Dashboard')
 );
 const CreateAnnouncement = React.lazy(() =>
-  import('./components/adminpanel/pages/CreateAnnouncement')
+  import('./components/adminpanel/pages/Announcement/CreateAnnouncement')
 );
 
 const ViewAnnouncement = React.lazy(() =>
-  import('./components/adminpanel/pages/ViewAnnouncement')
+  import('./components/adminpanel/pages/Announcement/ViewAnnouncement')
 );
 
 const AddTeacher = React.lazy(() =>
@@ -90,12 +90,12 @@ function App() {
 
   return (
     <>
+      <Sidebar show={showSideBar} />
       <NavBar
         onClickHandler={SideBarHandler}
         username={'PRABIN'}
         show={showSideBar}
       />
-      <Sidebar show={showSideBar} />
       <div className={`main-container ${!showSideBar ? 'close' : null}`}>
         <React.Suspense fallback={<Loading />}>
           <Routes>

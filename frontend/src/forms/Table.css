@@ -7,13 +7,10 @@ table {
   width: 100%;
   margin: 0 auto;
   position: relative;
+  overflow: auto;
 }
 
-.table-striped {
-  margin-top: 20px;
-}
 table thead tr {
-  height: 70px;
   background: #36304a;
 }
 
@@ -25,14 +22,21 @@ tbody tr {
   font-family: 'Open Sans';
   font-size: 15px;
   color: gray;
-  line-height: 1.2;
-  font-weight: unset;
 }
 
-table td,
+table td {
+  text-align: left;
+  padding: 15px;
+}
+
 table th {
   text-align: left;
-  padding-left: 30px;
+  padding: 10px;
+}
+
+table th.secondary-heading {
+  background-color: #aeaeae;
+  padding: 4px 5px 7px;
 }
 
 thead th {
@@ -161,7 +165,8 @@ table tbody tr:hover {
 }
 
 .local-filter {
-  width: 80%;
+  width: 100%;
+  max-width: 150px;
   border-radius: 4px;
   padding: 2px 6px;
 }
@@ -171,4 +176,18 @@ table tbody tr:hover {
   font-size: 2rem;
   padding: 5rem;
   color: #dc3545;
+}
+
+.input-range {
+  display: grid;
+  grid-template-columns: 1fr 10px 1fr;
+  gap: 2px;
+}
+
+.input-range span {
+  text-align: center;
+}
+
+.subject-column {
+  min-width: 500px;
 }

@@ -73,7 +73,7 @@
 .model-section {
   display: none;
   position: fixed;
-  z-index: 999;
+  z-index: 10001;
   padding-top: 100px;
   left: 0;
   top: 0;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import InnerHeader from './../../common/InnerHeader';
+import InnerHeader from './../../../common/InnerHeader';
 import * as MdIcons from 'react-icons/md';
 import * as FaIcons from 'react-icons/fa';
 import { getTeacherInputValues } from '../../../values/AdminPanel/TeacherInputField';
@@ -60,6 +60,10 @@ function AddTeacher() {
             errors={errors}
             ErrorMessage={ErrorMessage}
             isCustom={false}
+            hasFile={true}
+            fileTitle={'Upload Photo'}
+            fileIcon={<FaIcons.FaPhotoVideo className='mid-icon' />}
+            fileName={'teacherPhoto'}
           />
           <button className='morebutton btn' type='submit'>
             Submit

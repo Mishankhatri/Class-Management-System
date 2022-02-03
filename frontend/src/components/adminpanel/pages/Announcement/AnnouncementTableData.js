@@ -1,49 +1,57 @@
+import axios from 'axios';
 import React, { useEffect, useState, useMemo } from 'react';
+import { SelectColumnFilter } from '../../../common/Table/filters';
 import TableContainer from '../../../common/Table/TableContainer';
-import { timeTable_value } from '../../../values/AdminPanel/TimetableValues';
+import { announcementValue } from '../../../values/AdminPanel/AnnouncementInput';
 
-const ViewTimetable_Table = ({ click, setClick }) => {
-  const data = timeTable_value;
+const AnnouncementTableData = ({ click, setClick }) => {
+  const data = announcementValue;
 
   const columns = useMemo(
     () => [
       {
         Header: 'SN',
-        SearchAble: false,
         Cell: ({ row: { index } }) => {
           return index + 1;
         },
+        SearchAble: false,
       },
       {
-        Header: 'Day',
-        accessor: 'day',
+        Header: 'Type',
+        accessor: 'type',
         SearchAble: true,
+        Filter: SelectColumnFilter,
+        filter: 'includes',
       },
       {
-        Header: 'Time',
-        accessor: 'time',
+        Header: 'For',
+        accessor: 'for',
         SearchAble: true,
-      },
-      {
-        Header: 'Class',
-        accessor: 'classes',
-        SearchAble: true,
-      },
-      {
-        Header: 'Section',
-        accessor: 'section',
-        SearchAble: true,
+        Filter: SelectColumnFilter,
+        filter: 'includes',
       },
       {
         Header: 'Subject',
         accessor: 'subject',
+        SearchAble: false,
+        className: 'subject-column',
+      },
+      {
+        Header: 'File',
+        accessor: 'file',
+        SearchAble: false,
+      },
+      {
+        Header: 'Created By',
+        accessor: 'createdBy',
         SearchAble: true,
       },
       {
-        Header: 'Teacher',
-        accessor: 'teacher',
+        Header: 'Created At',
+        accessor: 'createdAt',
         SearchAble: true,
       },
+
       {
         Header: 'Action',
         SearchAble: false,
@@ -66,11 +74,11 @@ const ViewTimetable_Table = ({ click, setClick }) => {
 
   return (
     <>
-      <div style={{ margin: '20px 30px', marginBottom: 50 }}>
+      <div>
         <TableContainer columns={columns} data={data} />
       </div>
     </>
   );
 };
 
-export default ViewTimetable_Table;
+export default AnnouncementTableData;

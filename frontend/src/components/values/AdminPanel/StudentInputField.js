@@ -71,14 +71,6 @@ const StudentFieldValue = [
     isRequired: true,
     name: 'studentLocation',
   },
-  {
-    title: 'Upload Photo',
-    input: 'file',
-    isImageFile: true,
-    icon: <FaIcons.FaPhotoVideo className='mid-icon' />,
-    isRequired: true,
-    name: 'studentPhoto',
-  },
 ];
 
 const ParentInfoField = [
@@ -160,15 +152,6 @@ const ParentInfoField = [
     placeholder: 'example@domain.com',
     isRequired: false,
     name: 'parentEmail',
-  },
-
-  {
-    title: 'Upload Photo',
-    input: 'file',
-    isImageFile: true,
-    icon: <FaIcons.FaPhotoVideo className='mid-icon' />,
-    isRequired: false,
-    name: 'parentPhoto',
   },
 ];
 
