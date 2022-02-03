@@ -5,6 +5,7 @@ import NavBar from './components/common/NavBar/NavBar';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Loading from './components/common/Loading';
 import { getMenuValues } from './components/common/SideBar/SideMenuValue';
+import ProfileImage from './assets/profiles/pas075bct029.jpg';
 
 const Dashboard = React.lazy(() =>
   import('./components/adminpanel/pages/Dashboard')
@@ -92,6 +93,7 @@ function App() {
         onClickHandler={SideBarHandler}
         username={'PRABIN'}
         show={showSideBar}
+        profilePhoto={ProfileImage}
       />
       <div className={`main-container ${!showSideBar ? 'close' : null}`}>
         <React.Suspense fallback={<Loading />}>

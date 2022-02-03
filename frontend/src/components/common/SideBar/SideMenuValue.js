@@ -202,15 +202,15 @@ const menuTeacherValue = [
     submenus: [
       {
         name: 'Attendance',
-        to: '/teacher/reports/presence',
+        to: '/teacher/reports/view',
       },
       {
         name: 'Marks',
-        to: '/teacher/reports/marks',
+        to: '/teacher/reports/create',
       },
     ],
     icon: <FaIcons.FaAddressCard />,
-    to: '/teacher/reports/presence',
+    to: '/teacher/reports/view',
   },
 
   {

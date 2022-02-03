@@ -5,6 +5,7 @@ import NavBar from './components/common/NavBar/NavBar';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Loading from './components/common/Loading';
 import { menuTeacherValue } from './components/common/SideBar/SideMenuValue';
+import ProfileImage from './assets/profiles/pas075bct022.jpg';
 
 function TeacherPanel() {
   const [showSideBar, setSideBar] = useState(true);
@@ -23,6 +24,7 @@ function TeacherPanel() {
         onClickHandler={SideBarHandler}
         username={'Mishan'}
         show={showSideBar}
+        profilePhoto={ProfileImage}
       />
     </React.Fragment>
   );

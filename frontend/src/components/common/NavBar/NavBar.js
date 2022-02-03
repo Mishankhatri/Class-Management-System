@@ -3,11 +3,11 @@ import * as BsIcons from 'react-icons/bs';
 import * as BiIcons from 'react-icons/bi';
 import * as RiIcons from 'react-icons/ri';
 import * as FaIcons from 'react-icons/fa';
-import ProfileImage from '../../../assets/profiles/pas075bct029.jpg';
+
 import { Link, useNavigate } from 'react-router-dom';
 import NavBarNotification from './NavBarNotification';
 
-function NavBar({ onClickHandler, username, show }) {
+function NavBar({ onClickHandler, username, show, profilePhoto }) {
   const [showDropDown, setDropDown] = useState(false);
   const [showDropDownNotification, setDropDownNotification] = useState(false);
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ function NavBar({ onClickHandler, username, show }) {
               <BsIcons.BsBell className='notification__icon' />
             </div>
             <img
-              src={ProfileImage}
+              src={profilePhoto}
               alt='profile-image'
               className='profile-image'
             />
