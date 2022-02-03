@@ -17,7 +17,9 @@ function NavBar({ onClickHandler, username, show }) {
       <div className={show ? 'navigation' : 'navigation close'}>
         <div className='navbar'>
           <div className='left-section'>
-            <button className='backbtn' onClick={onClickHandler}>
+            <button
+              className={show ? 'backbtn active' : 'backbtn'}
+              onClick={onClickHandler}>
               <FaIcons.FaAlignLeft className='btn-outline-info' />
             </button>
           </div>

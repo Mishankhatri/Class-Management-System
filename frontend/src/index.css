@@ -50,16 +50,17 @@ body {
 }
 
 .navigation .navbar .backbtn {
-  border: 1px solid #17a2b8;
+  border: 2px solid #17a2b8;
   padding: 0.5rem 0.7rem;
   font-size: 1.2rem;
   border-radius: 0.25rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+  transition: color 0.5s ease-in-out, background-color 0.5s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   cursor: pointer;
 }
 
-.navigation .navbar .backbtn:hover {
+.navigation .navbar .backbtn:hover,
+.navigation .navbar .backbtn.active {
   background-color: #17a2b8;
   color: white;
 }
