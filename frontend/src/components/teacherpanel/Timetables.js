@@ -1,3 +1,5 @@
+import React from 'react';
+
 function Timetables() {
   return (
     <React.Fragment>

@@ -145,22 +145,19 @@ Consists Styling of
 }
 
 .morebutton {
-  width: 8rem;
-  position: relative;
-  /* left: 50%; */
-  /* top: -15px; */
-  /* transform: translate(-50%); */
-  border-radius: 5px;
+  border-radius: 4px;
+  border-style: none;
   text-align: center;
   vertical-align: middle;
-  background-color: #009ddc;
+  background-color: #222;
   padding: 10px;
+  line-height: 1.5;
   margin-bottom: 10px;
   cursor: pointer;
 }
 
 .morebutton:hover {
-  background-color: #1b90be;
+  opacity: 0.75;
 }
 
 .btn-text {

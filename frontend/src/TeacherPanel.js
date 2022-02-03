@@ -6,6 +6,51 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import Loading from './components/common/Loading';
 import { menuTeacherValue } from './components/common/SideBar/SideMenuValue';
 import ProfileImage from './assets/profiles/pas075bct022.jpg';
+import Error404 from './components/common/Error404';
+
+const Dashboard = React.lazy(() =>
+  import('./components/teacherpanel/Dashboard')
+);
+
+const ViewTimetables = React.lazy(() =>
+  import('./components/teacherpanel/Timetables')
+);
+
+const LectureNotes = React.lazy(() =>
+  import('./components/teacherpanel/LectureNotes')
+);
+
+const CreateMark = React.lazy(() =>
+  import('./components/teacherpanel/reports/CreateMark')
+);
+
+const ViewMark = React.lazy(() =>
+  import('./components/teacherpanel/reports/ViewMark')
+);
+
+const MarkAttendance = React.lazy(() =>
+  import('./components/teacherpanel/attendance/MarkAttendance')
+);
+
+const ViewAttendance = React.lazy(() =>
+  import('./components/teacherpanel/attendance/ViewAttendance')
+);
+
+const CreateAssignment = React.lazy(() =>
+  import('./components/teacherpanel/assignment/CreateAssignment')
+);
+
+const DownloadAssignment = React.lazy(() =>
+  import('./components/teacherpanel/assignment/DownloadAssignment')
+);
+
+const CreateAnnouncement = React.lazy(() =>
+  import('./components/teacherpanel/announcement/CreateAnnouncement')
+);
+
+const ViewAnnouncement = React.lazy(() =>
+  import('./components/teacherpanel/announcement/ViewAnnouncement')
+);
 
 function TeacherPanel() {
   const [showSideBar, setSideBar] = useState(true);
@@ -26,6 +71,41 @@ function TeacherPanel() {
         show={showSideBar}
         profilePhoto={ProfileImage}
       />
+      <div className={`main-container ${!showSideBar ? 'close' : null}`}>
+        <React.Suspense fallback={<Loading />}>
+          <Routes>
+            <Route
+              path='/'
+              element={<Navigate replace to='/teacher/dashboard' />}
+            />
+            <Route
+              path='/*'
+              element={
+                <div className='main-content'>
+                  <Error404 />
+                </div>
+              }
+            />
+            <Route path='/dashboard' element={<Dashboard />} />
+            <Route
+              path='/assignment/download'
+              element={<DownloadAssignment />}
+            />
+            <Route path='/assignment/create' element={<CreateAssignment />} />
+            <Route path='/attendance/view' element={<ViewAttendance />} />
+            <Route path='/attendance/mark' element={<MarkAttendance />} />
+            <Route
+              path='/announcement/create'
+              element={<CreateAnnouncement />}
+            />
+            <Route path='/announcement/view' element={<ViewAnnouncement />} />
+            <Route path='/timetables/view' element={<ViewTimetables />} />
+            <Route path='/notes' element={<LectureNotes />} />
+            <Route path='/reports/create' element={<CreateMark />} />
+            <Route path='/reports/view' element={<ViewMark />} />
+          </Routes>
+        </React.Suspense>
+      </div>
     </React.Fragment>
   );
 }

@@ -222,7 +222,7 @@ body {
   background-color: #f8f9fc;
   width: 15.25rem;
   height: 100vh;
-  left: -15rem;
+  left: -15.5rem;
   transition: all 0.5s;
   overflow-y: auto;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
@@ -232,12 +232,12 @@ body {
 .visible-sidemenu .title {
   font: normal 25px 'PoppinsBold', sans-serif;
   letter-spacing: 0.5px;
-  color: #5a67ba;
-  background-color: #f1f2f7;
-  /* F1F2F7 */
+  /* color: #5a67ba; */
+  background-color: rgba(0, 0, 0, 0.85);
   padding: 30px 0;
   text-align: center;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  width: 100%;
 }
 
 .sidemenu {

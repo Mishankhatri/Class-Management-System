@@ -7,7 +7,7 @@ function Sidebar({ show, title, menues }) {
     <>
       <div className={show ? 'visible-sidemenu active' : 'visible-sidemenu'}>
         <div className='title'>
-          <Link to={'/'} style={{ textDecoration: 'none', color: '#551ABB' }}>
+          <Link to={'/'} style={{ textDecoration: 'none', color: '#fff' }}>
             {title}
           </Link>
         </div>

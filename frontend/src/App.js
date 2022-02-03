@@ -6,6 +6,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import Loading from './components/common/Loading';
 import { getMenuValues } from './components/common/SideBar/SideMenuValue';
 import ProfileImage from './assets/profiles/pas075bct029.jpg';
+import Error404 from './components/common/Error404';
 
 const Dashboard = React.lazy(() =>
   import('./components/adminpanel/pages/Dashboard')
@@ -102,13 +103,17 @@ function App() {
               path='/'
               element={<Navigate replace to='/admin/dashboard' />}
             />
-            <Route
+            {/* <Route
               path='/admin'
               element={<Navigate replace to='/admin/dashboard' />}
-            />
+            /> */}
             <Route
               path='/*'
-              element={<div className='main-content'>Not Found</div>}
+              element={
+                <div className='main-content'>
+                  <Error404 />
+                </div>
+              }
             />
             {/* Dashboard */}
             <Route path='/dashboard' element={<Dashboard />} />
