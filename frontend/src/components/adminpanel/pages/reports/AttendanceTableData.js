@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState, useMemo } from 'react';
 import TableContainer from '../../../common/Table/TableContainer';
 import { attendanceDetail } from '../../../values/AdminPanel/AttendanceInput';
-import { NumberRangeColumnFilter } from './../../../common/Table/filters';
+import { DateRangeColumnFilter } from './../../../common/Table/filters';
 
 const AttendanceTableData = ({ click, setClick }) => {
   const data = attendanceDetail;
@@ -34,7 +34,7 @@ const AttendanceTableData = ({ click, setClick }) => {
       {
         Header: 'Date',
         accessor: 'date',
-        Filter: NumberRangeColumnFilter,
+        Filter: DateRangeColumnFilter,
         filter: 'dateBetween',
         SearchAble: true,
       },

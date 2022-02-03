@@ -58,7 +58,7 @@ export function SelectColumnFilter({
   );
 }
 
-export function NumberRangeColumnFilter({
+export function DateRangeColumnFilter({
   column: { filterValue = [], preFilteredRows, setFilter, id },
 }) {
   const [min, max] = React.useMemo(() => {
@@ -99,6 +99,56 @@ export function NumberRangeColumnFilter({
         }}
         className='local-filter'
         placeholder='End'
+      />
+    </div>
+  );
+}
+
+export function NumberRangeColumnFilter({
+  column: { filterValue = [], preFilteredRows, setFilter, id },
+}) {
+  const [min, max] = React.useMemo(() => {
+    let min = preFilteredRows.length ? preFilteredRows[0].values[id] : 0;
+    let max = preFilteredRows.length ? preFilteredRows[0].values[id] : 0;
+    preFilteredRows.forEach((row) => {
+      min = Math.min(row.values[id], min);
+      max = Math.max(row.values[id], max);
+    });
+    return [min, max];
+  }, [id, preFilteredRows]);
+
+  return (
+    <div>
+      <input
+        value={filterValue[0] || ''}
+        type='number'
+        min={0}
+        onChange={(e) => {
+          const val = e.target.value;
+          setFilter((old = []) => [
+            val ? parseInt(val, 10) : undefined,
+            old[1],
+          ]);
+        }}
+        placeholder={`Min (${min})`}
+        className='local-filter'
+        style={{ marginRight: 10 }}
+      />
+      <span>-</span>
+      <input
+        value={filterValue[1] || ''}
+        type='number'
+        min={0}
+        onChange={(e) => {
+          const val = e.target.value;
+          setFilter((old = []) => [
+            old[0],
+            val ? parseInt(val, 10) : undefined,
+          ]);
+        }}
+        placeholder={`Max (${max})`}
+        className='local-filter'
+        style={{ marginLeft: 10 }}
       />
     </div>
   );
