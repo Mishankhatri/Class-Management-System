@@ -228,6 +228,25 @@ const menuStudentValue = [
     icon: <MdIcons.MdDashboard />,
     to: '/student/dashboard',
   },
+
+  {
+    name: 'View Attendance',
+    hasSubMenu: false,
+    icon: <FaIcons.FaAddressCard />,
+    to: '/student/reports/attendance',
+  },
+  {
+    name: 'View Timetables',
+    hasSubMenu: false,
+    icon: <FaIcons.FaCalendar />,
+    to: '/student/timetables/view',
+  },
+  {
+    name: 'Announcement',
+    hasSubMenu: false,
+    icon: <FaIcons.FaBullhorn />,
+    to: '/student/announcements',
+  },
   {
     name: 'Assignment',
     hasSubMenu: true,
@@ -244,35 +263,6 @@ const menuStudentValue = [
     icon: <FaIcons.FaCode />,
     to: '/student/assignment/view',
   },
-  {
-    name: 'Reports',
-    hasSubMenu: true,
-    submenus: [
-      {
-        name: 'View Attendance',
-        to: '/student/reports/attendance',
-      },
-      {
-        name: 'View Marks',
-        to: '/student/reports/marks',
-      },
-    ],
-    icon: <FaIcons.FaAddressCard />,
-    to: '/student/reports/attendance',
-  },
-  {
-    name: 'View Timetables',
-    hasSubMenu: false,
-    icon: <FaIcons.FaCalendar />,
-    to: '/student/timetables/view',
-  },
-  {
-    name: 'Announcement',
-    hasSubMenu: false,
-    icon: <FaIcons.FaBullhorn />,
-    to: '/student/announcements',
-  },
-
   {
     name: 'Examination',
     hasSubMenu: true,
