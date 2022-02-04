@@ -184,7 +184,10 @@ function App() {
 
             {/* UserProfile Option  */}
             <Route path="admin/settings" element={<Settings />} />
-            <Route path="admin/profiles" element={<UserProfile />} />
+            <Route
+              path="admin/profiles"
+              element={<UserProfile image={user.profile_image} />}
+            />
           </Routes>
         </React.Suspense>
       </div>

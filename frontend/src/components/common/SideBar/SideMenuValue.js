@@ -212,12 +212,21 @@ const menuTeacherValue = [
     icon: <FaIcons.FaAddressCard />,
     to: "/teacher/reports/view",
   },
-
   {
-    name: "Lecture note",
-    hasSubMenu: false,
+    name: "Notes",
+    hasSubMenu: true,
+    submenus: [
+      {
+        name: "View Notes",
+        to: "/teacher/notes/view",
+      },
+      {
+        name: "Upload Notes",
+        to: "/teacher/notes/upload",
+      },
+    ],
     icon: <FaIcons.FaStickyNote />,
-    to: "/teacher/notes",
+    to: "/teacher/notes/view",
   },
 ];
 

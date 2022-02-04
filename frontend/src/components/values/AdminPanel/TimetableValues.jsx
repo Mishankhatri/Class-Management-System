@@ -22,7 +22,15 @@ const timeTable_value = [
     teacher: "Prabin Gautam",
   },
   {
-    day: "Sunday",
+    day: "Monday",
+    time: "10:05 - 10:50",
+    classes: 12,
+    section: "A",
+    subject: "Math",
+    teacher: "Prabin Gautam",
+  },
+  {
+    day: "Tuesday",
     time: "10:05 - 10:50",
     classes: 12,
     section: "A",
@@ -38,7 +46,7 @@ const timeTable_value = [
     teacher: "Prabin Gautam",
   },
   {
-    day: "Sunday",
+    day: "Wednesday",
     time: "10:05 - 10:50",
     classes: 12,
     section: "A",
@@ -46,7 +54,7 @@ const timeTable_value = [
     teacher: "Prabin Gautam",
   },
   {
-    day: "Sunday",
+    day: "Thursday",
     time: "10:05 - 10:50",
     classes: 12,
     section: "A",
@@ -54,15 +62,7 @@ const timeTable_value = [
     teacher: "Prabin Gautam",
   },
   {
-    day: "Sunday",
-    time: "10:05 - 10:50",
-    classes: 12,
-    section: "A",
-    subject: "Math",
-    teacher: "Prabin Gautam",
-  },
-  {
-    day: "Sunday",
+    day: "Friday",
     time: "10:05 - 10:50",
     classes: 12,
     section: "A",
