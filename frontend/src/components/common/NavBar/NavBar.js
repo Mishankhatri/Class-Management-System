@@ -3,14 +3,13 @@ import * as BsIcons from "react-icons/bs";
 import * as BiIcons from "react-icons/bi";
 import * as RiIcons from "react-icons/ri";
 import * as FaIcons from "react-icons/fa";
-
 import { Link, useNavigate } from "react-router-dom";
 import NavBarNotification from "./NavBarNotification";
 
-function NavBar({ onClickHandler, username, show, profilePhoto, name }) {
+function NavBar({ onClickHandler, username, show, image, name }) {
   const [showDropDown, setDropDown] = useState(false);
   const [showDropDownNotification, setDropDownNotification] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   return (
     <>
@@ -33,11 +32,7 @@ function NavBar({ onClickHandler, username, show, profilePhoto, name }) {
               <div className="notification__symbol"></div>
               <BsIcons.BsBell className="notification__icon" />
             </div>
-            <img
-              src={profilePhoto}
-              alt="profile-image"
-              className="profile-image"
-            />
+            <img src={image} alt="profile-img" className="profile-image" />
             <div className="user-name">
               {username}
               <RiIcons.RiArrowDownSFill
@@ -51,22 +46,22 @@ function NavBar({ onClickHandler, username, show, profilePhoto, name }) {
         <div className={showDropDown ? "menu active" : "menu inactive"}>
           <ul className="profile-options">
             <li>
-              <a href={`/${name}/settings`} className="menu-link">
+              <Link to={`/${name}/settings`} className="menu-link">
                 <RiIcons.RiSettings5Fill className="menu-icon" />
                 Settings
-              </a>
+              </Link>
             </li>
             <li>
-              <a href={`/${name}/profiles`} className="menu-link">
+              <Link to={`/${name}/profiles`} className="menu-link">
                 <BiIcons.BiUser className="menu-icon" />
                 User Profile
-              </a>
+              </Link>
             </li>
             <li>
-              <a className="menu-link" onClick={() => navigate("/login")}>
+              <Link to={"/logout"} className="menu-link">
                 <BiIcons.BiLogOut className="menu-icon" />
                 Logout
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

@@ -7,6 +7,7 @@ import Loading from "./components/common/Loading";
 import { getMenuValues } from "./components/common/SideBar/SideMenuValue";
 import ProfileImage from "./assets/profiles/pas075bct029.jpg";
 import Error404 from "./components/common/Error404";
+import { useSelector } from "react-redux";
 
 const Dashboard = React.lazy(() =>
   import("./components/adminpanel/pages/Dashboard")
@@ -77,6 +78,7 @@ const TeacherFullDetail = React.lazy(() =>
 );
 
 function App() {
+  const user = useSelector((state) => state.auth.user);
   const [showSideBar, setSideBar] = useState(true);
 
   const SideBarHandler = () => {
@@ -93,7 +95,9 @@ function App() {
       />
       <NavBar
         onClickHandler={SideBarHandler}
-        username={"PRABIN"}
+        // username={"PRABIN"}
+        username={user.username}
+        image={user.profile_image}
         show={showSideBar}
         profilePhoto={ProfileImage}
         name="admin"
