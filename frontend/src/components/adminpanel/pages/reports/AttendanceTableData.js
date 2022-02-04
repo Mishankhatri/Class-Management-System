@@ -1,8 +1,8 @@
-import axios from 'axios';
-import React, { useEffect, useState, useMemo } from 'react';
-import TableContainer from '../../../common/Table/TableContainer';
-import { attendanceDetail } from '../../../values/AdminPanel/AttendanceInput';
-import { NumberRangeColumnFilter } from './../../../common/Table/filters';
+import axios from "axios";
+import React, { useEffect, useState, useMemo } from "react";
+import TableContainer from "../../../common/Table/TableContainer";
+import { attendanceDetail } from "../../../values/AdminPanel/AttendanceInput";
+import { DateRangeColumnFilter } from "./../../../common/Table/filters";
 
 const AttendanceTableData = ({ click, setClick }) => {
   const data = attendanceDetail;
@@ -10,47 +10,48 @@ const AttendanceTableData = ({ click, setClick }) => {
   const columns = useMemo(
     () => [
       {
-        Header: 'SN',
+        Header: "SN",
         Cell: ({ row: { index } }) => {
           return index + 1;
         },
         SearchAble: false,
       },
       {
-        Header: 'Name',
-        accessor: 'name',
+        Header: "Name",
+        accessor: "name",
         SearchAble: true,
       },
       {
-        Header: 'Rollno',
-        accessor: 'roll',
+        Header: "Rollno",
+        accessor: "roll",
         SearchAble: true,
       },
       {
-        Header: 'Class',
-        accessor: 'class',
+        Header: "Class",
+        accessor: "class",
         SearchAble: true,
       },
       {
-        Header: 'Date',
-        accessor: 'date',
-        Filter: NumberRangeColumnFilter,
-        filter: 'dateBetween',
+        Header: "Date",
+        accessor: "date",
+        Filter: DateRangeColumnFilter,
+        filter: "dateBetween",
         SearchAble: true,
       },
       {
-        Header: 'Attendance',
-        accessor: 'attendance',
+        Header: "Subject",
+        accessor: "subject",
         SearchAble: true,
       },
       {
-        Header: 'Total Absent',
-        accessor: 'totalAbsent',
+        Header: "Attendance",
+        accessor: "attendance",
         SearchAble: true,
       },
+
       {
-        Header: 'Total Present',
-        accessor: 'totalPresent',
+        Header: "Present/Absent",
+        accessor: "P/A",
         SearchAble: true,
       },
     ],
@@ -59,7 +60,7 @@ const AttendanceTableData = ({ click, setClick }) => {
 
   return (
     <>
-      <div style={{ margin: '20px 30px', marginBottom: 50 }}>
+      <div style={{ margin: "20px 30px", marginBottom: 50 }}>
         <TableContainer columns={columns} data={data} isRangeSearch={true} />
       </div>
     </>

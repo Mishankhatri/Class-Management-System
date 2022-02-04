@@ -9,10 +9,10 @@ export function HeaderInputField({
   name,
 }) {
   return (
-    <div className='label-title'>
+    <div className="label-title">
       {icon}
-      <label className='mid-title'>{title}</label>
-      {isRequired && <span className='required'> *</span>}
+      <label className="mid-title">{title}</label>
+      {isRequired && <span className="required"> *</span>}
       {/* <br />
       <ErrorMessage
         errors={errors}

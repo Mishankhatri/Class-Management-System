@@ -25,7 +25,7 @@ Consists Styling of
 /* Inner Header CSS Code  */
 
 .main-container .header {
-  font: normal 16px 'Poppins', sans-serif;
+  font: normal 16px "Poppins", sans-serif;
   padding-bottom: 10px;
   border-bottom: 0.7px solid #c8cbd9;
 }
@@ -80,12 +80,12 @@ Consists Styling of
 }
 
 .cards .name-details .number {
-  font: bold 35px 'Open Sans', sans-serif;
+  font: bold 35px "Open Sans", sans-serif;
   letter-spacing: 0.5px;
 }
 
 .cards .name-details .name {
-  font: normal 18px 'Open Sans', sans-serif;
+  font: normal 18px "Open Sans", sans-serif;
   letter-spacing: 0.5px;
 }
 
@@ -98,7 +98,7 @@ Consists Styling of
 
 .card-section {
   margin: 40px 0;
-  font: normal 16px 'Open Sans', sans-serif;
+  font: normal 16px "Open Sans", sans-serif;
   /* width: 15rem; */
   /* width: fit-content; */
   padding-bottom: 30px;
@@ -145,22 +145,19 @@ Consists Styling of
 }
 
 .morebutton {
-  width: 8rem;
-  position: relative;
-  /* left: 50%; */
-  /* top: -15px; */
-  /* transform: translate(-50%); */
-  border-radius: 5px;
+  border-radius: 4px;
+  border-style: none;
   text-align: center;
   vertical-align: middle;
-  background-color: #009ddc;
+  background-color: #222;
   padding: 10px;
+  line-height: 1.5;
   margin-bottom: 10px;
   cursor: pointer;
 }
 
 .morebutton:hover {
-  background-color: #1b90be;
+  opacity: 0.75;
 }
 
 .btn-text {
@@ -174,7 +171,7 @@ Consists Styling of
   border: none;
   width: 6rem;
   color: white;
-  font: normal 16px 'Poppins', sans-serif;
+  font: normal 16px "Poppins", sans-serif;
 }
 
 .btn-custom-selection {
@@ -189,6 +186,12 @@ Consists Styling of
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 15px 40px;
+}
+
+.custom-announcementCreate {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 5rem;
 }
 
 .modal-inputfield {
@@ -231,7 +234,7 @@ Consists Styling of
 }
 
 .mid-title {
-  font: bold 14.5px 'Open Sans', sans-serif;
+  font: bold 14.5px "Open Sans", sans-serif;
   vertical-align: middle;
   letter-spacing: 0.5px;
 }
@@ -244,7 +247,7 @@ Consists Styling of
   border-radius: 4px;
   outline: none;
   line-height: 38px;
-  font: normal 16px 'Open Sans', sans-serif;
+  font: normal 16px "Open Sans", sans-serif;
 }
 
 .input:focus {
@@ -257,7 +260,7 @@ Consists Styling of
   transition: width 0.5s;
 }
 
-input[type='file'] {
+input[type="file"] {
   color: #83889c;
 }
 
@@ -278,7 +281,7 @@ input[type='file'] {
 
 .errors {
   color: #ba3939;
-  font: bold 10.5px 'Open Sans', sans-serif;
+  font: bold 10.5px "Open Sans", sans-serif;
   background: #ffe0e0;
   border: 1px solid #a33a3a;
   padding: 2px 8px;
@@ -334,6 +337,10 @@ input[type='file'] {
   .content-section.custom-content,
   .modal-inputfield {
     display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .custom-announcementCreate {
     grid-template-columns: 1fr;
   }
 }

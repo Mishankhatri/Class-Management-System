@@ -1,13 +1,13 @@
-import React from 'react';
-import { HeaderInputField } from '../../common/InputField/HeaderInputField';
+import React from "react";
+import { HeaderInputField } from "../../common/InputField/HeaderInputField";
 
 function ViewModal({ title, value }) {
   return (
-    <div className='info'>
-      <div className='mid-content'>
+    <div className="info">
+      <div className="mid-content">
         <HeaderInputField title={title} />
-        <div className='label-input'>
-          <input type='text' className='input' disabled value={value} />
+        <div className="label-input">
+          <input type="text" className="input" disabled value={value} />
         </div>
       </div>
     </div>

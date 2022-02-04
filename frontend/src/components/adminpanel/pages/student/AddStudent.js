@@ -133,56 +133,6 @@ function AddStudent() {
             </div>
             <div className='content-section'>
               <div className='allinputfield'>
-                {/* This is looping Process 
-                    Difficult from Using Loop
-                    Can't Pass functions (...refClearAcademicFirst...) and 
-                    (...refClearAcademicSecond...) on
-                    refClear below. I don't have any idea.
-
-                    We need to pass two functions for clearing the select value after submitting. If only one passed, it will clear only the last one. 
-
-                    I tried passing functions to StudentInputField  but it yields no solution. Maybe I had done wrong. 
-                    */}
-
-                {/* This is Looping  */}
-                {/* {addAcademicValues.map((value, index) => {
-                  return (
-                    <Controller
-                      name={value.name}
-                      control={control}
-                      key={index}
-                      rules={{
-                        required: {
-                          value: value.isRequired,
-                          message: `${value.title} is required`,
-                        },
-                      }}
-                      defaultValue=''
-                      render={({ field }) => (
-                        <InputField
-                          title={value.title.toUpperCase()}
-                          input={value.input}
-                          icon={value.icon}
-                          placeholder={value?.placeholder}
-                          name={value.name}
-                          onChangeHandler={field.onChange}
-                          isCustomInput={value.isCustomField}
-                          isTextArea={value?.isTextarea}
-                          isRequired={value.isRequired}
-                          options={value?.options}
-                          errors={errors}
-                          refClear={value.reference}
-                          ErrorMessage={ErrorMessage}
-                        />
-                      )}
-                    />
-                  );
-                })} */}
-
-                {/* This is manual Process || Not Done using looping
-                    Using this, The select options will be clear after submitting 
-                    Difficult from Using Loop
-                    */}
                 <Controller
                   name={'studentClass'}
                   control={control}

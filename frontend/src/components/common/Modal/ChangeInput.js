@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 
-import * as FaIcons from 'react-icons/fa';
-import InputField from '../InputField/InputField';
+import * as FaIcons from "react-icons/fa";
+import InputField from "../InputField/InputField";
 
 function ChangeInput({
   valueArray,
@@ -16,29 +16,29 @@ function ChangeInput({
   const { handleSubmit, control } = useForm();
 
   return (
-    <div className='modal'>
-      <div className={click ? 'model-section visible' : 'model-section'}>
+    <div className="modal">
+      <div className={click ? "model-section visible" : "model-section"}>
         {/* Add class visible to above element to see modal  */}
-        <div className='modal-content'>
+        <div className="modal-content">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <span className='close' onClick={() => setClick(!click)}>
+            <span className="close" onClick={() => setClick(!click)}>
               &times;
             </span>
-            <div className='content'>
+            <div className="content">
               <h2>{heading}</h2>
-              <div className='content-section'>
+              <div className="content-section">
                 <div
                   className={
-                    isCustom1 ? 'custom-modal-input' : 'allinputfield'
+                    isCustom1 ? "custom-modal-input" : "allinputfield"
                   }>
                   {valueArray.map((value, index) => {
                     return (
-                      value.input != 'file' && (
+                      value.input != "file" && (
                         <Controller
                           name={value.name}
                           control={control}
                           key={index}
-                          defaultValue=''
+                          defaultValue=""
                           render={({ field }) => (
                             <InputField
                               title={value.title.toUpperCase()}
@@ -61,16 +61,16 @@ function ChangeInput({
                 </div>
                 {isCustom2 && (
                   <Controller
-                    name={'description'}
+                    name={"description"}
                     control={control}
-                    defaultValue=''
+                    defaultValue=""
                     render={({ field }) => (
                       <InputField
-                        title={'Description'.toUpperCase()}
-                        input={'textarea'}
-                        icon={<FaIcons.FaFile className='mid-icon' />}
-                        placeholder={'Write  description'}
-                        name={'description'}
+                        title={"Description".toUpperCase()}
+                        input={"textarea"}
+                        icon={<FaIcons.FaFile className="mid-icon" />}
+                        placeholder={"Write  description"}
+                        name={"description"}
                         onChangeHandler={field.onChange}
                         isTextArea={true}
                         isRequired={true}
@@ -81,8 +81,8 @@ function ChangeInput({
                 )}
               </div>
               <button
-                className='btn-submit'
-                style={{ marginLeft: '40px', marginTop: '20px' }}>
+                className="btn-submit"
+                style={{ marginLeft: "40px", marginTop: "20px" }}>
                 Submit
               </button>
             </div>

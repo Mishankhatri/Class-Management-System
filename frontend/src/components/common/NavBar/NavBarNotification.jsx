@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import NotificationMessage from './NotificationMessage';
-import NotificationDummy from './NotifcationDummyValues';
-import Moment from 'react-moment';
+import React, { useState } from "react";
+import NotificationMessage from "./NotificationMessage";
+import NotificationDummy from "./NotifcationDummyValues";
+import Moment from "react-moment";
 
 function NavBarNotification({ showDropDown }) {
   const className = showDropDown
-    ? 'menu active notification'
-    : 'menu inactive notification';
+    ? "menu active notification"
+    : "menu inactive notification";
 
   const getNotification = NotificationDummy();
 
   return (
     <React.Fragment>
       <div className={className}>
-        <div className='heading'>Notifications</div>
+        <div className="heading">Notifications</div>
         {getNotification.map((value, index) => {
-          const messageText = value.messageText.slice(0, 80).concat('...');
+          const messageText = value.messageText.slice(0, 80).concat("...");
           const dates = <Moment fromNow>{value.date}</Moment>;
 
           return (

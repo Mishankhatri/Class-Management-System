@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import InnerHeader from './../../../common/InnerHeader';
-import * as MdIcons from 'react-icons/md';
-import * as FaIcons from 'react-icons/fa';
-import { getTeacherInputValues } from '../../../values/AdminPanel/TeacherInputField';
+import React, { useState } from "react";
+import InnerHeader from "./../../../common/InnerHeader";
+import * as MdIcons from "react-icons/md";
+import * as FaIcons from "react-icons/fa";
+import { getTeacherInputValues } from "../../../values/AdminPanel/TeacherInputField";
 
-import { useForm, Controller, useFormContext } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
-import CustomController from './../../../common/Controller';
+import { useForm, Controller, useFormContext } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import CustomController from "./../../../common/Controller";
 
 // teacher obtained values
 const teacherInitialValue = {
-  teacherFirstName: '',
-  teacherMiddleName: '',
-  teacherLastName: '',
-  teacherGender: '',
-  teacherDOB: '',
-  teacherPhone: '',
-  teacherEmail: '',
-  teacherLocation: '',
-  teacherPhoto: '',
+  teacherFirstName: "",
+  teacherMiddleName: "",
+  teacherLastName: "",
+  teacherGender: "",
+  teacherDOB: "",
+  teacherPhone: "",
+  teacherEmail: "",
+  teacherLocation: "",
+  teacherPhoto: "",
 };
 
 function AddTeacher() {
@@ -47,11 +47,11 @@ function AddTeacher() {
 
   return (
     <div>
-      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'Add Teacher'} />
-      <div className='main-content'>
+      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"Add Teacher"} />
+      <div className="main-content">
         <form onSubmit={handleSubmit(onSubmitForm)}>
           <CustomController
-            title={'ADD TEACHER'}
+            title={"ADD TEACHER"}
             icon={<FaIcons.FaUser />}
             ValueArray={getTeacherInputValues()}
             refClear={refClear}
@@ -61,11 +61,11 @@ function AddTeacher() {
             ErrorMessage={ErrorMessage}
             isCustom={false}
             hasFile={true}
-            fileTitle={'Upload Photo'}
-            fileIcon={<FaIcons.FaPhotoVideo className='mid-icon' />}
-            fileName={'teacherPhoto'}
+            fileTitle={"Upload Photo"}
+            fileIcon={<FaIcons.FaPhotoVideo className="mid-icon" />}
+            fileName={"teacherPhoto"}
           />
-          <button className='morebutton btn' type='submit'>
+          <button className="morebutton btn" type="submit">
             Submit
           </button>
         </form>

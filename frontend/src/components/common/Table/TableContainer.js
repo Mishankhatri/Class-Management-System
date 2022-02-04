@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 import {
   useTable,
   useSortBy,
   useFilters,
   usePagination,
   useGlobalFilter,
-} from 'react-table';
-import { DefaultColumnFilter, GlobalFilter } from './filters';
-import './../../../forms/Table.css';
-import NoDataFound from './Nodatafound';
+} from "react-table";
+import { DefaultColumnFilter, GlobalFilter } from "./filters";
+import "./../../../forms/Table.css";
+import NoDataFound from "./Nodatafound";
 
 const TableContainer = ({ columns, data }) => {
   function dateBetweenFilterFn(rows, id, filterValues) {
@@ -80,7 +80,7 @@ const TableContainer = ({ columns, data }) => {
   );
 
   const generateSortingIndicator = (column) => {
-    return column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : '';
+    return column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : "";
   };
 
   const onChangeInSelect = (event) => {
@@ -94,8 +94,8 @@ const TableContainer = ({ columns, data }) => {
 
   return (
     <React.Fragment>
-      <div className='table-heading'>
-        <div className='select-entries'>
+      <div className="table-heading">
+        <div className="select-entries">
           <span>Show</span>
           <select value={pageSize} onChange={onChangeInSelect}>
             {[5, 10, 20, 30, 40, 50].map((pageSize) => (
@@ -106,7 +106,7 @@ const TableContainer = ({ columns, data }) => {
           </select>
           <span>Entries</span>
         </div>
-        <div className='global-search'>
+        <div className="global-search">
           <span>Search: </span>
           <GlobalFilter
             filterValue={globalFilter}
@@ -114,7 +114,7 @@ const TableContainer = ({ columns, data }) => {
           />
         </div>
       </div>
-      <div style={{ overflow: 'auto' }}>
+      <div style={{ overflow: "auto" }}>
         <table {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup, index) => (
@@ -123,7 +123,7 @@ const TableContainer = ({ columns, data }) => {
                   {headerGroup.headers.map((column) => (
                     <th {...column.getHeaderProps()}>
                       <div {...column.getSortByToggleProps()}>
-                        {column.render('Header')}
+                        {column.render("Header")}
                         {generateSortingIndicator(column)}
                       </div>
                     </th>
@@ -133,10 +133,10 @@ const TableContainer = ({ columns, data }) => {
                   {headerGroup.headers.map((column) => (
                     <th
                       {...column.getHeaderProps()}
-                      className='secondary-heading'>
+                      className="secondary-heading">
                       {column.canFilter
                         ? column.SearchAble
-                          ? column.render('Filter')
+                          ? column.render("Filter")
                           : null
                         : null}
                     </th>
@@ -165,7 +165,7 @@ const TableContainer = ({ columns, data }) => {
                             {...cell.getCellProps([
                               { className: cell.column?.className },
                             ])}>
-                            {cell.render('Cell')}
+                            {cell.render("Cell")}
                           </td>
                         );
                       })}
@@ -178,9 +178,9 @@ const TableContainer = ({ columns, data }) => {
         </table>
       </div>
 
-      <div className='bottom'>
+      <div className="bottom">
         <div>
-          Showing Page{' '}
+          Showing Page{" "}
           <span>
             {pageIndex + 1} of {pageOptions.length}
           </span>
@@ -188,8 +188,8 @@ const TableContainer = ({ columns, data }) => {
         <div>
           <label>Jump to: </label>
           <input
-            className='input-page'
-            type='number'
+            className="input-page"
+            type="number"
             min={1}
             max={pageOptions.length}
             defaultValue={pageIndex + 1}
@@ -201,8 +201,8 @@ const TableContainer = ({ columns, data }) => {
           <button
             onClick={previousPage}
             disabled={!canPreviousPage}
-            className='table-btn'>
-            <span className=''> Previous </span>
+            className="table-btn">
+            <span className=""> Previous </span>
           </button>
 
           <label onChange={onChangeInInput}>{pageIndex + 1}</label>
@@ -210,7 +210,7 @@ const TableContainer = ({ columns, data }) => {
           <button
             onClick={nextPage}
             disabled={!canNextPage}
-            className='table-btn'>
+            className="table-btn">
             <span> Next </span>
           </button>
         </div>

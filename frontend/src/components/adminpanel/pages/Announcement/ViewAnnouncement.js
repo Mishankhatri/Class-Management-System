@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import * as MdIcons from 'react-icons/md';
-import * as FaIcons from 'react-icons/fa';
-import InnerHeader from '../../../common/InnerHeader';
+import React, { useState } from "react";
+import * as MdIcons from "react-icons/md";
+import * as FaIcons from "react-icons/fa";
+import InnerHeader from "../../../common/InnerHeader";
 
-import AnnouncementTableData from './AnnouncementTableData';
-import { useForm, Controller } from 'react-hook-form';
-import './../users/UserProfile.css';
-import InputField from '../../../common/InputField/InputField';
+import AnnouncementTableData from "./AnnouncementTableData";
+import { useForm, Controller } from "react-hook-form";
+import "./../users/UserProfile.css";
+import InputField from "../../../common/InputField/InputField";
 
 function ViewAnnouncements() {
   const [click, setClick] = useState(false);
@@ -28,20 +28,20 @@ function ViewAnnouncements() {
   };
   return (
     <div>
-      <div className='modal'>
-        <div className={click ? 'model-section visible' : 'model-section'}>
+      <div className="modal">
+        <div className={click ? "model-section visible" : "model-section"}>
           {/* Add class visible to above element to see modal  */}
-          <div className='modal-content'>
+          <div className="modal-content">
             <form onSubmit={handleSubmit(onSubmit)}>
-              <span className='close' onClick={() => setClick(!click)}>
+              <span className="close" onClick={() => setClick(!click)}>
                 &times;
               </span>
-              <div className='content'>
+              <div className="content">
                 <h2>Edit Announcement</h2>
-                <div className='content-section'>
-                  <div className='custom-modal-input'>
+                <div className="content-section">
+                  <div className="custom-modal-input">
                     <Controller
-                      name={'announcementTypeName'}
+                      name={"announcementTypeName"}
                       control={control}
                       rules={{
                         required: {
@@ -49,28 +49,28 @@ function ViewAnnouncements() {
                           message: `Announcement Type is required`,
                         },
                       }}
-                      defaultValue=''
+                      defaultValue=""
                       render={({ field }) => (
                         <InputField
-                          title={'Type'.toUpperCase()}
-                          input={'dropdown'}
-                          icon={<FaIcons.FaCogs className='mid-icon' />}
-                          name={'announcementTypeName'}
+                          title={"Type".toUpperCase()}
+                          input={"dropdown"}
+                          icon={<FaIcons.FaCogs className="mid-icon" />}
+                          name={"announcementTypeName"}
                           onChangeHandler={field.onChange}
                           isRequired={true}
                           refClear={refClearType}
                           options={[
-                            { value: 'Academic', label: 'Academic' },
-                            { value: 'Admistration', label: 'Admistration' },
-                            { value: 'Admission', label: 'Admission' },
-                            { value: 'Others', label: 'Others' },
+                            { value: "Academic", label: "Academic" },
+                            { value: "Admistration", label: "Admistration" },
+                            { value: "Admission", label: "Admission" },
+                            { value: "Others", label: "Others" },
                           ]}
                         />
                       )}
                     />
 
                     <Controller
-                      name={'announcementFor'}
+                      name={"announcementFor"}
                       control={control}
                       rules={{
                         required: {
@@ -78,40 +78,40 @@ function ViewAnnouncements() {
                           message: `Announcement For is required`,
                         },
                       }}
-                      defaultValue=''
+                      defaultValue=""
                       render={({ field }) => (
                         <InputField
-                          title={'For'.toUpperCase()}
-                          input={'dropdown'}
-                          icon={<FaIcons.FaPhotoVideo className='mid-icon' />}
-                          name={'announcementFor'}
+                          title={"For".toUpperCase()}
+                          input={"dropdown"}
+                          icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
+                          name={"announcementFor"}
                           onChangeHandler={field.onChange}
                           isRequired={true}
                           refClear={refClearFor}
                           options={[
-                            { value: 'All', label: 'All' },
-                            { value: 'Teacher', label: 'Teacher' },
-                            { value: 'Student', label: 'Student' },
+                            { value: "All", label: "All" },
+                            { value: "Teacher", label: "Teacher" },
+                            { value: "Student", label: "Student" },
                           ]}
                         />
                       )}
                     />
 
                     <Controller
-                      name={'studenannouncementFiletClass'}
+                      name={"studenannouncementFiletClass"}
                       control={control}
                       rules={{
                         required: {
                           value: false,
                         },
                       }}
-                      defaultValue=''
+                      defaultValue=""
                       render={({ field }) => (
                         <InputField
-                          title={'Files'.toUpperCase()}
-                          input={'file'}
-                          icon={<FaIcons.FaFile className='mid-icon' />}
-                          name={'announcementFile'}
+                          title={"Files".toUpperCase()}
+                          input={"file"}
+                          icon={<FaIcons.FaFile className="mid-icon" />}
+                          name={"announcementFile"}
                           onChangeHandler={field.onChange}
                           isRequired={false}
                         />
@@ -119,7 +119,7 @@ function ViewAnnouncements() {
                     />
                   </div>
                   <Controller
-                    name={'announcementSubjects'}
+                    name={"announcementSubjects"}
                     control={control}
                     rules={{
                       required: {
@@ -127,13 +127,13 @@ function ViewAnnouncements() {
                         message: `Announcement Subjects is required`,
                       },
                     }}
-                    defaultValue=''
+                    defaultValue=""
                     render={({ field }) => (
                       <InputField
-                        title={'Subjects'.toUpperCase()}
-                        input={'textarea'}
-                        icon={<FaIcons.FaCode className='mid-icon' />}
-                        name={'announcementSubjects'}
+                        title={"Subjects".toUpperCase()}
+                        input={"textarea"}
+                        icon={<FaIcons.FaCode className="mid-icon" />}
+                        name={"announcementSubjects"}
                         onChangeHandler={field.onChange}
                         isRequired={true}
                         isTextArea={true}
@@ -143,8 +143,8 @@ function ViewAnnouncements() {
                   />
                 </div>
                 <button
-                  className='btn-submit'
-                  style={{ marginLeft: '40px', marginTop: '20px' }}>
+                  className="btn-submit"
+                  style={{ marginLeft: "40px", marginTop: "20px" }}>
                   Submit
                 </button>
               </div>
@@ -152,8 +152,8 @@ function ViewAnnouncements() {
           </div>
         </div>
       </div>
-      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'View Announcements'} />
-      <div className='main-content'>
+      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"View Announcements"} />
+      <div className="main-content">
         <AnnouncementTableData click={click} setClick={setClick} />
       </div>
     </div>

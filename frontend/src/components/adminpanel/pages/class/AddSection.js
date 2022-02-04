@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import InnerHeader from './../../../common/InnerHeader';
-import * as MdIcons from 'react-icons/md';
-import * as FaIcons from 'react-icons/fa';
+import React, { useState } from "react";
+import InnerHeader from "./../../../common/InnerHeader";
+import * as MdIcons from "react-icons/md";
+import * as FaIcons from "react-icons/fa";
 
-import { useForm, Controller } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
-import CustomController from '../../../common/Controller';
-import { getSectionValue } from '../../../values/AdminPanel/ClassValue';
+import { useForm, Controller } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import CustomController from "../../../common/Controller";
+import { getSectionValue } from "../../../values/AdminPanel/ClassValue";
 /*
 1) Added usestate to import
 2) Import React Hook Form
@@ -14,10 +14,10 @@ import { getSectionValue } from '../../../values/AdminPanel/ClassValue';
 */
 
 const addClassSectionInitialValue = {
-  sectionName: '',
-  sectionClassName: '',
-  sectionCode: '',
-  sectionDescription: '',
+  sectionName: "",
+  sectionClassName: "",
+  sectionCode: "",
+  sectionDescription: "",
 };
 
 function AddSection() {
@@ -48,11 +48,11 @@ function AddSection() {
 
   return (
     <div>
-      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'Add Section'} />
-      <div className='main-content'>
+      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"Add Section"} />
+      <div className="main-content">
         <form onSubmit={handleSubmit(onSubmitForm)}>
           <CustomController
-            title={'ADD SUBJECT'}
+            title={"ADD SUBJECT"}
             icon={<FaIcons.FaUser />}
             ValueArray={getSectionValue()}
             refClear={refClear}
@@ -62,7 +62,7 @@ function AddSection() {
             ErrorMessage={ErrorMessage}
             isCustom={true}
           />
-          <button className='morebutton btn'>Submit</button>
+          <button className="morebutton btn">Submit</button>
         </form>
       </div>
     </div>

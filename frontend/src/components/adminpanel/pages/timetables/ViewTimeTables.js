@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import InnerHeader from './../../../common/InnerHeader';
-import * as MdIcons from 'react-icons/md';
-import * as FaIcons from 'react-icons/fa';
-import InputField from '../../../common//InputField/InputField';
+import React, { useState } from "react";
+import InnerHeader from "./../../../common/InnerHeader";
+import * as MdIcons from "react-icons/md";
+import * as FaIcons from "react-icons/fa";
+import InputField from "../../../common//InputField/InputField";
 
-import { useForm, Controller } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
-import { timeTable_value } from '../../../values/AdminPanel/TimetableValues';
-import { getAcademicValues } from '../../../values/AdminPanel/StudentInputField';
+import { useForm, Controller } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { timeTable_value } from "../../../values/AdminPanel/TimetableValues";
+import { getAcademicValues } from "../../../values/AdminPanel/StudentInputField";
 
 function ViewTimetables() {
   const addAcademicValues = getAcademicValues();
@@ -32,20 +32,20 @@ function ViewTimetables() {
 
   return (
     <div>
-      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'View Timetables'} />
-      <div className='main-content'>
+      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"View Timetables"} />
+      <div className="main-content">
         <form onSubmit={handleSubmit(onSubmitForm)}>
-          <div className='card-section'>
-            <div className='heading'>
-              <span className='title-icon'>
+          <div className="card-section">
+            <div className="heading">
+              <span className="title-icon">
                 <FaIcons.FaBook />
               </span>
-              <span className='title'>MAKE SELECTION</span>
+              <span className="title">MAKE SELECTION</span>
             </div>
-            <div className='content-section'>
-              <div className='custom-selection'>
+            <div className="content-section">
+              <div className="custom-selection">
                 <Controller
-                  name={'studentSelectionClass'}
+                  name={"studentSelectionClass"}
                   control={control}
                   rules={{
                     required: {
@@ -53,13 +53,13 @@ function ViewTimetables() {
                       message: `Student Class is required`,
                     },
                   }}
-                  defaultValue=''
+                  defaultValue=""
                   render={({ field }) => (
                     <InputField
-                      title={'Class'.toUpperCase()}
-                      input={'dropdown'}
-                      icon={<FaIcons.FaPhotoVideo className='mid-icon' />}
-                      name={'studentClass'}
+                      title={"Class".toUpperCase()}
+                      input={"dropdown"}
+                      icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
+                      name={"studentClass"}
                       onChangeHandler={field.onChange}
                       isRequired={true}
                       options={optionsClass}
@@ -70,7 +70,7 @@ function ViewTimetables() {
                   )}
                 />
                 <Controller
-                  name={'studentSelectionSection'}
+                  name={"studentSelectionSection"}
                   control={control}
                   rules={{
                     required: {
@@ -78,13 +78,13 @@ function ViewTimetables() {
                       message: `Student Section is required`,
                     },
                   }}
-                  defaultValue=''
+                  defaultValue=""
                   render={({ field }) => (
                     <InputField
-                      title={'Student Section'.toUpperCase()}
-                      input={'dropdown'}
-                      icon={<FaIcons.FaPhotoVideo className='mid-icon' />}
-                      name={'studentClass'}
+                      title={"Student Section".toUpperCase()}
+                      input={"dropdown"}
+                      icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
+                      name={"studentClass"}
                       onChangeHandler={field.onChange}
                       isRequired={true}
                       options={optionsClass}
@@ -96,22 +96,22 @@ function ViewTimetables() {
                 />
               </div>
               <button
-                className='morebutton btn btn-custom-selection'
-                type='submit'>
+                className="morebutton btn btn-custom-selection"
+                type="submit">
                 <span>Select</span>
               </button>
             </div>
           </div>
         </form>
-        <div className='card-section'>
-          <div className='heading'>
-            <span className='title-icon'>
+        <div className="card-section">
+          <div className="heading">
+            <span className="title-icon">
               <FaIcons.FaSlidersH />
             </span>
-            <span className='title'>All Slots</span>
+            <span className="title">All Slots</span>
           </div>
-          <div className='content-section'>
-            <table className='table-striped'>
+          <div className="content-section">
+            <table className="table-striped">
               <thead>
                 <tr>
                   <th>Timings</th>

@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import InnerHeader from '../../../common/InnerHeader';
-import * as MdIcons from 'react-icons/md';
-import * as FaIcons from 'react-icons/fa';
+import React, { useState } from "react";
+import InnerHeader from "../../../common/InnerHeader";
+import * as MdIcons from "react-icons/md";
+import * as FaIcons from "react-icons/fa";
 
-import { getCLassValue } from '../../../values/AdminPanel/ClassValue';
-import { useForm, Controller } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
-import CustomController from '../../../common/Controller';
+import { getCLassValue } from "../../../values/AdminPanel/ClassValue";
+import { useForm, Controller } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import CustomController from "../../../common/Controller";
 
 const addClassInitialValue = {
-  className: '',
-  classCode: '',
-  classDescription: '',
+  className: "",
+  classCode: "",
+  classDescription: "",
 };
 
 function AddClass() {
@@ -38,11 +38,11 @@ function AddClass() {
 
   return (
     <div>
-      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'Add Class'} />
-      <div className='main-content'>
+      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"Add Class"} />
+      <div className="main-content">
         <form onSubmit={handleSubmit(onSubmitForm)}>
           <CustomController
-            title={'ADD CLASS'}
+            title={"ADD CLASS"}
             icon={<FaIcons.FaUser />}
             ValueArray={getCLassValue()}
             refClear={refClear}
@@ -52,7 +52,7 @@ function AddClass() {
             ErrorMessage={ErrorMessage}
             isCustom={true}
           />
-          <button className='morebutton btn'>Submit</button>
+          <button className="morebutton btn">Submit</button>
         </form>
       </div>
     </div>
