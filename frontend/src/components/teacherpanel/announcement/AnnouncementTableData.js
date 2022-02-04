@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState, useMemo } from "react";
-import { SelectColumnFilter } from "../../../common/Table/filters";
-import TableContainer from "../../../common/Table/TableContainer";
-import { announcementValue } from "../../../values/AdminPanel/AnnouncementInput";
+import { SelectColumnFilter } from "../../common/Table/filters";
+import TableContainer from "../../common/Table/TableContainer";
+import { announcementValue } from "../../values/AdminPanel/AnnouncementInput";
 
 const AnnouncementTableData = () => {
   const data = announcementValue;
@@ -24,8 +24,15 @@ const AnnouncementTableData = () => {
         filter: "includes",
       },
       {
-        Header: "For",
-        accessor: "for",
+        Header: "Class",
+        accessor: "class",
+        SearchAble: true,
+        Filter: SelectColumnFilter,
+        filter: "includes",
+      },
+      {
+        Header: "Section",
+        accessor: "Section",
         SearchAble: true,
         Filter: SelectColumnFilter,
         filter: "includes",
@@ -40,16 +47,6 @@ const AnnouncementTableData = () => {
         Header: "File",
         accessor: "file",
         SearchAble: false,
-      },
-      {
-        Header: "Created By",
-        accessor: "createdBy",
-        SearchAble: true,
-      },
-      {
-        Header: "Created At",
-        accessor: "createdAt",
-        SearchAble: true,
       },
 
       {

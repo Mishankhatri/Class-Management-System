@@ -179,3 +179,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 40px;
 }
+
+.sort-icon {
+  margin-left: 10px;
+}

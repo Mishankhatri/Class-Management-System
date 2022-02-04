@@ -9,6 +9,7 @@ import {
 import { DefaultColumnFilter, GlobalFilter } from "./filters";
 import "./../../../forms/Table.css";
 import NoDataFound from "./Nodatafound";
+import * as BiIcons from "react-icons/bi";
 
 const TableContainer = ({ columns, data }) => {
   function dateBetweenFilterFn(rows, id, filterValues) {
@@ -80,7 +81,15 @@ const TableContainer = ({ columns, data }) => {
   );
 
   const generateSortingIndicator = (column) => {
-    return column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : "";
+    return column.isSorted ? (
+      column.isSortedDesc ? (
+        <BiIcons.BiSortDown className="sort-icon" />
+      ) : (
+        <BiIcons.BiSortUp className="sort-icon" />
+      )
+    ) : (
+      ""
+    );
   };
 
   const onChangeInSelect = (event) => {

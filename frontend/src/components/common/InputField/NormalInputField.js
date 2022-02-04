@@ -8,6 +8,7 @@ function NormalInputField({
   name,
   isRequired,
   isImageFile,
+  disabled,
 }) {
   const isFile = input === "file";
 
@@ -21,6 +22,7 @@ function NormalInputField({
         onChange={onChangeHandler}
         required={isRequired}
         name={name}
+        disabled={disabled}
         accept="image/*"
       />
     </>
@@ -31,6 +33,7 @@ function NormalInputField({
       placeholder={placeholder}
       onChange={onChangeHandler}
       required={isRequired}
+      disabled={disabled}
       name={name}
     />
   );

@@ -1,10 +1,19 @@
 import React from "react";
+import * as MdIcons from "react-icons/md";
 
-function ViewAnnouncement() {
+import InnerHeader from "../../common/InnerHeader";
+
+import AnnouncementTableData from "./AnnouncementTableData";
+
+function ViewAnnouncements() {
   return (
-    <React.Fragment>
-      <div></div>
-    </React.Fragment>
+    <div>
+      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"View Announcements"} />
+      <div className="main-content">
+        <AnnouncementTableData />
+      </div>
+    </div>
   );
 }
-export default ViewAnnouncement;
+
+export default ViewAnnouncements;

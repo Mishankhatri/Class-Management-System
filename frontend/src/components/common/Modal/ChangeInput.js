@@ -52,6 +52,7 @@ function ChangeInput({
                               isRequired={value.isRequired}
                               isImageFile={value?.isImageFile}
                               options={value?.options}
+                              disabled={value?.disabled}
                             />
                           )}
                         />
