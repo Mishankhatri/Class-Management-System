@@ -49,11 +49,18 @@ export function SelectColumnFilter({
         setFilter(e.target.value || undefined);
       }}>
       <option value="">Show All</option>
-      {options.map((option, i) => (
-        <option key={i} value={option}>
-          {option}
-        </option>
-      ))}
+      {options.map((option, i) => {
+        if (!option) option = "";
+        return option === "" ? (
+          <option key={i} value={""}>
+            {"Empty"}
+          </option>
+        ) : (
+          <option key={i} value={option}>
+            {option}
+          </option>
+        );
+      })}
     </select>
   );
 }
