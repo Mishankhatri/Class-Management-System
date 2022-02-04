@@ -4,7 +4,6 @@ import InnerHeader from "../../../common/InnerHeader";
 import ClassTableData from "./ClassTableData";
 import ChangeInput from "./../../../common/Modal/ChangeInput";
 import { getClassSectionMerge } from "./../../../values/AdminPanel/ClassValue";
-import "./../users/UserProfile.css";
 
 function ViewClass() {
   const [click, setClick] = useState(false);

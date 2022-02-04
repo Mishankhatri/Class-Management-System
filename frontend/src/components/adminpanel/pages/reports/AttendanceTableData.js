@@ -54,6 +54,22 @@ const AttendanceTableData = ({ click, setClick }) => {
         accessor: "P/A",
         SearchAble: true,
       },
+      {
+        Header: "Action",
+        SearchAble: false,
+        Cell: ({ row }) => {
+          return (
+            <>
+              <button
+                onClick={() => setClick(!click)}
+                className="btn-primary btn-1 btn-custom">
+                Edit
+              </button>
+              <button className="btn-danger btn-custom">Delete</button>
+            </>
+          );
+        },
+      },
     ],
     []
   );

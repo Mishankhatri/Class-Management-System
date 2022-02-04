@@ -19,6 +19,7 @@ function InputField({
   ErrorMessage,
   errors,
   isImageFile,
+  disabled = false,
 }) {
   const isDropdown = input === "dropdown";
 
@@ -44,6 +45,7 @@ function InputField({
               isCustomInput={isCustomInput}
               onChangeHandler={onChangeHandler}
               isRequired={isRequired}
+              disabled={disabled}
             />
           ) : (
             <NormalInputField
@@ -54,6 +56,7 @@ function InputField({
               isCustomInput={isCustomInput}
               isRequired={isRequired}
               isImageFile={isImageFile}
+              disabled={disabled}
             />
           )
         ) : (
@@ -64,8 +67,9 @@ function InputField({
             className="input-select custom-input"
             onChange={onChangeHandler}
             maxMenuHeight={200}
+            disabled={disabled}
             menuPlacement={"auto"}
-            styles={{ menuPortal: (base) => ({ ...base, zIndex: 998 }) }}
+            styles={{ menuPortal: (base) => ({ ...base, zIndex: 10002 }) }}
           />
         )}
         {/* <ErrorMessage

@@ -4,7 +4,7 @@ import { SelectColumnFilter } from "../../common/Table/filters";
 import TableContainer from "../../common/Table/TableContainer";
 import { announcementValue } from "../../values/AdminPanel/AnnouncementInput";
 
-const AnnouncementTableData = ({ click, setClick }) => {
+const AnnouncementTableData = () => {
   const data = announcementValue;
 
   const columns = useMemo(
@@ -55,11 +55,6 @@ const AnnouncementTableData = ({ click, setClick }) => {
         Cell: ({ row }) => {
           return (
             <>
-              <button
-                onClick={() => setClick(!click)}
-                className="btn-primary btn-1 btn-custom">
-                Edit
-              </button>
               <button className="btn-danger btn-custom">Delete</button>
             </>
           );

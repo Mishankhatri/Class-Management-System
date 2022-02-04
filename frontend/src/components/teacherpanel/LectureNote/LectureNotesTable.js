@@ -1,12 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import { SelectColumnFilter } from "./../../common/Table/filters";
 import TableContainer from "./../../common/Table/TableContainer";
 
 const LectureNotesTable = () => {
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     doFetch();
@@ -17,10 +15,6 @@ const LectureNotesTable = () => {
       "https://jsonplaceholder.typicode.com/users"
     );
     setData(data);
-  };
-
-  const onOpen = (post) => {
-    navigate(`${post.id}`);
   };
 
   const handleSubmit = (row) => {
@@ -78,11 +72,6 @@ const LectureNotesTable = () => {
         Cell: ({ row }) => {
           return (
             <>
-              <button
-                onClick={() => onOpen(row.original)}
-                className="btn-primary btn-1 btn-custom">
-                Open
-              </button>
               <button className="btn-danger btn-custom">Delete</button>
             </>
           );
