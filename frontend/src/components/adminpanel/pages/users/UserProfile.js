@@ -6,7 +6,7 @@ import BlankProfile from "../../../../assets/profiles/blank-profile.jpg";
 import "./UserProfile.css";
 import ChangePhoto from "../../../common/Modal/ChangePhoto";
 
-function UserProfile() {
+function UserProfile({ image }) {
   const [click, setClick] = useState(false);
   const [previousImage, setPreviosImage] = useState(BlankProfile);
   const [uploadedImage, setUploadedImage] = useState("");
@@ -33,7 +33,7 @@ function UserProfile() {
         <div className="profile">
           <div className="image">
             <img
-              src={ProfileImage}
+              src={image}
               alt="Profile-Image"
               title="Change Profile Picture"
               onClick={() => setClick(!click)}
