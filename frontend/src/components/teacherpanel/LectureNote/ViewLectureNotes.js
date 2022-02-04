@@ -1,13 +1,16 @@
-import React from "react";
-import InnerHeader from "./../common/InnerHeader";
+import React, { useState } from "react";
 import * as MdIcons from "react-icons/md";
 import * as FaIcons from "react-icons/fa";
-import LectureNotesTable from "./TableData/LectureNotesTable";
+import InnerHeader from "../../common/InnerHeader";
+import LectureNotesTable from "./LectureNotesTable";
 
-function LectureNotes() {
+function ViewLectureNotes() {
   return (
     <React.Fragment>
-      <InnerHeader icon={<MdIcons.MdFileCopy />} name={"Download Notes"} />
+      <InnerHeader
+        icon={<MdIcons.MdUploadFile />}
+        name={"View Uploaded Notes"}
+      />
       <div className="main-content">
         <div className="card-section">
           <div className="heading">
@@ -24,4 +27,4 @@ function LectureNotes() {
     </React.Fragment>
   );
 }
-export default LectureNotes;
+export default ViewLectureNotes;

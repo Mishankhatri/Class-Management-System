@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { SelectColumnFilter } from "../../common/Table/filters";
-import TableContainer from "../../common/Table/TableContainer";
+import { SelectColumnFilter } from "../common/Table/filters";
+import TableContainer from "../common/Table/TableContainer";
 
-import { timeTable_value } from "../../values/AdminPanel/TimetableValues";
+import { timeTable_value } from "../values/AdminPanel/TimetableValues";
 
 const TimeTableData = () => {
   const data = timeTable_value;
@@ -28,15 +28,19 @@ const TimeTableData = () => {
         accessor: "time",
         SearchAble: true,
       },
-
       {
-        Header: "Subject",
-        accessor: "subject",
+        Header: "Class",
+        accessor: "classes",
         SearchAble: true,
       },
       {
-        Header: "Teacher",
-        accessor: "teacher",
+        Header: "Section",
+        accessor: "section",
+        SearchAble: true,
+      },
+      {
+        Header: "Subject",
+        accessor: "subject",
         SearchAble: true,
       },
     ],

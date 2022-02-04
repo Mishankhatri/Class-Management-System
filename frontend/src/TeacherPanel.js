@@ -18,8 +18,12 @@ const ViewTimetables = React.lazy(() =>
   import("./components/teacherpanel/Timetables")
 );
 
-const LectureNotes = React.lazy(() =>
-  import("./components/teacherpanel/LectureNotes")
+const UploadLectureNotes = React.lazy(() =>
+  import("./components/teacherpanel/LectureNote/UploadLectureNotes")
+);
+
+const ViewLectureNotes = React.lazy(() =>
+  import("./components/teacherpanel/LectureNote/ViewLectureNotes.js")
 );
 
 const CreateMark = React.lazy(() =>
@@ -91,6 +95,8 @@ function TeacherPanel() {
               }
             />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/notes/upload" element={<UploadLectureNotes />} />
+            <Route path="/notes/view" element={<ViewLectureNotes />} />
             <Route
               path="/assignment/download"
               element={<DownloadAssignment />}
@@ -104,7 +110,6 @@ function TeacherPanel() {
             />
             <Route path="/announcement/view" element={<ViewAnnouncement />} />
             <Route path="/timetables/view" element={<ViewTimetables />} />
-            <Route path="/notes" element={<LectureNotes />} />
             <Route path="/reports/create" element={<CreateMark />} />
             <Route path="/reports/view" element={<ViewMark />} />
 
