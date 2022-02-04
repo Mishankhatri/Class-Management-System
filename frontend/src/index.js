@@ -13,6 +13,8 @@ import { Provider } from "react-redux";
 import Alert from "./components/common/Alert";
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
+import StudentPanel from "./StudentPanel";
+import TeacherPanel from "./TeacherPanel";
 
 //Alert options
 const alertOptions = {
@@ -31,6 +33,8 @@ ReactDOM.render(
             element={<PrivateRoute navigate="/login" component={App} />}
           />
           <Route path={"/login"} element={<Login />} />
+          <Route path={"/student"} element={<StudentPanel />} />
+          <Route path={"/teacher"} element={<TeacherPanel />} />
           <Route path={"/logout"} element={<Logout />} />
           <Route path={"/register/admin/"} element={<Register />} />
         </Routes>
