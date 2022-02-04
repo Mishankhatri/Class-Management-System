@@ -24,15 +24,17 @@ function NavBar({ onClickHandler, username, show, image, name }) {
           </div>
 
           <div className="right-section">
-            <div
-              className="notification"
-              onClick={() =>
-                setDropDownNotification(!showDropDownNotification)
-              }>
-              <div className="notification__symbol"></div>
-              <BsIcons.BsBell className="notification__icon" />
+            <div className="not-image">
+              <div
+                className="notification"
+                onClick={() =>
+                  setDropDownNotification(!showDropDownNotification)
+                }>
+                <div className="notification__symbol"></div>
+                <BsIcons.BsBell className="notification__icon" />
+              </div>
+              <img src={image} alt="profile-img" className="profile-image" />
             </div>
-            <img src={image} alt="profile-img" className="profile-image" />
             <div className="user-name">
               {username}
               <RiIcons.RiArrowDownSFill
