@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import TableContainer from '../../common/Table/TableContainer';
+import React, { useEffect, useState, useMemo } from "react";
+import TableContainer from "../../common/Table/TableContainer";
 
-import { timeTable_value } from '../../values/AdminPanel/TimetableValues';
+import { timeTable_value } from "../../values/AdminPanel/TimetableValues";
 
 const TimeTableData = () => {
   const data = timeTable_value;
@@ -9,40 +9,40 @@ const TimeTableData = () => {
   const columns = useMemo(
     () => [
       {
-        Header: 'SN',
+        Header: "SN",
         SearchAble: false,
         Cell: ({ row: { index } }) => {
           return index + 1;
         },
       },
       {
-        Header: 'Day',
-        accessor: 'day',
+        Header: "Day",
+        accessor: "day",
         SearchAble: true,
       },
       {
-        Header: 'Time',
-        accessor: 'time',
+        Header: "Time",
+        accessor: "time",
         SearchAble: true,
       },
       {
-        Header: 'Class',
-        accessor: 'classes',
+        Header: "Class",
+        accessor: "classes",
         SearchAble: true,
       },
       {
-        Header: 'Section',
-        accessor: 'section',
+        Header: "Section",
+        accessor: "section",
         SearchAble: true,
       },
       {
-        Header: 'Subject',
-        accessor: 'subject',
+        Header: "Subject",
+        accessor: "subject",
         SearchAble: true,
       },
       {
-        Header: 'Teacher',
-        accessor: 'teacher',
+        Header: "Teacher",
+        accessor: "teacher",
         SearchAble: true,
       },
     ],
@@ -51,7 +51,7 @@ const TimeTableData = () => {
 
   return (
     <>
-      <div style={{ margin: '20px 30px', marginBottom: 50 }}>
+      <div style={{ margin: "20px 30px", marginBottom: 50 }}>
         <TableContainer columns={columns} data={data} />
       </div>
     </>

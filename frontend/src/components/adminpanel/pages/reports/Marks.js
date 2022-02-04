@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import InnerHeader from './../../../common/InnerHeader';
-import * as MdIcons from 'react-icons/md';
-import * as FaIcons from 'react-icons/fa';
+import React, { useState } from "react";
+import InnerHeader from "./../../../common/InnerHeader";
+import * as MdIcons from "react-icons/md";
+import * as FaIcons from "react-icons/fa";
 
-import InputField from '../../../common//InputField/InputField';
+import InputField from "../../../common//InputField/InputField";
 
-import { useForm, Controller } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
-import { getAcademicValues } from '../../../values/AdminPanel/StudentInputField';
-import MarksTableData from './MarksTableData';
-import { marksValue } from '../../../values/AdminPanel/AttendanceInput';
-import './../users/UserProfile.css';
-import ChangeInput from './../../../common/Modal/ChangeInput';
+import { useForm, Controller } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { getAcademicValues } from "../../../values/AdminPanel/StudentInputField";
+import MarksTableData from "./MarksTableData";
+import { marksValue } from "../../../values/AdminPanel/AttendanceInput";
+import "./../users/UserProfile.css";
+import ChangeInput from "./../../../common/Modal/ChangeInput";
 
 function Marks() {
   const addAcademicValues = getAcademicValues();
@@ -60,24 +60,24 @@ function Marks() {
           valueArray={marksValue}
           click={click}
           setClick={setClick}
-          heading={'Edit Marks'}
+          heading={"Edit Marks"}
           isCustom1={false} //For showing grid 3
         />
       )}
-      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'Upload Marks'} />
-      <div className='main-content'>
+      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"Upload Marks"} />
+      <div className="main-content">
         {/* // custom-grid */}
         <form onSubmit={handleSubmit(onSubmitForm)}>
-          <div className='card-section '>
-            <div className='heading'>
-              <span className='title-icon'>
+          <div className="card-section ">
+            <div className="heading">
+              <span className="title-icon">
                 <FaIcons.FaBook />
               </span>
-              <span className='title'>MAKE SELECTION</span>
+              <span className="title">MAKE SELECTION</span>
             </div>
-            <div className='content-section allinputfield'>
+            <div className="content-section allinputfield">
               <Controller
-                name={'studentSelectionClass'}
+                name={"studentSelectionClass"}
                 control={control}
                 rules={{
                   required: {
@@ -85,13 +85,13 @@ function Marks() {
                     message: `Student Class is required`,
                   },
                 }}
-                defaultValue=''
+                defaultValue=""
                 render={({ field }) => (
                   <InputField
-                    title={'Class'.toUpperCase()}
-                    input={'dropdown'}
-                    icon={<FaIcons.FaPhotoVideo className='mid-icon' />}
-                    name={'studentClass'}
+                    title={"Class".toUpperCase()}
+                    input={"dropdown"}
+                    icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
+                    name={"studentClass"}
                     onChangeHandler={field.onChange}
                     isRequired={true}
                     options={optionsClass}
@@ -102,7 +102,7 @@ function Marks() {
                 )}
               />
               <Controller
-                name={'studentSelectionSection'}
+                name={"studentSelectionSection"}
                 control={control}
                 rules={{
                   required: {
@@ -110,13 +110,13 @@ function Marks() {
                     message: `Student Class is required`,
                   },
                 }}
-                defaultValue=''
+                defaultValue=""
                 render={({ field }) => (
                   <InputField
-                    title={'Section'.toUpperCase()}
-                    input={'dropdown'}
-                    icon={<FaIcons.FaPhotoVideo className='mid-icon' />}
-                    name={'studentClass'}
+                    title={"Section".toUpperCase()}
+                    input={"dropdown"}
+                    icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
+                    name={"studentClass"}
                     onChangeHandler={field.onChange}
                     isRequired={true}
                     options={optionsSection}
@@ -127,7 +127,7 @@ function Marks() {
                 )}
               />
               <Controller
-                name={'studentName'}
+                name={"studentName"}
                 control={control}
                 rules={{
                   required: {
@@ -135,13 +135,13 @@ function Marks() {
                     message: `Student Class is required`,
                   },
                 }}
-                defaultValue=''
+                defaultValue=""
                 render={({ field }) => (
                   <InputField
-                    title={'Student Name'.toUpperCase()}
-                    input={'text'}
-                    icon={<FaIcons.FaPhotoVideo className='mid-icon' />}
-                    name={'studentClass'}
+                    title={"Student Name".toUpperCase()}
+                    input={"text"}
+                    icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
+                    name={"studentClass"}
                     onChangeHandler={field.onChange}
                     isRequired={true}
                     options={optionsSection}
@@ -151,7 +151,7 @@ function Marks() {
                 )}
               />
               <Controller
-                name={'studentResult'}
+                name={"studentResult"}
                 control={control}
                 rules={{
                   required: {
@@ -159,18 +159,18 @@ function Marks() {
                     message: `Student Class is required`,
                   },
                 }}
-                defaultValue=''
+                defaultValue=""
                 render={({ field }) => (
                   <InputField
-                    title={'Results'.toUpperCase()}
-                    input={'dropdown'}
-                    icon={<FaIcons.FaList className='mid-icon' />}
-                    name={'studentResults'}
+                    title={"Results".toUpperCase()}
+                    input={"dropdown"}
+                    icon={<FaIcons.FaList className="mid-icon" />}
+                    name={"studentResults"}
                     onChangeHandler={field.onChange}
                     isRequired={true}
                     options={[
-                      { value: 'Passed', label: 'Passed' },
-                      { value: 'Failed', label: 'Failed' },
+                      { value: "Passed", label: "Passed" },
+                      { value: "Failed", label: "Failed" },
                     ]}
                     errors={errors}
                     refClear={refClearResults}
@@ -180,19 +180,19 @@ function Marks() {
               />
             </div>
           </div>
-          <button className='morebutton btn' type='submit'>
+          <button className="morebutton btn" type="submit">
             Select
           </button>
         </form>
 
-        <div className='card-section'>
-          <div className='heading'>
-            <span className='title-icon'>
+        <div className="card-section">
+          <div className="heading">
+            <span className="title-icon">
               <FaIcons.FaBook />
             </span>
-            <span className='title'>View Marks</span>
+            <span className="title">View Marks</span>
           </div>
-          <div className='content-section'>
+          <div className="content-section">
             <MarksTableData click={click} setClick={setClick} />
           </div>
         </div>

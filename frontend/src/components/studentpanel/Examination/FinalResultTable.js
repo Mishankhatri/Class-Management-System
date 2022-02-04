@@ -1,7 +1,7 @@
-import axios from 'axios';
-import React, { useEffect, useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import TableContainer from './../../common/Table/TableContainer';
+import axios from "axios";
+import React, { useEffect, useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import TableContainer from "./../../common/Table/TableContainer";
 
 const FinalResultData = () => {
   const [data, setData] = useState([]);
@@ -12,7 +12,7 @@ const FinalResultData = () => {
 
   const doFetch = async () => {
     const { data } = await axios.get(
-      'https://jsonplaceholder.typicode.com/users'
+      "https://jsonplaceholder.typicode.com/users"
     );
     setData(data);
   };
@@ -20,20 +20,20 @@ const FinalResultData = () => {
   const columns = useMemo(
     () => [
       {
-        Header: 'SN',
+        Header: "SN",
         SearchAble: false,
         Cell: ({ row: { index } }) => {
           return index + 1;
         },
       },
       {
-        Header: 'Class',
-        accessor: 'username',
+        Header: "Class",
+        accessor: "username",
         SearchAble: true,
       },
       {
-        Header: 'Result',
-        accessor: 'name',
+        Header: "Result",
+        accessor: "name",
         SearchAble: true,
       },
     ],
@@ -42,7 +42,7 @@ const FinalResultData = () => {
 
   return (
     <>
-      <div style={{ margin: '20px 30px', marginBottom: 50 }}>
+      <div style={{ margin: "20px 30px", marginBottom: 50 }}>
         <TableContainer columns={columns} data={data} />
       </div>
     </>

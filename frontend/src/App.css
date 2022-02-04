@@ -25,7 +25,7 @@ Consists Styling of
 /* Inner Header CSS Code  */
 
 .main-container .header {
-  font: normal 16px 'Poppins', sans-serif;
+  font: normal 16px "Poppins", sans-serif;
   padding-bottom: 10px;
   border-bottom: 0.7px solid #c8cbd9;
 }
@@ -80,12 +80,12 @@ Consists Styling of
 }
 
 .cards .name-details .number {
-  font: bold 35px 'Open Sans', sans-serif;
+  font: bold 35px "Open Sans", sans-serif;
   letter-spacing: 0.5px;
 }
 
 .cards .name-details .name {
-  font: normal 18px 'Open Sans', sans-serif;
+  font: normal 18px "Open Sans", sans-serif;
   letter-spacing: 0.5px;
 }
 
@@ -98,7 +98,7 @@ Consists Styling of
 
 .card-section {
   margin: 40px 0;
-  font: normal 16px 'Open Sans', sans-serif;
+  font: normal 16px "Open Sans", sans-serif;
   /* width: 15rem; */
   /* width: fit-content; */
   padding-bottom: 30px;
@@ -171,7 +171,7 @@ Consists Styling of
   border: none;
   width: 6rem;
   color: white;
-  font: normal 16px 'Poppins', sans-serif;
+  font: normal 16px "Poppins", sans-serif;
 }
 
 .btn-custom-selection {
@@ -234,7 +234,7 @@ Consists Styling of
 }
 
 .mid-title {
-  font: bold 14.5px 'Open Sans', sans-serif;
+  font: bold 14.5px "Open Sans", sans-serif;
   vertical-align: middle;
   letter-spacing: 0.5px;
 }
@@ -247,7 +247,7 @@ Consists Styling of
   border-radius: 4px;
   outline: none;
   line-height: 38px;
-  font: normal 16px 'Open Sans', sans-serif;
+  font: normal 16px "Open Sans", sans-serif;
 }
 
 .input:focus {
@@ -260,7 +260,7 @@ Consists Styling of
   transition: width 0.5s;
 }
 
-input[type='file'] {
+input[type="file"] {
   color: #83889c;
 }
 
@@ -281,7 +281,7 @@ input[type='file'] {
 
 .errors {
   color: #ba3939;
-  font: bold 10.5px 'Open Sans', sans-serif;
+  font: bold 10.5px "Open Sans", sans-serif;
   background: #ffe0e0;
   border: 1px solid #a33a3a;
   padding: 2px 8px;

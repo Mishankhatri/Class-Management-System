@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import * as MdIcons from 'react-icons/md';
-import * as FaIcons from 'react-icons/fa';
+import React, { useState } from "react";
+import * as MdIcons from "react-icons/md";
+import * as FaIcons from "react-icons/fa";
 
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller } from "react-hook-form";
 
-import InnerHeader from '../../common/InnerHeader';
-import InputField from '../../common/InputField/InputField';
-import { FileInput } from '../../common/InputField/FileInput';
+import InnerHeader from "../../common/InnerHeader";
+import InputField from "../../common/InputField/InputField";
+import { FileInput } from "../../common/InputField/FileInput";
 
 function CreateAssignment() {
   const [selectRefClass, setSelectRefClass] = useState(null);
@@ -33,40 +33,40 @@ function CreateAssignment() {
     <React.Fragment>
       <InnerHeader
         icon={<MdIcons.MdUploadFile />}
-        name={'Create Assignments'}
+        name={"Create Assignments"}
       />
-      <div className='main-content'>
+      <div className="main-content">
         <form onSubmit={handleSubmit(onSubmitForm)}>
-          <div className='card-section'>
-            <div className='heading'>
-              <span className='title-icon'>
+          <div className="card-section">
+            <div className="heading">
+              <span className="title-icon">
                 <FaIcons.FaFileArchive />
               </span>
-              <span className='title'>CREATE HOMEWORK</span>
+              <span className="title">CREATE HOMEWORK</span>
             </div>
-            <div className='content-section'>
-              <div className='allinputfield'>
+            <div className="content-section">
+              <div className="allinputfield">
                 <Controller
-                  name={'studentClass'}
+                  name={"studentClass"}
                   control={control}
-                  defaultValue=''
+                  defaultValue=""
                   render={({ field }) => (
                     <InputField
-                      title={'Student Class'.toUpperCase()}
-                      input={'dropdown'}
-                      icon={<FaIcons.FaChess className='mid-icon' />}
-                      name={'studentClass'}
+                      title={"Student Class".toUpperCase()}
+                      input={"dropdown"}
+                      icon={<FaIcons.FaChess className="mid-icon" />}
+                      name={"studentClass"}
                       onChangeHandler={field.onChange}
                       isRequired={true}
                       options={[
-                        { value: '12', label: '12' },
-                        { value: '11', label: '11' },
-                        { value: '10', label: '10' },
-                        { value: '9', label: '9' },
-                        { value: '8', label: '8' },
-                        { value: '7', label: '7' },
-                        { value: '6', label: '6' },
-                        { value: '5', label: '5' },
+                        { value: "12", label: "12" },
+                        { value: "11", label: "11" },
+                        { value: "10", label: "10" },
+                        { value: "9", label: "9" },
+                        { value: "8", label: "8" },
+                        { value: "7", label: "7" },
+                        { value: "6", label: "6" },
+                        { value: "5", label: "5" },
                       ]}
                       refClear={refClearClass}
                     />
@@ -74,21 +74,21 @@ function CreateAssignment() {
                 />
 
                 <Controller
-                  name={'studentSection'}
+                  name={"studentSection"}
                   control={control}
-                  defaultValue=''
+                  defaultValue=""
                   render={({ field }) => (
                     <InputField
-                      title={'Student Section'.toUpperCase()}
-                      input={'dropdown'}
-                      icon={<FaIcons.FaCode className='mid-icon' />}
-                      name={'studentSection'}
+                      title={"Student Section".toUpperCase()}
+                      input={"dropdown"}
+                      icon={<FaIcons.FaCode className="mid-icon" />}
+                      name={"studentSection"}
                       onChangeHandler={field.onChange}
                       isRequired={true}
                       options={[
-                        { value: 'A', label: 'A' },
-                        { value: 'B', label: 'B' },
-                        { value: 'C', label: 'C' },
+                        { value: "A", label: "A" },
+                        { value: "B", label: "B" },
+                        { value: "C", label: "C" },
                       ]}
                       refClear={refClearSection}
                     />
@@ -96,21 +96,21 @@ function CreateAssignment() {
                 />
 
                 <Controller
-                  name={'studentCourse'}
+                  name={"studentCourse"}
                   control={control}
-                  defaultValue=''
+                  defaultValue=""
                   render={({ field }) => (
                     <InputField
-                      title={'Student Course'.toUpperCase()}
-                      input={'dropdown'}
-                      icon={<FaIcons.FaBookOpen className='mid-icon' />}
-                      name={'studentCourse'}
+                      title={"Student Course".toUpperCase()}
+                      input={"dropdown"}
+                      icon={<FaIcons.FaBookOpen className="mid-icon" />}
+                      name={"studentCourse"}
                       onChangeHandler={field.onChange}
                       isRequired={true}
                       options={[
-                        { value: 'Social', label: 'Social' },
-                        { value: 'Science', label: 'Science' },
-                        { value: 'Math', label: 'Math' },
+                        { value: "Social", label: "Social" },
+                        { value: "Science", label: "Science" },
+                        { value: "Math", label: "Math" },
                       ]}
                       refClear={refClearCourse}
                     />
@@ -118,15 +118,15 @@ function CreateAssignment() {
                 />
 
                 <Controller
-                  name={'submitBy'}
+                  name={"submitBy"}
                   control={control}
-                  defaultValue=''
+                  defaultValue=""
                   render={({ field }) => (
                     <InputField
-                      title={'Submit By'.toUpperCase()}
-                      input={'date'}
-                      icon={<FaIcons.FaCalendar className='mid-icon' />}
-                      name={'submitBy'}
+                      title={"Submit By".toUpperCase()}
+                      input={"date"}
+                      icon={<FaIcons.FaCalendar className="mid-icon" />}
+                      name={"submitBy"}
                       onChangeHandler={field.onChange}
                       isRequired={true}
                     />
@@ -134,15 +134,15 @@ function CreateAssignment() {
                 />
               </div>
               <Controller
-                name={'assignmentRemark'}
+                name={"assignmentRemark"}
                 control={control}
-                defaultValue=''
+                defaultValue=""
                 render={({ field }) => (
                   <InputField
-                    title={'Assignment Remark'.toUpperCase()}
-                    input={'textarea'}
-                    icon={<FaIcons.FaBookOpen className='mid-icon' />}
-                    name={'assignmentRemark'}
+                    title={"Assignment Remark".toUpperCase()}
+                    input={"textarea"}
+                    icon={<FaIcons.FaBookOpen className="mid-icon" />}
+                    name={"assignmentRemark"}
                     onChangeHandler={field.onChange}
                     isRequired={false}
                     isTextArea={true}
@@ -150,14 +150,14 @@ function CreateAssignment() {
                 )}
               />
               <Controller
-                name={'assigmentFile'}
+                name={"assigmentFile"}
                 control={control}
-                defaultValue=''
+                defaultValue=""
                 render={(props) => (
                   <FileInput
-                    name={'assigmentFile'}
-                    title={'Upload File'}
-                    icon={<FaIcons.FaFile className='mid-icon' />}
+                    name={"assigmentFile"}
+                    title={"Upload File"}
+                    icon={<FaIcons.FaFile className="mid-icon" />}
                     isRequired={true}
                     isImageFile={false}
                     onChange={(event) =>
@@ -168,7 +168,7 @@ function CreateAssignment() {
               />
             </div>
           </div>
-          <button className='morebutton btn' type='submit'>
+          <button className="morebutton btn" type="submit">
             Submit
           </button>
         </form>

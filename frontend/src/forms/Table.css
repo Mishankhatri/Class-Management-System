@@ -19,7 +19,7 @@ table tbody tr {
 }
 
 tbody tr {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-size: 15px;
   color: gray;
 }
@@ -40,7 +40,7 @@ table th.secondary-heading {
 }
 
 thead th {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-size: 18px;
   color: #fff;
   line-height: 1.2;

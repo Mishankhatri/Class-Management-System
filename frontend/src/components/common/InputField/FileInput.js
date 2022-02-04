@@ -1,5 +1,5 @@
-import React from 'react';
-import { HeaderInputField } from './HeaderInputField';
+import React from "react";
+import { HeaderInputField } from "./HeaderInputField";
 
 export const FileInput = ({
   name,
@@ -12,7 +12,7 @@ export const FileInput = ({
 }) => {
   return (
     <>
-      <div className='mid-content'>
+      <div className="mid-content">
         <HeaderInputField
           title={title}
           icon={icon}
@@ -20,21 +20,21 @@ export const FileInput = ({
           name={name}
         />
 
-        <div className='label-input'>
+        <div className="label-input">
           {isImageFile ? (
             <input
-              type='file'
-              className={isCustomInput ? 'input custom-input' : 'input'}
+              type="file"
+              className={isCustomInput ? "input custom-input" : "input"}
               required={isRequired}
               onChange={onChange}
               name={name}
-              accept='image/*'
+              accept="image/*"
               //
             />
           ) : (
             <input
-              type='file'
-              className={isCustomInput ? 'input custom-input' : 'input'}
+              type="file"
+              className={isCustomInput ? "input custom-input" : "input"}
               required={isRequired}
               onChange={onChange}
               name={name}

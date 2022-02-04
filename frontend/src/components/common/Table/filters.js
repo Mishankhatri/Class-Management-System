@@ -1,16 +1,16 @@
 //Filter Completely Purified
 
-import React from 'react';
+import React from "react";
 
 export const DefaultColumnFilter = ({ column: { filterValue, setFilter } }) => {
   return (
     <input
-      value={filterValue || ''}
+      value={filterValue || ""}
       onChange={(e) => {
         setFilter(e.target.value || undefined);
       }}
       placeholder={`Search ...`}
-      className='local-filter'
+      className="local-filter"
     />
   );
 };
@@ -18,12 +18,12 @@ export const DefaultColumnFilter = ({ column: { filterValue, setFilter } }) => {
 export const GlobalFilter = ({ filterValue, setFilter }) => {
   return (
     <input
-      value={filterValue || ''}
+      value={filterValue || ""}
       onChange={(e) => {
         setFilter(e.target.value || undefined);
       }}
       placeholder={`Search Globally...`}
-      className='global-filter'
+      className="global-filter"
     />
   );
 };
@@ -48,7 +48,7 @@ export function SelectColumnFilter({
       onChange={(e) => {
         setFilter(e.target.value || undefined);
       }}>
-      <option value=''>Show All</option>
+      <option value="">Show All</option>
       {options.map((option, i) => (
         <option key={i} value={option}>
           {option}
@@ -78,27 +78,27 @@ export function DateRangeColumnFilter({
   }, [id, preFilteredRows]);
 
   return (
-    <div className='input-range'>
+    <div className="input-range">
       <input
-        value={filterValue[0] || ''}
-        type='text'
+        value={filterValue[0] || ""}
+        type="text"
         onChange={(e) => {
           const val = e.target.value;
           setFilter((old = []) => [val ? val : undefined, old[1]]);
         }}
-        className='local-filter'
-        placeholder='Start'
+        className="local-filter"
+        placeholder="Start"
       />
       <span>-</span>
       <input
-        value={filterValue[1] || ''}
-        type='text'
+        value={filterValue[1] || ""}
+        type="text"
         onChange={(e) => {
           const val = e.target.value;
           setFilter((old = []) => [old[0], val ? val : undefined]);
         }}
-        className='local-filter'
-        placeholder='End'
+        className="local-filter"
+        placeholder="End"
       />
     </div>
   );
@@ -120,8 +120,8 @@ export function NumberRangeColumnFilter({
   return (
     <div>
       <input
-        value={filterValue[0] || ''}
-        type='number'
+        value={filterValue[0] || ""}
+        type="number"
         min={0}
         onChange={(e) => {
           const val = e.target.value;
@@ -131,13 +131,13 @@ export function NumberRangeColumnFilter({
           ]);
         }}
         placeholder={`Min (${min})`}
-        className='local-filter'
+        className="local-filter"
         style={{ marginRight: 10 }}
       />
       <span>-</span>
       <input
-        value={filterValue[1] || ''}
-        type='number'
+        value={filterValue[1] || ""}
+        type="number"
         min={0}
         onChange={(e) => {
           const val = e.target.value;
@@ -147,7 +147,7 @@ export function NumberRangeColumnFilter({
           ]);
         }}
         placeholder={`Max (${max})`}
-        className='local-filter'
+        className="local-filter"
         style={{ marginLeft: 10 }}
       />
     </div>

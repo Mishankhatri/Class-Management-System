@@ -1,8 +1,8 @@
-import React from 'react';
-import Select from 'react-select';
-import TextAreaInput from './TextAreaInput';
-import NormalInputField from './NormalInputField';
-import { HeaderInputField } from './HeaderInputField';
+import React from "react";
+import Select from "react-select";
+import TextAreaInput from "./TextAreaInput";
+import NormalInputField from "./NormalInputField";
+import { HeaderInputField } from "./HeaderInputField";
 
 function InputField({
   title,
@@ -20,10 +20,10 @@ function InputField({
   errors,
   isImageFile,
 }) {
-  const isDropdown = input === 'dropdown';
+  const isDropdown = input === "dropdown";
 
   return (
-    <div className='mid-content'>
+    <div className="mid-content">
       {/* //Heading File  */}
       <HeaderInputField
         title={title}
@@ -35,7 +35,7 @@ function InputField({
       />
 
       {/* Input Field  */}
-      <div className='label-input'>
+      <div className="label-input">
         {!isDropdown ? (
           isTextArea ? (
             <TextAreaInput
@@ -61,10 +61,10 @@ function InputField({
             menuPortalTarget={document.body}
             ref={refClear}
             options={options}
-            className='input-select custom-input'
+            className="input-select custom-input"
             onChange={onChangeHandler}
             maxMenuHeight={200}
-            menuPlacement={'auto'}
+            menuPlacement={"auto"}
             styles={{ menuPortal: (base) => ({ ...base, zIndex: 998 }) }}
           />
         )}

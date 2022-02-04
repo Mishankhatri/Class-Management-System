@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import InnerHeader from '../../common/InnerHeader';
-import * as MdIcons from 'react-icons/md';
-import * as FaIcons from 'react-icons/fa';
+import React, { useState } from "react";
+import InnerHeader from "../../common/InnerHeader";
+import * as MdIcons from "react-icons/md";
+import * as FaIcons from "react-icons/fa";
 
-import { useForm, Controller, useFormContext } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
-import CustomController from '../../common/Controller';
-import { getCreateIdInputField } from '../../values/AdminPanel/CreateIdInputField';
+import { useForm, Controller, useFormContext } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import CustomController from "../../common/Controller";
+import { getCreateIdInputField } from "../../values/AdminPanel/CreateIdInputField";
 
 // // teacher obtained values For references
 // const createIdInitialValue = {
@@ -45,11 +45,11 @@ function CreateID() {
 
   return (
     <div>
-      <InnerHeader icon={<MdIcons.MdDashboard />} name={'Create ID'} />
-      <div className='main-content'>
+      <InnerHeader icon={<MdIcons.MdDashboard />} name={"Create ID"} />
+      <div className="main-content">
         <form onSubmit={handleSubmit(onSubmitForm)}>
           <CustomController
-            title={'CREATE USER LOGIN ID'}
+            title={"CREATE USER LOGIN ID"}
             icon={<FaIcons.FaUser />}
             ValueArray={getCreateIdInputField()}
             refClear={refClear}
@@ -59,7 +59,7 @@ function CreateID() {
             ErrorMessage={ErrorMessage}
             isCustom={true}
           />
-          <button className='morebutton btn' type='submit'>
+          <button className="morebutton btn" type="submit">
             Submit
           </button>
         </form>

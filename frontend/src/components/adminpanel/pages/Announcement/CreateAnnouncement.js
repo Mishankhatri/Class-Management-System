@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import InnerHeader from '../../../common/InnerHeader';
-import * as MdIcons from 'react-icons/md';
-import * as FaIcons from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+import InnerHeader from "../../../common/InnerHeader";
+import * as MdIcons from "react-icons/md";
+import * as FaIcons from "react-icons/fa";
 
-import { useForm, Controller } from 'react-hook-form';
-import InputField from '../../../common/InputField/InputField';
-import { ErrorMessage } from '@hookform/error-message';
-import { FileInput } from '../../../common/InputField/FileInput';
+import { useForm, Controller } from "react-hook-form";
+import InputField from "../../../common/InputField/InputField";
+import { ErrorMessage } from "@hookform/error-message";
+import { FileInput } from "../../../common/InputField/FileInput";
 
 function CreateAnnouncement() {
   const [selectRefType, setSelectRefType] = useState(null);
@@ -47,21 +47,21 @@ function CreateAnnouncement() {
   }
   return (
     <div>
-      <InnerHeader icon={<MdIcons.MdDashboard />} name={'Announcements'} />
-      <div className='main-content'>
+      <InnerHeader icon={<MdIcons.MdDashboard />} name={"Announcements"} />
+      <div className="main-content">
         {/* // custom-grid */}
         <form onSubmit={handleSubmit(onSubmitForm)}>
-          <div className='card-section'>
-            <div className='heading'>
-              <span className='title-icon'>
+          <div className="card-section">
+            <div className="heading">
+              <span className="title-icon">
                 <FaIcons.FaBook />
               </span>
-              <span className='title'>CREATE ANNOUNCEMENTS</span>
+              <span className="title">CREATE ANNOUNCEMENTS</span>
             </div>
-            <div className='content-section'>
-              <div className='custom-announcementCreate'>
+            <div className="content-section">
+              <div className="custom-announcementCreate">
                 <Controller
-                  name={'announcementTypeName'}
+                  name={"announcementTypeName"}
                   control={control}
                   rules={{
                     required: {
@@ -69,20 +69,20 @@ function CreateAnnouncement() {
                       message: `Announcement Type is required`,
                     },
                   }}
-                  defaultValue=''
+                  defaultValue=""
                   render={({ field }) => (
                     <InputField
-                      title={'Type'.toUpperCase()}
-                      input={'dropdown'}
-                      icon={<FaIcons.FaCogs className='mid-icon' />}
-                      name={'announcementTypeName'}
+                      title={"Type".toUpperCase()}
+                      input={"dropdown"}
+                      icon={<FaIcons.FaCogs className="mid-icon" />}
+                      name={"announcementTypeName"}
                       onChangeHandler={field.onChange}
                       isRequired={true}
                       options={[
-                        { value: 'Academic', label: 'Academic' },
-                        { value: 'Admistration', label: 'Admistration' },
-                        { value: 'Admission', label: 'Admission' },
-                        { value: 'Others', label: 'Others' },
+                        { value: "Academic", label: "Academic" },
+                        { value: "Admistration", label: "Admistration" },
+                        { value: "Admission", label: "Admission" },
+                        { value: "Others", label: "Others" },
                       ]}
                       errors={errors}
                       refClear={refClearType}
@@ -92,7 +92,7 @@ function CreateAnnouncement() {
                 />
 
                 <Controller
-                  name={'announcementFor'}
+                  name={"announcementFor"}
                   control={control}
                   rules={{
                     required: {
@@ -100,22 +100,22 @@ function CreateAnnouncement() {
                       message: `Announcement For is required`,
                     },
                   }}
-                  defaultValue=''
+                  defaultValue=""
                   render={(props) => (
                     <InputField
-                      title={'For'.toUpperCase()}
-                      input={'dropdown'}
-                      icon={<FaIcons.FaPhotoVideo className='mid-icon' />}
-                      name={'announcementFor'}
+                      title={"For".toUpperCase()}
+                      input={"dropdown"}
+                      icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
+                      name={"announcementFor"}
                       onChangeHandler={(event) => {
                         checkStudent(event);
                         return props.field.onChange(event);
                       }}
                       isRequired={true}
                       options={[
-                        { value: 'All', label: 'All' },
-                        { value: 'Teacher', label: 'Teacher' },
-                        { value: 'Student', label: 'Student' },
+                        { value: "All", label: "All" },
+                        { value: "Teacher", label: "Teacher" },
+                        { value: "Student", label: "Student" },
                       ]}
                       errors={errors}
                       refClear={refClearFor}
@@ -127,21 +127,21 @@ function CreateAnnouncement() {
                 {student && (
                   <>
                     <Controller
-                      name={'announcementForClass'}
+                      name={"announcementForClass"}
                       control={control}
-                      defaultValue=''
+                      defaultValue=""
                       render={({ field }) => (
                         <InputField
-                          title={'Class'.toUpperCase()}
-                          input={'dropdown'}
-                          icon={<FaIcons.FaPhotoVideo className='mid-icon' />}
-                          name={'announcementForClass'}
+                          title={"Class".toUpperCase()}
+                          input={"dropdown"}
+                          icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
+                          name={"announcementForClass"}
                           onChangeHandler={field.onChange}
                           isRequired={false}
                           options={[
-                            { value: '12', label: '12' },
-                            { value: '11', label: '11' },
-                            { value: '10', label: '10' },
+                            { value: "12", label: "12" },
+                            { value: "11", label: "11" },
+                            { value: "10", label: "10" },
                           ]}
                           errors={errors}
                           refClear={refClearForClass}
@@ -151,21 +151,21 @@ function CreateAnnouncement() {
                     />
 
                     <Controller
-                      name={'announcementForSection'}
+                      name={"announcementForSection"}
                       control={control}
-                      defaultValue=''
+                      defaultValue=""
                       render={({ field }) => (
                         <InputField
-                          title={'Section'.toUpperCase()}
-                          input={'dropdown'}
-                          icon={<FaIcons.FaPhotoVideo className='mid-icon' />}
-                          name={'announcementForSection'}
+                          title={"Section".toUpperCase()}
+                          input={"dropdown"}
+                          icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
+                          name={"announcementForSection"}
                           onChangeHandler={field.onChange}
                           isRequired={true}
                           options={[
-                            { value: 'A', label: 'A' },
-                            { value: 'B', label: 'B' },
-                            { value: 'C', label: 'C' },
+                            { value: "A", label: "A" },
+                            { value: "B", label: "B" },
+                            { value: "C", label: "C" },
                           ]}
                           errors={errors}
                           refClear={refClearForSection}
@@ -177,7 +177,7 @@ function CreateAnnouncement() {
                 )}
               </div>
               <Controller
-                name={'announcementSubjects'}
+                name={"announcementSubjects"}
                 control={control}
                 rules={{
                   required: {
@@ -185,13 +185,13 @@ function CreateAnnouncement() {
                     message: `Announcement Subjects is required`,
                   },
                 }}
-                defaultValue=''
+                defaultValue=""
                 render={({ field }) => (
                   <InputField
-                    title={'Subjects'.toUpperCase()}
-                    input={'textarea'}
-                    icon={<FaIcons.FaCode className='mid-icon' />}
-                    name={'announcementSubjects'}
+                    title={"Subjects".toUpperCase()}
+                    input={"textarea"}
+                    icon={<FaIcons.FaCode className="mid-icon" />}
+                    name={"announcementSubjects"}
                     onChangeHandler={field.onChange}
                     isRequired={true}
                     errors={errors}
@@ -203,14 +203,14 @@ function CreateAnnouncement() {
               />
 
               <Controller
-                name={'announcemntFile'}
+                name={"announcemntFile"}
                 control={control}
-                defaultValue=''
+                defaultValue=""
                 render={(props) => (
                   <FileInput
-                    name={'announcemntFile'}
-                    title={'Upload File'}
-                    icon={<FaIcons.FaFile className='mid-icon' />}
+                    name={"announcemntFile"}
+                    title={"Upload File"}
+                    icon={<FaIcons.FaFile className="mid-icon" />}
                     isRequired={true}
                     isImageFile={false}
                     onChange={(event) =>
@@ -221,7 +221,7 @@ function CreateAnnouncement() {
               />
             </div>
           </div>
-          <button className='morebutton btn' type='submit'>
+          <button className="morebutton btn" type="submit">
             Create
           </button>
         </form>
