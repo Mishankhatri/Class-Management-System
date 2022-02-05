@@ -34,11 +34,15 @@ const LectureNotesTable = () => {
         Header: "Class",
         accessor: "username",
         SearchAble: true,
+        Filter: SelectColumnFilter,
+        filter: "includes",
       },
       {
         Header: "Section",
         accessor: "name",
         SearchAble: true,
+        Filter: SelectColumnFilter,
+        filter: "includes",
       },
       {
         Header: "Course",
@@ -50,7 +54,7 @@ const LectureNotesTable = () => {
         accessor: "address.city",
         Filter: SelectColumnFilter,
         filter: "includes",
-        SearchAble: true,
+        SearchAble: false,
       },
       {
         Header: "File",

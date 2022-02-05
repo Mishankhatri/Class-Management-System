@@ -39,6 +39,13 @@ const TimeTableData = () => {
         SearchAble: true,
       },
       {
+        Header: "Teacher",
+        accessor: "teacher",
+        SearchAble: true,
+        Filter: SelectColumnFilter,
+        filter: "includes",
+      },
+      {
         Header: "Subject",
         accessor: "subject",
         SearchAble: true,
