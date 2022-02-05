@@ -179,13 +179,13 @@ table tbody tr:hover {
 }
 
 .input-range {
-  display: grid;
-  grid-template-columns: 1fr 10px 1fr;
-  gap: 2px;
+  display: flex;
+  max-width: 15rem;
 }
 
 .input-range span {
   text-align: center;
+  margin: 0 10px;
 }
 
 .subject-column {

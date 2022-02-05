@@ -34,16 +34,6 @@ const AttendanceTableData = ({ click, setClick }) => {
         Filter: SelectColumnFilter,
         filter: "includes",
       },
-      {
-        Header: "Total Absent",
-        accessor: "totalAbsent",
-        SearchAble: true,
-      },
-      {
-        Header: "Total Present",
-        accessor: "totalPresent",
-        SearchAble: true,
-      },
     ],
     []
   );
