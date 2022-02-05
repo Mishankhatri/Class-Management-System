@@ -47,6 +47,22 @@ function CreateAssignment() {
             <div className="content-section">
               <div className="allinputfield">
                 <Controller
+                  name={"assignmentTitle"}
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <InputField
+                      title={"Title".toUpperCase()}
+                      input={"text"}
+                      icon={<FaIcons.FaCogs className="mid-icon" />}
+                      name={"assignmentTitle"}
+                      onChangeHandler={field.onChange}
+                      isRequired={true}
+                    />
+                  )}
+                />
+
+                <Controller
                   name={"studentClass"}
                   control={control}
                   defaultValue=""
@@ -118,51 +134,69 @@ function CreateAssignment() {
                 />
 
                 <Controller
-                  name={"submitBy"}
+                  name={"dateDue"}
                   control={control}
                   defaultValue=""
                   render={({ field }) => (
                     <InputField
-                      title={"Submit By".toUpperCase()}
+                      title={"Date Due".toUpperCase()}
                       input={"date"}
                       icon={<FaIcons.FaCalendar className="mid-icon" />}
-                      name={"submitBy"}
+                      name={"dateDue"}
                       onChangeHandler={field.onChange}
                       isRequired={true}
                     />
                   )}
                 />
+
+                <Controller
+                  name={"timeDue"}
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <InputField
+                      title={"Time Due".toUpperCase()}
+                      input={"time"}
+                      icon={<FaIcons.FaClock className="mid-icon" />}
+                      name={"timeDue"}
+                      onChangeHandler={field.onChange}
+                      isRequired={true}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name={"assigmentFile"}
+                  control={control}
+                  defaultValue=""
+                  render={(props) => (
+                    <FileInput
+                      name={"assigmentFile"}
+                      title={"Upload File"}
+                      icon={<FaIcons.FaFile className="mid-icon" />}
+                      isRequired={true}
+                      isImageFile={false}
+                      onChange={(event) =>
+                        props.field.onChange(event.target.files)
+                      }
+                    />
+                  )}
+                />
               </div>
+
               <Controller
-                name={"assignmentRemark"}
+                name={"assignmentInstruction"}
                 control={control}
                 defaultValue=""
                 render={({ field }) => (
                   <InputField
-                    title={"Assignment Remark".toUpperCase()}
+                    title={"Instruction".toUpperCase()}
                     input={"textarea"}
                     icon={<FaIcons.FaBookOpen className="mid-icon" />}
-                    name={"assignmentRemark"}
+                    name={"assignmentInstruction"}
                     onChangeHandler={field.onChange}
                     isRequired={false}
                     isTextArea={true}
-                  />
-                )}
-              />
-              <Controller
-                name={"assigmentFile"}
-                control={control}
-                defaultValue=""
-                render={(props) => (
-                  <FileInput
-                    name={"assigmentFile"}
-                    title={"Upload File"}
-                    icon={<FaIcons.FaFile className="mid-icon" />}
-                    isRequired={true}
-                    isImageFile={false}
-                    onChange={(event) =>
-                      props.field.onChange(event.target.files)
-                    }
                   />
                 )}
               />

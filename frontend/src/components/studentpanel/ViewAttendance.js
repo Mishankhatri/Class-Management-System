@@ -6,9 +6,9 @@ import AttendanceTableData from "./TableData/AttendanceTableData";
 import { Controller, useForm } from "react-hook-form";
 import InputField from "./../common/InputField/InputField";
 import { HeaderInputField } from "./../common/InputField/HeaderInputField";
+import TextInput from "../common/InputField/TextInput";
 
 function ViewAttendance() {
-  const { control, setValue } = useForm();
   return (
     <>
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"View Attendance"} />
@@ -22,37 +22,22 @@ function ViewAttendance() {
           </div>
           <div className="content-section">
             <div className="custom-modal-input">
-              <div className="mid-content">
-                <HeaderInputField
-                  title={"Total Present".toUpperCase()}
-                  icon={<FaIcons.FaLevelUpAlt className="mid-icon" />}
-                />
-                <div className="label-input">
-                  <input
-                    type="text"
-                    className="input"
-                    disabled
-                    name="totalPresent"
-                    value={"12"}
-                  />
-                </div>
-              </div>
-
-              <div className="mid-content">
-                <HeaderInputField
-                  title={"Total Absent".toUpperCase()}
-                  icon={<FaIcons.FaLevelDownAlt className="mid-icon" />}
-                />
-                <div className="label-input">
-                  <input
-                    type="text"
-                    className="input"
-                    disabled
-                    name="totalPresent"
-                    value={5}
-                  />
-                </div>
-              </div>
+              <TextInput
+                title={"Total Present"}
+                icon={<FaIcons.FaLevelUpAlt className="mid-icon" />}
+                disabled={true}
+                name="totalPresent"
+                hasValue={true}
+                value={"23"}
+              />
+              <TextInput
+                title={"Total Absent"}
+                icon={<FaIcons.FaLevelDownAlt className="mid-icon" />}
+                disabled={true}
+                name="totalAbsent"
+                hasValue={true}
+                value={"2"}
+              />
             </div>
             <h2 className="h3">View All Detail</h2>
             <div style={{ border: "1px solid black" }}>

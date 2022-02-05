@@ -108,7 +108,8 @@ Consists Styling of
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
 }
 
-.card-section .heading {
+.card-section .heading,
+.assignment_id {
   padding: 15px;
   border-bottom: 0.7px solid #c8cbd9;
   width: auto;
@@ -127,7 +128,8 @@ Consists Styling of
   margin: 0 40px;
 }
 
-.content-section .mid-content {
+.content-section .mid-content,
+.content-section.assignment_mid {
   margin-top: 30px;
 }
 
@@ -287,6 +289,44 @@ input[type="file"] {
   padding: 2px 8px;
   margin: 30px 10px;
   vertical-align: middle;
+}
+
+.assignment_detail .assignment_id {
+  color: #6e6e6e;
+}
+
+.grid_assignment {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.assignment_mid .info {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+}
+
+.assignment_mid .info h4 {
+  color: #6e6e6e;
+  padding: 10px;
+}
+
+.assignment_mid .info .content {
+  border-left: 1px solid #c8cbd9;
+  color: #6e6e6e;
+  padding: 10px 0 10px 10px;
+}
+
+.instruction_info {
+  border-top: 2px solid #c8cbd9;
+  margin-top: 20px;
+  padding-top: 20px;
+  color: #6e6e6e;
+}
+
+.instruction_info .content {
+  padding: 10px;
+  margin-left: 10px;
+  border-left: 1px solid #c8cbd9;
 }
 
 @media only screen and (max-width: 1350px) {
