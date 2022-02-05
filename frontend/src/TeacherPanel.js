@@ -58,6 +58,10 @@ const ViewAnnouncement = React.lazy(() =>
   import("./components/teacherpanel/announcement/ViewAnnouncement")
 );
 
+const AssignmentDetail = React.lazy(() =>
+  import("./components/teacherpanel/assignment/AssignmentDetail")
+);
+
 function TeacherPanel() {
   const [showSideBar, setSideBar] = useState(true);
 
@@ -97,9 +101,10 @@ function TeacherPanel() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/notes/upload" element={<UploadLectureNotes />} />
             <Route path="/notes/view" element={<ViewLectureNotes />} />
+            <Route path="/assignment/view" element={<DownloadAssignment />} />
             <Route
-              path="/assignment/download"
-              element={<DownloadAssignment />}
+              path="/assignment/view/id=:id"
+              element={<AssignmentDetail />}
             />
             <Route path="/assignment/create" element={<CreateAssignment />} />
             <Route path="/attendance/view" element={<ViewAttendance />} />

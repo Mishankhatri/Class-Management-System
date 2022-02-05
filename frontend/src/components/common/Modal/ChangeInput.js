@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 import * as FaIcons from "react-icons/fa";
+import { FileInput } from "../InputField/FileInput";
 import InputField from "../InputField/InputField";
 
 function ChangeInput({
@@ -12,6 +13,10 @@ function ChangeInput({
   heading,
   isCustom1 = false,
   isCustom2 = false,
+  hasFile = false,
+  fileName,
+  fileTitle,
+  fileIcon,
 }) {
   const { handleSubmit, control } = useForm();
 
@@ -76,6 +81,25 @@ function ChangeInput({
                         isTextArea={true}
                         isRequired={true}
                         isImageFile={false}
+                      />
+                    )}
+                  />
+                )}
+                {hasFile && (
+                  <Controller
+                    name={fileName}
+                    control={control}
+                    defaultValue=""
+                    render={(props) => (
+                      <FileInput
+                        name={fileName}
+                        title={fileTitle}
+                        icon={fileIcon}
+                        isRequired={true}
+                        isImageFile={true}
+                        onChange={(event) =>
+                          props.field.onChange(event.target.files)
+                        }
                       />
                     )}
                   />

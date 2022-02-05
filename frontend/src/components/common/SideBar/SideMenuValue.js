@@ -146,8 +146,8 @@ const menuTeacherValue = [
     hasSubMenu: true,
     submenus: [
       {
-        name: "Download",
-        to: "/teacher/assignment/download",
+        name: "View",
+        to: "/teacher/assignment/view",
       },
       {
         name: "Create",
@@ -155,7 +155,7 @@ const menuTeacherValue = [
       },
     ],
     icon: <FaIcons.FaCode />,
-    to: "/teacher/assignment/download",
+    to: "/teacher/assignment/view",
   },
   {
     name: "Attendance",

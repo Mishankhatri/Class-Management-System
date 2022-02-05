@@ -1,7 +1,7 @@
 .toggle-switch {
   position: relative;
   margin-right: 10px;
-  width: 75px;
+  width: 50px;
   display: inline-block;
   vertical-align: middle;
   text-align: left;
@@ -37,10 +37,10 @@
   display: block;
   float: left;
   width: 50%;
-  height: 34px;
+  height: 24px;
   padding: 0;
-  line-height: 34px;
-  font-size: 20px;
+  line-height: 24px;
+  font-size: 14px;
   color: white;
   font-weight: bold;
   box-sizing: border-box;
@@ -48,7 +48,7 @@
 .toggle-switch-inner:before {
   content: attr(data-true);
   text-transform: uppercase;
-  padding-left: 15px;
+  padding-left: 10px;
   background-color: #2f855a;
   color: #fff;
 }
@@ -56,20 +56,21 @@
 .toggle-switch-inner:after {
   content: attr(data-false);
   text-transform: uppercase;
-  padding-right: 15px;
+  padding-right: 10px;
   background-color: #bbb;
   color: #fff;
   text-align: right;
 }
 .toggle-switch-switch {
   display: block;
-  width: 24px;
-  margin: 5px;
+  width: 20px;
+  margin: 2px;
   background: #fff;
   position: absolute;
   top: 0;
   bottom: 0;
-  right: 40px;
+  right: 24px;
+  /* Change right, width, margin  */
   border: 0 solid #bbb;
   border-radius: 20px;
   transition: all 0.3s ease-in 0s;
