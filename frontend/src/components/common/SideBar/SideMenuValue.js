@@ -258,17 +258,7 @@ const menuStudentValue = [
   },
   {
     name: "Assignment",
-    hasSubMenu: true,
-    submenus: [
-      {
-        name: "View",
-        to: "/student/assignment/view",
-      },
-      {
-        name: "Upload",
-        to: "/student/assignment/upload",
-      },
-    ],
+    hasSubMenu: false,
     icon: <FaIcons.FaCode />,
     to: "/student/assignment/view",
   },

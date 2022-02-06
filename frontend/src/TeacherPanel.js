@@ -80,7 +80,7 @@ function TeacherPanel() {
         onClickHandler={SideBarHandler}
         username={"Mishan"}
         show={showSideBar}
-        profilePhoto={ProfileImage}
+        image={ProfileImage}
         name="teacher"
       />
       <div className={`main-container ${!showSideBar ? "close" : null}`}>

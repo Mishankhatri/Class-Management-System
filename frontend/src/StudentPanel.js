@@ -64,7 +64,7 @@ function StudentPanel() {
         onClickHandler={SideBarHandler}
         username={"Paras"}
         show={showSideBar}
-        profilePhoto={ProfileImage}
+        image={ProfileImage}
         name="student"
       />
       <div className={`main-container ${!showSideBar ? "close" : null}`}>
@@ -86,7 +86,10 @@ function StudentPanel() {
             <Route path="/reports/attendance" element={<ViewAttendance />} />
             <Route path="/timetables/view" element={<ViewTimetables />} />
             <Route path="/announcements" element={<Announcement />} />
-            <Route path="/assignment/upload" element={<UploadAssignment />} />
+            <Route
+              path="/assignment/upload/assignmentId=:id"
+              element={<UploadAssignment />}
+            />
             <Route path="/assignment/view" element={<ViewAssignments />} />
             <Route path="/notes" element={<LectureNotes />} />
             <Route

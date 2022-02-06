@@ -7,7 +7,7 @@ import {
 import TableContainer from "../../common/Table/TableContainer";
 import { attendanceDetail } from "../../values/AdminPanel/AttendanceInput";
 
-const AttendanceTableData = ({ click, setClick }) => {
+const AttendanceTableData = () => {
   const data = attendanceDetail;
 
   const columns = useMemo(
@@ -25,6 +25,13 @@ const AttendanceTableData = ({ click, setClick }) => {
         accessor: "date",
         Filter: DateRangeColumnFilter,
         filter: "dateBetween",
+        SearchAble: true,
+      },
+      {
+        Header: "Subject",
+        accessor: "subject",
+        Filter: SelectColumnFilter,
+        filter: "includes",
         SearchAble: true,
       },
       {
