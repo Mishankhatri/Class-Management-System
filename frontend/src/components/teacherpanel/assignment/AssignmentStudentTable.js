@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import { SelectColumnFilter } from "../../common/Table/filters";
 import TableContainer from "./../../common/Table/TableContainer";
 
-const AssignmentStudentTable = () => {
+const AssignmentStudentTable = ({ remarkClick, setRemarkClick }) => {
   const data = [
     {
       roll: 1,
@@ -103,21 +103,29 @@ const AssignmentStudentTable = () => {
         SearchAble: false,
         Cell: ({ row }) => {
           return (
-            <button
-              className="btn-custom btn-1 btn-primary"
-              onClick={() => handleView(row)}>
-              View
-            </button>
+            row.original.status === "Submitted" && (
+              <button
+                className="btn-custom btn-1 btn-primary"
+                onClick={() => handleView(row)}>
+                View
+              </button>
+            )
           );
         },
       },
       {
-        Header: "Action",
+        Header: "Remark",
         SearchAble: false,
+        className: "col_remark",
         Cell: ({ row }) => {
           return (
             <>
-              <button className="btn-custom btn-danger">Delete</button>
+              <button
+                className="btn-custom btn-danger"
+                style={{ backgroundColor: "teal" }}
+                onClick={() => setRemarkClick(!remarkClick)}>
+                Remark
+              </button>
             </>
           );
         },
