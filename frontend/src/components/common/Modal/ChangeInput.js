@@ -17,6 +17,8 @@ function ChangeInput({
   fileName,
   fileTitle,
   fileIcon,
+  title = "Description",
+  placeholder = "Write Description",
 }) {
   const { handleSubmit, control } = useForm();
 
@@ -72,10 +74,10 @@ function ChangeInput({
                     defaultValue=""
                     render={({ field }) => (
                       <InputField
-                        title={"Description".toUpperCase()}
+                        title={title.toUpperCase()}
                         input={"textarea"}
                         icon={<FaIcons.FaFile className="mid-icon" />}
-                        placeholder={"Write  description"}
+                        placeholder={placeholder}
                         name={"description"}
                         onChangeHandler={field.onChange}
                         isTextArea={true}

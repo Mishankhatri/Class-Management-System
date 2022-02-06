@@ -8,6 +8,7 @@ import { AssignmentInputValue } from "../../values/TeacherPanel/AssignmentInputV
 
 function AssignmentDetail() {
   const [click, setClick] = useState(false);
+  const [remarkClick, setRemarkClick] = useState(false);
   const { id } = useParams();
 
   const onSubmit = (data) => {
@@ -17,18 +18,32 @@ function AssignmentDetail() {
 
   return (
     <React.Fragment>
-      <ChangeInput
-        onSubmit={onSubmit}
-        valueArray={AssignmentInputValue()}
-        click={click}
-        setClick={setClick}
-        heading={"Edit Assignment"}
-        isCustom2={true}
-        hasFile={true}
-        fileName={"assignmentFile"}
-        fileTitle={"Upload File"}
-        fileIcon={<MdIcons.MdFileUpload className="mid-icon" />}
-      />
+      {click && (
+        <ChangeInput
+          onSubmit={onSubmit}
+          valueArray={AssignmentInputValue()}
+          click={click}
+          setClick={setClick}
+          heading={"Edit Assignment"}
+          isCustom2={true}
+          hasFile={true}
+          fileName={"assignmentFile"}
+          fileTitle={"Upload File"}
+          fileIcon={<MdIcons.MdFileUpload className="mid-icon" />}
+        />
+      )}
+      {remarkClick && (
+        <ChangeInput
+          onSubmit={onSubmit}
+          valueArray={[]}
+          click={remarkClick}
+          setClick={setRemarkClick}
+          heading={"Give Remarks"}
+          isCustom2={true}
+          placeholder={"Write Remark"}
+          title="Remark"
+        />
+      )}
       <InnerHeader
         icon={<MdIcons.MdUploadFile />}
         name={`Assignments No: ${id}`}
@@ -99,7 +114,10 @@ function AssignmentDetail() {
         <div className="card-section">
           <h2 className="heading">Student Performance</h2>
           <div className="content-section">
-            <AssignmentStudentTable />
+            <AssignmentStudentTable
+              remarkClick={remarkClick}
+              setRemarkClick={setRemarkClick}
+            />
           </div>
         </div>
       </div>
