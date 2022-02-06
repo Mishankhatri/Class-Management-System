@@ -16,6 +16,7 @@ function CustomController({
   fileName,
   fileTitle,
   fileIcon,
+  fileRequired = false,
 }) {
   return (
     <div className={!isCustom ? "card-section" : "card-section custom-width"}>
@@ -75,7 +76,7 @@ function CustomController({
                 name={fileName}
                 title={fileTitle}
                 icon={fileIcon}
-                isRequired={true}
+                isRequired={fileRequired}
                 isImageFile={true}
                 onChange={(event) => props.field.onChange(event.target.files)}
               />
