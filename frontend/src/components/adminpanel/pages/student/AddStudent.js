@@ -101,6 +101,7 @@ function AddStudent() {
             ErrorMessage={ErrorMessage}
             isCustom={false}
             hasFile={true}
+            fileRequired={true}
             fileTitle={"Upload Photo"}
             fileIcon={<FaIcons.FaPhotoVideo className="mid-icon" />}
             fileName={"studentPhoto"}

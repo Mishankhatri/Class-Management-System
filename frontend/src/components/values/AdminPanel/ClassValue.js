@@ -103,20 +103,20 @@ const subjectsValue = [
     ],
   },
   {
-    title: "Teacher",
+    title: "Section",
     input: "dropdown",
     icon: <FaIcons.FaCode className="mid-icon" />,
-    isRequired: true,
-    name: "subjectsTeacherName",
+    isRequired: false,
+    name: "subjectsSection",
     isCustomField: true,
     isTextarea: false,
     options: [
-      { value: "Kushal Pangeni", label: "Kushal Pangeni" },
-      { value: "Mishan Khatri", label: "Mishan Khatri" },
-      { value: "Paras Panta", label: "Paras Panta" },
-      { value: "Prabin Gautam", label: "Prabin Gautam" },
+      { value: "A", label: "A" },
+      { value: "B", label: "B" },
+      { value: "C", label: "C" },
     ],
   },
+
   {
     title: "Description",
     input: "textarea",

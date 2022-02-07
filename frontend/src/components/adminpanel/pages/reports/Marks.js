@@ -64,7 +64,10 @@ function Marks() {
           isCustom1={false} //For showing grid 3
         />
       )}
-      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"Upload Marks"} />
+      <InnerHeader
+        icon={<MdIcons.MdPersonAdd />}
+        name={"Assign Results of Students"}
+      />
       <div className="main-content">
         {/* // custom-grid */}
         <form onSubmit={handleSubmit(onSubmitForm)}>
@@ -73,7 +76,7 @@ function Marks() {
               <span className="title-icon">
                 <FaIcons.FaBook />
               </span>
-              <span className="title">MAKE SELECTION</span>
+              <span className="title">ASSIGN RESULTS</span>
             </div>
             <div className="content-section allinputfield">
               <Controller
@@ -181,7 +184,7 @@ function Marks() {
             </div>
           </div>
           <button className="morebutton btn" type="submit">
-            Select
+            Assign
           </button>
         </form>
 
