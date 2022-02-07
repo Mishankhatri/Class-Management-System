@@ -1,12 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import TableContainer from "../../common/Table/TableContainer";
 import { SelectColumnFilter } from "../../common/Table/filters";
 
 const LectureNotesTable = () => {
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     doFetch();
@@ -20,7 +18,7 @@ const LectureNotesTable = () => {
   };
 
   const onOpen = (post) => {
-    navigate(`${post.id}`);
+    alert(`Previewing File ${post.id}`);
   };
 
   const handleSubmit = (row) => {

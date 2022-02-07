@@ -12,12 +12,16 @@ function CustomController({
   errors,
   ErrorMessage,
   isCustom,
+  isCustom2 = false,
   hasFile = false,
   fileName,
   fileTitle,
   fileIcon,
   fileRequired = false,
 }) {
+  const className = `content-section ${isCustom ? "" : "allinputfield"} ${
+    isCustom2 ? "custom-content" : ""
+  }`;
   return (
     <div className={!isCustom ? "card-section" : "card-section custom-width"}>
       <div className="heading">
@@ -28,10 +32,7 @@ function CustomController({
         <span className="title">{title}</span> {/*Custom  */}
       </div>
 
-      <div
-        className={
-          !isCustom ? "content-section allinputfield" : "content-section" //custom-content
-        }>
+      <div className={className}>
         {ValueArray.map((value, index) => {
           return (
             <Controller

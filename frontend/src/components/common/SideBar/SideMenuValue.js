@@ -33,8 +33,12 @@ const menuadminValue = [
         to: "/admin/teacher/view",
       },
       {
-        name: "Add",
+        name: "Add Teacher",
         to: "/admin/teacher/add",
+      },
+      {
+        name: "Assign Teacher",
+        to: "/admin/teacher/assign",
       },
     ],
     icon: <FaIcons.FaUserTie />,

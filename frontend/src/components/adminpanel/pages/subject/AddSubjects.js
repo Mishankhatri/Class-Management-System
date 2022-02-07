@@ -55,6 +55,7 @@ function AddSubjects() {
               errors={errors}
               ErrorMessage={ErrorMessage}
               isCustom={true}
+              isCustom2={true}
             />
             <button className="morebutton btn">Submit</button>
           </form>

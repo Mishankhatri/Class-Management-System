@@ -12,9 +12,9 @@ function NavLink({
 }) {
   //determine based on current location and to
   const location = useLocation();
+  const isParent = location.pathname.includes(name);
 
-  let isActive =
-    location.pathname.includes(name) || location.pathname === `${to}`;
+  let isActive = isParent || location.pathname === `${to}`;
 
   let allClassName =
     className + (isActive ? ` ${activeClassName}` : ` ${inactiveClassName}`);
@@ -23,7 +23,11 @@ function NavLink({
   // activeClassName to show active link
   //inactiveClassName to show inactive lik
 
-  return <Link className={allClassName} to={to} {...rest} />;
+  return !isParent ? (
+    <Link className={allClassName} to={to} {...rest} />
+  ) : (
+    <label className={allClassName} {...rest} style={{ cursor: "pointer" }} />
+  );
 }
 
 //Function to generate Sidebar
