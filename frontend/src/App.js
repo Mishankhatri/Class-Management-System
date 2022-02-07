@@ -23,6 +23,10 @@ const ViewAnnouncement = React.lazy(() =>
 const AddTeacher = React.lazy(() =>
   import("./components/adminpanel/pages/teacher/AddTeacher")
 );
+
+const AssignTeacher = React.lazy(() =>
+  import("./components/adminpanel/pages/teacher/AssignTeacher")
+);
 const ViewTeacher = React.lazy(() =>
   import("./components/adminpanel/pages/teacher/ViewTeacher")
 );
@@ -136,6 +140,7 @@ function App() {
             {/* Teacher  */}
             <Route path="admin/teacher/add" element={<AddTeacher />} />
             <Route path="admin/teacher/view" element={<ViewTeacher />} />
+            <Route path="admin/teacher/assign" element={<AssignTeacher />} />
             <Route
               path="admin/teacher/view/:id"
               element={<TeacherFullDetail />}
