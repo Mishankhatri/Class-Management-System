@@ -14,9 +14,9 @@ class UserAdminConfig(UserAdmin):
     list_filter = ('admin', 'teacher','student',)
     ordering = ('-account_created',)
     list_display = ('email','id', 'username', 'fullname',
-                    'is_active', 'is_staff','admin','teacher','student','last_login')
+                    'is_active', 'is_staff','admin','teacher','student',)
     fieldsets = (
-        (None, {'fields': ('email', 'username', 'fullname','password',)}),
+        (None, {'fields': ('email', 'username', 'fullname','password','profile_image')}),
         ('Permissions', {'fields': ('is_staff','is_active', 'admin','teacher','student','groups', 'user_permissions')}),
     )
     formfield_overrides = {

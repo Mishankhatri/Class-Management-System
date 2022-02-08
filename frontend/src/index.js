@@ -16,7 +16,7 @@ import AlertTemplate from "react-alert-template-basic";
 
 //Alert options
 const alertOptions = {
-  timeout: 8000,
+  // timeout: 8000,
   position: "top center",
 };
 

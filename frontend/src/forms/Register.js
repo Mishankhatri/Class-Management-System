@@ -49,8 +49,9 @@ function Register() {
       postData.append("username", formData.username);
       postData.append("fullname", formData.fullname);
       postData.append("password", formData.password);
-      postData.append("profile_image", profileImage.profile_image[0]);
-      console.log(postData);
+      profileImage &&
+        postData.append("profile_image", profileImage.profile_image[0]);
+      console.log(postData.values());
       dispatch(registeradmin(postData));
     }
   };
@@ -78,7 +79,6 @@ function Register() {
               id="email"
               placeholder="example@example.com"
               onChange={handleChange}
-              // value={formData.email}
               required
             />
           </div>
@@ -90,7 +90,6 @@ function Register() {
               id="text"
               placeholder="Enter Username"
               onChange={handleChange}
-              // value={formData.username}
               required
             />
           </div>
@@ -102,7 +101,6 @@ function Register() {
               id="text"
               placeholder="Enter Fullname"
               onChange={handleChange}
-              // value={formData.fullname}
               required
             />
           </div>
@@ -112,9 +110,7 @@ function Register() {
               type="file"
               name="profile_image"
               id="profile_image"
-              placeholder="Select image"
               onChange={handleChange}
-              // value={profileImage.profile_image[0]}
               accept="image/*"
               required
             />
@@ -127,7 +123,6 @@ function Register() {
               id="password"
               placeholder="Enter password"
               onChange={handleChange}
-              value={formData.password}
               required
             />
             {passwordShown ? (

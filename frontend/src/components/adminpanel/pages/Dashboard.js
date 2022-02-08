@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import InnerHeader from "../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
-
 import * as FaIcons from "react-icons/fa";
 import CardData from "../../common/DashboardCardData";
 import { Link } from "react-router-dom";
@@ -60,7 +59,11 @@ function Dashboard() {
                   </div>
                   <p>Annoucement From-{adminnotice.created_by.username}</p>
                   <p>Annoucement For-{adminnotice.annoucement_for}</p>
-                  <a href={adminnotice.files} target="_blank">
+                  <a
+                    href={adminnotice.files}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
                     Download:Available Files.
                   </a>
                 </div>
