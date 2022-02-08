@@ -1,11 +1,11 @@
-import React from 'react';
-import Error404 from '../../../assets/images/error404-2.png';
-import '../css/NoDataFound.css';
+import React from "react";
+import Error404 from "../../../assets/images/error404-2.png";
+import "../css/NoDataFound.css";
 
 function NoDataFound() {
   return (
     <>
-      <div className='error404'>
+      <div className="error404">
         <main>
           <h1>Oops!</h1>
           <p>
@@ -16,7 +16,7 @@ function NoDataFound() {
             Refresh Page!
           </button>
         </main>
-        <img src={Error404} alt='404 Image' />
+        <img src={Error404} alt="404 Image" />
       </div>
     </>
   );

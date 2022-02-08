@@ -1,5 +1,5 @@
-import React from 'react';
-import { HeaderInputField } from './../../../common/InputField/HeaderInputField';
+import React from "react";
+import { HeaderInputField } from "./../../../common/InputField/HeaderInputField";
 
 function CustomSettingsInput({
   title,
@@ -13,17 +13,17 @@ function CustomSettingsInput({
 }) {
   return (
     <React.Fragment>
-      <div className='inputfield'>
+      <div className="inputfield">
         <HeaderInputField
           title={title}
           icon={icon}
           isRequired={required}
-          className='headerinputfield'
+          className="headerinputfield"
         />
-        <div className=''>
+        <div className="">
           <input
             type={type}
-            className='input'
+            className="input"
             placeholder={placeholder}
             {...register(name)}
             required

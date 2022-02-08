@@ -25,7 +25,7 @@ Consists Styling of
 /* Inner Header CSS Code  */
 
 .main-container .header {
-  font: normal 16px 'Poppins', sans-serif;
+  font: normal 16px "Poppins", sans-serif;
   padding-bottom: 10px;
   border-bottom: 0.7px solid #c8cbd9;
 }
@@ -80,12 +80,12 @@ Consists Styling of
 }
 
 .cards .name-details .number {
-  font: bold 35px 'Open Sans', sans-serif;
+  font: bold 35px "Open Sans", sans-serif;
   letter-spacing: 0.5px;
 }
 
 .cards .name-details .name {
-  font: normal 18px 'Open Sans', sans-serif;
+  font: normal 18px "Open Sans", sans-serif;
   letter-spacing: 0.5px;
 }
 
@@ -98,7 +98,7 @@ Consists Styling of
 
 .card-section {
   margin: 40px 0;
-  font: normal 16px 'Open Sans', sans-serif;
+  font: normal 16px "Open Sans", sans-serif;
   /* width: 15rem; */
   /* width: fit-content; */
   padding-bottom: 30px;
@@ -108,7 +108,8 @@ Consists Styling of
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
 }
 
-.card-section .heading {
+.card-section .heading,
+.assignment_id {
   padding: 15px;
   border-bottom: 0.7px solid #c8cbd9;
   width: auto;
@@ -127,7 +128,8 @@ Consists Styling of
   margin: 0 40px;
 }
 
-.content-section .mid-content {
+.content-section .mid-content,
+.content-section.assignment_mid {
   margin-top: 30px;
 }
 
@@ -145,22 +147,19 @@ Consists Styling of
 }
 
 .morebutton {
-  width: 8rem;
-  position: relative;
-  /* left: 50%; */
-  /* top: -15px; */
-  /* transform: translate(-50%); */
-  border-radius: 5px;
+  border-radius: 4px;
+  border-style: none;
   text-align: center;
   vertical-align: middle;
-  background-color: #009ddc;
+  background-color: #222;
   padding: 10px;
+  line-height: 1.5;
   margin-bottom: 10px;
   cursor: pointer;
 }
 
 .morebutton:hover {
-  background-color: #1b90be;
+  opacity: 0.75;
 }
 
 .btn-text {
@@ -174,7 +173,7 @@ Consists Styling of
   border: none;
   width: 6rem;
   color: white;
-  font: normal 16px 'Poppins', sans-serif;
+  font: normal 16px "Poppins", sans-serif;
 }
 
 .btn-custom-selection {
@@ -189,6 +188,12 @@ Consists Styling of
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 15px 40px;
+}
+
+.custom-announcementCreate {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 5rem;
 }
 
 .modal-inputfield {
@@ -231,7 +236,7 @@ Consists Styling of
 }
 
 .mid-title {
-  font: bold 14.5px 'Open Sans', sans-serif;
+  font: bold 14.5px "Open Sans", sans-serif;
   vertical-align: middle;
   letter-spacing: 0.5px;
 }
@@ -244,7 +249,7 @@ Consists Styling of
   border-radius: 4px;
   outline: none;
   line-height: 38px;
-  font: normal 16px 'Open Sans', sans-serif;
+  font: normal 16px "Open Sans", sans-serif;
 }
 
 .input:focus {
@@ -257,7 +262,7 @@ Consists Styling of
   transition: width 0.5s;
 }
 
-input[type='file'] {
+input[type="file"] {
   color: #83889c;
 }
 
@@ -278,12 +283,50 @@ input[type='file'] {
 
 .errors {
   color: #ba3939;
-  font: bold 10.5px 'Open Sans', sans-serif;
+  font: bold 10.5px "Open Sans", sans-serif;
   background: #ffe0e0;
   border: 1px solid #a33a3a;
   padding: 2px 8px;
   margin: 30px 10px;
   vertical-align: middle;
+}
+
+.assignment_detail .assignment_id {
+  color: #6e6e6e;
+}
+
+.grid_assignment {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.assignment_mid .info {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+}
+
+.assignment_mid .info h4 {
+  color: #6e6e6e;
+  padding: 10px;
+}
+
+.assignment_mid .info .content {
+  border-left: 1px solid #c8cbd9;
+  color: #6e6e6e;
+  padding: 10px 0 10px 10px;
+}
+
+.instruction_info {
+  border-top: 2px solid #c8cbd9;
+  margin-top: 20px;
+  padding-top: 20px;
+  color: #6e6e6e;
+}
+
+.instruction_info .content {
+  padding: 10px;
+  margin-left: 10px;
+  border-left: 1px solid #c8cbd9;
 }
 
 @media only screen and (max-width: 1350px) {
@@ -334,6 +377,10 @@ input[type='file'] {
   .content-section.custom-content,
   .modal-inputfield {
     display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .custom-announcementCreate {
     grid-template-columns: 1fr;
   }
 }

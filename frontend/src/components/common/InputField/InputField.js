@@ -1,8 +1,8 @@
-import React from 'react';
-import Select from 'react-select';
-import TextAreaInput from './TextAreaInput';
-import NormalInputField from './NormalInputField';
-import { HeaderInputField } from './HeaderInputField';
+import React from "react";
+import Select from "react-select";
+import TextAreaInput from "./TextAreaInput";
+import NormalInputField from "./NormalInputField";
+import { HeaderInputField } from "./HeaderInputField";
 
 function InputField({
   title,
@@ -19,11 +19,12 @@ function InputField({
   ErrorMessage,
   errors,
   isImageFile,
+  disabled = false,
 }) {
-  const isDropdown = input === 'dropdown';
+  const isDropdown = input === "dropdown";
 
   return (
-    <div className='mid-content'>
+    <div className="mid-content">
       {/* //Heading File  */}
       <HeaderInputField
         title={title}
@@ -35,7 +36,7 @@ function InputField({
       />
 
       {/* Input Field  */}
-      <div className='label-input'>
+      <div className="label-input">
         {!isDropdown ? (
           isTextArea ? (
             <TextAreaInput
@@ -44,6 +45,7 @@ function InputField({
               isCustomInput={isCustomInput}
               onChangeHandler={onChangeHandler}
               isRequired={isRequired}
+              disabled={disabled}
             />
           ) : (
             <NormalInputField
@@ -54,6 +56,7 @@ function InputField({
               isCustomInput={isCustomInput}
               isRequired={isRequired}
               isImageFile={isImageFile}
+              disabled={disabled}
             />
           )
         ) : (
@@ -61,10 +64,11 @@ function InputField({
             menuPortalTarget={document.body}
             ref={refClear}
             options={options}
-            className='input-select custom-input'
+            className="input-select custom-input"
             onChange={onChangeHandler}
             maxMenuHeight={200}
-            menuPlacement={'auto'}
+            disabled={disabled}
+            menuPlacement={"auto"}
             styles={{ menuPortal: (base) => ({ ...base, zIndex: 10002 }) }}
           />
         )}

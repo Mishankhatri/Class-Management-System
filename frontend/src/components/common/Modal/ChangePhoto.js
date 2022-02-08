@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import BlankProfile from '../../../assets/profiles/blank-profile.jpg';
+import React, { useState } from "react";
+import BlankProfile from "../../../assets/profiles/blank-profile.jpg";
 
 function ChangePhoto({
   click,
@@ -23,45 +23,45 @@ function ChangePhoto({
 
   return (
     <>
-      <div className='modal'>
+      <div className="modal">
         <div
           className={
             click
-              ? 'model-section upload-image visible'
-              : 'model-section upload-image'
+              ? "model-section upload-image visible"
+              : "model-section upload-image"
           }
           //This for selecting outside modal
           onClick={(event) => {
-            if (event.target.className.includes('model-section')) {
+            if (event.target.className.includes("model-section")) {
               setClick(false);
             }
           }}>
-          <div className='modal-content'>
+          <div className="modal-content">
             <form onSubmit={onSubmit}>
               <span
-                className='close'
+                className="close"
                 onClick={() => {
                   setClick(!click);
                   setPreviosImage(BlankProfile);
                 }}>
                 &times;
               </span>
-              <div className='content'>
+              <div className="content">
                 <h2>Choose Your Photo</h2>
-                <div className='imageholder'>
-                  <img src={previousImage} alt='Profile-Picture' />
+                <div className="imageholder">
+                  <img src={previousImage} alt="Profile-Picture" />
                 </div>
-                <label htmlFor='file-upload' className='label'>
+                <label htmlFor="file-upload" className="label">
                   <span> Upload Image</span>
                 </label>
                 <input
-                  type='file'
-                  name='uploadImage'
-                  id='file-upload'
-                  accept='image/*'
+                  type="file"
+                  name="uploadImage"
+                  id="file-upload"
+                  accept="image/*"
                   onChange={imageHandler}
                 />
-                <button className='btn-submit'>Submit</button>
+                <button className="btn-submit">Submit</button>
               </div>
             </form>
           </div>

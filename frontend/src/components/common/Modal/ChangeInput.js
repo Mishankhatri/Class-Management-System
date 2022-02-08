@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 
-import * as FaIcons from 'react-icons/fa';
-import InputField from '../InputField/InputField';
+import * as FaIcons from "react-icons/fa";
+import { FileInput } from "../InputField/FileInput";
+import InputField from "../InputField/InputField";
 
 function ChangeInput({
   valueArray,
@@ -12,33 +13,39 @@ function ChangeInput({
   heading,
   isCustom1 = false,
   isCustom2 = false,
+  hasFile = false,
+  fileName,
+  fileTitle,
+  fileIcon,
+  title = "Description",
+  placeholder = "Write Description",
 }) {
   const { handleSubmit, control } = useForm();
 
   return (
-    <div className='modal'>
-      <div className={click ? 'model-section visible' : 'model-section'}>
+    <div className="modal">
+      <div className={click ? "model-section visible" : "model-section"}>
         {/* Add class visible to above element to see modal  */}
-        <div className='modal-content'>
+        <div className="modal-content">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <span className='close' onClick={() => setClick(!click)}>
+            <span className="close" onClick={() => setClick(!click)}>
               &times;
             </span>
-            <div className='content'>
+            <div className="content">
               <h2>{heading}</h2>
-              <div className='content-section'>
+              <div className="content-section">
                 <div
                   className={
-                    isCustom1 ? 'custom-modal-input' : 'allinputfield'
+                    isCustom1 ? "custom-modal-input" : "allinputfield"
                   }>
                   {valueArray.map((value, index) => {
                     return (
-                      value.input != 'file' && (
+                      value.input != "file" && (
                         <Controller
                           name={value.name}
                           control={control}
                           key={index}
-                          defaultValue=''
+                          defaultValue=""
                           render={({ field }) => (
                             <InputField
                               title={value.title.toUpperCase()}
@@ -52,6 +59,7 @@ function ChangeInput({
                               isRequired={value.isRequired}
                               isImageFile={value?.isImageFile}
                               options={value?.options}
+                              disabled={value?.disabled}
                             />
                           )}
                         />
@@ -61,16 +69,16 @@ function ChangeInput({
                 </div>
                 {isCustom2 && (
                   <Controller
-                    name={'description'}
+                    name={"description"}
                     control={control}
-                    defaultValue=''
+                    defaultValue=""
                     render={({ field }) => (
                       <InputField
-                        title={'Description'.toUpperCase()}
-                        input={'textarea'}
-                        icon={<FaIcons.FaFile className='mid-icon' />}
-                        placeholder={'Write  description'}
-                        name={'description'}
+                        title={title.toUpperCase()}
+                        input={"textarea"}
+                        icon={<FaIcons.FaFile className="mid-icon" />}
+                        placeholder={placeholder}
+                        name={"description"}
                         onChangeHandler={field.onChange}
                         isTextArea={true}
                         isRequired={true}
@@ -79,10 +87,29 @@ function ChangeInput({
                     )}
                   />
                 )}
+                {hasFile && (
+                  <Controller
+                    name={fileName}
+                    control={control}
+                    defaultValue=""
+                    render={(props) => (
+                      <FileInput
+                        name={fileName}
+                        title={fileTitle}
+                        icon={fileIcon}
+                        isRequired={true}
+                        isImageFile={true}
+                        onChange={(event) =>
+                          props.field.onChange(event.target.files)
+                        }
+                      />
+                    )}
+                  />
+                )}
               </div>
               <button
-                className='btn-submit'
-                style={{ marginLeft: '40px', marginTop: '20px' }}>
+                className="btn-submit"
+                style={{ marginLeft: "40px", marginTop: "20px" }}>
                 Submit
               </button>
             </div>

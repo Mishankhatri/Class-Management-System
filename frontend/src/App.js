@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import NavBar from "./components/common/NavBar/NavBar";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Loading from "./components/common/Loading";
+import { getMenuValues } from "./components/common/SideBar/SideMenuValue";
+import ProfileImage from "./assets/profiles/pas075bct029.jpg";
+import Error404 from "./components/common/Error404";
 import { useSelector } from "react-redux";
 
 const Dashboard = React.lazy(() =>
@@ -19,6 +22,10 @@ const ViewAnnouncement = React.lazy(() =>
 
 const AddTeacher = React.lazy(() =>
   import("./components/adminpanel/pages/teacher/AddTeacher")
+);
+
+const AssignTeacher = React.lazy(() =>
+  import("./components/adminpanel/pages/teacher/AssignTeacher")
 );
 const ViewTeacher = React.lazy(() =>
   import("./components/adminpanel/pages/teacher/ViewTeacher")
@@ -74,14 +81,6 @@ const TeacherFullDetail = React.lazy(() =>
   import("./components/adminpanel/pages/teacher/TeacherFullDetail")
 );
 
-// const ClassFullDetail = React.lazy(() =>
-//   import('./components/adminpanel/pages/classes/ClassFullDetail')
-// );
-
-// const SubjectFullDetail = React.lazy(() =>
-//   import('./components/adminpanel/pages/subject/SubjectFullDetail')
-// );
-
 function App() {
   const user = useSelector((state) => state.auth.user);
   const [showSideBar, setSideBar] = useState(true);
@@ -92,12 +91,20 @@ function App() {
 
   return (
     <>
-      <Sidebar show={showSideBar} />
+      <Sidebar
+        show={showSideBar}
+        title={"Admin Panel"}
+        menues={getMenuValues()}
+        name="admin"
+      />
       <NavBar
         onClickHandler={SideBarHandler}
+        // username={"PRABIN"}
         username={user.username}
         image={user.profile_image}
         show={showSideBar}
+        profilePhoto={ProfileImage}
+        name="admin"
       />
       <div className={`main-container ${!showSideBar ? "close" : null}`}>
         <React.Suspense fallback={<Loading />}>
@@ -106,78 +113,86 @@ function App() {
               path="/"
               element={<Navigate replace to="/admin/dashboard" />}
             />
-            <Route
-              path="/admin"
-              element={<Navigate replace to="/admin/dashboard" />}
-            />
+            {/* <Route
+              path='/admin'
+              element={<Navigate replace to='/admin/dashboard' />}
+            /> */}
             <Route
               path="/*"
-              element={<div className="main-content">Not Found</div>}
+              element={
+                <div className="main-content">
+                  <Error404 />
+                </div>
+              }
             />
             {/* Dashboard */}
-            <Route path="/admin/dashboard" element={<Dashboard />} />
-            <Route path="/loading" element={<Loading />} />
+            <Route path="admin/dashboard" element={<Dashboard />} />
+            <Route path="admin/loading" element={<Loading />} />
 
             {/* Student  */}
-            <Route path="/admin/student/add" element={<AddStudent />} />
-            <Route path="/admin/student/view" element={<ViewStudent />} />
+            <Route path="admin/student/add" element={<AddStudent />} />
+            <Route path="admin/student/view" element={<ViewStudent />} />
             <Route
-              path="/admin/student/view/:id"
+              path="admin/student/view/:id"
               element={<StudentFullDetail />}
             />
 
             {/* Teacher  */}
-            <Route path="/admin/teacher/add" element={<AddTeacher />} />
-            <Route path="/admin/teacher/view" element={<ViewTeacher />} />
+            <Route path="admin/teacher/add" element={<AddTeacher />} />
+            <Route path="admin/teacher/view" element={<ViewTeacher />} />
+            <Route path="admin/teacher/assign" element={<AssignTeacher />} />
             <Route
-              path="/admin/teacher/view/:id"
+              path="admin/teacher/view/:id"
               element={<TeacherFullDetail />}
             />
 
             {/* Announcements  */}
             <Route
-              path="/admin/announcements/create"
+              path="admin/announcements/create"
               element={<CreateAnnouncement />}
             />
             <Route
-              path="/admin/announcements/view"
+              path="admin/announcements/view"
               element={<ViewAnnouncement />}
             />
 
             {/* Classes  */}
-            <Route path="/admin/classes/addclass" element={<AddClass />} />
-            <Route path="/admin/classes/addsection" element={<AddSection />} />
-            <Route path="/admin/classes/view" element={<ViewClass />} />
+            <Route path="admin/classes/addclass" element={<AddClass />} />
+            <Route path="admin/classes/addsection" element={<AddSection />} />
+            <Route path="admin/classes/view" element={<ViewClass />} />
             {/* <Route
-              path='/admin/classes/view/:id'
+              path='/classes/view/:id'
               element={<ClassFullDetail />}
             /> */}
 
             {/* Subject  */}
-            <Route path="/admin/subject/add" element={<AddSubjects />} />
-            <Route path="/admin/subject/view" element={<ViewSubjects />} />
+            <Route path="admin/subject/add" element={<AddSubjects />} />
+            <Route path="admin/subject/view" element={<ViewSubjects />} />
             {/* <Route
-              path='/admin/subject/view/:id'
+              path='/subject/view/:id'
               element={<SubjectFullDetail />}
             /> */}
 
             {/* Timetables  */}
             <Route
-              path="/admin/timetables/create"
+              path="admin/timetables/create"
               element={<CreateTimetables />}
             />
-            <Route path="/admin/timetables/view" element={<ViewTimetables />} />
+            <Route path="admin/timetables/view" element={<ViewTimetables />} />
 
             {/* Reports  */}
-            <Route path="/admin/reports/attendance" element={<Attendance />} />
-            <Route path="/admin/reports/marks" element={<Marks />} />
+            <Route path="admin/reports/attendance" element={<Attendance />} />
+            <Route path="admin/reports/marks" element={<Marks />} />
 
             {/* Create Id  */}
-            <Route path="/admin/createid" element={<CreateID />} />
+            <Route path="admin/createid" element={<CreateID />} />
 
             {/* UserProfile Option  */}
-            <Route path="/admin/settings" element={<Settings />} />
-            <Route path="/admin/profiles" element={<UserProfile />} />
+            <Route path="admin/settings" element={<Settings />} />
+            <Route
+              path="admin/profiles"
+              element={<UserProfile image={user.profile_image} />}
+            />
           </Routes>
         </React.Suspense>
       </div>

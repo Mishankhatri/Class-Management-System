@@ -13,7 +13,7 @@ Consists Styling of
 
 body {
   background-color: #f1f2f7 !important;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   overflow-x: hidden;
 }
 
@@ -23,7 +23,7 @@ body {
   left: 15.25rem;
   width: calc(100vw - 15.25rem);
   margin-left: 15.25rem;
-  z-index: 10003;
+  z-index: 1000;
   transition: margin-left 0.5s, width 0.5s;
 }
 
@@ -37,7 +37,7 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 10px 20px;
-  border-bottom: 1px solid #c8cbd9;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
   background-color: #ffffff;
 }
 
@@ -78,19 +78,26 @@ body {
   display: flex;
   justify-content: space-between;
   font-size: 20px;
-  width: 11rem;
+  /* width: 100%;
+  max-width: 14rem; */
   align-items: center;
+}
+
+.navigation .navbar .right-section .not-image {
+  display: grid;
+  grid-template-columns: repeat(2, 0.8fr);
 }
 
 .navigation .navbar .right-section .profile-image {
   width: 40px;
-  height: 45px;
+  height: 40px;
   border-radius: 50%;
+  margin-right: 5px;
 }
 
 .user-name {
   display: flex;
-  font: bold 16px 'Poppins', sans-serif;
+  font: bold 16px "Poppins", sans-serif;
   letter-spacing: 0.5px;
 }
 
@@ -170,13 +177,13 @@ body {
 }
 
 .menu.notification .message_text {
-  font: bold 13px 'Poppins';
+  font: bold 13px "Poppins";
   padding-bottom: 5px;
 }
 
 .menu.notification .createdBy {
   display: flex;
-  font: bold 11.5px 'Open Sans';
+  font: bold 11.5px "Open Sans";
   color: #6c6c6c;
 }
 
@@ -193,7 +200,7 @@ body {
 .profile-options li {
   list-style-type: none;
   padding: 8px 0 !important;
-  font: normal 15px 'Poppins', sans-serif;
+  font: normal 15px "Poppins", sans-serif;
 }
 
 .navigation .menu .menu-icon {
@@ -222,21 +229,22 @@ body {
   background-color: #f8f9fc;
   width: 15.25rem;
   height: 100vh;
-  left: -15rem;
+  left: -15.5rem;
   transition: all 0.5s;
   overflow-y: auto;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
-  z-index: 10004;
+  z-index: 1001;
 }
 
 .visible-sidemenu .title {
-  font: normal 25px 'PoppinsBold', sans-serif;
+  font: normal 25px "PoppinsBold", sans-serif;
   letter-spacing: 0.5px;
-  color: #5a67ba;
-  background-color: #f1f2f7;
-  /* F1F2F7 */
+  /* color: #5a67ba; */
+  background-color: rgba(0, 0, 0, 0.85);
   padding: 30px 0;
   text-align: center;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  width: 100%;
 }
 
 .sidemenu {
@@ -246,7 +254,7 @@ body {
 .sidemenu li {
   list-style-type: none;
   padding: 8px 0;
-  font: normal 16px 'Poppins', sans-serif;
+  font: normal 16px "Poppins", sans-serif;
 }
 
 /* Custom ScrollBar */

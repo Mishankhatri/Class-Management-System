@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import InnerHeader from './../../../common/InnerHeader';
-import * as MdIcons from 'react-icons/md';
-import * as FaIcons from 'react-icons/fa';
+import React, { useState } from "react";
+import InnerHeader from "./../../../common/InnerHeader";
+import * as MdIcons from "react-icons/md";
+import * as FaIcons from "react-icons/fa";
 
-import { getAddSubjectsValue } from '../../../values/AdminPanel/ClassValue';
-import { useForm, Controller } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
-import CustomController from '../../../common/Controller';
+import { getAddSubjectsValue } from "../../../values/AdminPanel/ClassValue";
+import { useForm, Controller } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import CustomController from "../../../common/Controller";
 
 const addSubjectsInitialValue = {
-  subjectsName: '',
-  subjectsCode: '',
-  subjectsClassName: '',
-  subjectsTeacherName: '',
-  subjectsDescription: '',
+  subjectsName: "",
+  subjectsCode: "",
+  subjectsClassName: "",
+  subjectsTeacherName: "",
+  subjectsDescription: "",
 };
 
 function AddSubjects() {
@@ -42,11 +42,11 @@ function AddSubjects() {
   return (
     <>
       <div>
-        <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'Add Subjects'} />
-        <div className='main-content'>
+        <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"Add Subjects"} />
+        <div className="main-content">
           <form onSubmit={handleSubmit(onSubmitForm)}>
             <CustomController
-              title={'ADD SUBJECT'}
+              title={"ADD SUBJECT"}
               icon={<FaIcons.FaUser />}
               ValueArray={getAddSubjectsValue()}
               refClear={refClear}
@@ -55,8 +55,9 @@ function AddSubjects() {
               errors={errors}
               ErrorMessage={ErrorMessage}
               isCustom={true}
+              isCustom2={true}
             />
-            <button className='morebutton btn'>Submit</button>
+            <button className="morebutton btn">Submit</button>
           </form>
         </div>
       </div>

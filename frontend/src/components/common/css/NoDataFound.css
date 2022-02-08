@@ -1,5 +1,5 @@
 @font-face {
-  font-family: 'Fontdiner Swanky';
+  font-family: "Fontdiner Swanky";
   src: url(../../../assets/fonts/Fontdiner/Fontdiner.ttf);
 }
 
@@ -9,6 +9,10 @@
   align-items: center;
   height: 25rem;
   margin: 0 auto;
+}
+
+.custom404 {
+  height: 35rem;
 }
 
 .error404 img {
@@ -21,7 +25,7 @@
   max-width: 20rem;
 }
 .error404 main h1 {
-  font-family: 'Fontdiner Swanky', cursive;
+  font-family: "Fontdiner Swanky", cursive;
   font-size: 4rem;
   color: #1096e9;
   margin-bottom: 1rem;
@@ -34,7 +38,7 @@
   color: #1096e9;
 }
 .error404 main button {
-  font-family: 'Fontdiner Swanky', cursive;
+  font-family: "Fontdiner Swanky", cursive;
   font-size: 1rem;
   color: #383838;
   border: none;

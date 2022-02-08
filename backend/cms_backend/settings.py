@@ -88,11 +88,19 @@ WSGI_APPLICATION = 'cms_backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'classmanagement-db',
+    #     'USER': 'cms_admin',
+    #     'PASSWORD': 'cmsdatabase',
+    #     'HOST': 'localhost',
+    #     'PORT': '3306',
+    # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'classmanagement-db',
-        'USER': 'cms_admin',
-        'PASSWORD': 'cmsdatabase',
+        'NAME': 'cms',
+        'USER': 'root',
+        'PASSWORD': '123456789',
         'HOST': 'localhost',
         'PORT': '3306',
     }

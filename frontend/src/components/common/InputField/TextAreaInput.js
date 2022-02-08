@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default function TextAreaInput({
   name,
@@ -9,14 +9,14 @@ export default function TextAreaInput({
 }) {
   return (
     <textarea
-      rows='4'
-      cols='50'
+      rows="4"
+      cols="50"
       name={name}
       required={isRequired}
       placeholder={placeholder}
       onChange={onChangeHandler}
       className={
-        isCustomInput ? 'input custom-input textarea' : 'input textarea'
+        isCustomInput ? "input custom-input textarea" : "input textarea"
       }
     />
   );

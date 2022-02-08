@@ -1,28 +1,28 @@
-import React from 'react';
-import InnerHeader from './../../../common/InnerHeader';
-import * as MdIcons from 'react-icons/md';
-import '../users/UserProfile.css';
-import { getTeacherInputValues } from './../../../values/AdminPanel/TeacherInputField';
-import { Controller, useForm } from 'react-hook-form';
-import InputField from './../../../common/InputField/InputField';
-import { ErrorMessage } from '@hookform/error-message';
-import TeacherTableData from './TeacherTableData';
+import React from "react";
+import InnerHeader from "./../../../common/InnerHeader";
+import * as MdIcons from "react-icons/md";
+import "../users/UserProfile.css";
+import { getTeacherInputValues } from "./../../../values/AdminPanel/TeacherInputField";
+import { Controller, useForm } from "react-hook-form";
+import InputField from "./../../../common/InputField/InputField";
+import { ErrorMessage } from "@hookform/error-message";
+import TeacherTableData from "./TeacherTableData";
 
 function ViewTeacher() {
   const { handleSubmit, setValue, control, errors } = useForm();
   const onSubmit = (data) => console.log(data);
   return (
     <div>
-      <div className='modal'>
-        <div className='model-section'>
+      <div className="modal">
+        <div className="model-section">
           {/* Add class visible to above element to see modal  */}
-          <div className='modal-content'>
+          <div className="modal-content">
             <form onSubmit={handleSubmit(onSubmit)}>
-              <span className='close'>&times;</span>
-              <div className='content'>
+              <span className="close">&times;</span>
+              <div className="content">
                 <h2>Update Teacher Info</h2>
 
-                <div className='content-section modal-inputfield'>
+                <div className="content-section modal-inputfield">
                   {getTeacherInputValues().map((value, index) => {
                     return (
                       <Controller
@@ -35,7 +35,7 @@ function ViewTeacher() {
                             message: `${value.title} is required`,
                           },
                         }}
-                        defaultValue=''
+                        defaultValue=""
                         render={({ field }) => (
                           <InputField
                             title={value.title.toUpperCase()}
@@ -59,8 +59,8 @@ function ViewTeacher() {
                 </div>
 
                 <button
-                  className='btn-submit'
-                  style={{ marginLeft: '40px', marginTop: '20px' }}>
+                  className="btn-submit"
+                  style={{ marginLeft: "40px", marginTop: "20px" }}>
                   Submit
                 </button>
               </div>
@@ -68,7 +68,7 @@ function ViewTeacher() {
           </div>
         </div>
       </div>
-      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={'View Teacher'} />
+      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"View Teacher"} />
       <TeacherTableData />
     </div>
   );

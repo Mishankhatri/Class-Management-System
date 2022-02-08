@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import * as BiIcons from 'react-icons/bi';
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import * as BiIcons from "react-icons/bi";
 
 function NavLink({
   to,
@@ -12,8 +12,9 @@ function NavLink({
 }) {
   //determine based on current location and to
   const location = useLocation();
+  const isParent = location.pathname.includes(name);
 
-  let isActive = location.pathname.includes(name) || location.pathname === `/${to}`;
+  let isActive = isParent || location.pathname === `${to}`;
 
   let allClassName =
     className + (isActive ? ` ${activeClassName}` : ` ${inactiveClassName}`);
@@ -22,7 +23,11 @@ function NavLink({
   // activeClassName to show active link
   //inactiveClassName to show inactive lik
 
-  return <Link className={allClassName} to={to} {...rest} />;
+  return !isParent ? (
+    <Link className={allClassName} to={to} {...rest} />
+  ) : (
+    <label className={allClassName} {...rest} style={{ cursor: "pointer" }} />
+  );
 }
 
 //Function to generate Sidebar
@@ -36,19 +41,19 @@ function MenuItem({ name, submenus, icons, hasSubMenus, toLink }) {
       <li>
         <NavLink
           to={toLink}
-          name = {name.toLowerCase()}
+          name={name.toLowerCase()}
           onClick={() => setExpandMenu(!expandMenu)}
-          activeClassName='active-link'
-          inactiveClassName='inactive-link'
-          className='linktext'>
+          activeClassName="active-link"
+          inactiveClassName="inactive-link"
+          className="linktext">
           {/* Part of menu */}
-          <div className='submenuitems'>
-            <div className='icon'>{icons}</div>
+          <div className="submenuitems">
+            <div className="icon">{icons}</div>
             {name}
 
             {/* Submenu icon  */}
             {hasSubMenus && (
-              <div className='submenuicon'>
+              <div className="submenuicon">
                 {expandMenu ? (
                   <BiIcons.BiDownArrow />
                 ) : (
@@ -60,16 +65,16 @@ function MenuItem({ name, submenus, icons, hasSubMenus, toLink }) {
         </NavLink>
         {/* Creating menu with icons and name */}
         {submenus && submenus.length > 0 ? (
-          <ul className={`submenu ${expandMenu ? 'active' : 'collapse'}`}>
+          <ul className={`submenu ${expandMenu ? "active" : "collapse"}`}>
             {/* Mapping Submenu obtained from array */}
             {submenus.map((value, index) => {
               return (
                 <li key={index}>
                   <NavLink
                     to={value.to}
-                    className='linktext'
-                    activeClassName='active-link active-sublink'
-                    inactiveClassName='inactive-link'>
+                    className="linktext"
+                    activeClassName="active-link active-sublink"
+                    inactiveClassName="inactive-link">
                     {value.name}
                   </NavLink>
                 </li>

@@ -1,6 +1,6 @@
-import React from 'react';
-import InputField from './InputField/InputField';
-import { FileInput } from './InputField/FileInput';
+import React from "react";
+import InputField from "./InputField/InputField";
+import { FileInput } from "./InputField/FileInput";
 
 function CustomController({
   title,
@@ -12,25 +12,27 @@ function CustomController({
   errors,
   ErrorMessage,
   isCustom,
+  isCustom2 = false,
   hasFile = false,
   fileName,
   fileTitle,
   fileIcon,
+  fileRequired = false,
 }) {
+  const className = `content-section ${isCustom ? "" : "allinputfield"} ${
+    isCustom2 ? "custom-content" : ""
+  }`;
   return (
-    <div className={!isCustom ? 'card-section' : 'card-section custom-width'}>
-      <div className='heading'>
-        <span className='title-icon'>
+    <div className={!isCustom ? "card-section" : "card-section custom-width"}>
+      <div className="heading">
+        <span className="title-icon">
           {icon}
           {/*Custom  */}
         </span>
-        <span className='title'>{title}</span> {/*Custom  */}
+        <span className="title">{title}</span> {/*Custom  */}
       </div>
 
-      <div
-        className={
-          !isCustom ? 'content-section allinputfield' : 'content-section' //custom-content
-        }>
+      <div className={className}>
         {ValueArray.map((value, index) => {
           return (
             <Controller
@@ -43,7 +45,7 @@ function CustomController({
                   message: `${value.title} is required`,
                 },
               }}
-              defaultValue=''
+              defaultValue=""
               render={({ field }) => (
                 <InputField
                   title={value.title.toUpperCase()}
@@ -69,13 +71,13 @@ function CustomController({
           <Controller
             name={fileName}
             control={control}
-            defaultValue=''
+            defaultValue=""
             render={(props) => (
               <FileInput
                 name={fileName}
                 title={fileTitle}
                 icon={fileIcon}
-                isRequired={true}
+                isRequired={fileRequired}
                 isImageFile={true}
                 onChange={(event) => props.field.onChange(event.target.files)}
               />

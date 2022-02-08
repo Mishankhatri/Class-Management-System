@@ -23,11 +23,8 @@
   border-radius: 50%;
   margin-bottom: 30px;
   cursor: pointer;
+  border: 2px solid rgba(0, 0, 0, 1);
   /* padding: 10px; */
-}
-
-.profile img:active {
-  border: 2px solid rgba(0, 0, 0, 0.8);
 }
 
 .profile .camera {
@@ -44,7 +41,7 @@
 }
 
 .profile .profile-name {
-  font: bold 1.5rem 'Roboto';
+  font: bold 1.5rem "Roboto";
   text-transform: uppercase;
   color: #858796;
   margin-bottom: 10px;
@@ -64,7 +61,7 @@
   border-bottom: 1px solid #e3e6f0;
   display: grid;
   grid-template-columns: 200px 1fr;
-  font: normal 1.1rem 'Poppins';
+  font: normal 1.1rem "Poppins";
   color: #858796;
   padding: 10px;
 }
@@ -181,4 +178,8 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 40px;
+}
+
+.sort-icon {
+  margin-left: 10px;
 }

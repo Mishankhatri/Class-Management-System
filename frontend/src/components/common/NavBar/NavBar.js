@@ -6,7 +6,7 @@ import * as FaIcons from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import NavBarNotification from "./NavBarNotification";
 
-function NavBar({ onClickHandler, username, show, image }) {
+function NavBar({ onClickHandler, username, show, image, name }) {
   const [showDropDown, setDropDown] = useState(false);
   const [showDropDownNotification, setDropDownNotification] = useState(false);
   // const navigate = useNavigate();
@@ -18,21 +18,23 @@ function NavBar({ onClickHandler, username, show, image }) {
           <div className="left-section">
             <button
               className={show ? "backbtn active" : "backbtn"}
-              onClick={onClickHandler}
-            >
+              onClick={onClickHandler}>
               <FaIcons.FaAlignLeft className="btn-outline-info" />
             </button>
           </div>
 
           <div className="right-section">
-            <div
-              className="notification"
-              onClick={() => setDropDownNotification(!showDropDownNotification)}
-            >
-              <div className="notification__symbol"></div>
-              <BsIcons.BsBell className="notification__icon" />
+            <div className="not-image">
+              <div
+                className="notification"
+                onClick={() =>
+                  setDropDownNotification(!showDropDownNotification)
+                }>
+                <div className="notification__symbol"></div>
+                <BsIcons.BsBell className="notification__icon" />
+              </div>
+              <img src={image} alt="profile-img" className="profile-image" />
             </div>
-            <img src={image} alt="profile-img" className="profile-image" />
             <div className="user-name">
               {username}
               <RiIcons.RiArrowDownSFill
@@ -46,13 +48,13 @@ function NavBar({ onClickHandler, username, show, image }) {
         <div className={showDropDown ? "menu active" : "menu inactive"}>
           <ul className="profile-options">
             <li>
-              <Link to={"/admin/settings"} className="menu-link">
+              <Link to={`/${name}/settings`} className="menu-link">
                 <RiIcons.RiSettings5Fill className="menu-icon" />
                 Settings
               </Link>
             </li>
             <li>
-              <Link to={"/admin/profiles"} className="menu-link">
+              <Link to={`/${name}/profiles`} className="menu-link">
                 <BiIcons.BiUser className="menu-icon" />
                 User Profile
               </Link>
