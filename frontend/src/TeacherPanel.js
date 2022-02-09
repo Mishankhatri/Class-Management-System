@@ -5,10 +5,10 @@ import NavBar from "./components/common/NavBar/NavBar";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Loading from "./components/common/Loading";
 import { menuTeacherValue } from "./components/common/SideBar/SideMenuValue";
-import ProfileImage from "./assets/profiles/pas075bct022.jpg";
 import Error404 from "./components/common/Error404";
 import Settings from "./components/teacherpanel/user/Settings";
 import UserProfile from "./components/teacherpanel/user/UserProfile";
+import { useSelector } from "react-redux";
 
 const Dashboard = React.lazy(() =>
   import("./components/teacherpanel/Dashboard")
@@ -63,6 +63,8 @@ const AssignmentDetail = React.lazy(() =>
 );
 
 function TeacherPanel() {
+  const user = useSelector((state) => state.auth.user);
+  console.log(user);
   const [showSideBar, setSideBar] = useState(true);
 
   const SideBarHandler = () => {
@@ -78,9 +80,9 @@ function TeacherPanel() {
       />
       <NavBar
         onClickHandler={SideBarHandler}
-        username={"Mishan"}
+        username={user.username}
         show={showSideBar}
-        image={ProfileImage}
+        image={user.profile_image}
         name="teacher"
       />
       <div className={`main-container ${!showSideBar ? "close" : null}`}>
@@ -98,29 +100,50 @@ function TeacherPanel() {
                 </div>
               }
             />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/notes/upload" element={<UploadLectureNotes />} />
-            <Route path="/notes/view" element={<ViewLectureNotes />} />
-            <Route path="/assignment/view" element={<DownloadAssignment />} />
+            <Route path="teacher/dashboard" element={<Dashboard />} />
             <Route
-              path="/assignment/view/id=:id"
+              path="teacher/notes/upload"
+              element={<UploadLectureNotes />}
+            />
+            <Route path="teacher/notes/view" element={<ViewLectureNotes />} />
+            <Route
+              path="teacher/assignment/view"
+              element={<DownloadAssignment />}
+            />
+            <Route
+              path="teacher/assignment/view/id=:id"
               element={<AssignmentDetail />}
             />
-            <Route path="/assignment/create" element={<CreateAssignment />} />
-            <Route path="/attendance/view" element={<ViewAttendance />} />
-            <Route path="/attendance/mark" element={<MarkAttendance />} />
             <Route
-              path="/announcement/create"
+              path="teacher/assignment/create"
+              element={<CreateAssignment />}
+            />
+            <Route
+              path="teacher/attendance/view"
+              element={<ViewAttendance />}
+            />
+            <Route
+              path="teacher/attendance/mark"
+              element={<MarkAttendance />}
+            />
+            <Route
+              path="teacher/announcement/create"
               element={<CreateAnnouncement />}
             />
-            <Route path="/announcement/view" element={<ViewAnnouncement />} />
-            <Route path="/timetables/view" element={<ViewTimetables />} />
-            <Route path="/reports/create" element={<CreateMark />} />
-            <Route path="/reports/view" element={<ViewMark />} />
+            <Route
+              path="teacher/announcement/view"
+              element={<ViewAnnouncement />}
+            />
+            <Route
+              path="teacher/timetables/view"
+              element={<ViewTimetables />}
+            />
+            <Route path="teacher/reports/create" element={<CreateMark />} />
+            <Route path="teacher/reports/view" element={<ViewMark />} />
 
             {/* UserProfile Option  */}
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/profiles" element={<UserProfile />} />
+            <Route path="teacher/settings" element={<Settings />} />
+            <Route path="teacher/profiles" element={<UserProfile />} />
           </Routes>
         </React.Suspense>
       </div>

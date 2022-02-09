@@ -19,7 +19,7 @@ class Admin(admin.ModelAdmin):
 
 @admin.register(Parent)
 class Admin(admin.ModelAdmin):
-    list_display = ('student', 'gender', 'father_name', 'mother_name', 'parent_address', 'parent_state','parent_contact_no','parent_additional_contact_no','parent_email', )
+    list_display = ('student', 'father_name', 'mother_name', 'parent_address', 'parent_state','parent_contact_no','parent_additional_contact_no','parent_email', )
 
 @admin.register(Teacher)
 class Admin(admin.ModelAdmin):

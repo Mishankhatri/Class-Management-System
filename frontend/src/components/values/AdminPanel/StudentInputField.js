@@ -3,6 +3,14 @@ import * as FaIcons from "react-icons/fa";
 
 const StudentFieldValue = [
   {
+    title: "SRN",
+    input: "text",
+    icon: <FaIcons.FaCode className="mid-icon" />,
+    placeholder: "SRN Number",
+    name: "studentSRN",
+    isRequired: true,
+  },
+  {
     title: "First Name",
     input: "text",
     icon: <FaIcons.FaUser className="mid-icon" />,

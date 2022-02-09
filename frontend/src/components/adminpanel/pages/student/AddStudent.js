@@ -4,6 +4,7 @@ import * as MdIcons from "react-icons/md";
 import * as FaIcons from "react-icons/fa";
 import InputField from "../../../common//InputField/InputField";
 import CustomController from "../../../common/Controller";
+import axios from "axios";
 
 import {
   getParentInfoValues,
@@ -76,8 +77,7 @@ function AddStudent() {
   const onSubmitForm = (data, e) => {
     console.log(data);
 
-    //CLear Input Field Value
-    e.target.reset();
+    // e.target.reset();
     selectRefStudent.clearValue();
     selectRefParent.clearValue();
     selectRefAcademicFirst.clearValue();
@@ -118,10 +118,6 @@ function AddStudent() {
             errors={errors}
             ErrorMessage={ErrorMessage}
             isCustom={false}
-            hasFile={true}
-            fileTitle={"Upload Photo"}
-            fileIcon={<FaIcons.FaPhotoVideo className="mid-icon" />}
-            fileName={"parentPhoto"}
           />
 
           {/* Academic Info  */}

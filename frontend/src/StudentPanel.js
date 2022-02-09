@@ -5,10 +5,10 @@ import NavBar from "./components/common/NavBar/NavBar";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Loading from "./components/common/Loading";
 import { menuStudentValue } from "./components/common/SideBar/SideMenuValue";
-import ProfileImage from "./assets/profiles/pas075bct028.jpg";
 import Error404 from "./components/common/Error404";
 import Settings from "./components/studentpanel/users/Settings";
 import UserProfile from "./components/studentpanel/users/Profile";
+import { useSelector } from "react-redux";
 
 const UploadAssignment = React.lazy(() =>
   import("./components/studentpanel/Assignment/UploadAssignment")
@@ -47,6 +47,7 @@ const ViewTimetables = React.lazy(() =>
 );
 
 function StudentPanel() {
+  const user = useSelector((state) => state.auth.user);
   const [showSideBar, setSideBar] = useState(true);
 
   const SideBarHandler = () => {
@@ -62,9 +63,9 @@ function StudentPanel() {
       />
       <NavBar
         onClickHandler={SideBarHandler}
-        username={"Paras"}
+        username={user.username}
+        image={user.profile_image}
         show={showSideBar}
-        image={ProfileImage}
         name="student"
       />
       <div className={`main-container ${!showSideBar ? "close" : null}`}>
@@ -82,25 +83,37 @@ function StudentPanel() {
                 </div>
               }
             />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/reports/attendance" element={<ViewAttendance />} />
-            <Route path="/timetables/view" element={<ViewTimetables />} />
-            <Route path="/announcements" element={<Announcement />} />
+            <Route path="student/dashboard" element={<Dashboard />} />
             <Route
-              path="/assignment/upload/assignmentId=:id"
+              path="student/reports/attendance"
+              element={<ViewAttendance />}
+            />
+            <Route
+              path="student/timetables/view"
+              element={<ViewTimetables />}
+            />
+            <Route path="student/announcements" element={<Announcement />} />
+            <Route
+              path="student/assignment/upload/assignmentId=:id"
               element={<UploadAssignment />}
             />
-            <Route path="/assignment/view" element={<ViewAssignments />} />
-            <Route path="/notes" element={<LectureNotes />} />
             <Route
-              path="/examination/internal"
+              path="student/assignment/view"
+              element={<ViewAssignments />}
+            />
+            <Route path="student/notes" element={<LectureNotes />} />
+            <Route
+              path="student/examination/internal"
               element={<ViewInternalMark />}
             />
-            <Route path="/examination/final" element={<ViewFinalResults />} />
+            <Route
+              path="student/examination/final"
+              element={<ViewFinalResults />}
+            />
 
             {/* UserProfile Option  */}
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/profiles" element={<UserProfile />} />
+            <Route path="student/settings" element={<Settings />} />
+            <Route path="student/profiles" element={<UserProfile />} />
           </Routes>
         </React.Suspense>
       </div>
