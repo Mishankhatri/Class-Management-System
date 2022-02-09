@@ -5,7 +5,7 @@ import * as RiIcons from "react-icons/ri";
 import * as FaIcons from "react-icons/fa";
 import { Link } from "react-router-dom";
 import NavBarNotification from "./NavBarNotification";
-import { logout } from "./../../../redux/actions/authactions";
+import Logout from "../../../forms/Logout";
 
 function NavBar({ onClickHandler, username, show, image, name }) {
   const [showDropDown, setDropDown] = useState(false);

@@ -61,7 +61,6 @@ class Student(models.Model):
     
 class Parent(models.Model):
     student = models.OneToOneField(Student,on_delete=models.CASCADE,related_name='parent_info')   
-    gender = models.CharField(max_length=50, choices=gender_choices, default='Male')
     father_name= models.CharField(max_length=200,null=False,blank=False)
     mother_name= models.CharField(max_length=200,null=False,blank=False)
     parent_address=models.CharField(max_length=100,null=False,blank=False)

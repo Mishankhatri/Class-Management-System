@@ -52,7 +52,7 @@ function AddSection() {
       <div className="main-content">
         <form onSubmit={handleSubmit(onSubmitForm)}>
           <CustomController
-            title={"ADD SUBJECT"}
+            title={"Asign Section"}
             icon={<FaIcons.FaUser />}
             ValueArray={getSectionValue()}
             refClear={refClear}

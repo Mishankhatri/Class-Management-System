@@ -3,36 +3,20 @@ import InnerHeader from "../../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
 import * as FaIcons from "react-icons/fa";
 
-import { getCLassValue } from "../../../values/AdminPanel/ClassValue";
 import { useForm, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import CustomController from "../../../common/Controller";
-
-const addClassInitialValue = {
-  className: "",
-  classCode: "",
-  classDescription: "",
-};
+import InputField from "../../../common/InputField/InputField";
 
 function AddClass() {
-  //For Reseting Select Options while Submitting
-  const [selectRef, setSelectRef] = useState(null);
-
-  //Define requirements from useform
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm({
-    addClassInitialValue,
-  });
-
-  //Reset Value using ref for Select Options
-  const refClear = (ref) => setSelectRef(ref);
+  } = useForm();
 
   const onSubmitForm = (data, e) => {
     console.log(data);
-    //CLear Input Field Value
+
     e.target.reset();
   };
 
@@ -41,17 +25,41 @@ function AddClass() {
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"Add Class"} />
       <div className="main-content">
         <form onSubmit={handleSubmit(onSubmitForm)}>
-          <CustomController
-            title={"ADD CLASS"}
-            icon={<FaIcons.FaUser />}
-            ValueArray={getCLassValue()}
-            refClear={refClear}
-            control={control}
-            Controller={Controller}
-            errors={errors}
-            ErrorMessage={ErrorMessage}
-            isCustom={true}
-          />
+          <div className="card-section">
+            <div className="heading">
+              <span className="title-icon">
+                <FaIcons.FaBook />
+              </span>
+              <span className="title">ACADEMIC INFO</span>
+            </div>
+
+            <div className="content-section">
+              <Controller
+                name={"className"}
+                control={control}
+                rules={{
+                  required: {
+                    value: true,
+                    message: `Class Name is required`,
+                  },
+                }}
+                defaultValue=""
+                render={({ field }) => (
+                  <InputField
+                    title={"Class Name".toUpperCase()}
+                    input={"text"}
+                    icon={<FaIcons.FaBook className="mid-icon" />}
+                    placeholder={"Enter Class Name"}
+                    name={"className"}
+                    onChangeHandler={field.onChange}
+                    isRequired={true}
+                    errors={errors}
+                    ErrorMessage={ErrorMessage}
+                  />
+                )}
+              />
+            </div>
+          </div>
           <button className="morebutton btn">Submit</button>
         </form>
       </div>
