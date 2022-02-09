@@ -81,7 +81,7 @@ const TeacherFullDetail = React.lazy(() =>
   import("./components/adminpanel/pages/teacher/TeacherFullDetail")
 );
 
-function App() {
+function AdminPanel() {
   const user = useSelector((state) => state.auth.user);
   const [showSideBar, setSideBar] = useState(true);
 
@@ -99,11 +99,9 @@ function App() {
       />
       <NavBar
         onClickHandler={SideBarHandler}
-        // username={"PRABIN"}
         username={user.username}
         image={user.profile_image}
         show={showSideBar}
-        profilePhoto={ProfileImage}
         name="admin"
       />
       <div className={`main-container ${!showSideBar ? "close" : null}`}>
@@ -113,10 +111,6 @@ function App() {
               path="/"
               element={<Navigate replace to="/admin/dashboard" />}
             />
-            {/* <Route
-              path='/admin'
-              element={<Navigate replace to='/admin/dashboard' />}
-            /> */}
             <Route
               path="/*"
               element={
@@ -200,4 +194,4 @@ function App() {
   );
 }
 
-export default App;
+export default AdminPanel;

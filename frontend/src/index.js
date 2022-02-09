@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import App from "./App";
 import Login from "./forms/Login";
 import Logout from "./forms/Logout";
 import Register from "./forms/Register";
@@ -13,8 +12,6 @@ import { Provider } from "react-redux";
 import Alert from "./components/common/Alert";
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
-import StudentPanel from "./StudentPanel";
-import TeacherPanel from "./TeacherPanel";
 import "./components/adminpanel/pages/users/UserProfile.css";
 import "./components/adminpanel/pages/student/CustomView.css";
 
@@ -30,13 +27,8 @@ ReactDOM.render(
       <AlertProvider template={AlertTemplate} {...alertOptions}>
         <Alert />
         <Routes>
-          <Route
-            path="/*"
-            element={<PrivateRoute navigate="/login" component={App} />}
-          />
+          <Route path="/*" element={<PrivateRoute navigate="/login" />} />
           <Route path={"/login"} element={<Login />} />
-          <Route path={"/student/*"} element={<StudentPanel />} />
-          <Route path={"/teacher/*"} element={<TeacherPanel />} />
           <Route path={"/logout"} element={<Logout />} />
           <Route path={"/register/admin/"} element={<Register />} />
         </Routes>

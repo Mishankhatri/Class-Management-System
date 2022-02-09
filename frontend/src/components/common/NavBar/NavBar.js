@@ -3,8 +3,9 @@ import * as BsIcons from "react-icons/bs";
 import * as BiIcons from "react-icons/bi";
 import * as RiIcons from "react-icons/ri";
 import * as FaIcons from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import NavBarNotification from "./NavBarNotification";
+import { logout } from "./../../../redux/actions/authactions";
 
 function NavBar({ onClickHandler, username, show, image, name }) {
   const [showDropDown, setDropDown] = useState(false);
@@ -60,7 +61,7 @@ function NavBar({ onClickHandler, username, show, image, name }) {
               </Link>
             </li>
             <li>
-              <Link to={"/logout"} className="menu-link">
+              <Link to="logout" className="menu-link">
                 <BiIcons.BiLogOut className="menu-icon" />
                 Logout
               </Link>

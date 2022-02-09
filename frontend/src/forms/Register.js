@@ -65,100 +65,104 @@ function Register() {
         <img src={Logo} alt="Logo" />
       </div>
       <div id="forms">
-        <img src={CampusLogo} alt="Logo" className="campus-logo" />
-        <div className="information">
-          <p id="welcome-info">Register</p>
-          <p id="login-message">Register admin.</p>
+        <div className="image-container">
+          <img src={CampusLogo} alt="Logo" className="campus-logo" />
         </div>
-        <form>
-          <div className="input-field">
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="example@example.com"
-              onChange={handleChange}
-              required
-            />
+        <div className="form_input">
+          <div className="information">
+            <p id="welcome-info">Register</p>
+            <p id="login-message">Register admin.</p>
           </div>
-          <div className="input-field">
-            <label>Username</label>
-            <input
-              type="text"
-              name="username"
-              id="text"
-              placeholder="Enter Username"
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="input-field">
-            <label>Fullname</label>
-            <input
-              type="text"
-              name="fullname"
-              id="text"
-              placeholder="Enter Fullname"
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="input-field">
-            <label>Profile Image</label>
-            <input
-              type="file"
-              name="profile_image"
-              id="profile_image"
-              onChange={handleChange}
-              accept="image/*"
-              required
-            />
-          </div>
-          <div className="input-field password">
-            <label>Password</label>
-            <input
-              type={passwordShown ? "text" : "password"}
-              name="password"
-              id="password"
-              placeholder="Enter password"
-              onChange={handleChange}
-              required
-            />
-            {passwordShown ? (
-              <FaEyeSlash className="icons" onClick={handleClick} />
-            ) : (
-              <FaEye className="icons" onClick={handleClick} />
-            )}
-          </div>
-          <div className="input-field password">
-            <label>Confirm Password</label>
-            <input
-              type={passwordShown ? "text" : "password"}
-              name="password2"
-              id="password"
-              placeholder="Re-enter password"
-              onChange={handleChange}
-              required
-            />
-            {passwordShown ? (
-              <FaEyeSlash className="icons" onClick={handleClick} />
-            ) : (
-              <FaEye className="icons" onClick={handleClick} />
-            )}
-          </div>
-          <button className="login__btn" onClick={handleSubmit} type="submit">
-            Register
-          </button>
-          <div className="account">
-            <span>
-              Don't have an account?{" "}
-              <a href="/#" className="links">
-                Contact Us
-              </a>
-            </span>
-          </div>
-        </form>
+          <form>
+            <div className="input-field">
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="example@example.com"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-field">
+              <label>Username</label>
+              <input
+                type="text"
+                name="username"
+                id="text"
+                placeholder="Enter Username"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-field">
+              <label>Fullname</label>
+              <input
+                type="text"
+                name="fullname"
+                id="text"
+                placeholder="Enter Fullname"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-field">
+              <label>Profile Image</label>
+              <input
+                type="file"
+                name="profile_image"
+                id="profile_image"
+                onChange={handleChange}
+                accept="image/*"
+                required
+              />
+            </div>
+            <div className="input-field password">
+              <label>Password</label>
+              <input
+                type={passwordShown ? "text" : "password"}
+                name="password"
+                id="password"
+                placeholder="Enter password"
+                onChange={handleChange}
+                required
+              />
+              {passwordShown ? (
+                <FaEyeSlash className="icons" onClick={handleClick} />
+              ) : (
+                <FaEye className="icons" onClick={handleClick} />
+              )}
+            </div>
+            <div className="input-field password">
+              <label>Confirm Password</label>
+              <input
+                type={passwordShown ? "text" : "password"}
+                name="password2"
+                id="password"
+                placeholder="Re-enter password"
+                onChange={handleChange}
+                required
+              />
+              {passwordShown ? (
+                <FaEyeSlash className="icons" onClick={handleClick} />
+              ) : (
+                <FaEye className="icons" onClick={handleClick} />
+              )}
+            </div>
+            <button className="login__btn" onClick={handleSubmit} type="submit">
+              Register
+            </button>
+            <div className="account">
+              <span>
+                Don't have an account?{" "}
+                <a href="/#" className="links">
+                  Contact Us
+                </a>
+              </span>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
