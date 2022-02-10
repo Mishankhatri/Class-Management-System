@@ -1,25 +1,35 @@
-import axios from "axios";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TableContainer from "./../../../common/Table/TableContainer";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  GET_DETAILS,
+  StudentDelete,
+} from "../../../../redux/actions/student/studentactions";
+import CustomConfirm from "../../../common/CustomConfirm";
 
 const StudentTableData = () => {
-  const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [clickDelete, setClickDelete] = useState(false);
+  const [deleteId, setdeleteId] = useState(null);
+
+  const { student: fetchData } = useSelector((state) => state.students);
+  const { classes: classSec } = useSelector((state) => state.students);
 
   useEffect(() => {
-    doFetch();
+    dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
+    dispatch(GET_DETAILS("/parent", "GET_STUDENT_PARENTS"));
   }, []);
-
-  const doFetch = async () => {
-    const { data } = await axios.get(
-      "https://jsonplaceholder.typicode.com/users"
-    );
-    setData(data);
-  };
 
   const onOpen = (post) => {
     navigate(`${post.id}`);
+  };
+
+  const handleDelete = (id) => {
+    setdeleteId(id);
+    setClickDelete(true);
   };
 
   const columns = useMemo(
@@ -32,18 +42,19 @@ const StudentTableData = () => {
         },
       },
       {
-        Header: "Username",
-        accessor: "username",
+        Header: "Full Name",
+        accessor: (d) => {
+          if (d.middleName == null) {
+            d.middleName = "";
+          }
+          return `${d.first_name} ${d.middleName} ${d.last_name}`;
+        },
         SearchAble: true,
       },
-      {
-        Header: "Name",
-        accessor: "name",
-        SearchAble: true,
-      },
+
       {
         Header: "Phone",
-        accessor: "phone",
+        accessor: "contact_no",
         SearchAble: true,
       },
       {
@@ -52,8 +63,13 @@ const StudentTableData = () => {
         SearchAble: true,
       },
       {
-        Header: "City",
-        accessor: "address.city",
+        Header: "Class",
+        accessor: (d) => {
+          const filterData = classSec.find(
+            (value) => value?.id == d.current_grade
+          );
+          return `${filterData.class_name} : ${filterData.section.section}`;
+        },
         SearchAble: true,
       },
       {
@@ -67,7 +83,11 @@ const StudentTableData = () => {
                 className="btn-primary btn-1 btn-custom">
                 Open
               </button>
-              <button className="btn-danger btn-custom">Delete</button>
+              <button
+                className="btn-danger btn-custom"
+                onClick={() => handleDelete(row.original.id)}>
+                Delete
+              </button>
             </>
           );
         },
@@ -78,8 +98,18 @@ const StudentTableData = () => {
 
   return (
     <>
+      {clickDelete && (
+        <CustomConfirm
+          title={"Delete User"}
+          msg={"Are you sure you want to delete?"}
+          trueActivity={"Yes"}
+          falseActivity={"Cancel"}
+          setDelete={setClickDelete}
+          id={deleteId}
+        />
+      )}
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        <TableContainer columns={columns} data={data} />
+        {fetchData && <TableContainer columns={columns} data={fetchData} />}
       </div>
     </>
   );

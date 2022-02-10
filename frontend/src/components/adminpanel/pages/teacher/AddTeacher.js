@@ -7,19 +7,8 @@ import { getTeacherInputValues } from "../../../values/AdminPanel/TeacherInputFi
 import { useForm, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import CustomController from "./../../../common/Controller";
-
-// teacher obtained values
-const teacherInitialValue = {
-  teacherFirstName: "",
-  teacherMiddleName: "",
-  teacherLastName: "",
-  teacherGender: "",
-  teacherDOB: "",
-  teacherPhone: "",
-  teacherEmail: "",
-  teacherLocation: "",
-  teacherPhoto: "",
-};
+import { useDispatch } from "react-redux";
+import { AddTeacherDetail } from "../../../../redux/actions/teacher/teacheractions";
 
 function AddTeacher() {
   //For Reseting Select Options while Submitting
@@ -30,19 +19,16 @@ function AddTeacher() {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm({
-    teacherInitialValue,
-  });
+  } = useForm();
 
   //Reset Value using ref for Select Options
   const refClear = (ref) => setSelectRef(ref);
+  const dispatch = useDispatch();
 
   const onSubmitForm = (data, e) => {
-    console.log(data);
-
-    //CLear Input Field Value
+    dispatch(AddTeacherDetail(data));
     e.target.reset();
-    selectRef.clearValue(); // Clear Select Value
+    selectRef.clearValue();
   };
 
   return (

@@ -6,11 +6,13 @@ import CardData from "../../common/DashboardCardData";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getData } from "../../../redux/actions/dataactions";
+import { GET_DETAILS } from "../../../redux/actions/student/studentactions";
 
 function Dashboard() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getData("adminnotices"));
+    dispatch(GET_DETAILS("/grades", "GET_STUDENT_CLASS"));
   }, [dispatch]);
   const adminnotices = useSelector((state) => state.data.adminnotices.results);
   return (
@@ -62,8 +64,7 @@ function Dashboard() {
                   <a
                     href={adminnotice.files}
                     target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                    rel="noreferrer noopener">
                     Download:Available Files.
                   </a>
                 </div>

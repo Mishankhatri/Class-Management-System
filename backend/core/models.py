@@ -52,9 +52,10 @@ class Student(models.Model):
     SRN = models.CharField(unique=True, max_length=100) #studentid
     user = models.OneToOneField(CMS_Users, on_delete=models.CASCADE,related_name='student_user')
     first_name = models.CharField(max_length=200,null=False,blank=False)
-    middle_name = models.CharField(max_length=200,null=True,blank=True)
+    middle_name = models.CharField(default='',max_length=200,null=True,blank=True)
     last_name = models.CharField(max_length=200,null=False,blank=False)
     DOB = models.DateField(default='2000-01-01',null=False)
+
     email= models.EmailField(_('email address'),null=False,blank=False)
     address = models.CharField(max_length=100,null=False,blank=False)
     photo = models.ImageField(default='default.png',upload_to='student_profile_pics')

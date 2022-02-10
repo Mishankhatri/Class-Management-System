@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import InnerHeader from "./../../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
-import axios from "axios";
-import ProfileImage from "../../../../assets/profiles/pas075bct029.jpg";
 import BlankProfile from "../../../../assets/profiles/blank-profile.jpg";
 
 import Loading from "./../../../common/Loading";
@@ -15,31 +13,27 @@ import {
   getStudentInputValues,
   getAcademicValues,
 } from "./../../../values/AdminPanel/StudentInputField";
+import {
+  // CLassList,
+  StudentClassById,
+} from "../../../../redux/actions/student/studentactions";
+import { useDispatch, useSelector } from "react-redux";
 
 function StudentFullDetail() {
   let { id } = useParams();
-  const [data, setData] = useState([]);
+  const dispatch = useDispatch();
+  const {
+    studentId: data,
+    classes,
+    studentParent,
+  } = useSelector((state) => state.students);
 
   useEffect(() => {
-    doFetch();
+    dispatch(StudentClassById(id));
+    // dispatch(CLassList());
   }, []);
 
-  const doFetch = async () => {
-    const { data } = await axios.get(
-      "https://jsonplaceholder.typicode.com/users"
-    );
-    setData(data);
-  };
-
-  const studentDetail = data.find((value) => value.id === Number(id));
-
-  if (studentDetail != undefined) {
-    studentDetail.gender = "Male";
-    studentDetail.DOB = "2058-03-09";
-  }
-
   const [click, setClick] = useState(false);
-  const [click1, setClick1] = useState(false);
   const [clickStudent, setClickStudent] = useState(false);
   const [clickParent, setClickParent] = useState(false);
   const [clickStudentAcademic, setClickStudentAcademic] = useState(false);
@@ -51,13 +45,6 @@ function StudentFullDetail() {
     setPreviosImage(BlankProfile);
     setClick(false);
     console.log(uploadedImage); //Uploaded Image
-  };
-
-  const onSubmitParent = (e) => {
-    e.preventDefault();
-    setPreviosImage(BlankProfile);
-    setClick1(false);
-    console.log(uploadedImage);
   };
 
   const onSubmitStudentInput = (data, e) => {
@@ -78,7 +65,11 @@ function StudentFullDetail() {
     setClickStudentAcademic(false);
   };
 
-  return studentDetail ? (
+  const studentClass = classes.find((value) => value.id == data?.current_grade);
+
+  const parents = studentParent.find((value) => value.student.id == id);
+
+  return data && studentClass ? (
     <React.Fragment>
       {/* Modal Section Image Start */}
       {click && (
@@ -86,16 +77,6 @@ function StudentFullDetail() {
           click={click}
           setClick={setClick}
           onSubmit={onSubmitStudent}
-          setPreviosImage={setPreviosImage}
-          setUploadedImage={setUploadedImage}
-          previousImage={previousImage}
-        />
-      )}
-      {click1 && (
-        <ChangePhoto
-          click={click1}
-          setClick={setClick1}
-          onSubmit={onSubmitParent}
           setPreviosImage={setPreviosImage}
           setUploadedImage={setUploadedImage}
           previousImage={previousImage}
@@ -135,10 +116,7 @@ function StudentFullDetail() {
       )}
 
       {/* Modal Section Input End  */}
-      <InnerHeader
-        icon={<MdIcons.MdPerson />}
-        name={`Student: ${studentDetail.name}`}
-      />
+      <InnerHeader icon={<MdIcons.MdPerson />} name={`Student`} />
       <div className="main-content">
         {/* Student Info  */}
         <div className="heading-section">
@@ -152,35 +130,49 @@ function StudentFullDetail() {
             </div>
             <div className="content-section">
               <div className="custom-info-show">
-                <div className="profile-image">
+                {/* <div className="profile-image">
                   <div className="image">
                     <img
-                      // src={studentDetail?.image}
-                      src={ProfileImage}
+                      src={data.photo}
                       alt="Profile-Image"
                       title="Change Profile Picture"
                       onClick={() => setClick(!click)}
                     />
-                    <MdIcons.MdPhotoCamera
-                      className="camera"
-                      onClick={() => setClick(!click)}
-                    />
+                    <div className="image_overlay">Change Photo</div>
+                  </div>
+                </div> */}
+
+                <div className="content" onClick={() => setClick(!click)}>
+                  <div className="content-overlay"></div>
+                  <img
+                    className="content-image"
+                    src={data.photo}
+                    alt="Profile-Image"
+                    title="Change Profile Picture"
+                  />
+                  <div className="content-details fadeIn-bottom">
+                    <h3 className="content-title">
+                      <MdIcons.MdCamera style={{ fontSize: 40 }} />
+                    </h3>
+                    <p className="content-text" style={{ fontSize: 20 }}>
+                      Change Photo
+                    </p>
                   </div>
                 </div>
+
                 <div className="information">
                   <div className="information__info">
-                    <ViewModal title={"Full Name"} value={studentDetail.name} />
-                    <ViewModal title={"Gender"} value={studentDetail.gender} />
                     <ViewModal
-                      title={"Date of Birth"}
-                      value={studentDetail.DOB}
+                      title={"Full Name"}
+                      value={`${data.first_name} ${
+                        data.middleName ? data.middleName : ""
+                      } ${data.last_name}`}
                     />
-                    <ViewModal title={"Phone"} value={studentDetail.phone} />
-                    <ViewModal title={"Email"} value={studentDetail.email} />
-                    <ViewModal
-                      title={"Address"}
-                      value={studentDetail.address.city}
-                    />
+                    <ViewModal title={"Gender"} value={data.gender} />
+                    <ViewModal title={"Date of Birth"} value={data.DOB} />
+                    <ViewModal title={"Phone"} value={data.contact_no} />
+                    <ViewModal title={"Email"} value={data.email} />
+                    <ViewModal title={"Address"} value={data.address} />
                   </div>
                   <button
                     className="btn-edit"
@@ -205,54 +197,33 @@ function StudentFullDetail() {
               {/*Custom  */}
             </div>
             <div className="content-section">
-              <div className="custom-info-show">
-                <div className="profile-image">
-                  <div className="image">
-                    <img
-                      src={BlankProfile}
-                      alt="Profile-Image"
-                      title="Change Profile Picture"
-                      onClick={() => setClick1(!click1)}
-                    />
-                    <MdIcons.MdPhotoCamera
-                      className="camera"
-                      onClick={() => setClick1(!click1)}
-                    />
-                  </div>
-                </div>
-                <div className="information">
-                  <div className="information__info">
-                    <ViewModal
-                      title={"Father Name"}
-                      value={studentDetail.name}
-                    />
-                    <ViewModal
-                      title={"Mother Name"}
-                      value={studentDetail.name}
-                    />
-                    <ViewModal title={"Phone"} value={studentDetail.phone} />
-                    <ViewModal
-                      title={"Alternate Phone"}
-                      value={studentDetail.phone}
-                    />
-                    <ViewModal title={"Email"} value={studentDetail.email} />
-                    <ViewModal
-                      title={"Address"}
-                      value={studentDetail.address.city}
-                    />
-                    <ViewModal
-                      title={"State"}
-                      value={studentDetail.address.street}
-                    />
-                  </div>
-                  <button
-                    className="btn-edit"
-                    style={{ marginTop: 20 }}
-                    onClick={() => setClickParent(!clickParent)}>
-                    Edit
-                  </button>
-                </div>
+              <div className="allinputfield">
+                <ViewModal title={"Father Name"} value={parents.father_name} />
+                <ViewModal title={"Mother Name"} value={parents.mother_name} />
+                <ViewModal title={"Phone"} value={parents.parent_contact_no} />
+                <ViewModal
+                  title={"Alternate Phone"}
+                  value={
+                    parents.parent_additional_contact_no === null
+                      ? ""
+                      : parents.parent_additional_contact_no
+                  }
+                />
+                <ViewModal
+                  title={"Email"}
+                  value={
+                    parents.parent_email === null ? "" : parents.parent_email
+                  }
+                />
+                <ViewModal title={"Address"} value={parents.parent_address} />
+                <ViewModal title={"State"} value={parents.parent_state} />
               </div>
+              <button
+                className="btn-edit"
+                style={{ marginTop: 20 }}
+                onClick={() => setClickParent(!clickParent)}>
+                Edit
+              </button>
             </div>
           </div>
         </div>
@@ -270,9 +241,12 @@ function StudentFullDetail() {
             <div className="content-section">
               <div className="information">
                 <div className="information__info">
-                  <ViewModal title={"Class"} value={12} />
-                  <ViewModal title={"Section"} value={"A"} />
-                  <ViewModal title={"Rollno"} value={29} />
+                  <ViewModal title={"Class"} value={studentClass.class_name} />
+                  <ViewModal
+                    title={"Section"}
+                    value={studentClass.section.section}
+                  />
+                  <ViewModal title={"SRN No"} value={data.SRN} />
                 </div>
                 <button
                   className="btn-edit"
