@@ -2,20 +2,18 @@ import React, { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import TableContainer from "./../../../common/Table/TableContainer";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  StudentDetail,
-  CLassList,
-} from "../../../../redux/actions/student/studentactions";
+import { GET_DETAILS } from "../../../../redux/actions/student/studentactions";
 
 const StudentTableData = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { student: fetchData } = useSelector((state) => state.students);
   const { classes: classSec } = useSelector((state) => state.students);
 
   useEffect(() => {
-    dispatch(StudentDetail());
-    dispatch(CLassList());
+    dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
+    dispatch(GET_DETAILS("/parent", "GET_STUDENT_PARENTS"));
   }, []);
 
   const onOpen = (post) => {
@@ -55,10 +53,10 @@ const StudentTableData = () => {
       {
         Header: "Class",
         accessor: (d) => {
-          const filterData =
-            classSec && classSec.find((value) => value.id == d.current_grade);
-
-          return `${filterData?.class_name} : ${filterData?.section?.section}`;
+          const filterData = classSec.find(
+            (value) => value?.id == d.current_grade
+          );
+          return `${filterData.class_name} : ${filterData.section.section}`;
         },
         SearchAble: true,
       },

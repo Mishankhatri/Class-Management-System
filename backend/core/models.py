@@ -67,8 +67,8 @@ class Parent(models.Model):
     parent_address=models.CharField(max_length=100,null=False,blank=False)
     parent_state=models.CharField(max_length=100,null=False,blank=False)
     parent_contact_no=models.BigIntegerField(null=False,blank=False)
-    parent_additional_contact_no=models.BigIntegerField(null=False,blank=True)
-    parent_email=models.EmailField(_('email address'),null=False,blank=False)
+    parent_additional_contact_no=models.BigIntegerField(null=True,blank=True)
+    parent_email=models.EmailField(_('email address'),null=True,blank=False)
     
 class Teacher(models.Model):
     TRN = models.CharField( max_length=100) #teacherid

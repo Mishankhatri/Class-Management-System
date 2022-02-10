@@ -1,22 +1,19 @@
-import axios from "axios";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import TableContainer from "./../../../common/Table/TableContainer";
+import { useDispatch, useSelector } from "react-redux";
+import { TeacherDetail } from "../../../../redux/actions/teacher/teacheractions";
 
 const TeacherTableData = () => {
-  const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // const
+
+  const data = [];
 
   useEffect(() => {
-    doFetch();
+    dispatch(TeacherDetail());
   }, []);
-
-  const doFetch = async () => {
-    const { data } = await axios.get(
-      "https://jsonplaceholder.typicode.com/users"
-    );
-    setData(data);
-  };
 
   const onOpen = (post) => {
     navigate(`${post.id}`);

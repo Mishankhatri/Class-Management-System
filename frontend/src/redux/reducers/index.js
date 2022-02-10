@@ -4,6 +4,7 @@ import messages from "./messages";
 import auth from "./auth";
 import data from "./data";
 import studentReducer from "./Student/student";
+import teacherReducer from "./Teacher/teacherReducer";
 
 export default combineReducers({
   errors,
@@ -11,4 +12,5 @@ export default combineReducers({
   auth,
   data,
   students: studentReducer,
+  teachers: teacherReducer,
 });
