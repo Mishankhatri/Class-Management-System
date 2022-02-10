@@ -3,6 +3,7 @@ import {
   GET_STUDENT_CLASS,
   GET_STUDENTCLASS_SID,
   GET_STUDENT_PARENTS,
+  DELETE_STUDENT,
 } from "../../actiontypes/student/studentdatatype";
 
 const initialState = {
@@ -22,6 +23,9 @@ export default function studentReducer(state = initialState, action) {
 
     case GET_STUDENT_PARENTS:
       return { ...state, studentParent: action.payload };
+
+    case DELETE_STUDENT:
+      return { ...state };
 
     default:
       return state;

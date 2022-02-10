@@ -1,12 +1,19 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TableContainer from "./../../../common/Table/TableContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { GET_DETAILS } from "../../../../redux/actions/student/studentactions";
+import {
+  GET_DETAILS,
+  StudentDelete,
+} from "../../../../redux/actions/student/studentactions";
+import CustomConfirm from "../../../common/CustomConfirm";
 
 const StudentTableData = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [clickDelete, setClickDelete] = useState(false);
+  const [deleteId, setdeleteId] = useState(null);
 
   const { student: fetchData } = useSelector((state) => state.students);
   const { classes: classSec } = useSelector((state) => state.students);
@@ -18,6 +25,11 @@ const StudentTableData = () => {
 
   const onOpen = (post) => {
     navigate(`${post.id}`);
+  };
+
+  const handleDelete = (id) => {
+    setdeleteId(id);
+    setClickDelete(true);
   };
 
   const columns = useMemo(
@@ -71,7 +83,11 @@ const StudentTableData = () => {
                 className="btn-primary btn-1 btn-custom">
                 Open
               </button>
-              <button className="btn-danger btn-custom">Delete</button>
+              <button
+                className="btn-danger btn-custom"
+                onClick={() => handleDelete(row.original.id)}>
+                Delete
+              </button>
             </>
           );
         },
@@ -82,6 +98,16 @@ const StudentTableData = () => {
 
   return (
     <>
+      {clickDelete && (
+        <CustomConfirm
+          title={"Delete User"}
+          msg={"Are you sure you want to delete?"}
+          trueActivity={"Yes"}
+          falseActivity={"Cancel"}
+          setDelete={setClickDelete}
+          id={deleteId}
+        />
+      )}
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
         {fetchData && <TableContainer columns={columns} data={fetchData} />}
       </div>
