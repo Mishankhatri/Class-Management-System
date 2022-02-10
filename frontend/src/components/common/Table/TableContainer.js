@@ -159,7 +159,8 @@ const TableContainer = ({ columns, data }) => {
             {page.length === 0 ? (
               <tr>
                 <td colSpan={allColumns.length}>
-                  <NoDataFound />
+                  {/* <NoDataFound /> */}
+                  <div>No data found...</div>
                 </td>
               </tr>
             ) : (

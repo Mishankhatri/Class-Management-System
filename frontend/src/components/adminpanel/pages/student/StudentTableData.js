@@ -1,22 +1,22 @@
-import axios from "axios";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import TableContainer from "./../../../common/Table/TableContainer";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  StudentDetail,
+  CLassList,
+} from "../../../../redux/actions/student/studentactions";
 
 const StudentTableData = () => {
-  const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { student: fetchData } = useSelector((state) => state.students);
+  const { classes: classSec } = useSelector((state) => state.students);
 
   useEffect(() => {
-    doFetch();
+    dispatch(StudentDetail());
+    dispatch(CLassList());
   }, []);
-
-  const doFetch = async () => {
-    const { data } = await axios.get(
-      "https://jsonplaceholder.typicode.com/users"
-    );
-    setData(data);
-  };
 
   const onOpen = (post) => {
     navigate(`${post.id}`);
@@ -32,18 +32,19 @@ const StudentTableData = () => {
         },
       },
       {
-        Header: "Username",
-        accessor: "username",
+        Header: "Full Name",
+        accessor: (d) => {
+          if (d.middleName == null) {
+            d.middleName = "";
+          }
+          return `${d.first_name} ${d.middleName} ${d.last_name}`;
+        },
         SearchAble: true,
       },
-      {
-        Header: "Name",
-        accessor: "name",
-        SearchAble: true,
-      },
+
       {
         Header: "Phone",
-        accessor: "phone",
+        accessor: "contact_no",
         SearchAble: true,
       },
       {
@@ -52,8 +53,13 @@ const StudentTableData = () => {
         SearchAble: true,
       },
       {
-        Header: "City",
-        accessor: "address.city",
+        Header: "Class",
+        accessor: (d) => {
+          const filterData =
+            classSec && classSec.find((value) => value.id == d.current_grade);
+
+          return `${filterData?.class_name} : ${filterData?.section?.section}`;
+        },
         SearchAble: true,
       },
       {
@@ -79,7 +85,7 @@ const StudentTableData = () => {
   return (
     <>
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        <TableContainer columns={columns} data={data} />
+        {fetchData && <TableContainer columns={columns} data={fetchData} />}
       </div>
     </>
   );
