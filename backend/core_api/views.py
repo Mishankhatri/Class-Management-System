@@ -1,5 +1,5 @@
-from rest_framework import viewsets,permissions,parsers
-from backend.core.models import Attendance
+from rest_framework  import viewsets,permissions,parsers
+# from backend.core.models import Attendance
 from core.models import Grade,Subject,Student,Parent,Teacher,AssignTeacherToSubjects,AdminAnnouncement,TeachersAnnouncement,GivenAssignments,SubmittedAssignments,LectureNotes,Attendance
 from .serializers import AdminAnnoucementSerializer, AssignTeacherToSubjectsSerializer, GivenAssignmentSerializer, GradeSerializer, LectureNotesSerializer, ParentSerializer,  StudentSerializer, SubjectsSerializer, SubmittedAssignmentSerializer, TeacherAnnoucementSerializer,AttendanceSerializer
 
