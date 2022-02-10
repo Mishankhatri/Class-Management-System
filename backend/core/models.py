@@ -20,16 +20,22 @@ announcement_types=(
     ('Admission', 'Admission'),
     ('Other', 'Other'),
 )
+section_choices = (
+    ('A','A'),
+    ('B','B'),
+    ('C','C'),
+    ('D','D'),
+    ('E','E'),
+    ('F','F'),
+)
 
-class Section(models.Model):
-    section= models.CharField(max_length=50)
-    
-    def __str__(self):
-        return  self.section
-    
+attendance_choices = (
+    ('ABSENT','A'),
+    ('PRESENT','P'),
+)
 class Grade(models.Model):
     class_name = models.PositiveIntegerField()
-    section = models.ForeignKey(Section,max_length=50,related_name='sections', on_delete=models.SET_NULL,null=True)
+    section = models.CharField(max_length=15,choices=section_choices,default='A')
     class Meta:
         verbose_name_plural = 'grades'
         
@@ -52,12 +58,12 @@ class Student(models.Model):
     email= models.EmailField(_('email address'),null=False,blank=False)
     address = models.CharField(max_length=100,null=False,blank=False)
     photo = models.ImageField(default='default.png',upload_to='student_profile_pics')
-    contact_no= models.IntegerField(null=False,blank=False)
+    contact_no= models.CharField(max_length=1024,null=False,blank=False)
     current_grade = models.ForeignKey(Grade,related_name='students',on_delete=models.SET_NULL, null=True)
     gender = models.CharField(max_length=50, choices=gender_choices, default='Male')
 
     def __str__(self):
-        return '%s %s %s' % (self.firstname, self.middlename,self.lastname)
+        return '%s %s %s' % (self.first_name, self.middle_name,self.last_name)
     
 class Parent(models.Model):
     student = models.OneToOneField(Student,on_delete=models.CASCADE,related_name='parent_info')   
@@ -65,8 +71,8 @@ class Parent(models.Model):
     mother_name= models.CharField(max_length=200,null=False,blank=False)
     parent_address=models.CharField(max_length=100,null=False,blank=False)
     parent_state=models.CharField(max_length=100,null=False,blank=False)
-    parent_contact_no=models.IntegerField(null=False,blank=False)
-    parent_additional_contact_no=models.IntegerField(null=False,blank=True)
+    parent_contact_no= models.CharField(max_length=1024,null=False,blank=False)
+    parent_additional_contact_no= models.CharField(max_length=1024,null=False,blank=False)
     parent_email=models.EmailField(_('email address'),null=False,blank=False)
     
 class Teacher(models.Model):
@@ -79,11 +85,11 @@ class Teacher(models.Model):
     email= models.EmailField(_('email address'),null=False,blank=False)
     address = models.CharField(max_length=100,null=False,blank=False)
     photo = models.ImageField(default='default.png',upload_to='teachers_profile_pics')
-    contact_no= models.IntegerField(null=False,blank=False)
+    contact_no=models.CharField(max_length=1024,null=False,blank=False)
     gender = models.CharField(max_length=50, choices=gender_choices, default='Male')
 
     def __str__(self):
-        return '%s %s %s' % (self.firstname, self.middlename,self.lastname)
+        return '%s %s %s' % (self.first_name, self.middle_name,self.last_name)
 class AssignTeacherToSubjects(models.Model):
     teacher = models.ForeignKey(Teacher,on_delete=models.CASCADE,related_name='teachers_assigned_subjects')
     grade = models.ForeignKey(Grade,on_delete=models.CASCADE,related_name='teacher_grade')
@@ -147,3 +153,14 @@ class LectureNotes(models.Model):
 
     def __str__(self):
             return '%s: %s,%s' % (self.grade,self.title,self.subject)
+
+class Attendance(models.Model):
+    student= models.ForeignKey(Student,related_name='attendances',on_delete=models.CASCADE)
+    teacher= models.ForeignKey(Teacher,related_name='attendances_teachers',on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject,related_name='attendance_subject',on_delete=models.CASCADE)
+    date = models.DateField()
+    grade = models.ForeignKey(Grade,on_delete=models.CASCADE,related_name='attendance_grade')
+    attendance_status = models.CharField(max_length=55,choices=attendance_choices,default='ABSENT',null=False,blank=False)
+    
+    def __str__(self):
+        return '%s,%s,%s:%s' % (self.student,self.subject,self.date,self.attendance_status)
