@@ -1,7 +1,7 @@
 from rest_framework import viewsets,permissions,parsers
 from backend.core.models import Attendance
 from core.models import Grade,Subject,Student,Parent,Teacher,AssignTeacherToSubjects,AdminAnnouncement,TeachersAnnouncement,GivenAssignments,SubmittedAssignments,LectureNotes,Attendance
-from .serializers import AdminAnnoucementSerializer, AssignTeacherToSubjectsSerializer, GivenAssignmentSerializer, GradeSerializer, LectureNotesSerializer, ParentSerializer,  StudentSerializer, SubjectsSerializer, SubmittedAssignmentSerializer, TeacherAnnoucementSerializer,AttendanceSerializer
+from .serializers import AdminAnnoucementSerializer, AssignTeacherToSubjectsSerializer, GivenAssignmentSerializer, GradeSerializer, LectureNotesSerializer, ParentSerializer,  StudentSerializer, SubjectsSerializer, SubmittedAssignmentSerializer, TeacherAnnoucementSerializer,AttendanceSerializer, TeacherSerializer
 
 class GradeAPI(viewsets.ModelViewSet):
     queryset = Grade.objects.all()
@@ -26,7 +26,7 @@ class ParentAPI(viewsets.ModelViewSet):
     
 class TeacherAPI(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
-    serializer_class = StudentSerializer
+    serializer_class = TeacherSerializer
     parser_clases = [parsers.FileUploadParser,parsers.FormParser]
     permissions_classes= [permissions.IsAuthenticated,]
 
@@ -71,16 +71,16 @@ class AttendanceAPI(viewsets.ModelViewSet):
     
     def get_queryset(self):
         queryset = Attendance.objects.all()
-        grade = self.request.query_params.get('grade')
-        subject = self.request.query_params.get('subject')
-        student = self.request.query_params.get('student')
-        teacher = self.request.query_params.get('teacher')
-        if grade is not None:
-            queryset = queryset.filter(grade=grade)
-        if subject is not None:
-            queryset = queryset.filter(subject=subject)
-        if student is not None:
-            queryset = queryset.filter(student=student)
-        if teacher is not None:
-            queryset = queryset.filter(teacher=teacher)
+        grade_id = self.request.query_params.get('grade')
+        subject_id = self.request.query_params.get('subject')
+        student_id = self.request.query_params.get('student')
+        teacher_id = self.request.query_params.get('teacher')
+        if grade_id is not None:
+            queryset = queryset.filter(grade__id=grade_id)
+        if subject_id is not None:
+            queryset = queryset.filter(subject__id=subject_id)
+        if student_id is not None:
+            queryset = queryset.filter(student__id=student_id)
+        if teacher_id is not None:
+            queryset = queryset.filter(teacher__id=teacher_id)
         return queryset
