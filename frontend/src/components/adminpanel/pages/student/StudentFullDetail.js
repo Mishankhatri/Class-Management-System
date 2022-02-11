@@ -19,11 +19,10 @@ import { useDispatch, useSelector } from "react-redux";
 function StudentFullDetail() {
   let { id } = useParams();
   const dispatch = useDispatch();
-  const {
-    studentId: data,
-    classes,
-    studentParent,
-  } = useSelector((state) => state.students);
+  const { studentId: data, studentParent } = useSelector(
+    (state) => state.students
+  );
+  const { grades: classes } = useSelector((state) => state.classes);
 
   useEffect(() => {
     dispatch(StudentClassById(id));

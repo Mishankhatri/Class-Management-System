@@ -69,7 +69,7 @@ export const TeacherDelete = (id) => {
   return function (dispatch) {
     axiosInstance
       .delete(`/teacher/${id}`)
-      .then(({ data }) => {
+      .then(() => {
         console.log("deleted");
         dispatch({ type: DELETE_TEACHER_DETAIL });
         dispatch(TeacherDetail());

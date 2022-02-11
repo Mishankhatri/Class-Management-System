@@ -10,7 +10,7 @@ import { useAlert } from "react-alert";
 import { AddClassActions } from "./../../../../redux/actions/classactions";
 
 function AddClass() {
-  const { classes } = useSelector((state) => state.students);
+  const { grades: classes } = useSelector((state) => state.classes);
   const alert = useAlert();
   const dispatch = useDispatch();
 

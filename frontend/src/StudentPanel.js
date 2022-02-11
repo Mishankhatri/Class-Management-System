@@ -22,14 +22,6 @@ const ViewAssignments = React.lazy(() =>
   import("./components/studentpanel/Assignment/ViewAssignments")
 );
 
-const ViewFinalResults = React.lazy(() =>
-  import("./components/studentpanel/Examination/ViewFinalResults")
-);
-
-const ViewInternalMark = React.lazy(() =>
-  import("./components/studentpanel/Examination/ViewInternalMark")
-);
-
 const Announcement = React.lazy(() =>
   import("./components/studentpanel/Announcement")
 );
@@ -102,14 +94,6 @@ function StudentPanel() {
               element={<ViewAssignments />}
             />
             <Route path="student/notes" element={<LectureNotes />} />
-            <Route
-              path="student/examination/internal"
-              element={<ViewInternalMark />}
-            />
-            <Route
-              path="student/examination/final"
-              element={<ViewFinalResults />}
-            />
 
             {/* UserProfile Option  */}
             <Route path="student/settings" element={<Settings />} />

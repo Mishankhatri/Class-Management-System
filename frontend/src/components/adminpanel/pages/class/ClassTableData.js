@@ -1,16 +1,27 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { SelectColumnFilter } from "../../../common/Table/filters";
 import TableContainer from "../../../common/Table/TableContainer";
 import { useSelector, useDispatch } from "react-redux";
-import { GetClass } from "../../../../redux/actions/classactions";
+import CustomConfirm from "./../../../common/CustomConfirm";
+import {
+  DeleteClassSec,
+  GetClass,
+} from "../../../../redux/actions/classactions";
 
 const ClassTableData = ({ click, setClick }) => {
-  const { classes } = useSelector((state) => state.students);
+  const { grades: classes } = useSelector((state) => state.classes);
   const dispatch = useDispatch();
+  const [clickDelete, setClickDelete] = useState(false);
+  const [deleteId, setdeleteId] = useState(null);
 
   useEffect(() => {
     dispatch(GetClass());
   }, []);
+
+  const handleDelete = (id) => {
+    setdeleteId(id);
+    setClickDelete(true);
+  };
 
   const columns = useMemo(
     () => [
@@ -44,7 +55,11 @@ const ClassTableData = ({ click, setClick }) => {
                 className="btn-primary btn-1 btn-custom">
                 Edit
               </button>
-              <button className="btn-danger btn-custom">Delete</button>
+              <button
+                className="btn-danger btn-custom"
+                onClick={() => handleDelete(row.original.id)}>
+                Delete
+              </button>
             </>
           );
         },
@@ -55,10 +70,17 @@ const ClassTableData = ({ click, setClick }) => {
 
   return (
     <>
-      {/* <div style={{ margin: "20px 30px", marginBottom: 50, width: "40rem" }}>
-        <TableContainer columns={columns} data={classes} />
-      </div> */}
-
+      {clickDelete && (
+        <CustomConfirm
+          title={"Delete User"}
+          msg={"Are you sure you want to delete?"}
+          trueActivity={"Yes"}
+          falseActivity={"Cancel"}
+          setDelete={setClickDelete}
+          id={deleteId}
+          PeformDelete={DeleteClassSec}
+        />
+      )}
       <div className="main-content">
         <div className="card-section">
           <div className="heading">

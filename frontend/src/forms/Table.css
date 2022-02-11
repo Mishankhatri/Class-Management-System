@@ -189,9 +189,9 @@ table tbody tr:hover {
 }
 
 .subject-column {
-  min-width: 500px;
+  text-align: center;
 }
 
-/* .col_remark {
-  min-width: 20rem;
-} */
+.detail-column {
+  min-width: 100%;
+}

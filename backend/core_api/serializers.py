@@ -76,6 +76,7 @@ class AttendanceSerializer(serializers.ModelSerializer):
     grade = GradeSerializer()
     subject = SubjectsSerializer()
     teacher = TeacherSerializer()
+    student = StudentSerializer()
     class Meta:
         model= Attendance
         fields = '__all__'

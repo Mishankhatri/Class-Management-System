@@ -98,18 +98,8 @@ const menuadminValue = [
     to: "/admin/timetables/view",
   },
   {
-    name: "Reports",
-    hasSubMenu: true,
-    submenus: [
-      {
-        name: "Attendance",
-        to: "/admin/reports/attendance",
-      },
-      {
-        name: "Marks",
-        to: "/admin/reports/marks",
-      },
-    ],
+    name: "Attendance",
+    hasSubMenu: false,
     icon: <FaIcons.FaAddressCard />,
     to: "/admin/reports/attendance",
   },
@@ -200,22 +190,7 @@ const menuTeacherValue = [
     icon: <FaIcons.FaCalendar />,
     to: "/teacher/timetables/view",
   },
-  {
-    name: "Reports",
-    hasSubMenu: true,
-    submenus: [
-      {
-        name: "View Reports",
-        to: "/teacher/reports/view",
-      },
-      {
-        name: "Create Reports",
-        to: "/teacher/reports/create",
-      },
-    ],
-    icon: <FaIcons.FaAddressCard />,
-    to: "/teacher/reports/view",
-  },
+
   {
     name: "Notes",
     hasSubMenu: true,
@@ -266,22 +241,7 @@ const menuStudentValue = [
     icon: <FaIcons.FaCode />,
     to: "/student/assignment/view",
   },
-  {
-    name: "Examination",
-    hasSubMenu: true,
-    submenus: [
-      {
-        name: "Internal Marks",
-        to: "/student/examination/internal",
-      },
-      {
-        name: "Final Results",
-        to: "/student/examination/final",
-      },
-    ],
-    icon: <FaIcons.FaExpand />,
-    to: "/student/examination/internal",
-  },
+
   {
     name: "Lecture note",
     hasSubMenu: false,

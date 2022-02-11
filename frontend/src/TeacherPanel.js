@@ -26,14 +26,6 @@ const ViewLectureNotes = React.lazy(() =>
   import("./components/teacherpanel/LectureNote/ViewLectureNotes.js")
 );
 
-const CreateMark = React.lazy(() =>
-  import("./components/teacherpanel/reports/CreateMark")
-);
-
-const ViewMark = React.lazy(() =>
-  import("./components/teacherpanel/reports/ViewMark")
-);
-
 const MarkAttendance = React.lazy(() =>
   import("./components/teacherpanel/attendance/MarkAttendance")
 );
@@ -138,8 +130,6 @@ function TeacherPanel() {
               path="teacher/timetables/view"
               element={<ViewTimetables />}
             />
-            <Route path="teacher/reports/create" element={<CreateMark />} />
-            <Route path="teacher/reports/view" element={<ViewMark />} />
 
             {/* UserProfile Option  */}
             <Route path="teacher/settings" element={<Settings />} />

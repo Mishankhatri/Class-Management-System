@@ -15,10 +15,8 @@ const StudentTableData = () => {
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
 
-  const { student: fetchData, classes: classSec } = useSelector(
-    (state) => state.students
-  );
-  // const { classes: classSec } = useSelector((state) => state.students);
+  const { student: fetchData } = useSelector((state) => state.students);
+  const { grades: classSec } = useSelector((state) => state.classes);
 
   useEffect(() => {
     dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));

@@ -1,11 +1,18 @@
-import axios from "axios";
 import React, { useEffect, useState, useMemo } from "react";
 import TableContainer from "../../../common/Table/TableContainer";
-import { attendanceDetail } from "../../../values/AdminPanel/AttendanceInput";
 import { DateRangeColumnFilter } from "./../../../common/Table/filters";
 
+import { useSelector, useDispatch } from "react-redux";
+import { ViewStudentAttendance } from "../../../../redux/actions/subjectactions";
+import Loading from "./../../../common/Loading";
+
 const AttendanceTableData = ({ click, setClick }) => {
-  const data = attendanceDetail;
+  const { attendance } = useSelector((state) => state.students);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(ViewStudentAttendance());
+  }, []);
 
   const columns = useMemo(
     () => [
@@ -18,17 +25,24 @@ const AttendanceTableData = ({ click, setClick }) => {
       },
       {
         Header: "Name",
-        accessor: "name",
+        accessor: (d) => {
+          if (d.student.middleName == null) {
+            d.student.middleName = "";
+          }
+          return `${d.student.first_name} ${d.student.middleName} ${d.student.last_name}`;
+        },
         SearchAble: true,
       },
       {
-        Header: "Rollno",
-        accessor: "roll",
+        Header: "SRN",
+        accessor: (d) => d.student.SRN,
         SearchAble: true,
       },
       {
         Header: "Class",
-        accessor: "class",
+        accessor: (d) => {
+          return `${d.grade.class_name}: ${d.grade.section}`;
+        },
         SearchAble: true,
       },
       {
@@ -40,46 +54,40 @@ const AttendanceTableData = ({ click, setClick }) => {
       },
       {
         Header: "Subject",
-        accessor: "subject",
+        accessor: "subject.subject_name",
         SearchAble: true,
       },
       {
         Header: "Attendance",
-        accessor: "attendance",
+        accessor: "attendance_status",
         SearchAble: true,
       },
 
       {
-        Header: "Present/Absent",
-        accessor: "P/A",
-        SearchAble: true,
-      },
-      {
-        Header: "Action",
-        SearchAble: false,
-        Cell: ({ row }) => {
-          return (
-            <>
-              <button
-                onClick={() => setClick(!click)}
-                className="btn-primary btn-1 btn-custom">
-                Edit
-              </button>
-              <button className="btn-danger btn-custom">Delete</button>
-            </>
-          );
+        Header: "Teacher",
+        accessor: (d) => {
+          return `${d.teacher.first_name} ${
+            d.teacher.middle_name ? d.teacher.middle_name : ""
+          } ${d.teacher.last_name}`;
         },
+        SearchAble: true,
       },
     ],
     []
   );
 
-  return (
+  return attendance ? (
     <>
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        <TableContainer columns={columns} data={data} isRangeSearch={true} />
+        <TableContainer
+          columns={columns}
+          data={attendance}
+          isRangeSearch={true}
+        />
       </div>
     </>
+  ) : (
+    <Loading />
   );
 };
 

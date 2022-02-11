@@ -60,9 +60,7 @@ const ViewTimetables = React.lazy(() =>
 const Attendance = React.lazy(() =>
   import("./components/adminpanel/pages/reports/Attendance")
 );
-const Marks = React.lazy(() =>
-  import("./components/adminpanel/pages/reports/Marks")
-);
+
 const CreateID = React.lazy(() =>
   import("./components/adminpanel/pages/CreateId")
 );
@@ -176,7 +174,6 @@ function AdminPanel() {
 
             {/* Reports  */}
             <Route path="admin/reports/attendance" element={<Attendance />} />
-            <Route path="admin/reports/marks" element={<Marks />} />
 
             {/* Create Id  */}
             <Route path="admin/createid" element={<CreateID />} />

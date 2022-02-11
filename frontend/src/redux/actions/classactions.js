@@ -1,5 +1,6 @@
 import { ADD_CLASS, GET_CLASS } from "../actiontypes/classtype";
 import axiosInstance from "./../../axios";
+import { DELETE_CLASSSEC } from "./../actiontypes/classtype";
 
 export const AddClassActions = (data) => {
   return function (dispatch) {
@@ -9,7 +10,6 @@ export const AddClassActions = (data) => {
         dispatch({
           type: ADD_CLASS,
         });
-        // dispatch()
       })
       .catch((error) => console.log(error));
   };
@@ -17,9 +17,20 @@ export const AddClassActions = (data) => {
 
 export const GetClass = () => {
   return function (dispatch) {
-    axiosInstance.get("/grades").then(({ data }) => {
-      console.log(data);
-      dispatch({ type: GET_CLASS, payload: data });
+    axiosInstance.get("/grades").then(({ data: { results } }) => {
+      dispatch({ type: GET_CLASS, payload: results });
     });
+  };
+};
+
+export const DeleteClassSec = (id) => {
+  return function (dispatch) {
+    axiosInstance
+      .delete(`/grades/${id}`)
+      .then(() => {
+        dispatch({ type: DELETE_CLASSSEC });
+        dispatch(GetClass());
+      })
+      .catch((error) => console.log(error));
   };
 };
