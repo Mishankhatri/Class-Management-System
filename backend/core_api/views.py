@@ -1,7 +1,7 @@
 from rest_framework  import viewsets,permissions,parsers
 # from backend.core.models import Attendance
 from core.models import Grade,Subject,Student,Parent,Teacher,AssignTeacherToSubjects,AdminAnnouncement,TeachersAnnouncement,GivenAssignments,SubmittedAssignments,LectureNotes,Attendance
-from .serializers import AdminAnnoucementSerializer, AssignTeacherToSubjectsSerializer, GivenAssignmentSerializer, GradeSerializer, LectureNotesSerializer, ParentSerializer,  StudentSerializer, SubjectsSerializer, SubmittedAssignmentSerializer, TeacherAnnoucementSerializer,AttendanceSerializer
+from .serializers import AdminAnnoucementSerializer, AssignTeacherToSubjectsSerializer, GivenAssignmentSerializer, GradeSerializer, LectureNotesSerializer, ParentSerializer,  StudentSerializer, SubjectsSerializer, SubmittedAssignmentSerializer, TeacherAnnoucementSerializer,AttendanceSerializer, TeacherSerializer
 
 class GradeAPI(viewsets.ModelViewSet):
     queryset = Grade.objects.all()
@@ -26,7 +26,7 @@ class ParentAPI(viewsets.ModelViewSet):
     
 class TeacherAPI(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
-    serializer_class = StudentSerializer
+    serializer_class = TeacherSerializer
     parser_clases = [parsers.FileUploadParser,parsers.FormParser]
     permissions_classes= [permissions.IsAuthenticated,]
 

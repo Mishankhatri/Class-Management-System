@@ -79,7 +79,9 @@ function CustomController({
                 icon={fileIcon}
                 isRequired={fileRequired}
                 isImageFile={true}
-                onChange={(event) => props.field.onChange(event.target.files)}
+                onChange={(event) =>
+                  props.field.onChange(event.target.files[0])
+                }
               />
             )}
           />

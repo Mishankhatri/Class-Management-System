@@ -1,6 +1,7 @@
 import {
   GET_TEACHER_DETAIL,
   ADD_TEACHER_DETAIL,
+  GET_TEACHER_BYID,
 } from "../../actiontypes/teacher/teacherdatatype";
 
 const initialState = {
@@ -14,6 +15,9 @@ export default function teacherReducer(state = initialState, action) {
 
     case ADD_TEACHER_DETAIL:
       return { ...state };
+
+    case GET_TEACHER_BYID:
+      return { ...state, teacherId: action.payload };
 
     // case GET_STUDENTCLASS_SID:
     //   return { ...state, studentId: action.payload };

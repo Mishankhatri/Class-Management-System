@@ -27,8 +27,8 @@ function AddTeacher() {
 
   const onSubmitForm = (data, e) => {
     dispatch(AddTeacherDetail(data));
-    e.target.reset();
-    selectRef.clearValue();
+    // e.target.reset();
+    // selectRef.clearValue();
   };
 
   return (

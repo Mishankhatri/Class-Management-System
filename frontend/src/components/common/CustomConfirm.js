@@ -11,12 +11,13 @@ function CustomConfirm({
   falseActivity,
   id,
   setDelete,
+  PeformDelete,
 }) {
   const dispatch = useDispatch();
   const alert = useAlert();
 
   const doAction = () => {
-    dispatch(StudentDelete(id));
+    dispatch(PeformDelete(id));
     setDelete(false);
     alert.success(`Deleted Successful`);
   };

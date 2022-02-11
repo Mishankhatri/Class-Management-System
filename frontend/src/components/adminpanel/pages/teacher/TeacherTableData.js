@@ -1,15 +1,22 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import TableContainer from "./../../../common/Table/TableContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { TeacherDetail } from "../../../../redux/actions/teacher/teacheractions";
+import {
+  TeacherDelete,
+  TeacherDetail,
+} from "../../../../redux/actions/teacher/teacheractions";
+import CustomConfirm from "../../../common/CustomConfirm";
+import Loading from "./../../../common/Loading";
 
 const TeacherTableData = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const
 
-  const data = [];
+  const [clickDelete, setClickDelete] = useState(false);
+  const [deleteId, setdeleteId] = useState(null);
+
+  const { teacherDetail: data } = useSelector((state) => state.teachers);
 
   useEffect(() => {
     dispatch(TeacherDetail());
@@ -17,6 +24,11 @@ const TeacherTableData = () => {
 
   const onOpen = (post) => {
     navigate(`${post.id}`);
+  };
+
+  const handleDelete = (id) => {
+    setdeleteId(id);
+    setClickDelete(true);
   };
 
   const columns = useMemo(
@@ -29,18 +41,18 @@ const TeacherTableData = () => {
         },
       },
       {
-        Header: "User Name",
-        accessor: "username",
-        SearchAble: true,
-      },
-      {
-        Header: "Name",
-        accessor: "name",
+        Header: "Full Name",
+        accessor: (d) => {
+          if (d.middleName == null) {
+            d.middleName = "";
+          }
+          return `${d.first_name} ${d.middleName} ${d.last_name}`;
+        },
         SearchAble: true,
       },
       {
         Header: "Phone",
-        accessor: "phone",
+        accessor: "contact_no",
         SearchAble: true,
       },
       {
@@ -49,8 +61,13 @@ const TeacherTableData = () => {
         SearchAble: true,
       },
       {
-        Header: "City",
-        accessor: "address.city",
+        Header: "TRN NO",
+        accessor: "TRN",
+        SearchAble: true,
+      },
+      {
+        Header: "Address",
+        accessor: "address",
         SearchAble: true,
       },
       {
@@ -64,7 +81,11 @@ const TeacherTableData = () => {
                 className="btn-primary btn-1 btn-custom">
                 Open
               </button>
-              <button className="btn-danger btn-custom">Delete</button>
+              <button
+                className="btn-danger btn-custom"
+                onClick={() => handleDelete(row.original.id)}>
+                Delete
+              </button>
             </>
           );
         },
@@ -75,8 +96,19 @@ const TeacherTableData = () => {
 
   return (
     <>
+      {clickDelete && (
+        <CustomConfirm
+          title={"Delete Teacher"}
+          msg={"Are you sure you want to delete?"}
+          trueActivity={"Yes"}
+          falseActivity={"Cancel"}
+          setDelete={setClickDelete}
+          id={deleteId}
+          PeformDelete={TeacherDelete}
+        />
+      )}
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        <TableContainer columns={columns} data={data} />
+        {data ? <TableContainer columns={columns} data={data} /> : <Loading />}
       </div>
     </>
   );
