@@ -16,7 +16,7 @@ const StudentTableData = () => {
   const [deleteId, setdeleteId] = useState(null);
 
   const { student: fetchData } = useSelector((state) => state.students);
-  const { classes: classSec } = useSelector((state) => state.students);
+  const { grades: classSec } = useSelector((state) => state.classes);
 
   useEffect(() => {
     dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
@@ -68,7 +68,7 @@ const StudentTableData = () => {
           const filterData = classSec.find(
             (value) => value?.id == d.current_grade
           );
-          return `${filterData.class_name} : ${filterData.section.section}`;
+          return `${filterData.class_name} : ${filterData.section}`;
         },
         SearchAble: true,
       },
@@ -106,6 +106,7 @@ const StudentTableData = () => {
           falseActivity={"Cancel"}
           setDelete={setClickDelete}
           id={deleteId}
+          PeformDelete={StudentDelete}
         />
       )}
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>

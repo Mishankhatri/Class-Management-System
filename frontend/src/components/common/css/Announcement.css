@@ -1,0 +1,46 @@
+.announcementtable {
+  display: grid;
+  grid-template-columns: 1fr 60px;
+  align-items: center;
+}
+
+.dasboardannouncement {
+  border-bottom: 0.7px solid #c8cbd9;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.announcementtable .title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.announcementtable .subjects {
+  font-size: 16px;
+  margin-bottom: 5px;
+  padding: 0 20px 8px 0;
+}
+
+.announcementtable .createdate .info .date {
+  padding-right: 10px;
+  margin-right: 10px;
+  border-right: 2px solid grey;
+}
+
+.announcementtable .info .announced .createdby {
+  font-weight: "bold";
+  padding-right: 10px;
+  margin-right: 10px;
+  border-right: 2px solid grey;
+}
+
+.announcementtable .info .announced .createdat {
+  font-weight: "bold";
+}
+
+.announcementtable .profilephoto img {
+  width: 60px;
+  height: 65px;
+  border-radius: 50%;
+}

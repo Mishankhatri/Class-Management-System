@@ -5,37 +5,28 @@ import * as FaIcons from "react-icons/fa";
 
 import { getAddSubjectsValue } from "../../../values/AdminPanel/ClassValue";
 import { useForm, Controller } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
 import CustomController from "../../../common/Controller";
-
-const addSubjectsInitialValue = {
-  subjectsName: "",
-  subjectsCode: "",
-  subjectsClassName: "",
-  subjectsTeacherName: "",
-  subjectsDescription: "",
-};
+import { useDispatch, useSelector } from "react-redux";
+import AddSubject from "./../../../../redux/actions/subjectactions";
+import { useAlert } from "react-alert";
 
 function AddSubjects() {
-  //For Reseting Select Options while Submitting
+  const dispatch = useDispatch();
+  const alert = useAlert();
+
+  const { grades } = useSelector((state) => state.classes);
   const [selectRef, setSelectRef] = useState(null);
 
   //Define requirements from useform
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm({
-    addSubjectsInitialValue,
-  });
+  const { handleSubmit, control } = useForm();
 
   //Reset Value using ref for Select Options
   const refClear = (ref) => setSelectRef(ref);
 
   const onSubmitForm = (data, e) => {
     console.log(data);
-
-    //CLear Input Field Value
+    dispatch(AddSubject(data, grades));
+    alert.success("Subjects Added Successfully");
     e.target.reset();
   };
 
@@ -52,8 +43,6 @@ function AddSubjects() {
               refClear={refClear}
               control={control}
               Controller={Controller}
-              errors={errors}
-              ErrorMessage={ErrorMessage}
               isCustom={true}
               isCustom2={true}
             />

@@ -13,20 +13,16 @@ import {
   getStudentInputValues,
   getAcademicValues,
 } from "./../../../values/AdminPanel/StudentInputField";
-import {
-  // CLassList,
-  StudentClassById,
-} from "../../../../redux/actions/student/studentactions";
+import { StudentClassById } from "../../../../redux/actions/student/studentactions";
 import { useDispatch, useSelector } from "react-redux";
 
 function StudentFullDetail() {
   let { id } = useParams();
   const dispatch = useDispatch();
-  const {
-    studentId: data,
-    classes,
-    studentParent,
-  } = useSelector((state) => state.students);
+  const { studentId: data, studentParent } = useSelector(
+    (state) => state.students
+  );
+  const { grades: classes } = useSelector((state) => state.classes);
 
   useEffect(() => {
     dispatch(StudentClassById(id));
@@ -130,18 +126,6 @@ function StudentFullDetail() {
             </div>
             <div className="content-section">
               <div className="custom-info-show">
-                {/* <div className="profile-image">
-                  <div className="image">
-                    <img
-                      src={data.photo}
-                      alt="Profile-Image"
-                      title="Change Profile Picture"
-                      onClick={() => setClick(!click)}
-                    />
-                    <div className="image_overlay">Change Photo</div>
-                  </div>
-                </div> */}
-
                 <div className="content" onClick={() => setClick(!click)}>
                   <div className="content-overlay"></div>
                   <img
@@ -242,10 +226,7 @@ function StudentFullDetail() {
               <div className="information">
                 <div className="information__info">
                   <ViewModal title={"Class"} value={studentClass.class_name} />
-                  <ViewModal
-                    title={"Section"}
-                    value={studentClass.section.section}
-                  />
+                  <ViewModal title={"Section"} value={studentClass.section} />
                   <ViewModal title={"SRN No"} value={data.SRN} />
                 </div>
                 <button

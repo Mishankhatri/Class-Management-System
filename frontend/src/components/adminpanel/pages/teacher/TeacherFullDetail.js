@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import InnerHeader from "./../../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
-import axios from "axios";
-import ProfileImage from "../../../../assets/profiles/pas075bct029.jpg";
+
 import BlankProfile from "../../../../assets/profiles/blank-profile.jpg";
 import Loading from "./../../../common/Loading";
 import "../student/CustomView.css";
@@ -12,28 +11,17 @@ import ViewModal from "../../../common/Modal/ViewModal";
 import ChangePhoto from "../../../common/Modal/ChangePhoto";
 import ChangeInput from "../../../common/Modal/ChangeInput";
 import { getTeacherInputValues } from "./../../../values/AdminPanel/TeacherInputField";
+import { useDispatch, useSelector } from "react-redux";
+import { TeacherById } from "../../../../redux/actions/teacher/teacheractions";
 
 function TeacherFullDetail() {
   let { id } = useParams();
-  const [data, setData] = useState([]);
+  const dispatch = useDispatch();
+  const { teacherId: data } = useSelector((state) => state.teachers);
 
   useEffect(() => {
-    doFetch();
+    dispatch(TeacherById(id));
   }, []);
-
-  const doFetch = async () => {
-    const { data } = await axios.get(
-      "https://jsonplaceholder.typicode.com/users"
-    );
-    setData(data);
-  };
-
-  const teacherDetail = data.find((value) => value.id === Number(id));
-
-  if (teacherDetail != undefined) {
-    teacherDetail.gender = "Male";
-    teacherDetail.DOB = "2058-03-09";
-  }
 
   const [click, setClick] = useState(false);
   const [clickTeacher, setClickTeacher] = useState(false);
@@ -52,7 +40,8 @@ function TeacherFullDetail() {
     console.log(data);
     setClickTeacher(false);
   };
-  return teacherDetail ? (
+
+  return data ? (
     <React.Fragment>
       {click && (
         <ChangePhoto
@@ -75,10 +64,7 @@ function TeacherFullDetail() {
         />
       )}
 
-      <InnerHeader
-        icon={<MdIcons.MdPerson />}
-        name={`Teacher: ${teacherDetail.name}`}
-      />
+      <InnerHeader icon={<MdIcons.MdPerson />} name={`Teacher`} />
       <div className="main-content">
         <div className="heading-section">
           <div className="card-section">
@@ -91,31 +77,36 @@ function TeacherFullDetail() {
             </div>
             <div className="content-section">
               <div className="custom-info-show">
-                <div className="profile-image">
-                  <div className="image" onClick={() => setClick(!click)}>
-                    <img
-                      // src={teacherDetail?.image}
-                      src={ProfileImage}
-                      alt="Profile-Image"
-                      title="Change Profile Picture"
-                    />
-                    <MdIcons.MdPhotoCamera className="camera" />
+                <div className="content" onClick={() => setClick(!click)}>
+                  <div className="content-overlay"></div>
+                  <img
+                    className="content-image"
+                    src={data.photo}
+                    alt="Profile-Image"
+                    title="Change Profile Picture"
+                  />
+                  <div className="content-details fadeIn-bottom">
+                    <h3 className="content-title">
+                      <MdIcons.MdCamera style={{ fontSize: 40 }} />
+                    </h3>
+                    <p className="content-text" style={{ fontSize: 20 }}>
+                      Change Photo
+                    </p>
                   </div>
                 </div>
                 <div className="information">
                   <div className="information__info">
-                    <ViewModal title={"Full Name"} value={teacherDetail.name} />
-                    <ViewModal title={"Gender"} value={teacherDetail.gender} />
                     <ViewModal
-                      title={"Date of Birth"}
-                      value={teacherDetail.DOB}
+                      title={"Full Name"}
+                      value={`${data.first_name} ${
+                        data.middleName ? data.middleName : ""
+                      } ${data.last_name}`}
                     />
-                    <ViewModal title={"Phone"} value={teacherDetail.phone} />
-                    <ViewModal title={"Email"} value={teacherDetail.email} />
-                    <ViewModal
-                      title={"Address"}
-                      value={teacherDetail.address.city}
-                    />
+                    <ViewModal title={"Gender"} value={data.gender} />
+                    <ViewModal title={"Date of Birth"} value={data.DOB} />
+                    <ViewModal title={"Phone"} value={data.contact_no} />
+                    <ViewModal title={"Email"} value={data.email} />
+                    <ViewModal title={"Address"} value={data.address} />
                   </div>
                   <button
                     className="btn-edit"

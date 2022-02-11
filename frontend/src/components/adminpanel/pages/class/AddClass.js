@@ -1,22 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import InnerHeader from "../../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
 import * as FaIcons from "react-icons/fa";
 
 import { useForm, Controller } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
 import InputField from "../../../common/InputField/InputField";
+import { useSelector, useDispatch } from "react-redux";
+import { useAlert } from "react-alert";
+import { AddClassActions } from "./../../../../redux/actions/classactions";
 
 function AddClass() {
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm();
+  const { grades: classes } = useSelector((state) => state.classes);
+  const alert = useAlert();
+  const dispatch = useDispatch();
+
+  const { handleSubmit, control } = useForm();
 
   const onSubmitForm = (data, e) => {
-    console.log(data);
+    const dataFound = classes.find(
+      (value) => value.class_name == data.className
+    );
 
+    try {
+      if (dataFound) {
+        throw `Class "${data.className}" Already Exist`;
+      } else {
+        dispatch(AddClassActions(data));
+        alert.success(
+          `Class "${data.className}" Added Succefully with Section A`
+        );
+      }
+    } catch (error) {
+      alert.error(error);
+    }
     e.target.reset();
   };
 
@@ -53,8 +69,6 @@ function AddClass() {
                     name={"className"}
                     onChangeHandler={field.onChange}
                     isRequired={true}
-                    errors={errors}
-                    ErrorMessage={ErrorMessage}
                   />
                 )}
               />

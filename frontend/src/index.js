@@ -14,8 +14,9 @@ import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import "./components/adminpanel/pages/users/UserProfile.css";
 import "./components/adminpanel/pages/student/CustomView.css";
-import "./components/common/css/CustomConfirm.css";
 
+import "./components/common/css/Announcement.css";
+import "./components/common/css/CustomConfirm.css";
 //Alert options
 const alertOptions = {
   timeout: 2000,

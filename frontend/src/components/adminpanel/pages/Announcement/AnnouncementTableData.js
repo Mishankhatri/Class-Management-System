@@ -1,59 +1,87 @@
-import axios from "axios";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { SelectColumnFilter } from "../../../common/Table/filters";
 import TableContainer from "../../../common/Table/TableContainer";
-import { announcementValue } from "../../../values/AdminPanel/AnnouncementInput";
+import Moment from "react-moment";
+import { getData } from "../../../../redux/actions/dataactions";
 
 const AnnouncementTableData = () => {
-  const data = announcementValue;
+  let newArray = [];
 
+  const {
+    adminnotices: { results: data },
+  } = useSelector((state) => state.data);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getData("adminnotices"));
+  }, [dispatch]);
+
+  for (let i = data.length - 1; i >= 0; i--) {
+    newArray.push(data[i]);
+  }
+
+  console.log(newArray);
+
+  // console.log(data.reverse());
   const columns = useMemo(
     () => [
       {
-        Header: "SN",
-        Cell: ({ row: { index } }) => {
-          return index + 1;
-        },
-        SearchAble: false,
-      },
-      {
-        Header: "Type",
+        Header: "Accessor",
         accessor: "type",
         SearchAble: true,
         Filter: SelectColumnFilter,
-        filter: "includes",
-      },
-
-      {
-        Header: "Subject",
-        accessor: "subject",
-        SearchAble: false,
         className: "subject-column",
       },
-      {
-        Header: "File",
-        accessor: "file",
-        SearchAble: false,
-      },
-      {
-        Header: "Created By",
-        accessor: "createdBy",
-        SearchAble: true,
-      },
-      {
-        Header: "Created At",
-        accessor: "createdAt",
-        SearchAble: true,
-      },
 
       {
-        Header: "Action",
-        SearchAble: false,
-        Cell: ({ row }) => {
+        Header: "Details",
+        className: "detail-column",
+        accessor: (rowData) => {
+          const dates = <Moment fromNow>{rowData.created_at}</Moment>;
+
           return (
-            <>
-              <button className="btn-danger btn-custom">Delete</button>
-            </>
+            <div className="announcementtable">
+              <div>
+                <div className="title">Title : {rowData.title}</div>
+                <div className="subjects">Subjects: {rowData.details}</div>
+                <div className="createdate">
+                  <div className="info">
+                    <span className="date">
+                      Date: {rowData.created_at.slice(0, 10)}
+                    </span>
+                    <span className="announced">
+                      Announced By:{"  "}
+                      <span className="createdby">
+                        {rowData.created_by.fullname}
+                      </span>
+                    </span>
+                    <span>
+                      <span className="createdat">{dates}</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="profilephoto">
+                <img src={rowData.created_by.profile_image} alt="profile" />
+              </div>
+            </div>
+          );
+        },
+      },
+      {
+        Header: "Files",
+        accessor: (rowData) => {
+          return rowData.files_by_admin ? (
+            <a
+              href={rowData.files_by_admin}
+              target="_blank"
+              className="btn-edit"
+              style={{ textDecoration: "none" }}>
+              Download
+            </a>
+          ) : (
+            <p>No file Provided</p>
           );
         },
       },
@@ -64,7 +92,7 @@ const AnnouncementTableData = () => {
   return (
     <>
       <div>
-        <TableContainer columns={columns} data={data} />
+        <TableContainer columns={columns} data={newArray} />
       </div>
     </>
   );

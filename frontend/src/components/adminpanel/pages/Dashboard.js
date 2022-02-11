@@ -6,13 +6,15 @@ import CardData from "../../common/DashboardCardData";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getData } from "../../../redux/actions/dataactions";
-import { GET_DETAILS } from "../../../redux/actions/student/studentactions";
+
+import { GetClass } from "../../../redux/actions/classactions";
+import Moment from "react-moment";
 
 function Dashboard() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getData("adminnotices"));
-    dispatch(GET_DETAILS("/grades", "GET_STUDENT_CLASS"));
+    dispatch(GetClass());
   }, [dispatch]);
   const adminnotices = useSelector((state) => state.data.adminnotices.results);
   return (
@@ -48,27 +50,43 @@ function Dashboard() {
             </span>
             <span className="title">ANNOUNCEMENT</span>
           </div>
-          <div className="content-section">
+          <div className="content-section" style={{ paddingTop: 30 }}>
             {adminnotices ? (
-              adminnotices.map((adminnotice) => (
-                <div className="content-section" key={adminnotice.id}>
-                  {/* <Link to={"/admin/annoucements/" + adminnotice.id}>
-                    {adminnotice.title}
-                  </Link> */}
-                  <h2>{adminnotice.title}</h2>
-                  <div className="mid-content new-adminnotice">
-                    {adminnotice.details}
+              adminnotices.slice(0, 3).map((rowData, index) => {
+                const dates = <Moment fromNow>{rowData.created_at}</Moment>;
+                return (
+                  <div className="announcementtable dasboardannouncement">
+                    <div>
+                      <div className="title">Title : {rowData.title}</div>
+                      <div className="subjects">
+                        Subjects: {rowData.details}
+                      </div>
+                      <div className="createdate">
+                        <div className="info">
+                          <span className="date">
+                            Date: {rowData.created_at.slice(0, 10)}
+                          </span>
+                          <span className="announced">
+                            Announced By:{"  "}
+                            <span className="createdby">
+                              {rowData.created_by.fullname}
+                            </span>
+                          </span>
+                          <span>
+                            <span className="createdat">{dates}</span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="profilephoto">
+                      <img
+                        src={rowData.created_by.profile_image}
+                        alt="profile"
+                      />
+                    </div>
                   </div>
-                  <p>Annoucement From-{adminnotice.created_by.username}</p>
-                  <p>Annoucement For-{adminnotice.annoucement_for}</p>
-                  <a
-                    href={adminnotice.files}
-                    target="_blank"
-                    rel="noreferrer noopener">
-                    Download:Available Files.
-                  </a>
-                </div>
-              ))
+                );
+              })
             ) : (
               <p>No data available</p>
             )}
