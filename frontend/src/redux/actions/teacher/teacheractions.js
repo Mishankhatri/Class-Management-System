@@ -4,6 +4,8 @@ import {
   ADD_TEACHER_DETAIL,
   GET_TEACHER_BYID,
   DELETE_TEACHER_DETAIL,
+  GET_LECTURE_NOTES,
+  DELETE_LECTURE_NOTES,
 } from "./../../actiontypes/teacher/teacherdatatype";
 
 export const TeacherDetail = () => {
@@ -73,6 +75,33 @@ export const TeacherDelete = (id) => {
         console.log("deleted");
         dispatch({ type: DELETE_TEACHER_DETAIL });
         dispatch(TeacherDetail());
+      })
+      .catch((error) => console.log(error));
+  };
+};
+
+//Lecture Notes
+export const GetLectureNotes = () => {
+  return function (dispatch) {
+    axiosInstance
+      .get(`/lecturenotes`)
+      .then(({ data: { results } }) => {
+        dispatch({
+          type: GET_LECTURE_NOTES,
+          payload: results,
+        });
+      })
+      .catch((error) => console.log(error));
+  };
+};
+
+export const DeleteLectureNotes = (id) => {
+  return function (dispatch) {
+    axiosInstance
+      .delete(`/lecturenotes/${id}`)
+      .then(() => {
+        dispatch({ type: DELETE_LECTURE_NOTES });
+        dispatch(GetLectureNotes());
       })
       .catch((error) => console.log(error));
   };

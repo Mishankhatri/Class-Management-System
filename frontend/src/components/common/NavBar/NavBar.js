@@ -6,18 +6,14 @@ import * as FaIcons from "react-icons/fa";
 import { Link } from "react-router-dom";
 import NavBarNotification from "./NavBarNotification";
 
-import * as MdIcons from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import { CloseAnnouncementModal } from "../../../redux/actions/admin/announcementaction";
 import AnnouncementCard from "../AnnouncementCard";
+import { useSelector } from "react-redux";
 
 function NavBar({ onClickHandler, username, show, image, name }) {
   const [showDropDown, setDropDown] = useState(false);
   const [showDropDownNotification, setDropDownNotification] = useState(false);
 
   const adminnotices = useSelector((state) => state.admins);
-  console.log(adminnotices);
-  const dispatch = useDispatch();
 
   return (
     <>

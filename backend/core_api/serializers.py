@@ -68,6 +68,7 @@ class SubmittedAssignmentSerializer(serializers.ModelSerializer):
 class LectureNotesSerializer(serializers.ModelSerializer):
     grade = GradeSerializer()
     subject = SubjectsSerializer()
+    teacher = TeacherSerializer()
     class Meta:
         model= LectureNotes
         fields = '__all__'

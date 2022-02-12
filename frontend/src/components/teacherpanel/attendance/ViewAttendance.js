@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import InnerHeader from "./../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
-import AttendanceTableData from "./../../adminpanel/pages/reports/AttendanceTableData";
 import ChangeInput from "../../common/Modal/ChangeInput";
 import AttendanceInputValue from "./../../values/TeacherPanel/AttendanceInputValue";
+import ViewAttendanceTable from "./ViewAttendanceTable";
 
 function ViewAttendance() {
   const [click, setClick] = useState(false);
@@ -26,7 +26,7 @@ function ViewAttendance() {
       )}
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"View Attendance"} />
       <div className="main-content">
-        <AttendanceTableData click={click} setClick={setClick} />
+        <ViewAttendanceTable click={click} setClick={setClick} />
       </div>
     </>
   );

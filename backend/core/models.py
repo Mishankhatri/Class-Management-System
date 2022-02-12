@@ -151,9 +151,10 @@ class LectureNotes(models.Model):
     grade = models.ForeignKey(Grade,on_delete=models.CASCADE,related_name='grades')
     subject = models.ForeignKey(Subject,on_delete=models.CASCADE,related_name='lectures_notes')
     notes_files = models.FileField(upload_to='lecture_notes',null=True,blank=True)
+    teacher= models.ForeignKey(Teacher,related_name='teachers_name',on_delete=models.CASCADE,default=0)
 
     def __str__(self):
-            return '%s: %s,%s' % (self.grade,self.title,self.subject)
+            return '%s: %s,%s,%s' % (self.grade,self.title,self.subject,self.teacher)
 
 class Attendance(models.Model):
     student= models.ForeignKey(Student,related_name='attendances',on_delete=models.CASCADE)

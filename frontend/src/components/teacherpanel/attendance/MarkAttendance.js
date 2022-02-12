@@ -4,7 +4,7 @@ import * as MdIcons from "react-icons/md";
 import InnerHeader from "../../common/InnerHeader";
 
 import SelectInputField from "../../common/InputField/SelectInputField";
-import AttendanceTableData from "./AttendanceTableData";
+import AttendanceTableData from "./AttendanceMarkTableData";
 
 function MarkAttendance() {
   const selectChange = (data) => {
