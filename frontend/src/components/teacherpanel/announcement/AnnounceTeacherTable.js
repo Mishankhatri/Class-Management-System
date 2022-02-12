@@ -3,15 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { SelectColumnFilter } from "../../common/Table/filters";
 import TableContainer from "../../common/Table/TableContainer";
 import Moment from "react-moment";
-import { getData } from "../../../redux/actions/dataactions";
+
 import reverseArray from "../../common/ReverseArray";
 import CustomConfirm from "../../common/CustomConfirm";
-import { AdminAnnouncementDelete } from "../../../redux/actions/admin/announcementaction";
 
-const AnnouncementTableData = () => {
-  const {
-    adminnotices: { results: data },
-  } = useSelector((state) => state.data);
+import {
+  GetTeacherAnnouncement,
+  DeleteTeacherAnnouncements,
+} from "./../../../redux/actions/teacher/teacheractions";
+
+const AnnouncementTeacherTable = () => {
+  const { teachernotices: data } = useSelector((state) => state.teachers);
 
   const { user } = useSelector((state) => state.auth);
   const [clickDelete, setClickDelete] = useState(false);
@@ -19,12 +21,14 @@ const AnnouncementTableData = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getData("adminnotices"));
+    dispatch(GetTeacherAnnouncement());
   }, [dispatch]);
 
-  const newArray = reverseArray(data);
+  const newArray =
+    data &&
+    reverseArray(data).filter((value) => value.created_by.id == user.id);
 
-  const handleDelete = (id) => {
+  const handleDelete = ({ id }) => {
     setdeleteId(id);
     setClickDelete(true);
   };
@@ -33,13 +37,12 @@ const AnnouncementTableData = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "Accessor",
-        accessor: "type",
+        Header: "Class",
         SearchAble: true,
         Filter: SelectColumnFilter,
-        className: "subject-column",
+        accessor: (d) =>
+          `${d.announcement_for_class.class_name}: ${d.announcement_for_class.section}`,
       },
-
       {
         Header: "Details",
         className: "detail-column",
@@ -47,7 +50,7 @@ const AnnouncementTableData = () => {
           const dates = <Moment fromNow>{rowData.created_at}</Moment>;
 
           return (
-            <div className="announcementtable">
+            <div className="announcementtable" style={{ display: "block" }}>
               <div>
                 <div className="title">Title : {rowData.title}</div>
                 <div className="subjects">Subjects: {rowData.details}</div>
@@ -57,20 +60,12 @@ const AnnouncementTableData = () => {
                     <span className="date">
                       Date: {rowData.created_at.slice(0, 10)}
                     </span>
-                    <span className="announced">
-                      Announced By:{"  "}
-                      <span className="createdby">
-                        {rowData.created_by.fullname}
-                      </span>
-                    </span>
+
                     <span>
                       <span className="createdat">{dates}</span>
                     </span>
                   </div>
                 </div>
-              </div>
-              <div className="profilephoto">
-                <img src={rowData.created_by.profile_image} alt="profile" />
               </div>
             </div>
           );
@@ -79,9 +74,9 @@ const AnnouncementTableData = () => {
       {
         Header: "Files",
         accessor: (rowData) => {
-          return rowData.files_by_admin ? (
+          return rowData.files_by_teachers ? (
             <a
-              href={rowData.files_by_admin}
+              href={rowData.files_by_teachers}
               target="_blank"
               className="btn-primary btn-custom"
               style={{ textDecoration: "none" }}>
@@ -91,6 +86,16 @@ const AnnouncementTableData = () => {
             <p>No file Provided</p>
           );
         },
+      },
+      {
+        Header: "Action",
+        accessor: (row) => (
+          <button
+            onClick={() => handleDelete(row)}
+            className="btn-danger btn-custom">
+            Delete
+          </button>
+        ),
       },
     ],
     []
@@ -106,7 +111,7 @@ const AnnouncementTableData = () => {
           falseActivity={"Cancel"}
           setDelete={setClickDelete}
           id={deleteId}
-          PeformDelete={AdminAnnouncementDelete}
+          PeformDelete={DeleteTeacherAnnouncements}
         />
       )}
       <div>{data && <TableContainer columns={columns} data={newArray} />}</div>
@@ -114,4 +119,4 @@ const AnnouncementTableData = () => {
   );
 };
 
-export default AnnouncementTableData;
+export default AnnouncementTeacherTable;

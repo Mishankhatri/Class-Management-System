@@ -14,6 +14,7 @@ class SubjectsSerializer(serializers.ModelSerializer):
         
 class StudentSerializer(serializers.ModelSerializer):
     user = CMS_UsersSerializer()
+    current_grade = GradeSerializer()
     class Meta:
         model= Student
         fields = '__all__'

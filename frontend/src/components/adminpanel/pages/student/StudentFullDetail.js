@@ -60,11 +60,9 @@ function StudentFullDetail() {
     setClickStudentAcademic(false);
   };
 
-  const studentClass = classes.find((value) => value.id == data?.current_grade);
-
   const parents = studentParent.find((value) => value.student.id == id);
 
-  return data && studentClass ? (
+  return data ? (
     <React.Fragment>
       {/* Modal Section Image Start */}
       {click && (
@@ -226,8 +224,14 @@ function StudentFullDetail() {
             <div className="content-section">
               <div className="information">
                 <div className="information__info">
-                  <ViewModal title={"Class"} value={studentClass.class_name} />
-                  <ViewModal title={"Section"} value={studentClass.section} />
+                  <ViewModal
+                    title={"Class"}
+                    value={data.current_grade.class_name}
+                  />
+                  <ViewModal
+                    title={"Section"}
+                    value={data.current_grade.section}
+                  />
                   <ViewModal title={"SRN No"} value={data.SRN} />
                 </div>
                 <button

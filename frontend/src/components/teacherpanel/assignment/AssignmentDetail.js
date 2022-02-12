@@ -6,7 +6,10 @@ import AssignmentStudentTable from "./AssignmentStudentTable";
 import ChangeInput from "./../../common/Modal/ChangeInput";
 import { AssignmentInputValue } from "../../values/TeacherPanel/AssignmentInputValue";
 import { useDispatch, useSelector } from "react-redux";
-import { AssignmentGivenById } from "./../../../redux/actions/teacher/teacheractions";
+import {
+  AssignmentGivenById,
+  GetStudentSubmittedAssignment,
+} from "./../../../redux/actions/teacher/teacheractions";
 import Loading from "../../common/Loading";
 import moment from "moment";
 
@@ -16,10 +19,15 @@ function AssignmentDetail() {
   const { id } = useParams();
 
   const dispatch = useDispatch();
-  const { assignmentId } = useSelector((state) => state.teachers);
+  const { assignmentId, submittedAssignment } = useSelector(
+    (state) => state.teachers
+  );
+
+  // const filterSubmittedViaClass = submittedAssignment.filter(value => )
 
   useEffect(() => {
     dispatch(AssignmentGivenById(id));
+    dispatch(GetStudentSubmittedAssignment());
   }, []);
 
   const onSubmit = (data) => {
