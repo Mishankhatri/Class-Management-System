@@ -43,7 +43,7 @@ class Admin(admin.ModelAdmin):
 
 @admin.register(LectureNotes)
 class Admin(admin.ModelAdmin):
-    list_display = ('title', 'description', 'grade', 'subject', 'notes_files', )
+    list_display = ('title', 'description', 'grade', 'subject', 'notes_files', 'teacher')
 @admin.register(Attendance)
 class Admin(admin.ModelAdmin):
     list_display = ('student', 'teacher','subject', 'date', 'grade', 'attendance_status', )

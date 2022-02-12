@@ -56,7 +56,6 @@ const AssignmentDetail = React.lazy(() =>
 
 function TeacherPanel() {
   const user = useSelector((state) => state.auth.user);
-  console.log(user);
   const [showSideBar, setSideBar] = useState(true);
 
   const SideBarHandler = () => {

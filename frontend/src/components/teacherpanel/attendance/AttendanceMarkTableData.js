@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import ToggleSwitch from "../../common/InputField/ToggleSwitch";
-import TableContainer from "./../../common/Table/TableContainer";
+import TableContainer from "../../common/Table/TableContainer";
 
 const AttendanceTableData = () => {
   const data = [
