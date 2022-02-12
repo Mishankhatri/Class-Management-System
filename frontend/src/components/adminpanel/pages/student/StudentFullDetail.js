@@ -26,7 +26,6 @@ function StudentFullDetail() {
 
   useEffect(() => {
     dispatch(StudentClassById(id));
-    // dispatch(CLassList());
   }, []);
 
   const [click, setClick] = useState(false);
@@ -126,7 +125,9 @@ function StudentFullDetail() {
             </div>
             <div className="content-section">
               <div className="custom-info-show">
-                <div className="content" onClick={() => setClick(!click)}>
+                <div
+                  className="content-image-p"
+                  onClick={() => setClick(!click)}>
                   <div className="content-overlay"></div>
                   <img
                     className="content-image"

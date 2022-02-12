@@ -6,6 +6,9 @@ import {
   DELETE_TEACHER_DETAIL,
   GET_LECTURE_NOTES,
   DELETE_LECTURE_NOTES,
+  DELETE_TEACHER_GIVEN_ASSIGNMENT,
+  GET_TEACHER_GIVEN_ASSIGNMENT,
+  GET_TEACHER_ASSIGNMENT_BYID,
 } from "./../../actiontypes/teacher/teacherdatatype";
 
 export const TeacherDetail = () => {
@@ -102,6 +105,47 @@ export const DeleteLectureNotes = (id) => {
       .then(() => {
         dispatch({ type: DELETE_LECTURE_NOTES });
         dispatch(GetLectureNotes());
+      })
+      .catch((error) => console.log(error));
+  };
+};
+
+//Assignment
+export const GetTeacherGivenAssignment = () => {
+  return function (dispatch) {
+    axiosInstance
+      .get(`/givenassignments`)
+      .then(({ data: { results } }) => {
+        dispatch({
+          type: GET_TEACHER_GIVEN_ASSIGNMENT,
+          payload: results,
+        });
+      })
+      .catch((error) => console.log(error));
+  };
+};
+
+export const DeleteTeacherGivenAssignment = (id) => {
+  return function (dispatch) {
+    axiosInstance
+      .delete(`/givenassignments/${id}`)
+      .then(() => {
+        dispatch({ type: DELETE_TEACHER_GIVEN_ASSIGNMENT });
+        dispatch(GetTeacherGivenAssignment());
+      })
+      .catch((error) => console.log(error));
+  };
+};
+
+export const AssignmentGivenById = (id) => {
+  return function (dispatch) {
+    axiosInstance
+      .get(`/givenassignments/${id}`)
+      .then(({ data }) => {
+        dispatch({
+          type: GET_TEACHER_ASSIGNMENT_BYID,
+          payload: data,
+        });
       })
       .catch((error) => console.log(error));
   };

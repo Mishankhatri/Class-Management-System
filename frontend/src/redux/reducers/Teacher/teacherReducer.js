@@ -4,6 +4,9 @@ import {
   GET_TEACHER_BYID,
   GET_LECTURE_NOTES,
   DELETE_LECTURE_NOTES,
+  GET_TEACHER_GIVEN_ASSIGNMENT,
+  DELETE_TEACHER_GIVEN_ASSIGNMENT,
+  GET_TEACHER_ASSIGNMENT_BYID,
 } from "../../actiontypes/teacher/teacherdatatype";
 
 const initialState = {
@@ -17,6 +20,7 @@ export default function teacherReducer(state = initialState, action) {
 
     case ADD_TEACHER_DETAIL:
     case DELETE_LECTURE_NOTES:
+    case DELETE_TEACHER_GIVEN_ASSIGNMENT:
       return { ...state };
 
     case GET_TEACHER_BYID:
@@ -24,6 +28,12 @@ export default function teacherReducer(state = initialState, action) {
 
     case GET_LECTURE_NOTES:
       return { ...state, lecturenotes: action.payload };
+
+    case GET_TEACHER_GIVEN_ASSIGNMENT:
+      return { ...state, assignments: action.payload };
+
+    case GET_TEACHER_ASSIGNMENT_BYID:
+      return { ...state, assignmentId: action.payload };
 
     default:
       return state;

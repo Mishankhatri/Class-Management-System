@@ -1,22 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InnerHeader from "./../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
 import { useParams } from "react-router-dom";
 import AssignmentStudentTable from "./AssignmentStudentTable";
 import ChangeInput from "./../../common/Modal/ChangeInput";
 import { AssignmentInputValue } from "../../values/TeacherPanel/AssignmentInputValue";
+import { useDispatch, useSelector } from "react-redux";
+import { AssignmentGivenById } from "./../../../redux/actions/teacher/teacheractions";
+import Loading from "../../common/Loading";
+import moment from "moment";
 
 function AssignmentDetail() {
   const [click, setClick] = useState(false);
   const [remarkClick, setRemarkClick] = useState(false);
   const { id } = useParams();
 
+  const dispatch = useDispatch();
+  const { assignmentId } = useSelector((state) => state.teachers);
+
+  useEffect(() => {
+    dispatch(AssignmentGivenById(id));
+  }, []);
+
   const onSubmit = (data) => {
     console.log(data);
     setClick(false);
   };
 
-  return (
+  return assignmentId ? (
     <React.Fragment>
       {click && (
         <ChangeInput
@@ -44,52 +55,62 @@ function AssignmentDetail() {
           title="Remark"
         />
       )}
-      <InnerHeader
-        icon={<MdIcons.MdUploadFile />}
-        name={`Assignments No: ${id}`}
-      />
+      <InnerHeader icon={<MdIcons.MdUploadFile />} name={`Assignments`} />
       <div className="main-content">
         <div className="card-section">
-          <h2 className="assignment_id">Assignment - 0{id}</h2>
+          <h2 className="assignment_id">
+            {`Assignment : ${id > 9 ? id : "0" + id}`}
+          </h2>
           <div className="content-section assignment_mid">
             <div className="grid_assignment">
               <div className="assignment_left">
                 <div className="info">
                   <h4>Course</h4>
-                  <div className="content">Social</div>
+                  <div className="content">
+                    {assignmentId.subject.subject_name}
+                  </div>
                 </div>
                 <div className="info">
                   <h4>Class</h4>
-                  <div className="content">12</div>
+                  <div className="content">
+                    {assignmentId.for_grade.class_name}
+                  </div>
                 </div>
                 <div className="info">
                   <h4>Section</h4>
-                  <div className="content">A</div>
+                  <div className="content">
+                    {assignmentId.for_grade.section}
+                  </div>
                 </div>
                 <div className="info">
                   <h4>Teacher</h4>
-                  <div className="content">Mishan Khatri</div>
+                  <div className="content">
+                    {assignmentId.created_by.fullname}
+                  </div>
                 </div>
               </div>
               <div className="assignment_right">
                 <div className="info">
                   <h4>Title</h4>
-                  <div className="content">Title</div>
+                  <div className="content">{assignmentId.title}</div>
                 </div>
                 <div className="info">
                   <h4>Date Due</h4>
-                  <div className="content">2022-12-02</div>
+                  <div className="content">{assignmentId.date_due}</div>
                 </div>
                 <div className="info">
                   <h4>Time Due</h4>
-                  <div className="content">12:59 PM</div>
+                  <div className="content">
+                    {moment(assignmentId.time_due, "HH").format("LT")}
+                  </div>
                 </div>
                 <div className="info">
                   <h4>File</h4>
                   <div className="content">
                     <a
-                      className="btn-edit"
-                      onClick={() => window.location.reload()}>
+                      href={assignmentId.related_files}
+                      style={{ textDecoration: "none" }}
+                      className="btn-edit">
                       Preview File
                     </a>
                   </div>
@@ -98,12 +119,7 @@ function AssignmentDetail() {
             </div>
             <div className="instruction_info">
               <h4>Instruction</h4>
-              <div className="content">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Id,
-                possimus deleniti ratione molestiae commodi, ipsam ipsa
-                perferendis voluptatum voluptatibus impedit obcaecati ullam
-                doloremque, aspernatur saepe non nisi nobis ab excepturi!
-              </div>
+              <div className="content">{assignmentId.instructions}</div>
             </div>
           </div>
         </div>
@@ -122,6 +138,8 @@ function AssignmentDetail() {
         </div>
       </div>
     </React.Fragment>
+  ) : (
+    <Loading />
   );
 }
 export default AssignmentDetail;

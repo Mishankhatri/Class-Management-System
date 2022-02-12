@@ -29,7 +29,7 @@
 }
 
 /* Image Overlay */
-.content {
+.content-image-p {
   position: relative;
   width: 100%;
   max-width: 400px;
@@ -37,7 +37,7 @@
   cursor: pointer;
 }
 
-.content .content-overlay {
+.content-image-p .content-overlay {
   background: rgba(0, 0, 0, 0.7);
   position: absolute;
   height: 100%;
@@ -50,7 +50,7 @@
   transition: all 0.4s ease-in-out 0s;
 }
 
-.content:hover .content-overlay {
+.content-image-p:hover .content-overlay {
   opacity: 1;
   border-radius: 10px;
 }
@@ -73,7 +73,7 @@
   transition: all 0.3s ease-in-out 0s;
 }
 
-.content:hover .content-details {
+.content-image-p:hover .content-details {
   top: 50%;
   left: 50%;
   opacity: 1;

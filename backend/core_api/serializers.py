@@ -54,6 +54,7 @@ class TeacherAnnoucementSerializer(serializers.ModelSerializer):
 class GivenAssignmentSerializer(serializers.ModelSerializer):
     created_by = CMS_UsersSerializer()
     for_grade = GradeSerializer()
+    subject = SubjectsSerializer()
     class Meta:
         model= GivenAssignments
         fields = '__all__'
