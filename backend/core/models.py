@@ -16,7 +16,7 @@ gender_choices=(
 
 announcement_types=(
     ('Academic', 'Academic'),
-    ('Admininstration', 'Admininstration'),
+    ('Admistration', 'Admistration'),
     ('Admission', 'Admission'),
     ('Other', 'Other'),
 )

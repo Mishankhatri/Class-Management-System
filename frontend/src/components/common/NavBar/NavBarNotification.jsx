@@ -1,35 +1,56 @@
 import React, { useState } from "react";
 import NotificationMessage from "./NotificationMessage";
-import NotificationDummy from "./NotifcationDummyValues";
 import Moment from "react-moment";
+import { useDispatch, useSelector } from "react-redux";
+import reverseArray from "../ReverseArray";
+import Loading from "./../Loading";
+import { AdminAnnouncementById } from "./../../../redux/actions/admin/announcementaction";
 
-function NavBarNotification({ showDropDown }) {
+function NavBarNotification({ showDropDown, setDropDown }) {
+  const dispatch = useDispatch();
+
   const className = showDropDown
     ? "menu active notification"
     : "menu inactive notification";
 
-  const getNotification = NotificationDummy();
+  const {
+    adminnotices: { results },
+  } = useSelector((state) => state.data);
 
-  return (
+  const adminnotices = results && reverseArray(results);
+
+  const handleChange = (data) => {
+    setDropDown(false);
+    dispatch(AdminAnnouncementById(data));
+  };
+
+  return adminnotices ? (
     <React.Fragment>
       <div className={className}>
         <div className="heading">Notifications</div>
-        {getNotification.map((value, index) => {
-          const messageText = value.messageText.slice(0, 80).concat("...");
-          const dates = <Moment fromNow>{value.date}</Moment>;
+        {adminnotices.map((value, index) => {
+          const stringLength = value.details.length;
+          const messageText =
+            stringLength > 80
+              ? value.details.slice(0, 80).concat("...")
+              : value.details;
+          const dates = <Moment fromNow>{value.created_at}</Moment>;
 
           return (
             <NotificationMessage
               messageText={messageText}
-              by={value.by}
+              by={value.created_by.fullname}
               time={dates}
-              ProfileImage={value.ProfileImage}
+              ProfileImage={value.created_by.profile_image}
               key={index}
+              onClick={() => handleChange(value.id)}
             />
           );
         })}
       </div>
     </React.Fragment>
+  ) : (
+    <Loading />
   );
 }
 
