@@ -5,7 +5,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
+  z-index: 99999;
 }
 .dialog-ovelay .dialog {
   width: 400px;
@@ -15,6 +15,12 @@
   border-radius: 3px;
   overflow: hidden;
 }
+
+.dialog-ovelay .dialog.custom {
+  width: 80%;
+  margin: 100px auto;
+}
+
 .dialog-ovelay .dialog header {
   padding: 10px 8px;
   background-color: #f6f7f9;

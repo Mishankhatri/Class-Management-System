@@ -5,15 +5,24 @@ import * as RiIcons from "react-icons/ri";
 import * as FaIcons from "react-icons/fa";
 import { Link } from "react-router-dom";
 import NavBarNotification from "./NavBarNotification";
-import Logout from "../../../forms/Logout";
+
+import * as MdIcons from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { CloseAnnouncementModal } from "../../../redux/actions/admin/announcementaction";
+import AnnouncementCard from "../AnnouncementCard";
 
 function NavBar({ onClickHandler, username, show, image, name }) {
   const [showDropDown, setDropDown] = useState(false);
   const [showDropDownNotification, setDropDownNotification] = useState(false);
-  // const navigate = useNavigate();
+
+  const adminnotices = useSelector((state) => state.admins);
+  console.log(adminnotices);
+  const dispatch = useDispatch();
 
   return (
     <>
+      {adminnotices.isOpen && <AnnouncementCard />}
+
       <div className={show ? "navigation" : "navigation close"}>
         <div className="navbar">
           <div className="left-section">
@@ -45,9 +54,12 @@ function NavBar({ onClickHandler, username, show, image, name }) {
             </div>
           </div>
         </div>
-        <NavBarNotification showDropDown={showDropDownNotification} />
+        <NavBarNotification
+          showDropDown={showDropDownNotification}
+          setDropDown={setDropDownNotification}
+        />
         <div className={showDropDown ? "menu active" : "menu inactive"}>
-          <ul className="profile-options">
+          <ul className="profile-options" style={{ padding: 10 }}>
             <li>
               <Link to={`/${name}/settings`} className="menu-link">
                 <RiIcons.RiSettings5Fill className="menu-icon" />

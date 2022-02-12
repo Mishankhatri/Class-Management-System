@@ -9,39 +9,61 @@ import { getData } from "../../../redux/actions/dataactions";
 
 import { GetClass } from "../../../redux/actions/classactions";
 import Moment from "react-moment";
+import reverseArray from "../../common/ReverseArray";
+import { GET_DETAILS } from "../../../redux/actions/student/studentactions";
 
 function Dashboard() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getData("adminnotices"));
     dispatch(GetClass());
+    dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
+    dispatch(GET_DETAILS("/teacher", "GET_TEACHER_DETAIL"));
   }, [dispatch]);
-  const adminnotices = useSelector((state) => state.data.adminnotices.results);
+  const {
+    adminnotices: { results },
+  } = useSelector((state) => state.data);
+
+  const { grades } = useSelector((state) => state.classes);
+  const { teacherDetail } = useSelector((state) => state.teachers);
+  const { student } = useSelector((state) => state.students);
+
+  const adminnotices = results && reverseArray(results);
+
   return (
     <div>
       <InnerHeader icon={<MdIcons.MdDashboard />} name={"Dashboard"} />
       <div className="main-content">
         <div className="cardelement">
-          <CardData
-            number={199}
-            name={"Students"}
-            icon={<FaIcons.FaUsers style={{ color: "#FFC36D" }} />}
-          />
-          <CardData
-            number={111}
-            name={"Teachers"}
-            icon={<FaIcons.FaUserSecret style={{ color: "#FF7676" }} />}
-          />
-          <CardData
-            number={8}
-            name={"Faculties"}
-            icon={<FaIcons.FaFlag style={{ color: "#009DDC" }} />}
-          />
-          <CardData
-            number={9}
-            name={"Classes"}
-            icon={<FaIcons.FaFile style={{ color: "#27AE60" }} />}
-          />
+          {student && (
+            <CardData
+              number={student.length}
+              name={"Students"}
+              icon={<FaIcons.FaUsers style={{ color: "#FFC36D" }} />}
+            />
+          )}
+
+          {
+            <CardData
+              number={teacherDetail?.length}
+              name={"Teachers"}
+              icon={<FaIcons.FaUserSecret style={{ color: "#FF7676" }} />}
+            />
+          }
+          {
+            <CardData
+              number={adminnotices?.length}
+              name={"Announcements"}
+              icon={<FaIcons.FaBullhorn style={{ color: "#009DDC" }} />}
+            />
+          }
+          {
+            <CardData
+              number={grades?.length}
+              name={"Classes"}
+              icon={<FaIcons.FaFile style={{ color: "#27AE60" }} />}
+            />
+          }
         </div>
         <div className="card-section">
           <div className="heading">
@@ -55,7 +77,9 @@ function Dashboard() {
               adminnotices.slice(0, 3).map((rowData, index) => {
                 const dates = <Moment fromNow>{rowData.created_at}</Moment>;
                 return (
-                  <div className="announcementtable dasboardannouncement">
+                  <div
+                    className="announcementtable dasboardannouncement"
+                    key={index}>
                     <div>
                       <div className="title">Title : {rowData.title}</div>
                       <div className="subjects">
@@ -78,6 +102,18 @@ function Dashboard() {
                         </div>
                       </div>
                     </div>
+                    {rowData.files_by_admin ? (
+                      <a
+                        href={rowData.files_by_admin}
+                        target="_blank"
+                        className="btn-custom btn-primary"
+                        style={{ textDecoration: "none" }}>
+                        Download
+                      </a>
+                    ) : (
+                      <p>No file Provided</p>
+                    )}
+
                     <div className="profilephoto">
                       <img
                         src={rowData.created_by.profile_image}

@@ -128,7 +128,6 @@ body {
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
-  padding: 10px;
   margin-top: 10px;
   width: 9rem;
 }
@@ -145,16 +144,31 @@ body {
   font-weight: bold;
   padding-bottom: 5px;
   border-bottom: 1px solid #a8bbbf;
+  padding: 10px;
 }
 
-.menu.notification .body-section {
+.menu.notification .section {
   display: grid;
   grid-template-columns: 20px 1fr 40px;
   gap: 5px;
   border-bottom: 1px solid #c5c6ca;
+  padding: 0 10px;
+  width: 100%;
 }
 
-.menu.notification .body-section .catagory {
+.menu.notification .body-section:hover {
+  background-color: #273240;
+}
+
+.menu.notification .body-section:hover .message {
+  color: white;
+}
+
+.menu.notification .body-section:hover .createdBy {
+  color: #a8bbbf;
+}
+
+.menu.notification .section .catagory {
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -162,17 +176,17 @@ body {
   margin: 15px 0;
 }
 
-.body-section .breadcrumb {
+.section .breadcrumb {
   margin: 0 5px;
   font-weight: bold;
 }
 
-.body-section .photo img {
+.section .photo img {
   width: 40px;
   border-radius: 50%;
 }
 
-.body-section .photo {
+.section .photo {
   align-self: center;
 }
 

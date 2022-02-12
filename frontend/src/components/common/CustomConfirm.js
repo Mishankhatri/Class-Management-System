@@ -1,6 +1,5 @@
 import React from "react";
 import * as MdIcons from "react-icons/md";
-import { StudentDelete } from "./../../redux/actions/student/studentactions";
 import { useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 
@@ -19,7 +18,7 @@ function CustomConfirm({
   const doAction = () => {
     dispatch(PeformDelete(id));
     setDelete(false);
-    alert.success(`Deleted Successful`);
+    // alert.success(`Deleted Successful`);
   };
 
   return (

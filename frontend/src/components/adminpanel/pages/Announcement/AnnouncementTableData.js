@@ -1,27 +1,33 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectColumnFilter } from "../../../common/Table/filters";
 import TableContainer from "../../../common/Table/TableContainer";
 import Moment from "react-moment";
 import { getData } from "../../../../redux/actions/dataactions";
+import reverseArray from "../../../common/ReverseArray";
+import CustomConfirm from "../../../common/CustomConfirm";
+import { AdminAnnouncementDelete } from "../../../../redux/actions/admin/announcementaction";
 
 const AnnouncementTableData = () => {
-  let newArray = [];
-
   const {
     adminnotices: { results: data },
   } = useSelector((state) => state.data);
+
+  const { user } = useSelector((state) => state.auth);
+  const [clickDelete, setClickDelete] = useState(false);
+  const [deleteId, setdeleteId] = useState(null);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getData("adminnotices"));
   }, [dispatch]);
 
-  for (let i = data.length - 1; i >= 0; i--) {
-    newArray.push(data[i]);
-  }
+  const newArray = reverseArray(data);
 
-  console.log(newArray);
+  const handleDelete = (id) => {
+    setdeleteId(id);
+    setClickDelete(true);
+  };
 
   // console.log(data.reverse());
   const columns = useMemo(
@@ -45,6 +51,7 @@ const AnnouncementTableData = () => {
               <div>
                 <div className="title">Title : {rowData.title}</div>
                 <div className="subjects">Subjects: {rowData.details}</div>
+
                 <div className="createdate">
                   <div className="info">
                     <span className="date">
@@ -76,7 +83,7 @@ const AnnouncementTableData = () => {
             <a
               href={rowData.files_by_admin}
               target="_blank"
-              className="btn-edit"
+              className="btn-primary btn-custom"
               style={{ textDecoration: "none" }}>
               Download
             </a>
@@ -85,15 +92,39 @@ const AnnouncementTableData = () => {
           );
         },
       },
+
+      {
+        Header: "Action",
+        accessor: (data) => {
+          if (data.created_by.username == user.username)
+            return (
+              <button
+                className="btn-danger btn-custom"
+                onClick={() => handleDelete(data.id)}>
+                Delete
+              </button>
+            );
+          else return;
+        },
+      },
     ],
     []
   );
 
   return (
     <>
-      <div>
-        <TableContainer columns={columns} data={newArray} />
-      </div>
+      {clickDelete && (
+        <CustomConfirm
+          title={"Delete Announcement"}
+          msg={"Are you sure you want to delete?"}
+          trueActivity={"Yes"}
+          falseActivity={"Cancel"}
+          setDelete={setClickDelete}
+          id={deleteId}
+          PeformDelete={AdminAnnouncementDelete}
+        />
+      )}
+      <div>{data && <TableContainer columns={columns} data={newArray} />}</div>
     </>
   );
 };

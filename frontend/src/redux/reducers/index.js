@@ -6,6 +6,7 @@ import data from "./data";
 import studentReducer from "./Student/student";
 import teacherReducer from "./Teacher/teacherReducer";
 import classReducer from "./classReducer";
+import adminReducer from "./Admin/adminReducer";
 
 export default combineReducers({
   errors,
@@ -15,4 +16,5 @@ export default combineReducers({
   students: studentReducer,
   teachers: teacherReducer,
   classes: classReducer,
+  admins: adminReducer,
 });
