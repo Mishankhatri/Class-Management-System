@@ -22,7 +22,6 @@ function StudentFullDetail() {
   const { studentId: data, studentParent } = useSelector(
     (state) => state.students
   );
-  const { grades: classes } = useSelector((state) => state.classes);
 
   useEffect(() => {
     dispatch(StudentClassById(id));
@@ -119,7 +118,6 @@ function StudentFullDetail() {
                 <MdIcons.MdPerson />
               </span>
               <span className="title">Students Personal Info</span>
-              {/*Custom  */}
             </div>
             <div className="content-section">
               <div className="custom-info-show">

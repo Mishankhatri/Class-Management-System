@@ -1,21 +1,33 @@
 import React, { useState, useEffect } from "react";
 import InnerHeader from "./../../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
-import ProfileImage from "../../../../assets/profiles/pas075bct029.jpg";
 import BlankProfile from "../../../../assets/profiles/blank-profile.jpg";
 import "./UserProfile.css";
 import ChangePhoto from "../../../common/Modal/ChangePhoto";
+import { useDispatch, useSelector } from "react-redux";
+import ViewModal from "../../../common/Modal/ViewModal";
+import { useForm } from "react-hook-form";
+import { UpdateUserInfo } from "../../../../redux/actions/admin/adminaction";
 
 function UserProfile({ image }) {
   const [click, setClick] = useState(false);
   const [previousImage, setPreviosImage] = useState(BlankProfile);
   const [uploadedImage, setUploadedImage] = useState("");
 
-  const onSubmit = (e) => {
+  const { register, handleSubmit } = useForm();
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.auth);
+
+  const onSubmitImage = (e) => {
     e.preventDefault();
     setPreviosImage(BlankProfile);
     setClick(false);
-    console.log(uploadedImage); //Uploaded Image
+    console.log(uploadedImage);
+  };
+
+  const ChangeUserInfo = (data) => {
+    dispatch(UpdateUserInfo(data));
   };
 
   return (
@@ -23,56 +35,80 @@ function UserProfile({ image }) {
       <ChangePhoto
         click={click}
         setClick={setClick}
-        onSubmit={onSubmit}
+        onSubmit={onSubmitImage}
         setPreviosImage={setPreviosImage}
         setUploadedImage={setUploadedImage}
         previousImage={previousImage}
       />
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"UserProfile"} />
-      <div className="main-content main-section">
-        <div className="profile">
-          <div className="image">
-            <img
-              src={image}
-              alt="Profile-Image"
-              title="Change Profile Picture"
-              onClick={() => setClick(!click)}
-            />
-            <MdIcons.MdPhotoCamera
-              className="camera"
-              onClick={() => setClick(!click)}
-            />
+      <div className="main-content">
+        <div className="card-section">
+          <div className="heading">
+            <span className="title-icon">
+              <MdIcons.MdPerson />
+            </span>
+            <span className="title">Your Information</span>
           </div>
+          <div className="content-section">
+            <div className="mid-content">
+              <div className="custom-info-show">
+                <div
+                  className="content-image-p userprofile"
+                  onClick={() => setClick(!click)}>
+                  <div className="content-overlay"></div>
+                  <img
+                    className="content-image"
+                    src={user.profile_image}
+                    alt="Profile-Image"
+                    title="Change Profile Picture"
+                  />
+                  <div className="content-details fadeIn-bottom">
+                    <h3 className="content-title">
+                      <MdIcons.MdCamera style={{ fontSize: 40 }} />
+                    </h3>
+                    <p className="content-text" style={{ fontSize: 20 }}>
+                      Change Photo
+                    </p>
+                  </div>
+                </div>
 
-          <div className="profile-name">Prabin Gautam</div>
-
-          <div className="role">Adminstrator</div>
-        </div>
-        <div className="profile-info">
-          <div className="profile-info__inner">
-            <div className="title">Full Name</div>
-            <div className="title__value">Prabin Gautam</div>
-          </div>
-          <div className="profile-info__inner">
-            <div className="title">Email</div>
-            <div className="title__value">prabeen122@gmail.com</div>
-          </div>
-          <div className="profile-info__inner">
-            <div className="title">User Name</div>
-            <div className="title__value">PrabinGautam</div>
-          </div>
-          <div className="profile-info__inner">
-            <div className="title">Date of Birth</div>
-            <div className="title__value">2058-03-09</div>
-          </div>
-          <div className="profile-info__inner">
-            <div className="title">Phone</div>
-            <div className="title__value">9846915836</div>
-            {/* <div>Update Phone </div> */}
-          </div>
-          <div className="profile-info__inner">
-            <div className="title">Address</div>
-            <div className="title__value">Lamachaur-16</div>
+                <div className="information">
+                  <form onSubmit={handleSubmit(ChangeUserInfo)}>
+                    <div className="information__info">
+                      <ViewModal
+                        title={"Full Name"}
+                        disabled={false}
+                        value={user.fullname}
+                        name={"fullname"}
+                        register={register}
+                      />
+                      <ViewModal
+                        title={"Email"}
+                        disabled={false}
+                        value={user.email}
+                        name={"email"}
+                        register={register}
+                      />
+                      <ViewModal
+                        title={"UserName"}
+                        disabled={false}
+                        value={user.username}
+                        name={"username"}
+                        register={register}
+                      />
+                      <ViewModal
+                        title={"Role"}
+                        disabled={false}
+                        value={"Admin"}
+                      />
+                    </div>
+                    <button className="morebutton btn btn-custom-selection">
+                      Save
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -2,101 +2,69 @@ import React from "react";
 import InnerHeader from "./../../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
 import { useForm } from "react-hook-form";
-import {
-  SettingsInput,
-  SettingsPasswordInput,
-} from "../../../values/AdminPanel/SettingsValue";
+import { SettingsPasswordInput } from "../../../values/AdminPanel/SettingsValue";
 import CustomSettingsInput from "./CustomSettings";
+import { useDispatch, useSelector } from "react-redux";
+import { useAlert } from "react-alert";
+import { ChangeAdminPassword } from "../../../../redux/actions/admin/adminaction";
 
 function Settings() {
-  const { handleSubmit, register, setValue } = useForm();
+  const { handleSubmit, register } = useForm();
+  const alert = useAlert();
+  const dispatch = useDispatch();
 
-  const {
-    handleSubmit: handleSubmitPassword,
-    register: registerPassword,
-    setValue: setPasswordValue,
-  } = useForm();
+  const onSubmit = (data, e) => {
+    dispatch(ChangeAdminPassword(data));
 
-  const onSubmit = (data) => {
-    console.log(data);
+    // try {
+    //   if (data.settingsNewPassword != data.settingsRePassword)
+    //     throw "New Entered Password didn't match";
+    //   else {
+    //     e.target.reset();
+    //     disp
+    //     alert.success("Password Changed Successfully!");
+    //   }
+    // } catch (error) {
+    //   alert.error(error);
+    // }
   };
 
-  const settingsInputValue = SettingsInput();
   const settingsPasswordValue = SettingsPasswordInput();
 
   return (
     <React.Fragment>
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"Settings"} />
       <div className="main-content">
-        <div className="">
-          {/* className = main-contentsection */}
-          <div className="card-section">
-            <div className="heading">
-              <span className="title-icon">
-                <MdIcons.MdVerifiedUser />
-              </span>
-              <span className="title">Profiles Settings</span> {/*Custom  */}
-            </div>
-
-            <div className="content-section">
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="mid-content">
-                  {settingsInputValue.map((value, index) => {
-                    setValue(value.name, value.values);
-                    return (
-                      <CustomSettingsInput
-                        title={value.title}
-                        icon={value.icon}
-                        required={value.required}
-                        type={value.input}
-                        key={index}
-                        register={register}
-                        placeholder={value.placeholder}
-                        name={value.name}
-                        value={value.values}
-                        setValue={setValue}
-                      />
-                    );
-                  })}
-                </div>
-                <button className="morebutton btn btn-custom-selection">
-                  Save
-                </button>
-              </form>
-            </div>
+        <div className="card-section">
+          <div className="heading">
+            <span className="title-icon">
+              <MdIcons.MdSecurity />
+            </span>
+            <span className="title">Change Password</span> {/*Custom  */}
           </div>
-          <div className="card-section">
-            <div className="heading">
-              <span className="title-icon">
-                <MdIcons.MdSecurity />
-              </span>
-              <span className="title">Change Password</span> {/*Custom  */}
-            </div>
 
-            <div className="content-section">
-              <form onSubmit={handleSubmitPassword(onSubmit)}>
-                <div className="mid-content">
-                  {settingsPasswordValue.map((value, index) => {
-                    setPasswordValue(value.name, value.values);
-                    return (
-                      <CustomSettingsInput
-                        title={value.title}
-                        icon={value.icon}
-                        required={value.required}
-                        type={value.input}
-                        key={index}
-                        register={registerPassword}
-                        placeholder={value.placeholder}
-                        name={value.name}
-                      />
-                    );
-                  })}
-                </div>
-                <button className="morebutton btn btn-custom-selection">
-                  Save
-                </button>
-              </form>
-            </div>
+          <div className="content-section">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="mid-content">
+                {settingsPasswordValue.map((value, index) => {
+                  return (
+                    <CustomSettingsInput
+                      title={value.title}
+                      icon={value.icon}
+                      required={value.required}
+                      type={value.input}
+                      key={index}
+                      placeholder={value.placeholder}
+                      name={value.name}
+                      register={register}
+                    />
+                  );
+                })}
+              </div>
+              <button className="morebutton btn btn-custom-selection">
+                Save
+              </button>
+            </form>
           </div>
         </div>
       </div>

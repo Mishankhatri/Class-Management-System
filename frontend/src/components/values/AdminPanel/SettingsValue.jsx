@@ -10,7 +10,6 @@ function SettingsInput() {
       placeholder: "Your Email",
       name: "settingsEmail",
       isRequired: true,
-      values: "prabeen122@gmail.com",
     },
     {
       title: "Username",
@@ -19,34 +18,6 @@ function SettingsInput() {
       placeholder: "Your Username",
       name: "settingsUsername",
       isRequired: true,
-      values: "PrabinGautam",
-    },
-    {
-      title: "Date of Birth",
-      input: "date",
-      icon: <FaIcons.FaCalendar className="mid-icon" />,
-      placeholder: "Your DOB",
-      name: "settingsDOB",
-      isRequired: true,
-      values: "2020-12-20",
-    },
-    {
-      title: "Phone",
-      input: "number",
-      icon: <FaIcons.FaPhone className="mid-icon" />,
-      placeholder: "Your Phone number",
-      name: "settingsPhone",
-      isRequired: true,
-      values: "9846915836",
-    },
-    {
-      title: "Address",
-      input: "text",
-      icon: <FaIcons.FaLocationArrow className="mid-icon" />,
-      placeholder: "Your Address",
-      name: "settingsAddress",
-      isRequired: true,
-      values: "Lamachaur",
     },
   ];
 }
