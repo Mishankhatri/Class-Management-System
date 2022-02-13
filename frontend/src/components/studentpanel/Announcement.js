@@ -6,21 +6,49 @@ import AnnouncementTable from "./TableData/AnnouncementTable";
 import AnnouncementTeacher from "./TableData/TeacherAnnouncement";
 
 function Announcement() {
-  const [showAdmin, setShowAdmin] = useState(true);
+  const [showAdmin, setShowAdmin] = useState(false);
   return (
     <div>
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"View Announcements"} />
       <div className="main-content">
-        <h4 className="h3">Announcement By Teachers</h4>
+        <h4 className="h3">
+          Announcement:
+          <button
+            className={`btn-custom ${showAdmin ? "btn-active" : ""}`}
+            onClick={() => {
+              setShowAdmin(true);
+            }}>
+            From Admin
+          </button>
+          |
+          <button
+            className={`btn-custom ${!showAdmin ? "btn-active" : ""}`}
+            onClick={() => {
+              setShowAdmin(false);
+            }}>
+            Announced By Me
+          </button>
+        </h4>
 
-        <div className="card-section">
-          <h2 className="heading">Announcement From Teacher</h2>
-          <div className="content-section">
-            <div className="mid-content">
-              <AnnouncementTeacher />
+        {showAdmin ? (
+          <div className="card-section">
+            <h2 className="heading">Announcement From Admin</h2>
+            <div className="content-section">
+              <div className="mid-content">
+                <AnnouncementTable />
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="card-section">
+            <h2 className="heading">Announcement From Teacher</h2>
+            <div className="content-section">
+              <div className="mid-content">
+                <AnnouncementTeacher />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
