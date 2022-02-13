@@ -14,10 +14,13 @@ function NavBar({ onClickHandler, username, show, image, name }) {
   const [showDropDownNotification, setDropDownNotification] = useState(false);
 
   const adminnotices = useSelector((state) => state.admins);
+  const teachernotices = useSelector((state) => state.teachers);
 
   return (
     <>
-      {adminnotices.isOpen && <AnnouncementCard />}
+      {name === "student"
+        ? teachernotices.isOpen && <AnnouncementCard name="student" />
+        : adminnotices.isOpen && <AnnouncementCard />}
 
       <div className={show ? "navigation" : "navigation close"}>
         <div className="navbar">
@@ -53,6 +56,7 @@ function NavBar({ onClickHandler, username, show, image, name }) {
         <NavBarNotification
           showDropDown={showDropDownNotification}
           setDropDown={setDropDownNotification}
+          name={name}
         />
         <div className={showDropDown ? "menu active" : "menu inactive"}>
           <ul className="profile-options" style={{ padding: 10 }}>

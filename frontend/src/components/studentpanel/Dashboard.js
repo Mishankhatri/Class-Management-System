@@ -11,26 +11,40 @@ import { GetClass } from "../../redux/actions/classactions";
 import Moment from "react-moment";
 import reverseArray from "../common/ReverseArray";
 import { GET_DETAILS } from "../../redux/actions/student/studentactions";
+import { GetTeacherAnnouncement } from "./../../redux/actions/teacher/teacheractions";
+import Loading from "../common/Loading";
 
 function Dashboard() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getData("adminnotices"));
     dispatch(GetClass());
     dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
     dispatch(GET_DETAILS("/teacher", "GET_TEACHER_DETAIL"));
+    dispatch(GetTeacherAnnouncement());
   }, [dispatch]);
-  const {
-    adminnotices: { results },
-  } = useSelector((state) => state.data);
 
   const { grades } = useSelector((state) => state.classes);
-  const { teacherDetail } = useSelector((state) => state.teachers);
+  const { teacherDetail, teachernotices } = useSelector(
+    (state) => state.teachers
+  );
   const { student } = useSelector((state) => state.students);
 
-  const adminnotices = results && reverseArray(results);
+  const { user } = useSelector((state) => state.auth);
 
-  return (
+  const currentStudentDetail =
+    student && student.find((value) => (value.user.id = user.id));
+
+  const teachernoticesReverse =
+    teachernotices &&
+    reverseArray(teachernotices).filter(
+      (value) =>
+        value.announcement_for_class.class_name ==
+          currentStudentDetail?.current_grade.class_name &&
+        value.announcement_for_class.section ==
+          currentStudentDetail?.current_grade.section
+    );
+
+  return student ? (
     <div>
       <InnerHeader icon={<MdIcons.MdDashboard />} name={"Dashboard"} />
       <div className="main-content">
@@ -50,13 +64,13 @@ function Dashboard() {
               icon={<FaIcons.FaUserSecret style={{ color: "#FF7676" }} />}
             />
           }
-          {
+          {teachernotices && (
             <CardData
-              number={adminnotices?.length}
+              number={teachernoticesReverse?.length}
               name={"Announcements"}
               icon={<FaIcons.FaBullhorn style={{ color: "#009DDC" }} />}
             />
-          }
+          )}
           {
             <CardData
               number={grades?.length}
@@ -73,8 +87,8 @@ function Dashboard() {
             <span className="title">ANNOUNCEMENT</span>
           </div>
           <div className="content-section" style={{ paddingTop: 30 }}>
-            {adminnotices ? (
-              adminnotices.slice(0, 3).map((rowData, index) => {
+            {teachernotices ? (
+              teachernoticesReverse.slice(0, 3).map((rowData, index) => {
                 const dates = <Moment fromNow>{rowData.created_at}</Moment>;
                 return (
                   <div
@@ -134,6 +148,8 @@ function Dashboard() {
         </div>
       </div>
     </div>
+  ) : (
+    <Loading />
   );
 }
 
