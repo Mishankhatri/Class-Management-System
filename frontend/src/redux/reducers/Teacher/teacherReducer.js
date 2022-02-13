@@ -1,3 +1,4 @@
+import { CLOSE_ANNOUNCEMENTS_BYID } from "../../actiontypes/admin/announcementtypes";
 import {
   GET_TEACHER_DETAIL,
   ADD_TEACHER_DETAIL,
@@ -10,10 +11,12 @@ import {
   GET_SUBMITTED_ASSIGNMENT,
   DELETE_TEACHER_ANNOUNCEMENT,
   GET_TEACHER_ANNOUNCEMENT,
+  GET_TEACHER_ANNOUNCEMENTS_BYID,
 } from "../../actiontypes/teacher/teacherdatatype";
 
 const initialState = {
   isLoading: false,
+  isOpen: false,
 };
 
 export default function teacherReducer(state = initialState, action) {
@@ -38,6 +41,12 @@ export default function teacherReducer(state = initialState, action) {
 
     case GET_TEACHER_ASSIGNMENT_BYID:
       return { ...state, assignmentId: action.payload };
+
+    case GET_TEACHER_ANNOUNCEMENTS_BYID:
+      return { ...state, teacherNoticeId: action.payload, isOpen: true };
+
+    case CLOSE_ANNOUNCEMENTS_BYID:
+      return { ...state, isOpen: false };
 
     case GET_SUBMITTED_ASSIGNMENT:
       return { ...state, submittedAssignment: action.payload };

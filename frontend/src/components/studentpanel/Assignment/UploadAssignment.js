@@ -17,15 +17,14 @@ function UploadAssignment() {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { assignmentId, submittedAssignment } = useSelector(
-    (state) => state.teachers
-  );
-
   useEffect(() => {
     dispatch(AssignmentGivenById(id));
   }, []);
 
-  console.log(assignmentId.time_due, assignmentId.date_due);
+  const { assignmentId, submittedAssignment } = useSelector(
+    (state) => state.teachers
+  );
+
   const date =
     assignmentId && assignmentId.date_due + "T" + assignmentId.time_due;
 

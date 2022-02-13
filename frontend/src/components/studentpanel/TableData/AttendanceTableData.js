@@ -1,25 +1,41 @@
-import axios from "axios";
 import React, { useEffect, useState, useMemo } from "react";
+import TableContainer from "../../common/Table/TableContainer";
 import {
   DateRangeColumnFilter,
   SelectColumnFilter,
-} from "../../common/Table/filters";
-import TableContainer from "../../common/Table/TableContainer";
-import { attendanceDetail } from "../../values/AdminPanel/AttendanceInput";
+} from "./../../common/Table/filters";
+
+import { useSelector, useDispatch } from "react-redux";
+import {
+  DeleteAttendance,
+  ViewStudentAttendance,
+} from "../../../redux/actions/subjectactions";
+import Loading from "./../../common/Loading";
+import CustomConfirm from "../../common/CustomConfirm";
+import reverseArray from "../../common/ReverseArray";
 
 const AttendanceTableData = () => {
-  const data = attendanceDetail;
+  const { attendance } = useSelector((state) => state.students);
+  const { user } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+
+  const filterAttendance =
+    attendance &&
+    reverseArray(attendance).filter(
+      (value) => value.student.user.id === user.id
+    );
+
+  useEffect(() => {
+    dispatch(ViewStudentAttendance());
+  }, []);
 
   const columns = useMemo(
     () => [
       {
         Header: "SN",
-        Cell: ({ row: { index } }) => {
-          return index + 1;
-        },
-        SearchAble: false,
+        Cell: ({ row }) => row.index + 1,
       },
-
       {
         Header: "Date",
         accessor: "date",
@@ -29,28 +45,31 @@ const AttendanceTableData = () => {
       },
       {
         Header: "Subject",
-        accessor: "subject",
-        Filter: SelectColumnFilter,
-        filter: "includes",
+        accessor: "subject.subject_name",
         SearchAble: true,
       },
       {
         Header: "Attendance",
-        accessor: "attendance",
-        SearchAble: true,
+        accessor: "attendance_status",
         Filter: SelectColumnFilter,
-        filter: "includes",
+        SearchAble: true,
       },
     ],
     []
   );
 
-  return (
+  return attendance ? (
     <>
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        <TableContainer columns={columns} data={data} isRangeSearch={true} />
+        <TableContainer
+          columns={columns}
+          data={filterAttendance}
+          isRangeSearch={true}
+        />
       </div>
     </>
+  ) : (
+    <Loading />
   );
 };
 

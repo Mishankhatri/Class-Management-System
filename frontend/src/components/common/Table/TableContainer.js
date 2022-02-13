@@ -9,9 +9,8 @@ import {
 import { DefaultColumnFilter, GlobalFilter } from "./filters";
 import "./../../../forms/Table.css";
 import * as BiIcons from "react-icons/bi";
-import reverseArray from "./../ReverseArray";
 
-const TableContainer = ({ columns, data }) => {
+const TableContainer = ({ columns, data, showSearch = true }) => {
   function dateBetweenFilterFn(rows, id, filterValues) {
     const startDate = filterValues[0] ? new Date(filterValues[0]) : undefined;
     const endDate = filterValues[1] ? new Date(filterValues[1]) : undefined;
@@ -139,17 +138,18 @@ const TableContainer = ({ columns, data }) => {
                   ))}
                 </tr>
                 <tr>
-                  {headerGroup.headers.map((column) => (
-                    <th
-                      {...column.getHeaderProps()}
-                      className="secondary-heading">
-                      {column.canFilter
-                        ? column.SearchAble
-                          ? column.render("Filter")
-                          : null
-                        : null}
-                    </th>
-                  ))}
+                  {showSearch &&
+                    headerGroup.headers.map((column) => (
+                      <th
+                        {...column.getHeaderProps()}
+                        className="secondary-heading">
+                        {column.canFilter
+                          ? column.SearchAble
+                            ? column.render("Filter")
+                            : null
+                          : null}
+                      </th>
+                    ))}
                 </tr>
               </React.Fragment>
             ))}
