@@ -15,7 +15,7 @@ function ViewAnnouncements() {
         <h4 className="h3">
           Announcement:
           <button
-            className="btn-custom"
+            className={`btn-custom ${showAdmin ? "btn-active" : ""}`}
             onClick={() => {
               setShowAdmin(true);
             }}>
@@ -23,7 +23,7 @@ function ViewAnnouncements() {
           </button>
           |
           <button
-            className="btn-custom"
+            className={`btn-custom ${!showAdmin ? "btn-active" : ""}`}
             onClick={() => {
               setShowAdmin(false);
             }}>

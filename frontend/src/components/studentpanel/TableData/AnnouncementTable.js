@@ -22,12 +22,7 @@ const AnnouncementTable = () => {
     dispatch(getData("adminnotices"));
   }, [dispatch]);
 
-  const newArray = reverseArray(data);
-
-  const handleDelete = (id) => {
-    setdeleteId(id);
-    setClickDelete(true);
-  };
+  const newArray = data && reverseArray(data);
 
   // console.log(data.reverse());
   const columns = useMemo(

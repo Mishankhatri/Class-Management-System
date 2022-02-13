@@ -141,9 +141,15 @@ function Dashboard() {
               <p>No data available</p>
             )}
 
-            <Link to="/admin/announcements/view" className="btn-text">
-              <div className="morebutton">Load More</div>
-            </Link>
+            {teachernotices ? (
+              teachernoticesReverse.length > 3 && (
+                <Link to="/student/announcements" className="btn-text">
+                  <div className="morebutton">Load More</div>
+                </Link>
+              )
+            ) : (
+              <Loading />
+            )}
           </div>
         </div>
       </div>

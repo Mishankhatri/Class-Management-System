@@ -11,44 +11,16 @@ function Announcement() {
     <div>
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"View Announcements"} />
       <div className="main-content">
-        <h4 className="h3">
-          Announcement:
-          <button
-            className="btn-custom"
-            onClick={() => {
-              setShowAdmin(true);
-            }}>
-            From Admin
-          </button>
-          |
-          <button
-            className="btn-custom"
-            onClick={() => {
-              setShowAdmin(false);
-            }}>
-            Announced By Teacher
-          </button>
-        </h4>
+        <h4 className="h3">Announcement By Teachers</h4>
 
-        {showAdmin ? (
-          <div className="card-section">
-            <h2 className="heading">Announcement From Admin</h2>
-            <div className="content-section">
-              <div className="mid-content">
-                <AnnouncementTable />
-              </div>
+        <div className="card-section">
+          <h2 className="heading">Announcement From Teacher</h2>
+          <div className="content-section">
+            <div className="mid-content">
+              <AnnouncementTeacher />
             </div>
           </div>
-        ) : (
-          <div className="card-section">
-            <h2 className="heading">Announcement From Teacher</h2>
-            <div className="content-section">
-              <div className="mid-content">
-                <AnnouncementTeacher />
-              </div>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );

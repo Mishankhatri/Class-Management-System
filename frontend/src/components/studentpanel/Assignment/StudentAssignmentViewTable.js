@@ -52,7 +52,8 @@ const StudentAssignmentViewTable = () => {
       {
         Header: "Subject",
         accessor: "subject.subject_name",
-        SearchAble: false,
+        SearchAble: true,
+        Filter: SelectColumnFilter,
       },
 
       {

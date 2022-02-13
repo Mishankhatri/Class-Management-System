@@ -22,7 +22,7 @@ function ViewClass() {
         setClick={setClick}
         heading={"View Class"}
         isCustom1={true} //For showing grid 3
-        isCustom2={true} //For showing description
+        isCustom2={false} //For showing description
       />
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"View Class"} />
       <ClassTableData click={click} setClick={setClick} />
