@@ -8,15 +8,14 @@ import {
 export const ChangeAdminPassword = (data) => {
   return function (dispatch) {
     axiosInstance
-      .post("user/changepassword/", {
+      .put("user/changepassword/", {
         old_password: data.settingsCurrentPassword,
         password: data.settingsNewPassword,
         password2: data.settingsRePassword,
       })
       .then(() => dispatch({ type: CHANGE_ADMIN_PASSWORD }))
-      .catch((err) => {
-        dispatch(returnErrors(err.response.data, err.response.status));
-        console.log(err.response);
+      .catch(({ response }) => {
+        dispatch(returnErrors(response.data, response.status));
       });
   };
 };
@@ -24,7 +23,7 @@ export const ChangeAdminPassword = (data) => {
 export const UpdateUserInfo = (data) => {
   return function (dispatch) {
     axiosInstance
-      .post("user/profile/update/", {
+      .patch("user/profile/update/", {
         username: data.username,
         email: data.email,
         fullname: data.fullname,
@@ -40,7 +39,7 @@ export const UpdateUserInfo = (data) => {
 export const ChangeUserImage = (data) => {
   return function (dispatch) {
     axiosInstance
-      .post("user/profile/update/", {
+      .put("user/profile/update/", {
         // username: data.username,
         // email: data.email,
         // fullname: data.fullname,
