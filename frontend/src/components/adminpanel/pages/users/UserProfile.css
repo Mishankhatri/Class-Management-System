@@ -18,21 +18,19 @@
   text-align: center;
 }
 
-.profile img {
-  width: 100%;
-  height: auto;
-  border-radius: 50%;
-  margin-bottom: 30px;
-  cursor: pointer;
-  border: 2px solid rgba(0, 0, 0, 1);
-  /* padding: 10px; */
-}
-
 /* Image Overlay */
 .content-image-p {
   position: relative;
   width: 100%;
   max-width: 400px;
+  margin: auto;
+  cursor: pointer;
+}
+
+.content-image-p.userprofile {
+  position: relative;
+  width: 100%;
+  max-width: 270px;
   margin: auto;
   cursor: pointer;
 }
