@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AdminAnnouncement, Attendance,Grade,Subject,Student,Parent,Teacher,AssignTeacherToSubjects,TeachersAnnouncement,GivenAssignments,SubmittedAssignments,LectureNotes
+from .models import AdminAnnouncement, Attendance,Grade,Subject,Student,Parent,Teacher,AssignTeacherToSubjects,TeachersAnnouncement,GivenAssignments,SubmittedAssignments,LectureNotes, TimeTable
 
 @admin.register(Grade)
 class Admin(admin.ModelAdmin):
@@ -44,6 +44,10 @@ class Admin(admin.ModelAdmin):
 @admin.register(LectureNotes)
 class Admin(admin.ModelAdmin):
     list_display = ('title', 'description', 'grade', 'subject', 'notes_files', 'teacher')
+
 @admin.register(Attendance)
 class Admin(admin.ModelAdmin):
     list_display = ('student', 'teacher','subject', 'date', 'grade', 'attendance_status', )
+@admin.register(TimeTable)
+class Admin(admin.ModelAdmin):
+    list_display = ('id','day', 'startTime', 'endTime', 'assigned', )

@@ -1,3 +1,4 @@
+from ast import Assign
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
@@ -32,6 +33,15 @@ section_choices = (
 attendance_choices = (
     ('ABSENT','A'),
     ('PRESENT','P'),
+)
+day_choices = (
+    ('Sunday','Sunday'),
+    ('Monday','Monday'),
+    ('Tuesday','Tuesday'),
+    ('Wednesday','Wednesday'),
+    ('Thrusday','Thrusday'),
+    ('Friday','Friday'),
+    ('Saturday','Saturday'),
 )
 class Grade(models.Model):
     class_name = models.PositiveIntegerField()
@@ -166,3 +176,12 @@ class Attendance(models.Model):
     
     def __str__(self):
         return '%s,%s,%s:%s' % (self.student,self.subject,self.date,self.attendance_status)
+
+class TimeTable(models.Model):
+    day = models.CharField(max_length=255,choices=day_choices,null=False,blank=False)
+    startTime = models.TimeField()
+    endTime = models.TimeField()
+    assigned = models.ForeignKey(AssignTeacherToSubjects,related_name='assigned_teachers',on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '%s,%s,%s:%s' % (self.day,self.startTime,self.endTime,self.assigned)
