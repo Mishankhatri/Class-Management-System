@@ -5,35 +5,26 @@ import TableContainer from "../../common/Table/TableContainer";
 import Moment from "react-moment";
 import { getData } from "../../../redux/actions/dataactions";
 import reverseArray from "../../common/ReverseArray";
-import CustomConfirm from "../../common/CustomConfirm";
-import { AdminAnnouncementDelete } from "../../../redux/actions/admin/announcementaction";
 
-const AnnouncementTableData = () => {
+const AnnouncementTable = () => {
   const {
     adminnotices: { results: data },
   } = useSelector((state) => state.data);
-
-  const { user } = useSelector((state) => state.auth);
-  const [clickDelete, setClickDelete] = useState(false);
-  const [deleteId, setdeleteId] = useState(null);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getData("adminnotices"));
   }, [dispatch]);
 
-  const newArray = reverseArray(data);
-
-  const handleDelete = (id) => {
-    setdeleteId(id);
-    setClickDelete(true);
-  };
+  const newArray =
+    data &&
+    reverseArray(data).filter((value) => value.announcement_for == "all");
 
   // console.log(data.reverse());
   const columns = useMemo(
     () => [
       {
-        Header: "Accessor",
+        Header: "Type",
         accessor: "type",
         SearchAble: true,
         Filter: SelectColumnFilter,
@@ -98,20 +89,9 @@ const AnnouncementTableData = () => {
 
   return (
     <>
-      {clickDelete && (
-        <CustomConfirm
-          title={"Delete Announcement"}
-          msg={"Are you sure you want to delete?"}
-          trueActivity={"Yes"}
-          falseActivity={"Cancel"}
-          setDelete={setClickDelete}
-          id={deleteId}
-          PeformDelete={AdminAnnouncementDelete}
-        />
-      )}
       <div>{data && <TableContainer columns={columns} data={newArray} />}</div>
     </>
   );
 };
 
-export default AnnouncementTableData;
+export default AnnouncementTable;

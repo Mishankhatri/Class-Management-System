@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NotificationMessage from "./NotificationMessage";
 import Moment from "react-moment";
 import { useDispatch, useSelector } from "react-redux";
 import reverseArray from "../ReverseArray";
 import Loading from "./../Loading";
-import { AdminAnnouncementById } from "./../../../redux/actions/admin/announcementaction";
+import {
+  AdminAnnouncementById,
+  TeacherAnnouncementById,
+} from "./../../../redux/actions/admin/announcementaction";
 
-function NavBarNotification({ showDropDown, setDropDown }) {
+function NavBarNotification({ showDropDown, setDropDown, name }) {
   const dispatch = useDispatch();
 
   const className = showDropDown
@@ -16,19 +19,40 @@ function NavBarNotification({ showDropDown, setDropDown }) {
   const {
     adminnotices: { results },
   } = useSelector((state) => state.data);
+  const teacherAnnounce = useSelector((state) => state.teachers);
+
+  const { student } = useSelector((state) => state.students);
+
+  const { user } = useSelector((state) => state.auth);
+
+  const currentStudentDetail =
+    student && student.find((value) => (value.user.id = user.id));
 
   const adminnotices = results && reverseArray(results);
+  const reverseTeacherNotices =
+    teacherAnnounce?.teachernotices &&
+    reverseArray(teacherAnnounce?.teachernotices).filter(
+      (value) =>
+        value.announcement_for_class.class_name ==
+          currentStudentDetail?.current_grade.class_name &&
+        value.announcement_for_class.section ==
+          currentStudentDetail?.current_grade.section
+    );
+
+  const notices = name == "student" ? reverseTeacherNotices : adminnotices;
 
   const handleChange = (data) => {
     setDropDown(false);
-    dispatch(AdminAnnouncementById(data));
+    if (name == "student") {
+      dispatch(TeacherAnnouncementById(data));
+    } else dispatch(AdminAnnouncementById(data));
   };
 
-  return adminnotices ? (
+  return notices ? (
     <React.Fragment>
       <div className={className}>
         <div className="heading">Notifications</div>
-        {adminnotices.map((value, index) => {
+        {notices.map((value, index) => {
           const stringLength = value.details.length;
           const messageText =
             stringLength > 80

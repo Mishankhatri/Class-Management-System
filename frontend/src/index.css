@@ -336,6 +336,11 @@ body {
   text-decoration: none;
 }
 
+.btn-active {
+  color: #f1f2f7;
+  background-color: #5a6acf;
+}
+
 .sidemenu .active-sublink {
   background-color: rgba(112, 127, 221, 0.1);
   padding: 5px;

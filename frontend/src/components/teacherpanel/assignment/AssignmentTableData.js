@@ -1,47 +1,81 @@
-import axios from "axios";
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ToggleSwitch from "../../common/InputField/ToggleSwitch";
+import {
+  DeleteTeacherGivenAssignment,
+  GetTeacherGivenAssignment,
+} from "../../../redux/actions/teacher/teacheractions";
+import CustomConfirm from "../../common/CustomConfirm";
+import Loading from "../../common/Loading";
 import TableContainer from "./../../common/Table/TableContainer";
+import moment from "moment";
+import { SelectColumnFilter } from "../../common/Table/filters";
+import reverseArray from "./../../common/ReverseArray";
 
 const AssignmentTableData = () => {
   const navigate = useNavigate();
-  const data = [
-    { roll: 1, name: "Prabin", id: 1 },
-    { roll: 2, name: "Anu", id: 2 },
-    { roll: 3, name: "Mishan", id: 3 },
-    { roll: 4, name: "Paras", id: 4 },
-    { roll: 5, name: "Kushal", id: 5 },
-    { roll: 6, name: "Pranu", id: 6 },
-    { roll: 7, name: "Pranisha", id: 7 },
-  ];
+
+  const [clickDelete, setClickDelete] = useState(false);
+  const [deleteId, setdeleteId] = useState(null);
+  const dispatch = useDispatch();
+  const { assignments } = useSelector((state) => state.teachers);
+  const { user } = useSelector((state) => state.auth);
+
+  const filterAssignment =
+    assignments &&
+    reverseArray(assignments).filter(
+      (value) => value.created_by.email === user.email
+    );
 
   const handleView = (row) => {
     navigate(`/teacher/assignment/view/id=${row.original.id}`);
   };
 
+  useEffect(() => {
+    dispatch(GetTeacherGivenAssignment());
+  }, []);
+
+  const handleDelete = (id) => {
+    setdeleteId(id);
+    setClickDelete(true);
+  };
+
   const columns = useMemo(
     () => [
       {
-        Header: "Roll No",
-        accessor: "roll",
-        SearchAble: false,
+        Header: "Class",
+        accessor: "for_grade.class_name",
+        SearchAble: true,
+        Filter: SelectColumnFilter,
+      },
+      {
+        Header: "Section",
+        accessor: "for_grade.section",
+        SearchAble: true,
+        Filter: SelectColumnFilter,
+      },
+      {
+        Header: "Subject",
+        accessor: "subject.subject_name",
+        SearchAble: true,
       },
       {
         Header: "Title",
-        accessor: "name",
+        accessor: "title",
         SearchAble: false,
       },
 
       {
         Header: "Date due",
-        accessor: "date",
+        accessor: "date_due",
         SearchAble: false,
       },
 
       {
         Header: "Time due",
-        accessor: "time",
+        accessor: (d) => {
+          return moment(d.time_due, "HH").format("LT");
+        },
         SearchAble: false,
       },
       {
@@ -55,7 +89,11 @@ const AssignmentTableData = () => {
                 onClick={() => handleView(row)}>
                 View
               </button>
-              <button className="btn-custom btn-danger">Delete</button>
+              <button
+                className="btn-custom btn-danger"
+                onClick={() => handleDelete(row.original.id)}>
+                Delete
+              </button>
             </>
           );
         },
@@ -64,12 +102,25 @@ const AssignmentTableData = () => {
     []
   );
 
-  return (
+  return filterAssignment ? (
     <>
+      {clickDelete && (
+        <CustomConfirm
+          title={"Delete User"}
+          msg={"Are you sure you want to delete?"}
+          trueActivity={"Yes"}
+          falseActivity={"Cancel"}
+          setDelete={setClickDelete}
+          id={deleteId}
+          PeformDelete={DeleteTeacherGivenAssignment}
+        />
+      )}
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        <TableContainer columns={columns} data={data} />
+        <TableContainer columns={columns} data={filterAssignment} />
       </div>
     </>
+  ) : (
+    <Loading />
   );
 };
 

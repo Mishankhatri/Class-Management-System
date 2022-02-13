@@ -3,43 +3,44 @@ import { useDispatch, useSelector } from "react-redux";
 import { SelectColumnFilter } from "../../common/Table/filters";
 import TableContainer from "../../common/Table/TableContainer";
 import Moment from "react-moment";
-import { getData } from "../../../redux/actions/dataactions";
-import reverseArray from "../../common/ReverseArray";
-import CustomConfirm from "../../common/CustomConfirm";
-import { AdminAnnouncementDelete } from "../../../redux/actions/admin/announcementaction";
 
-const AnnouncementTableData = () => {
-  const {
-    adminnotices: { results: data },
-  } = useSelector((state) => state.data);
+import reverseArray from "../../common/ReverseArray";
+
+import { GetTeacherAnnouncement } from "./../../../redux/actions/teacher/teacheractions";
+import Loading from "./../../common/Loading";
+
+const AnnouncementTeacher = () => {
+  const { teachernotices: data } = useSelector((state) => state.teachers);
 
   const { user } = useSelector((state) => state.auth);
-  const [clickDelete, setClickDelete] = useState(false);
-  const [deleteId, setdeleteId] = useState(null);
+  const { student } = useSelector((state) => state.students);
+
+  const filterStudent =
+    student && student.find((value) => value.user.id === user.id);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getData("adminnotices"));
+    dispatch(GetTeacherAnnouncement());
   }, [dispatch]);
 
-  const newArray = reverseArray(data);
-
-  const handleDelete = (id) => {
-    setdeleteId(id);
-    setClickDelete(true);
-  };
+  const newArray =
+    data &&
+    reverseArray(data).filter(
+      (value) =>
+        value.announcement_for_class.class_name ==
+          filterStudent.current_grade.class_name &&
+        value.announcement_for_class.section ==
+          filterStudent.current_grade.section
+    );
 
   // console.log(data.reverse());
   const columns = useMemo(
     () => [
       {
-        Header: "Accessor",
-        accessor: "type",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
-        className: "subject-column",
+        Header: "SN",
+        SearchAble: false,
+        Cell: ({ row }) => row.index + 1,
       },
-
       {
         Header: "Details",
         className: "detail-column",
@@ -79,9 +80,9 @@ const AnnouncementTableData = () => {
       {
         Header: "Files",
         accessor: (rowData) => {
-          return rowData.files_by_admin ? (
+          return rowData.files_by_teachers ? (
             <a
-              href={rowData.files_by_admin}
+              href={rowData.files_by_teachers}
               target="_blank"
               className="btn-primary btn-custom"
               style={{ textDecoration: "none" }}>
@@ -96,22 +97,21 @@ const AnnouncementTableData = () => {
     []
   );
 
-  return (
+  return student ? (
     <>
-      {clickDelete && (
-        <CustomConfirm
-          title={"Delete Announcement"}
-          msg={"Are you sure you want to delete?"}
-          trueActivity={"Yes"}
-          falseActivity={"Cancel"}
-          setDelete={setClickDelete}
-          id={deleteId}
-          PeformDelete={AdminAnnouncementDelete}
-        />
-      )}
-      <div>{data && <TableContainer columns={columns} data={newArray} />}</div>
+      <div>
+        {data && (
+          <TableContainer
+            columns={columns}
+            data={newArray}
+            showSearch={false}
+          />
+        )}
+      </div>
     </>
+  ) : (
+    <Loading />
   );
 };
 
-export default AnnouncementTableData;
+export default AnnouncementTeacher;

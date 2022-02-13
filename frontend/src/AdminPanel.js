@@ -5,7 +5,6 @@ import NavBar from "./components/common/NavBar/NavBar";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Loading from "./components/common/Loading";
 import { getMenuValues } from "./components/common/SideBar/SideMenuValue";
-import ProfileImage from "./assets/profiles/pas075bct029.jpg";
 import Error404 from "./components/common/Error404";
 import { useSelector } from "react-redux";
 

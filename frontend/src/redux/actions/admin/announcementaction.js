@@ -6,6 +6,7 @@ import {
   CLOSE_ANNOUNCEMENTS_BYID,
 } from "../../actiontypes/admin/announcementtypes";
 import { getData } from "../dataactions";
+import { GET_TEACHER_ANNOUNCEMENTS_BYID } from "./../../actiontypes/teacher/teacherdatatype";
 
 export const CreateAdminAnnouncement = (data, user) => {
   return function (dispatch) {
@@ -46,6 +47,20 @@ export const AdminAnnouncementById = (id) => {
       .then(({ data }) => {
         dispatch({
           type: GET_ADMIN_ANNOUNCEMENTS_BYID,
+          payload: data,
+        });
+      })
+      .catch((error) => console.log(error));
+  };
+};
+
+export const TeacherAnnouncementById = (id) => {
+  return function (dispatch) {
+    axiosInstance
+      .get(`/teachernotices/${id}`)
+      .then(({ data }) => {
+        dispatch({
+          type: GET_TEACHER_ANNOUNCEMENTS_BYID,
           payload: data,
         });
       })

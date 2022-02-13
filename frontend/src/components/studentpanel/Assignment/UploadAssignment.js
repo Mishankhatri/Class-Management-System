@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InnerHeader from "./../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
 import { useParams } from "react-router-dom";
@@ -7,16 +7,28 @@ import { AssignmentInputValue } from "./../../values/TeacherPanel/AssignmentInpu
 import { Controller, useForm } from "react-hook-form";
 import { FileInput } from "../../common/InputField/FileInput";
 import moment from "moment";
+import { useSelector, useDispatch } from "react-redux";
+import { AssignmentGivenById } from "../../../redux/actions/teacher/teacheractions";
+import Loading from "../../common/Loading";
 
 function UploadAssignment() {
   const [click, setClick] = useState(false);
   const { handleSubmit, control } = useForm();
   const { id } = useParams();
+  const dispatch = useDispatch();
 
-  const SubmittedTime = "2022-02-06T09:20";
-  const AssignmentTime = new Date().toISOString();
+  useEffect(() => {
+    dispatch(AssignmentGivenById(id));
+  }, []);
 
-  const isOnTime = moment(AssignmentTime).isSameOrBefore(SubmittedTime);
+  const { assignmentId, submittedAssignment } = useSelector(
+    (state) => state.teachers
+  );
+
+  const date =
+    assignmentId && assignmentId.date_due + "T" + assignmentId.time_due;
+
+  const isOnTime = assignmentId && moment(date).isSameOrAfter(new Date());
 
   const onSubmit = (data) => {
     console.log(data);
@@ -27,7 +39,7 @@ function UploadAssignment() {
     console.log(data);
   };
 
-  return (
+  return assignmentId ? (
     <React.Fragment>
       {click && (
         <ChangeInput
@@ -56,40 +68,51 @@ function UploadAssignment() {
               <div className="assignment_left">
                 <div className="info">
                   <h4>Course</h4>
-                  <div className="content">Social</div>
+                  <div className="content">
+                    {assignmentId.subject.subject_name}
+                  </div>
                 </div>
                 <div className="info">
                   <h4>Class</h4>
-                  <div className="content">12</div>
+                  <div className="content">
+                    {assignmentId.for_grade.class_name}
+                  </div>
                 </div>
                 <div className="info">
                   <h4>Section</h4>
-                  <div className="content">A</div>
+                  <div className="content">
+                    {assignmentId.for_grade.section}
+                  </div>
                 </div>
                 <div className="info">
                   <h4>Teacher</h4>
-                  <div className="content">Mishan Khatri</div>
+                  <div className="content">
+                    {assignmentId.created_by.fullname}
+                  </div>
                 </div>
               </div>
               <div className="assignment_right">
                 <div className="info">
                   <h4>Title</h4>
-                  <div className="content">Title</div>
+                  <div className="content">{assignmentId.title}</div>
                 </div>
                 <div className="info">
                   <h4>Date Due</h4>
-                  <div className="content">2022-12-02</div>
+                  <div className="content">{assignmentId.date_due}</div>
                 </div>
                 <div className="info">
                   <h4>Time Due</h4>
-                  <div className="content">12:59 PM</div>
+                  <div className="content">
+                    {moment(assignmentId.time_due, "HH").format("LT")}
+                  </div>
                 </div>
                 <div className="info">
                   <h4>File</h4>
                   <div className="content">
                     <a
-                      className="btn-edit"
-                      onClick={() => window.location.reload()}>
+                      href={assignmentId.related_files}
+                      style={{ textDecoration: "none" }}
+                      className="btn-edit">
                       Preview File
                     </a>
                   </div>
@@ -98,12 +121,7 @@ function UploadAssignment() {
             </div>
             <div className="instruction_info">
               <h4>Instruction</h4>
-              <div className="content">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Id,
-                possimus deleniti ratione molestiae commodi, ipsam ipsa
-                perferendis voluptatum voluptatibus impedit obcaecati ullam
-                doloremque, aspernatur saepe non nisi nobis ab excepturi!
-              </div>
+              <div className="content">{assignmentId.instructions}</div>
             </div>
             <div className="instruction_info">
               <h4>Upload Assignment</h4>
@@ -148,6 +166,8 @@ function UploadAssignment() {
         </div>
       </div>
     </React.Fragment>
+  ) : (
+    <Loading />
   );
 }
 export default UploadAssignment;

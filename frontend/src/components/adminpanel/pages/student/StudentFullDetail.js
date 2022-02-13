@@ -26,7 +26,6 @@ function StudentFullDetail() {
 
   useEffect(() => {
     dispatch(StudentClassById(id));
-    // dispatch(CLassList());
   }, []);
 
   const [click, setClick] = useState(false);
@@ -61,11 +60,9 @@ function StudentFullDetail() {
     setClickStudentAcademic(false);
   };
 
-  const studentClass = classes.find((value) => value.id == data?.current_grade);
-
   const parents = studentParent.find((value) => value.student.id == id);
 
-  return data && studentClass ? (
+  return data ? (
     <React.Fragment>
       {/* Modal Section Image Start */}
       {click && (
@@ -126,7 +123,9 @@ function StudentFullDetail() {
             </div>
             <div className="content-section">
               <div className="custom-info-show">
-                <div className="content" onClick={() => setClick(!click)}>
+                <div
+                  className="content-image-p"
+                  onClick={() => setClick(!click)}>
                   <div className="content-overlay"></div>
                   <img
                     className="content-image"
@@ -225,8 +224,14 @@ function StudentFullDetail() {
             <div className="content-section">
               <div className="information">
                 <div className="information__info">
-                  <ViewModal title={"Class"} value={studentClass.class_name} />
-                  <ViewModal title={"Section"} value={studentClass.section} />
+                  <ViewModal
+                    title={"Class"}
+                    value={data.current_grade.class_name}
+                  />
+                  <ViewModal
+                    title={"Section"}
+                    value={data.current_grade.section}
+                  />
                   <ViewModal title={"SRN No"} value={data.SRN} />
                 </div>
                 <button

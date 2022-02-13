@@ -143,7 +143,7 @@ export function getAddSubjectsValue() {
 
 //Exporting for Modal
 export function getClassSectionMerge() {
-  return [addClassValue[0], addClassValue[1], sectionValue[0]];
+  return [addClassValue[0], sectionValue[0]];
 }
 
 export function getSubjectModal() {

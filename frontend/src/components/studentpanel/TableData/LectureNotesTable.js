@@ -1,29 +1,30 @@
-import axios from "axios";
 import React, { useEffect, useState, useMemo } from "react";
 import TableContainer from "../../common/Table/TableContainer";
 import { SelectColumnFilter } from "../../common/Table/filters";
+import { useDispatch, useSelector } from "react-redux";
+import { GetLectureNotes } from "./../../../redux/actions/teacher/teacheractions";
+import reverseArray from "./../../common/ReverseArray";
+import Loading from "./../../common/Loading";
 
 const LectureNotesTable = () => {
-  const [data, setData] = useState([]);
+  const dispatch = useDispatch();
+  const { lecturenotes } = useSelector((state) => state.teachers);
+  const { student } = useSelector((state) => state.students);
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    doFetch();
+    dispatch(GetLectureNotes());
   }, []);
 
-  const doFetch = async () => {
-    const { data } = await axios.get(
-      "https://jsonplaceholder.typicode.com/users"
+  const studentDetail = student.find((value) => value.user.id === user.id);
+
+  const newLectureNote =
+    lecturenotes &&
+    reverseArray(lecturenotes).filter(
+      (value) =>
+        value.grade.class_name == studentDetail.current_grade?.class_name &&
+        value.grade.section == studentDetail.current_grade?.section
     );
-    setData(data);
-  };
-
-  const onOpen = (post) => {
-    alert(`Previewing File ${post.id}`);
-  };
-
-  const handleSubmit = (row) => {
-    alert(`Click Id is ${row.id}. Downloading file!`);
-  };
 
   const columns = useMemo(
     () => [
@@ -36,48 +37,38 @@ const LectureNotesTable = () => {
       },
       {
         Header: "Course",
-        accessor: "website",
+        accessor: "subject.subject_name",
+        Filter: SelectColumnFilter,
         SearchAble: true,
       },
       {
         Header: "Teacher",
-        accessor: "username",
+        accessor: (d) => {
+          return `${d.teacher.first_name} ${
+            d.teacher.middlename ? d.teacher.middlename : ""
+          } ${d.teacher.last_name}`;
+        },
         SearchAble: true,
       },
       {
         Header: "Description",
-        accessor: "address.city",
-        Filter: SelectColumnFilter,
-        filter: "includes",
+        accessor: "description",
         SearchAble: false,
       },
       {
         Header: "File",
         SearchAble: false,
         Cell: ({ row }) => {
-          return (
-            <button
+          return row.original.notes_files ? (
+            <a
+              href={row.original.notes_files}
+              target="_blank"
               className="btn-primary  btn-custom"
-              style={{ background: "#012346" }}
-              onClick={() => handleSubmit(row.original)}>
+              style={{ background: "#012346", textDecoration: "none" }}>
               Download
-            </button>
-          );
-        },
-      },
-      {
-        Header: "Action",
-        SearchAble: false,
-        Cell: ({ row }) => {
-          return (
-            <>
-              <button
-                onClick={() => onOpen(row.original)}
-                className="btn-primary btn-1 btn-custom">
-                Open
-              </button>
-              <button className="btn-danger btn-custom">Delete</button>
-            </>
+            </a>
+          ) : (
+            <p>No file Provided</p>
           );
         },
       },
@@ -85,12 +76,16 @@ const LectureNotesTable = () => {
     []
   );
 
-  return (
+  return studentDetail ? (
     <>
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        <TableContainer columns={columns} data={data} />
+        {lecturenotes && (
+          <TableContainer columns={columns} data={newLectureNote} />
+        )}
       </div>
     </>
+  ) : (
+    <Loading />
   );
 };
 
