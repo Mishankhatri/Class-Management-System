@@ -1,4 +1,4 @@
-from core.models import  Grade,Subject,Student,Parent,Teacher,AssignTeacherToSubjects,AdminAnnouncement,TeachersAnnouncement,GivenAssignments,SubmittedAssignments,LectureNotes,Attendance
+from core.models import  Grade,Subject,Student,Parent,Teacher,AssignTeacherToSubjects,AdminAnnouncement,TeachersAnnouncement,GivenAssignments,SubmittedAssignments,LectureNotes,Attendance,TimeTable
 from rest_framework import serializers
 from users.serializers import CMS_UsersSerializer
 class GradeSerializer(serializers.ModelSerializer):
@@ -82,4 +82,10 @@ class AttendanceSerializer(serializers.ModelSerializer):
     student = StudentSerializer()
     class Meta:
         model= Attendance
+        fields = '__all__'
+
+class TimeTableSerializer(serializers.ModelSerializer):
+    assigned = AssignTeacherToSubjectsSerializer()
+    class Meta:
+        model= TimeTable
         fields = '__all__'
