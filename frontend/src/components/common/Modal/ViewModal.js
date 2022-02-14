@@ -1,7 +1,14 @@
 import React from "react";
 import { HeaderInputField } from "../../common/InputField/HeaderInputField";
 
-function ViewModal({ title, value, disabled = true, name = "", register }) {
+function ViewModal({
+  title,
+  value,
+  disabled = true,
+  name = "",
+  register,
+  type = "text",
+}) {
   return (
     <div className="info">
       <div className="mid-content">
@@ -9,7 +16,7 @@ function ViewModal({ title, value, disabled = true, name = "", register }) {
         <div className="label-input">
           {register ? (
             <input
-              type="text"
+              type={type}
               className="input"
               disabled={disabled}
               defaultValue={value}
@@ -18,7 +25,7 @@ function ViewModal({ title, value, disabled = true, name = "", register }) {
             />
           ) : (
             <input
-              type="text"
+              type={type}
               className="input"
               disabled={disabled}
               defaultValue={value}

@@ -5,7 +5,6 @@ import * as FaIcons from "react-icons/fa";
 
 import { useForm, Controller } from "react-hook-form";
 import InputField from "../../../common/InputField/InputField";
-import { AsyncSelect } from "react-select/async";
 
 function AddSection() {
   //For Reseting Select Options while Submitting

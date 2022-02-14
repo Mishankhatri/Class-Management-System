@@ -336,7 +336,7 @@ input[type="file"] {
 
   .allinputfield {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .modal-inputfield {
@@ -359,6 +359,11 @@ input[type="file"] {
 
 @media only screen and (max-width: 1000px) {
   .modal-inputfield {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .allinputfield {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }

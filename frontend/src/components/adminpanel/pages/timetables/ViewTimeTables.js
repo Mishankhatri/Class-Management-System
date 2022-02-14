@@ -1,154 +1,133 @@
-import React, { useState } from "react";
-import InnerHeader from "./../../../common/InnerHeader";
-import * as MdIcons from "react-icons/md";
-import * as FaIcons from "react-icons/fa";
-import InputField from "../../../common//InputField/InputField";
+import React, { useState, useMemo } from "react";
+import { useSelector } from "react-redux";
+import TableContainer from "../../../common/Table/TableContainer";
+import moment from "moment";
+import { SelectColumnFilter } from "../../../common/Table/filters";
+import CustomConfirm from "../../../common/CustomConfirm";
+import { DeleteTimetables } from "../../../../redux/actions/admin/adminaction";
+import ChangeInput from "../../../common/Modal/ChangeInput";
+import { addSlot } from "../../../values/AdminPanel/TimetableValues";
 
-import { useForm, Controller } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
-import { timeTable_value } from "../../../values/AdminPanel/TimetableValues";
-import { getAcademicValues } from "../../../values/AdminPanel/StudentInputField";
+const ViewTimetable_Table = () => {
+  const [clickDelete, setClickDelete] = useState(false);
+  const [deleteId, setdeleteId] = useState(null);
 
-function ViewTimetables() {
-  const addAcademicValues = getAcademicValues();
+  const { timetables } = useSelector((state) => state.admins);
 
-  //Define requirements from useform
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm();
-
-  //Getting options for academic info
-  const optionsClass = addAcademicValues[0].options;
-  const optionsSection = addAcademicValues[1].options;
-
-  const onSubmitForm = (data, e) => {
-    console.log(data);
-
-    //CLear Input Field Value
-    e.target.reset();
+  const handleDelete = (id) => {
+    setdeleteId(id);
+    setClickDelete(true);
   };
 
-  return (
-    <div>
-      <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"View Timetables"} />
-      <div className="main-content">
-        <form onSubmit={handleSubmit(onSubmitForm)}>
-          <div className="card-section">
-            <div className="heading">
-              <span className="title-icon">
-                <FaIcons.FaBook />
-              </span>
-              <span className="title">MAKE SELECTION</span>
-            </div>
-            <div className="content-section">
-              <div className="custom-selection">
-                <Controller
-                  name={"studentSelectionClass"}
-                  control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: `Student Class is required`,
-                    },
-                  }}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <InputField
-                      title={"Class".toUpperCase()}
-                      input={"dropdown"}
-                      icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
-                      name={"studentClass"}
-                      onChangeHandler={field.onChange}
-                      isRequired={true}
-                      options={optionsClass}
-                      errors={errors}
-                      // refClear={refClearAcademicFirst}
-                      ErrorMessage={ErrorMessage}
-                    />
-                  )}
-                />
-                <Controller
-                  name={"studentSelectionSection"}
-                  control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: `Student Section is required`,
-                    },
-                  }}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <InputField
-                      title={"Student Section".toUpperCase()}
-                      input={"dropdown"}
-                      icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
-                      name={"studentClass"}
-                      onChangeHandler={field.onChange}
-                      isRequired={true}
-                      options={optionsClass}
-                      errors={errors}
-                      // refClear={refClearAcademicFirst}
-                      ErrorMessage={ErrorMessage}
-                    />
-                  )}
-                />
-              </div>
+  const [click, setClick] = useState(false);
+
+  const onSubmit = (data, e) => {
+    e.target.reset();
+    console.log(data);
+    setClick(false);
+  };
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "SN",
+        SearchAble: false,
+        Cell: ({ row: { index } }) => {
+          return index + 1;
+        },
+      },
+      {
+        Header: "Day",
+        accessor: "day",
+        SearchAble: true,
+        Filter: SelectColumnFilter,
+      },
+      {
+        Header: "Time",
+        accessor: (d) => {
+          const startTime = moment(d.startTime, "HH").format("LT");
+          const endTime = moment(d.endTime, "HH").format("LT");
+          return `${startTime} to ${endTime}`;
+        },
+        SearchAble: true,
+      },
+      {
+        Header: "Class",
+        accessor: (d) => {
+          return `${d.assigned.grade.class_name} : ${d.assigned.grade.section}`;
+        },
+        SearchAble: true,
+        Filter: SelectColumnFilter,
+      },
+      {
+        Header: "Subject",
+        accessor: (d) => {
+          return `${d.assigned.subject.subject_name}`;
+        },
+        SearchAble: true,
+      },
+      {
+        Header: "Teacher",
+        accessor: (d) => {
+          return `${d.assigned.teacher.first_name} ${
+            d.assigned.teacher.middle_name ? d.assigned.teacher.middle_name : ""
+          } ${d.assigned.teacher.last_name}`;
+        },
+        SearchAble: true,
+      },
+      {
+        Header: "Action",
+        SearchAble: false,
+        Cell: ({ row }) => {
+          return (
+            <>
               <button
-                className="morebutton btn btn-custom-selection"
-                type="submit">
-                <span>Select</span>
+                onClick={() => setClick(!click)}
+                className="btn-primary btn-1 btn-custom">
+                Edit
               </button>
-            </div>
-          </div>
-        </form>
-        <div className="card-section">
-          <div className="heading">
-            <span className="title-icon">
-              <FaIcons.FaSlidersH />
-            </span>
-            <span className="title">All Slots</span>
-          </div>
-          <div className="content-section">
-            <table className="table-striped">
-              <thead>
-                <tr>
-                  <th>Timings</th>
-                  <th>Sunday</th>
-                  <th>Monday</th>
-                  <th>Tuesday</th>
-                  <th>Wednesday</th>
-                  <th>Thurday</th>
-                  <th>Friday</th>
-                </tr>
-              </thead>
-              <tbody>
-                {timeTable_value.map((value, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{value.day}</td>
-                      <td>{value.time}</td>
-                      <td>{value.classes}</td>
-                      <td>{value.section}</td>
-                      <td>{value.subject}</td>
-                      <td>{value.teacher}</td>
-
-                      <td>
-                        <div>Lecture: AI</div>
-                        <div>Class: 12</div>
-                        <div>Teacher: Urbara Bhandari</div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
+              <button
+                className="btn-danger btn-custom"
+                onClick={() => handleDelete(row.original.id)}>
+                Delete
+              </button>
+            </>
+          );
+        },
+      },
+    ],
+    []
   );
-}
 
-export default ViewTimetables;
+  return (
+    <>
+      {click && (
+        <ChangeInput
+          onSubmit={onSubmit}
+          valueArray={addSlot}
+          click={click}
+          setClick={setClick}
+          heading={"View Class"}
+          isCustom1={false} //For showing grid 3
+          isCustom2={false} //For showing description
+        />
+      )}
+      {clickDelete && (
+        <CustomConfirm
+          title={"Delete User"}
+          msg={"Are you sure you want to delete?"}
+          trueActivity={"Yes"}
+          falseActivity={"Cancel"}
+          setDelete={setClickDelete}
+          id={deleteId}
+          PeformDelete={DeleteTimetables}
+        />
+      )}
+      <div style={{ margin: "20px 30px", marginBottom: 50 }}>
+        {timetables && <TableContainer columns={columns} data={timetables} />}
+      </div>
+    </>
+  );
+};
+
+export default ViewTimetable_Table;

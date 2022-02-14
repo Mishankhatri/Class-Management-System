@@ -9,13 +9,12 @@ import { ErrorMessage } from "@hookform/error-message";
 import TeacherTableData from "./TeacherTableData";
 
 function ViewTeacher() {
-  const { handleSubmit, setValue, control, errors } = useForm();
+  const { handleSubmit, control, errors } = useForm();
   const onSubmit = (data) => console.log(data);
   return (
     <div>
       <div className="modal">
         <div className="model-section">
-          {/* Add class visible to above element to see modal  */}
           <div className="modal-content">
             <form onSubmit={handleSubmit(onSubmit)}>
               <span className="close">&times;</span>

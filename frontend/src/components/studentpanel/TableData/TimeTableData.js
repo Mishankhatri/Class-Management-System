@@ -1,11 +1,35 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { SelectColumnFilter } from "../../common/Table/filters";
+import React, { useEffect, useMemo } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import TableContainer from "../../common/Table/TableContainer";
 
-import { timeTable_value } from "../../values/AdminPanel/TimetableValues";
+import moment from "moment";
+import { SelectColumnFilter } from "../../common/Table/filters";
+import { GET_DETAILS } from "./../../../redux/actions/student/studentactions";
+import { GetTimetables } from "../../../redux/actions/admin/adminaction";
 
 const TimeTableData = () => {
-  const data = timeTable_value;
+  const { timetables } = useSelector((state) => state.admins);
+  const { user } = useSelector((state) => state.auth);
+  const { student } = useSelector((state) => state.students);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(GetTimetables());
+    dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
+  }, []);
+
+  const studentFilter =
+    student && student.find((value) => value.user.id === user.id);
+
+  const newTimetable =
+    timetables &&
+    timetables.filter(
+      (value) =>
+        value.assigned.grade.class_name ===
+          studentFilter.current_grade.class_name &&
+        value.assigned.grade.section === studentFilter.current_grade.section
+    );
 
   const columns = useMemo(
     () => [
@@ -21,22 +45,31 @@ const TimeTableData = () => {
         accessor: "day",
         SearchAble: true,
         Filter: SelectColumnFilter,
-        filter: "includes",
       },
       {
         Header: "Time",
-        accessor: "time",
+        accessor: (d) => {
+          const startTime = moment(d.startTime, "HH").format("LT");
+          const endTime = moment(d.endTime, "HH").format("LT");
+          return `${startTime} to ${endTime}`;
+        },
         SearchAble: true,
       },
 
       {
         Header: "Subject",
-        accessor: "subject",
+        accessor: (d) => {
+          return `${d.assigned.subject.subject_name}`;
+        },
         SearchAble: true,
       },
       {
         Header: "Teacher",
-        accessor: "teacher",
+        accessor: (d) => {
+          return `${d.assigned.teacher.first_name} ${
+            d.assigned.teacher.middle_name ? d.assigned.teacher.middle_name : ""
+          } ${d.assigned.teacher.last_name}`;
+        },
         SearchAble: true,
       },
     ],
@@ -46,7 +79,7 @@ const TimeTableData = () => {
   return (
     <>
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        <TableContainer columns={columns} data={data} />
+        {timetables && <TableContainer columns={columns} data={newTimetable} />}
       </div>
     </>
   );

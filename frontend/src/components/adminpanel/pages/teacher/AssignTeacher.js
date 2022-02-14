@@ -5,7 +5,7 @@ import SelectInputField from "./../../../common/InputField/SelectInputField";
 import { useForm, Controller } from "react-hook-form";
 
 function AssignTeacher() {
-  const { handleSubmit, register, control } = useForm();
+  const { handleSubmit, control } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
@@ -22,75 +22,75 @@ function AssignTeacher() {
         </div>
         <div className="content-section">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Controller
-              name="selectClass"
-              control={control}
-              rules={{ required: true }}
-              defaultValue=""
-              render={({ field }) => (
-                <SelectInputField
-                  title={"Select Class"}
-                  icon={<MdIcons.MdDepartureBoard className="mid-icon" />}
-                  name={"selectClass"}
-                  onChange={field.onChange}
-                  options={[{ label: "12 ", value: "12" }]}
-                />
-              )}
-            />
+            <div className="allinputfield">
+              <Controller
+                name="selectClass"
+                control={control}
+                rules={{ required: true }}
+                defaultValue=""
+                render={({ field }) => (
+                  <SelectInputField
+                    title={"Select Class"}
+                    icon={<MdIcons.MdDepartureBoard className="mid-icon" />}
+                    name={"selectClass"}
+                    onChange={field.onChange}
+                    options={[{ label: "12 ", value: "12" }]}
+                  />
+                )}
+              />
 
-            <Controller
-              name="selectSection"
-              control={control}
-              rules={{ required: true }}
-              defaultValue=""
-              render={({ field }) => (
-                <SelectInputField
-                  title={"Select Section"}
-                  icon={<MdIcons.MdCode className="mid-icon" />}
-                  name={"selectSection"}
-                  onChange={field.onChange}
-                  options={[{ label: "A ", value: "A" }]}
-                />
-              )}
-            />
+              <Controller
+                name="selectSection"
+                control={control}
+                rules={{ required: true }}
+                defaultValue=""
+                render={({ field }) => (
+                  <SelectInputField
+                    title={"Select Section"}
+                    icon={<MdIcons.MdCode className="mid-icon" />}
+                    name={"selectSection"}
+                    onChange={field.onChange}
+                    options={[{ label: "A ", value: "A" }]}
+                  />
+                )}
+              />
 
-            <Controller
-              name="selectSubject"
-              control={control}
-              rules={{ required: true }}
-              defaultValue=""
-              render={({ field }) => (
-                <SelectInputField
-                  title={"Select Subject"}
-                  icon={<MdIcons.MdSubject className="mid-icon" />}
-                  options={[{ label: "Social", value: "Social" }]}
-                  name={"selectSubject"}
-                  onChange={field.onChange}
-                />
-              )}
-            />
+              <Controller
+                name="selectSubject"
+                control={control}
+                rules={{ required: true }}
+                defaultValue=""
+                render={({ field }) => (
+                  <SelectInputField
+                    title={"Select Subject"}
+                    icon={<MdIcons.MdSubject className="mid-icon" />}
+                    options={[{ label: "Social", value: "Social" }]}
+                    name={"selectSubject"}
+                    onChange={field.onChange}
+                  />
+                )}
+              />
 
-            <Controller
-              name="selectTeacher"
-              control={control}
-              rules={{ required: true }}
-              defaultValue=""
-              render={({ field }) => (
-                <SelectInputField
-                  title={"Assign Teacher"}
-                  icon={<MdIcons.MdVerified className="mid-icon" />}
-                  name={"selectTeacher"}
-                  onChange={field.onChange}
-                  options={[{ label: "Mishan ", value: "Mishan" }]}
-                />
-              )}
-            />
-
+              <Controller
+                name="selectTeacher"
+                control={control}
+                rules={{ required: true }}
+                defaultValue=""
+                render={({ field }) => (
+                  <SelectInputField
+                    title={"Assign Teacher"}
+                    icon={<MdIcons.MdVerified className="mid-icon" />}
+                    name={"selectTeacher"}
+                    onChange={field.onChange}
+                    options={[{ label: "Mishan ", value: "Mishan" }]}
+                  />
+                )}
+              />
+            </div>
             <button className="btn-edit" style={{ marginTop: 20 }}>
               Submit
             </button>
           </form>
-          <button></button>
         </div>
       </div>
     </React.Fragment>

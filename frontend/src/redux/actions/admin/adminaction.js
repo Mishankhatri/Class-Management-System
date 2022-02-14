@@ -1,7 +1,10 @@
 import axiosInstance from "../../../axios";
 import { returnErrors } from "../alertactions";
 import {
+  ADD_TIMETABLES,
   CHANGE_ADMIN_PASSWORD,
+  DELETE_TIMETABLES,
+  GET_TIMETABLES,
   UPDATE_ADMIN_INFO,
 } from "./../../actiontypes/admin/admindatatype";
 
@@ -49,5 +52,33 @@ export const ChangeUserImage = (data) => {
         dispatch(returnErrors(err.response.data, err.response.status));
         console.log(err.response);
       });
+  };
+};
+
+//Timetables
+
+export const GetTimetables = () => {
+  return function (dispatch) {
+    axiosInstance
+      .get("/timetable")
+      .then(({ data }) => {
+        dispatch({ type: GET_TIMETABLES, payload: data.results });
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+        console.log(err.response);
+      });
+  };
+};
+
+export const DeleteTimetables = (id) => {
+  return function (dispatch) {
+    axiosInstance
+      .delete(`/timetable/${id}`)
+      .then(() => {
+        dispatch({ type: DELETE_TIMETABLES });
+        dispatch(GetTimetables());
+      })
+      .catch((error) => console.log(error));
   };
 };
