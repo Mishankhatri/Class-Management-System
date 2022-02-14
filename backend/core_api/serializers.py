@@ -6,86 +6,154 @@ class GradeSerializer(serializers.ModelSerializer):
         model= Grade
         fields = '__all__'
         
-class SubjectsSerializer(serializers.ModelSerializer):
-    grade = GradeSerializer()
+class SubjectsLISTSerializer(serializers.ModelSerializer):
+    grade = GradeSerializer(read_only=True)
     class Meta:
         model= Subject
         fields = '__all__'
         
-class StudentSerializer(serializers.ModelSerializer):
-    user = CMS_UsersSerializer()
-    current_grade = GradeSerializer()
+class SubjectsPOSTSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Subject
+        fields = '__all__'
+        
+class StudentLISTSerializer(serializers.ModelSerializer):
+    user = CMS_UsersSerializer(read_only=True)
     class Meta:
         model= Student
         fields = '__all__'
         
-class ParentSerializer(serializers.ModelSerializer):
-    student = StudentSerializer()
+class StudentPOSTSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Student
+        fields = '__all__'
+        
+class ParentLISTSerializer(serializers.ModelSerializer):
+    student = StudentLISTSerializer(read_only=True)
     class Meta:
         model= Parent
         fields = '__all__'
         
-class TeacherSerializer(serializers.ModelSerializer):
-    user = CMS_UsersSerializer()
+class ParentPOSTSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Parent
+        fields = '__all__'
+        
+class TeacherLISTSerializer(serializers.ModelSerializer):
+    user = CMS_UsersSerializer(read_only=True)
     class Meta:
         model= Teacher
         fields = '__all__'
         
-class AssignTeacherToSubjectsSerializer(serializers.ModelSerializer):
-    teacher = TeacherSerializer()
-    grade = GradeSerializer()
-    subject = SubjectsSerializer()
+class TeacherPOSTSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Teacher
+        fields = '__all__'
+        
+class AssignTeacherToSubjectsLISTSerializer(serializers.ModelSerializer):
+    teacher= serializers.StringRelatedField()
+    subject= serializers.StringRelatedField()
+    grade = serializers.StringRelatedField()
     class Meta:
         model= AssignTeacherToSubjects
         fields = '__all__'
         
-class AdminAnnoucementSerializer(serializers.ModelSerializer):
-    created_by = CMS_UsersSerializer()
+class AssignTeacherToSubjectsPOSTSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= AssignTeacherToSubjects
+        fields = '__all__'
+        
+class AdminAnnoucementLISTSerializer(serializers.ModelSerializer):
+    created_by = CMS_UsersSerializer(read_only=True)
     class Meta:
         model= AdminAnnouncement
         fields = '__all__'
         
-class TeacherAnnoucementSerializer(serializers.ModelSerializer):
-    created_by = CMS_UsersSerializer()
-    announcement_for_class = GradeSerializer()
+class AdminAnnoucementPOSTSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= AdminAnnouncement
+        fields = '__all__'
+        
+class TeacherAnnoucementLISTSerializer(serializers.ModelSerializer):
+    created_by = CMS_UsersSerializer(read_only=True)
+    announcement_for_class = GradeSerializer(read_only=True)
     class Meta:
         model= TeachersAnnouncement
         fields = '__all__'
         
-class GivenAssignmentSerializer(serializers.ModelSerializer):
-    created_by = CMS_UsersSerializer()
-    for_grade = GradeSerializer()
-    subject = SubjectsSerializer()
+class TeacherAnnoucementPOSTSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= TeachersAnnouncement
+        fields = '__all__'
+        
+class GivenAssignmentLISTSerializer(serializers.ModelSerializer):
+    created_by = serializers.StringRelatedField()
+    for_grade = serializers.StringRelatedField()
+    subject = serializers.StringRelatedField()
     class Meta:
         model= GivenAssignments
         fields = '__all__'
         
-class SubmittedAssignmentSerializer(serializers.ModelSerializer):
-    student = CMS_UsersSerializer()
-    assignment = GivenAssignmentSerializer()
+class GivenAssignmentPOSTSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= GivenAssignments
+        fields = '__all__'
+        
+class SubmittedAssignmentLISTSerializer(serializers.ModelSerializer):
+    student = CMS_UsersSerializer(read_only=True)
+    assignment = GivenAssignmentLISTSerializer(read_only=True)
     class Meta:
         model= SubmittedAssignments
         fields = '__all__'
         
-class LectureNotesSerializer(serializers.ModelSerializer):
-    grade = GradeSerializer()
-    subject = SubjectsSerializer()
-    teacher = TeacherSerializer()
+class SubmittedAssignmentPOSTSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= SubmittedAssignments
+        fields = '__all__'
+        
+class LectureNotesLISTSerializer(serializers.ModelSerializer):
+    grade = serializers.StringRelatedField()
+    subject = serializers.StringRelatedField()
+    teacher = serializers.StringRelatedField()
     class Meta:
         model= LectureNotes
         fields = '__all__'
-
-class AttendanceSerializer(serializers.ModelSerializer):
-    grade = GradeSerializer()
-    subject = SubjectsSerializer()
-    teacher = TeacherSerializer()
-    student = StudentSerializer()
+        
+class LectureNotesPOSTSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= LectureNotes
+        fields = '__all__'
+        
+class AttendanceListSerializer(serializers.ModelSerializer):
+    grade = serializers.StringRelatedField()
+    subject = serializers.StringRelatedField()
+    teacher = serializers.StringRelatedField()
+    student = serializers.StringRelatedField()
+    class Meta:
+        model= Attendance
+        fields = '__all__'
+        
+class AttendancePOSTSerializer(serializers.ModelSerializer):
     class Meta:
         model= Attendance
         fields = '__all__'
 
-class TimeTableSerializer(serializers.ModelSerializer):
-    assigned = AssignTeacherToSubjectsSerializer()
+class TimeTableLISTSerializer(serializers.ModelSerializer):
+    assigned = AssignTeacherToSubjectsLISTSerializer(read_only=True)
     class Meta:
         model= TimeTable
         fields = '__all__'
+        
+class TimeTablePOSTSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= TimeTable
+        fields = '__all__'
+    
+    def validate(self,data):
+        assigned = data.get('assigned')
+        startTime = data.get('startTime')
+        endTime = data.get('endTime')
+        day = data.get('day')
+        if self.Meta.model.objects.filter(assigned = assigned).filter(day=day).filter(startTime=startTime).filter(endTime=endTime):
+            raise serializers.ValidationError('Data already exists.')
+        return data
