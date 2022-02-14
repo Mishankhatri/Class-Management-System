@@ -15,7 +15,7 @@ class SubjectAPI(viewsets.ModelViewSet):
 class StudentAPI(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    parser_classes = [parsers.FileUploadParser,parsers.FormParser]
+    parser_classes = [parsers.MultiPartParser,parsers.FileUploadParser,parsers.FormParser]
     permissions_classes= [permissions.IsAuthenticated,]
     
 class ParentAPI(viewsets.ModelViewSet):
@@ -26,7 +26,7 @@ class ParentAPI(viewsets.ModelViewSet):
 class TeacherAPI(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
-    parser_classes = [parsers.FileUploadParser,parsers.FormParser]
+    parser_classes = [parsers.MultiPartParser,parsers.FileUploadParser,parsers.FormParser]
     permissions_classes= [permissions.IsAuthenticated,]
 
 class AssignTeacherToSubjectsAPI(viewsets.ModelViewSet):
@@ -38,31 +38,31 @@ class AdminAnnoucementAPI(viewsets.ModelViewSet):
     queryset= AdminAnnouncement.objects.all()
     serializer_class= AdminAnnoucementSerializer
     permissions_classes= [permissions.IsAdminUser,]
-    parser_classes = [parsers.FileUploadParser,parsers.FormParser]
+    parser_classes = [parsers.MultiPartParser,parsers.FileUploadParser,parsers.FormParser]
 
 class TeacherAnnoucementAPI(viewsets.ModelViewSet):
     queryset= TeachersAnnouncement.objects.all()
     serializer_class= TeacherAnnoucementSerializer
     permissions_classes= [permissions.IsAuthenticated,]
-    parser_classes = [parsers.FileUploadParser,parsers.FormParser]
+    parser_classes = [parsers.MultiPartParser,parsers.FileUploadParser,parsers.FormParser]
 
 class GivenAssignmentsAPI(viewsets.ModelViewSet):
     queryset= GivenAssignments.objects.all()
     serializer_class= GivenAssignmentSerializer
     permissions_classes= [permissions.IsAuthenticated,]
-    parser_classes = [parsers.FileUploadParser,parsers.FormParser]
+    parser_classes = [parsers.MultiPartParser,parsers.FileUploadParser,parsers.FormParser]
 
 class SubmittedAssignmentsAPI(viewsets.ModelViewSet):
     queryset= SubmittedAssignments.objects.all()
     serializer_class= SubmittedAssignmentSerializer
     permissions_classes= [permissions.IsAuthenticated,]
-    parser_classes = [parsers.FileUploadParser,parsers.FormParser]
+    parser_classes = [parsers.MultiPartParser,parsers.FileUploadParser,parsers.FormParser]
 
 class LectureNotesAPI(viewsets.ModelViewSet):
     queryset= LectureNotes.objects.all()
     serializer_class= LectureNotesSerializer
     permissions_classes= [permissions.IsAuthenticated,]
-    parser_classes = [parsers.FileUploadParser,parsers.FormParser]
+    parser_classes = [parsers.MultiPartParser,parsers.FileUploadParser,parsers.FormParser]
 
 class AttendanceAPI(viewsets.ModelViewSet):
     serializer_class= AttendanceSerializer
