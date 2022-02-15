@@ -14,6 +14,8 @@ import {
 
 import { useForm, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+import ViewModal from "./../../../common/Modal/ViewModal";
+import PasswordInputField from "../../../common/InputField/PasswordInputField";
 
 // student obtained values
 const studentInitialValue = {
@@ -203,6 +205,50 @@ function AddStudent() {
                       isRequired={true}
                       errors={errors}
                       ErrorMessage={ErrorMessage}
+                    />
+                  )}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Academic Info  */}
+          <div className="card-section">
+            <div className="heading">
+              <span className="title-icon">
+                <FaIcons.FaBook />
+              </span>
+              <span className="title">STUDENT LOGIN INFO</span>
+            </div>
+            <div className="content-section">
+              <div className="custom-selection">
+                <Controller
+                  name={"studentUsername"}
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <InputField
+                      title={"Username".toUpperCase()}
+                      input={"text"}
+                      icon={<MdIcons.MdVerifiedUser className="mid-icon" />}
+                      placeholder={"Enter Username"}
+                      name={"studentUsername"}
+                      onChangeHandler={field.onChange}
+                      isRequired={true}
+                    />
+                  )}
+                />
+                <Controller
+                  name={"studentPassword"}
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <PasswordInputField
+                      title={"Password".toUpperCase()}
+                      placeholder={"**********"}
+                      name={"studentPassword"}
+                      onChangeHandler={field.onChange}
+                      isRequired={true}
                     />
                   )}
                 />

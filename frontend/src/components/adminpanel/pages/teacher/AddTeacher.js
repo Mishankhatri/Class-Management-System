@@ -15,11 +15,7 @@ function AddTeacher() {
   const [selectRef, setSelectRef] = useState(null);
 
   //Define requirements from useform
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm();
+  const { handleSubmit, control } = useForm();
 
   //Reset Value using ref for Select Options
   const refClear = (ref) => setSelectRef(ref);
@@ -56,8 +52,6 @@ function AddTeacher() {
             refClear={refClear}
             control={control}
             Controller={Controller}
-            errors={errors}
-            ErrorMessage={ErrorMessage}
             isCustom={false}
             hasFile={true}
             fileTitle={"Upload Photo"}
