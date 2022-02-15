@@ -9,7 +9,7 @@ function SelectInputField({
   value,
   hasValue = false,
   options,
-  onChange,
+  onChangeHandler,
 }) {
   return (
     <React.Fragment>
@@ -22,9 +22,9 @@ function SelectInputField({
               name={name}
               options={options}
               className="input-select custom-input"
-              onChange={onChange}
+              onChange={onChangeHandler}
               maxMenuHeight={200}
-              value={value}
+              defaultValue={value}
               menuPlacement={"auto"}
               styles={{ menuPortal: (base) => ({ ...base, zIndex: 10002 }) }}
             />
@@ -34,7 +34,6 @@ function SelectInputField({
               options={options}
               name={name}
               className="input-select custom-input"
-              onChange={onChange}
               maxMenuHeight={200}
               menuPlacement={"auto"}
               styles={{ menuPortal: (base) => ({ ...base, zIndex: 10002 }) }}

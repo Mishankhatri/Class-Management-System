@@ -1,9 +1,23 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
+import { useSelector } from "react-redux";
 import TableContainer from "../../../common/Table/TableContainer";
-import { timeTable_value } from "../../../values/AdminPanel/TimetableValues";
+import reverseArray from "./../../../common/ReverseArray";
+import moment from "moment";
+import { SelectColumnFilter } from "../../../common/Table/filters";
+import CustomConfirm from "../../../common/CustomConfirm";
+import { DeleteTimetables } from "../../../../redux/actions/admin/adminaction";
 
 const ViewTimetable_Table = ({ click, setClick }) => {
-  const data = timeTable_value;
+  const [clickDelete, setClickDelete] = useState(false);
+  const [deleteId, setdeleteId] = useState(null);
+
+  const { timetables } = useSelector((state) => state.admins);
+  const reverseTimetable = timetables && reverseArray(timetables);
+
+  const handleDelete = (id) => {
+    setdeleteId(id);
+    setClickDelete(true);
+  };
 
   const columns = useMemo(
     () => [
@@ -18,30 +32,39 @@ const ViewTimetable_Table = ({ click, setClick }) => {
         Header: "Day",
         accessor: "day",
         SearchAble: true,
+        Filter: SelectColumnFilter,
       },
       {
         Header: "Time",
-        accessor: "time",
+        accessor: (d) => {
+          const startTime = moment(d.startTime, "HH").format("LT");
+          const endTime = moment(d.endTime, "HH").format("LT");
+          return `${startTime} to ${endTime}`;
+        },
         SearchAble: true,
       },
       {
         Header: "Class",
-        accessor: "classes",
+        accessor: (d) => {
+          return `${d.assigned.grade.class_name} : ${d.assigned.grade.section}`;
+        },
         SearchAble: true,
-      },
-      {
-        Header: "Section",
-        accessor: "section",
-        SearchAble: true,
+        Filter: SelectColumnFilter,
       },
       {
         Header: "Subject",
-        accessor: "subject",
+        accessor: (d) => {
+          return `${d.assigned.subject.subject_name}`;
+        },
         SearchAble: true,
       },
       {
         Header: "Teacher",
-        accessor: "teacher",
+        accessor: (d) => {
+          return `${d.assigned.teacher.first_name} ${
+            d.assigned.teacher.middle_name ? d.assigned.teacher.middle_name : ""
+          } ${d.assigned.teacher.last_name}`;
+        },
         SearchAble: true,
       },
       {
@@ -55,7 +78,11 @@ const ViewTimetable_Table = ({ click, setClick }) => {
                 className="btn-primary btn-1 btn-custom">
                 Edit
               </button>
-              <button className="btn-danger btn-custom">Delete</button>
+              <button
+                className="btn-danger btn-custom"
+                onClick={() => handleDelete(row.original.id)}>
+                Delete
+              </button>
             </>
           );
         },
@@ -66,8 +93,21 @@ const ViewTimetable_Table = ({ click, setClick }) => {
 
   return (
     <>
+      {clickDelete && (
+        <CustomConfirm
+          title={"Delete User"}
+          msg={"Are you sure you want to delete?"}
+          trueActivity={"Yes"}
+          falseActivity={"Cancel"}
+          setDelete={setClickDelete}
+          id={deleteId}
+          PeformDelete={DeleteTimetables}
+        />
+      )}
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        <TableContainer columns={columns} data={data} />
+        {timetables && (
+          <TableContainer columns={columns} data={reverseTimetable} />
+        )}
       </div>
     </>
   );

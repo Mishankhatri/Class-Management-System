@@ -5,17 +5,18 @@ import * as MdIcons from "react-icons/md";
 
 import BlankProfile from "../../../../assets/profiles/blank-profile.jpg";
 import Loading from "./../../../common/Loading";
-import "../student/CustomView.css";
-import "../users/UserProfile.css";
 import ViewModal from "../../../common/Modal/ViewModal";
 import ChangePhoto from "../../../common/Modal/ChangePhoto";
-import ChangeInput from "../../../common/Modal/ChangeInput";
-import { getTeacherInputValues } from "./../../../values/AdminPanel/TeacherInputField";
+
 import { useDispatch, useSelector } from "react-redux";
 import { TeacherById } from "../../../../redux/actions/teacher/teacheractions";
+import TeacherEditModal from "../../TeacherEditModal";
+import { Controller, useForm } from "react-hook-form";
 
 function TeacherFullDetail() {
   let { id } = useParams();
+  const { handleSubmit, control, register } = useForm();
+
   const dispatch = useDispatch();
   const { teacherId: data } = useSelector((state) => state.teachers);
 
@@ -55,13 +56,38 @@ function TeacherFullDetail() {
       )}
 
       {clickTeacher && (
-        <ChangeInput
-          onSubmit={onSubmitTeacherInput}
-          valueArray={getTeacherInputValues()}
-          click={clickTeacher}
-          setClick={setClickTeacher}
-          heading={"View Teacher's Info"}
-        />
+        <div className="modal">
+          <div
+            className={
+              clickTeacher ? "model-section visible" : "model-section"
+            }>
+            <div className="modal-content">
+              <form onSubmit={handleSubmit(onSubmitTeacherInput)}>
+                <span
+                  className="close"
+                  onClick={() => setClickTeacher(!clickTeacher)}>
+                  &times;
+                </span>
+                <div className="content">
+                  <h2>Edit Student's Info</h2>
+                  <div className="content-section">
+                    <TeacherEditModal
+                      register={register}
+                      data={data}
+                      Controller={Controller}
+                      control={control}
+                    />
+                  </div>
+                  <button
+                    className="btn-submit"
+                    style={{ marginLeft: "40px", marginTop: "20px" }}>
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       )}
 
       <InnerHeader icon={<MdIcons.MdPerson />} name={`Teacher`} />
@@ -77,7 +103,9 @@ function TeacherFullDetail() {
             </div>
             <div className="content-section">
               <div className="custom-info-show">
-                <div className="content" onClick={() => setClick(!click)}>
+                <div
+                  className="content-image-p"
+                  onClick={() => setClick(!click)}>
                   <div className="content-overlay"></div>
                   <img
                     className="content-image"
