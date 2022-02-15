@@ -79,7 +79,7 @@ class RegisterAdminSerializer(serializers.ModelSerializer):
             )]
     
     def create(self,validated_data):
-        user = CMS_Users.objects.create_superuser(validated_data['email'],validated_data['username'],validated_data['fullname'],validated_data['password'],validated_data['profile_image'])
+        user = CMS_Users.objects.create_superuser(validated_data['email'],validated_data['username'],validated_data['fullname'],validated_data['password'])
         return user
     
     def update(self, instance, validated_data):

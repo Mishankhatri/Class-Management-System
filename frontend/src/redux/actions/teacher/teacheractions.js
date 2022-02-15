@@ -1,4 +1,5 @@
 import axiosInstance from "../../../axios";
+import { axiosInstanceMultipart } from "../../../axios";
 import {
   GET_TEACHER_DETAIL,
   ADD_TEACHER_DETAIL,
@@ -42,22 +43,12 @@ export const TeacherById = (id) => {
   };
 };
 
-export const AddTeacherDetail = (data) => {
+export const AddTeacherDetail = (postData) => {
   return function (dispatch) {
-    console.log(data);
-    axiosInstance
-      .post("teacher/", {
-        TRN: data.teacherTRN,
-        first_name: data.teacherFirstName,
-        middle_name: data.teacherMiddleName,
-        last_name: data.teacherLastName,
-        DOB: data.teacherDOB,
-        email: data.teacherEmail,
-        address: data.teacherLocation,
-        photo: data.teacherPhoto?.name,
-        contact_no: data.teacherPhone,
-        gender: data.teacherGender.value,
-      })
+    console.log(postData);
+    const body = postData;
+    axiosInstanceMultipart
+      .post("teacher/", body)
       .then(() => {
         dispatch({
           type: ADD_TEACHER_DETAIL,
