@@ -21,18 +21,14 @@ const AssignmentTableData = () => {
   const { assignments } = useSelector((state) => state.teachers);
   const { user } = useSelector((state) => state.auth);
 
-  const filterAssignment =
-    assignments &&
-    reverseArray(assignments).filter(
-      (value) => value.created_by.email === user.email
-    );
+  const filterAssignment = assignments && reverseArray(assignments);
 
   const handleView = (row) => {
     navigate(`/teacher/assignment/view/id=${row.original.id}`);
   };
 
   useEffect(() => {
-    dispatch(GetTeacherGivenAssignment());
+    dispatch(GetTeacherGivenAssignment(user.username));
   }, []);
 
   const handleDelete = (id) => {
@@ -44,19 +40,13 @@ const AssignmentTableData = () => {
     () => [
       {
         Header: "Class",
-        accessor: "for_grade.class_name",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
-      },
-      {
-        Header: "Section",
-        accessor: "for_grade.section",
+        accessor: "for_grade",
         SearchAble: true,
         Filter: SelectColumnFilter,
       },
       {
         Header: "Subject",
-        accessor: "subject.subject_name",
+        accessor: "subject",
         SearchAble: true,
       },
       {

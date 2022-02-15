@@ -52,11 +52,13 @@ export const SubjectDelete = (id) => {
   };
 };
 
-export const ViewStudentAttendance = () => {
+export const ViewStudentAttendance = (username) => {
   return function (dispatch) {
-    axiosInstance.get("/attendance").then(({ data: { results } }) => {
-      dispatch({ type: GET_STUDENT_ATTENDANCE, payload: results });
-    });
+    axiosInstance
+      .get(`/attendance?teachers=${username}`)
+      .then(({ data: { results } }) => {
+        dispatch({ type: GET_STUDENT_ATTENDANCE, payload: results });
+      });
   };
 };
 

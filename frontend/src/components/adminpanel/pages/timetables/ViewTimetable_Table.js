@@ -45,26 +45,18 @@ const ViewTimetable_Table = ({ click, setClick }) => {
       },
       {
         Header: "Class",
-        accessor: (d) => {
-          return `${d.assigned.grade.class_name} : ${d.assigned.grade.section}`;
-        },
+        accessor: "assigned.grade",
         SearchAble: true,
         Filter: SelectColumnFilter,
       },
       {
         Header: "Subject",
-        accessor: (d) => {
-          return `${d.assigned.subject.subject_name}`;
-        },
+        accessor: "assigned.subject",
         SearchAble: true,
       },
       {
         Header: "Teacher",
-        accessor: (d) => {
-          return `${d.assigned.teacher.first_name} ${
-            d.assigned.teacher.middle_name ? d.assigned.teacher.middle_name : ""
-          } ${d.assigned.teacher.last_name}`;
-        },
+        accessor: "assigned.teacher",
         SearchAble: true,
       },
       {

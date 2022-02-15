@@ -7,6 +7,7 @@ import AnnouncementTeacher from "./TableData/TeacherAnnouncement";
 
 function Announcement() {
   const [showAdmin, setShowAdmin] = useState(false);
+
   return (
     <div>
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"View Announcements"} />
@@ -26,7 +27,7 @@ function Announcement() {
             onClick={() => {
               setShowAdmin(false);
             }}>
-            Announced By Me
+            From Teacher
           </button>
         </h4>
 

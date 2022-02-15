@@ -21,19 +21,16 @@ const AnnouncementTeacherTable = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(GetTeacherAnnouncement());
+    dispatch(GetTeacherAnnouncement(user.username));
   }, [dispatch]);
 
-  const newArray =
-    data &&
-    reverseArray(data).filter((value) => value.created_by.id == user.id);
+  const newArray = data && reverseArray(data);
 
   const handleDelete = ({ id }) => {
     setdeleteId(id);
     setClickDelete(true);
   };
 
-  // console.log(data.reverse());
   const columns = useMemo(
     () => [
       {

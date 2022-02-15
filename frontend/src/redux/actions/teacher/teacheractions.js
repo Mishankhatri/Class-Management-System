@@ -78,17 +78,27 @@ export const TeacherDelete = (id) => {
 };
 
 //Lecture Notes
-export const GetLectureNotes = () => {
+export const GetLectureNotes = (id) => {
   return function (dispatch) {
-    axiosInstance
-      .get(`/lecturenotes`)
-      .then(({ data: { results } }) => {
-        dispatch({
-          type: GET_LECTURE_NOTES,
-          payload: results,
-        });
-      })
-      .catch((error) => console.log(error));
+    id
+      ? axiosInstance
+          .get(`/lecturenotes?ordering=-id&teacher=${id}`)
+          .then(({ data: { results } }) => {
+            dispatch({
+              type: GET_LECTURE_NOTES,
+              payload: results,
+            });
+          })
+          .catch((error) => console.log(error))
+      : axiosInstance
+          .get(`/lecturenotes`)
+          .then(({ data: { results } }) => {
+            dispatch({
+              type: GET_LECTURE_NOTES,
+              payload: results,
+            });
+          })
+          .catch((error) => console.log(error));
   };
 };
 
@@ -105,10 +115,10 @@ export const DeleteLectureNotes = (id) => {
 };
 
 //Assignment
-export const GetTeacherGivenAssignment = () => {
+export const GetTeacherGivenAssignment = (username) => {
   return function (dispatch) {
     axiosInstance
-      .get(`/givenassignments`)
+      .get(`/givenassignments?teachers=${username}`)
       .then(({ data: { results } }) => {
         dispatch({
           type: GET_TEACHER_GIVEN_ASSIGNMENT,
@@ -161,17 +171,27 @@ export const GetStudentSubmittedAssignment = () => {
 };
 
 //Announcement
-export const GetTeacherAnnouncement = () => {
+export const GetTeacherAnnouncement = (username) => {
   return function (dispatch) {
-    axiosInstance
-      .get(`/teachernotices`)
-      .then(({ data: { results } }) => {
-        dispatch({
-          type: GET_TEACHER_ANNOUNCEMENT,
-          payload: results,
-        });
-      })
-      .catch((error) => console.log(error));
+    username
+      ? axiosInstance
+          .get(`/teachernotices?teacher=${username}`)
+          .then(({ data: { results } }) => {
+            dispatch({
+              type: GET_TEACHER_ANNOUNCEMENT,
+              payload: results,
+            });
+          })
+          .catch((error) => console.log(error))
+      : axiosInstance
+          .get(`/teachernotices`)
+          .then(({ data: { results } }) => {
+            dispatch({
+              type: GET_TEACHER_ANNOUNCEMENT,
+              payload: results,
+            });
+          })
+          .catch((error) => console.log(error));
   };
 };
 

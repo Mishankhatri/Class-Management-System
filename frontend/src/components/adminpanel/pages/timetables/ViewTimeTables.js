@@ -1,18 +1,26 @@
-import React, { useState, useMemo } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useMemo, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import TableContainer from "../../../common/Table/TableContainer";
 import moment from "moment";
 import { SelectColumnFilter } from "../../../common/Table/filters";
 import CustomConfirm from "../../../common/CustomConfirm";
-import { DeleteTimetables } from "../../../../redux/actions/admin/adminaction";
+import {
+  DeleteTimetables,
+  GetAdminTimetables,
+} from "../../../../redux/actions/admin/adminaction";
 import ChangeInput from "../../../common/Modal/ChangeInput";
 import { addSlot } from "../../../values/AdminPanel/TimetableValues";
 
-const ViewTimetable_Table = () => {
+const ViewTimetableAdmin = () => {
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
+  const dispatch = useDispatch();
 
   const { timetables } = useSelector((state) => state.admins);
+
+  useEffect(() => {
+    dispatch(GetAdminTimetables());
+  }, []);
 
   const handleDelete = (id) => {
     setdeleteId(id);
@@ -53,26 +61,18 @@ const ViewTimetable_Table = () => {
       },
       {
         Header: "Class",
-        accessor: (d) => {
-          return `${d.assigned.grade.class_name} : ${d.assigned.grade.section}`;
-        },
+        accessor: "assigned.grade",
         SearchAble: true,
         Filter: SelectColumnFilter,
       },
       {
         Header: "Subject",
-        accessor: (d) => {
-          return `${d.assigned.subject.subject_name}`;
-        },
+        accessor: "assigned.subject",
         SearchAble: true,
       },
       {
         Header: "Teacher",
-        accessor: (d) => {
-          return `${d.assigned.teacher.first_name} ${
-            d.assigned.teacher.middle_name ? d.assigned.teacher.middle_name : ""
-          } ${d.assigned.teacher.last_name}`;
-        },
+        accessor: "assigned.teacher",
         SearchAble: true,
       },
       {
@@ -130,4 +130,4 @@ const ViewTimetable_Table = () => {
   );
 };
 
-export default ViewTimetable_Table;
+export default ViewTimetableAdmin;

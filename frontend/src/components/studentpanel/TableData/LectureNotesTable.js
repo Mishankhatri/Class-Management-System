@@ -9,22 +9,12 @@ import Loading from "./../../common/Loading";
 const LectureNotesTable = () => {
   const dispatch = useDispatch();
   const { lecturenotes } = useSelector((state) => state.teachers);
-  const { student } = useSelector((state) => state.students);
-  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(GetLectureNotes());
   }, []);
 
-  const studentDetail = student.find((value) => value.user.id === user.id);
-
-  const newLectureNote =
-    lecturenotes &&
-    reverseArray(lecturenotes).filter(
-      (value) =>
-        value.grade.class_name == studentDetail.current_grade?.class_name &&
-        value.grade.section == studentDetail.current_grade?.section
-    );
+  const newLectureNote = lecturenotes && reverseArray(lecturenotes);
 
   const columns = useMemo(
     () => [
@@ -37,17 +27,13 @@ const LectureNotesTable = () => {
       },
       {
         Header: "Course",
-        accessor: "subject.subject_name",
+        accessor: "subject",
         Filter: SelectColumnFilter,
         SearchAble: true,
       },
       {
         Header: "Teacher",
-        accessor: (d) => {
-          return `${d.teacher.first_name} ${
-            d.teacher.middlename ? d.teacher.middlename : ""
-          } ${d.teacher.last_name}`;
-        },
+        accessor: "teacher",
         SearchAble: true,
       },
       {
@@ -76,7 +62,7 @@ const LectureNotesTable = () => {
     []
   );
 
-  return studentDetail ? (
+  return (
     <>
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
         {lecturenotes && (
@@ -84,8 +70,6 @@ const LectureNotesTable = () => {
         )}
       </div>
     </>
-  ) : (
-    <Loading />
   );
 };
 

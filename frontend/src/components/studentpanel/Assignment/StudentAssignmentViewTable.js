@@ -26,16 +26,7 @@ const StudentAssignmentViewTable = () => {
     (state) => state.teachers
   );
 
-  const studentDetail =
-    student && student.find((value) => value.user.id === user.id);
-
-  const data =
-    assignments &&
-    reverseArray(assignments).filter(
-      (value) =>
-        value.for_grade.class_name == studentDetail.current_grade?.class_name &&
-        value.for_grade.section == studentDetail.current_grade?.section
-    );
+  const data = assignments && reverseArray(assignments);
 
   const handleView = (row) => {
     navigate(`/student/assignment/upload/assignmentId=${row.original.id}`);
@@ -51,7 +42,7 @@ const StudentAssignmentViewTable = () => {
       },
       {
         Header: "Subject",
-        accessor: "subject.subject_name",
+        accessor: "subject",
         SearchAble: true,
         Filter: SelectColumnFilter,
       },
@@ -93,7 +84,7 @@ const StudentAssignmentViewTable = () => {
     []
   );
 
-  return studentDetail ? (
+  return assignments ? (
     <>
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
         {data && <TableContainer columns={columns} data={data} />}
