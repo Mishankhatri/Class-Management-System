@@ -25,24 +25,13 @@ const AttendanceTableData = ({ click, setClick }) => {
       },
       {
         Header: "Name",
-        accessor: (d) => {
-          if (d.student.middleName == null) {
-            d.student.middleName = "";
-          }
-          return `${d.student.first_name} ${d.student.middleName} ${d.student.last_name}`;
-        },
+        accessor: "student",
         SearchAble: true,
       },
-      {
-        Header: "SRN",
-        accessor: (d) => d.student.SRN,
-        SearchAble: true,
-      },
+
       {
         Header: "Class",
-        accessor: (d) => {
-          return `${d.grade.class_name}: ${d.grade.section}`;
-        },
+        accessor: "grade",
         SearchAble: true,
       },
       {
@@ -54,7 +43,7 @@ const AttendanceTableData = ({ click, setClick }) => {
       },
       {
         Header: "Subject",
-        accessor: "subject.subject_name",
+        accessor: "subject",
         SearchAble: true,
       },
       {
@@ -65,11 +54,7 @@ const AttendanceTableData = ({ click, setClick }) => {
 
       {
         Header: "Teacher",
-        accessor: (d) => {
-          return `${d.teacher.first_name} ${
-            d.teacher.middle_name ? d.teacher.middle_name : ""
-          } ${d.teacher.last_name}`;
-        },
+        accessor: "teacher",
         SearchAble: true,
       },
     ],

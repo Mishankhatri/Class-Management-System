@@ -6,29 +6,16 @@ import {
 } from "./../../common/Table/filters";
 
 import { useSelector, useDispatch } from "react-redux";
-import {
-  DeleteAttendance,
-  ViewStudentAttendance,
-} from "../../../redux/actions/subjectactions";
+import { ViewStudentAttendance } from "../../../redux/actions/subjectactions";
 import Loading from "./../../common/Loading";
-import CustomConfirm from "../../common/CustomConfirm";
 import reverseArray from "../../common/ReverseArray";
 
-const AttendanceTableData = () => {
-  const { attendance } = useSelector((state) => state.students);
-  const { user } = useSelector((state) => state.auth);
-
-  const dispatch = useDispatch();
-
-  const filterAttendance =
-    attendance &&
-    reverseArray(attendance).filter(
-      (value) => value.student.user.id === user.id
-    );
-
-  useEffect(() => {
-    dispatch(ViewStudentAttendance());
-  }, []);
+const AttendanceTableData = ({ attendance }) => {
+  // const filterAttendance =
+  //   attendance &&
+  //   reverseArray(attendance).filter(
+  //     (value) => value.student.user.id === user.id
+  //   );
 
   const columns = useMemo(
     () => [
@@ -45,7 +32,7 @@ const AttendanceTableData = () => {
       },
       {
         Header: "Subject",
-        accessor: "subject.subject_name",
+        accessor: "subject",
         SearchAble: true,
       },
       {
@@ -63,7 +50,7 @@ const AttendanceTableData = () => {
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
         <TableContainer
           columns={columns}
-          data={filterAttendance}
+          data={attendance}
           isRangeSearch={true}
         />
       </div>

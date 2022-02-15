@@ -3,20 +3,30 @@ import axiosInstance from "../../../axios";
 import {
   GET_STUDENTCLASS_SID,
   DELETE_STUDENT,
-  GET_STUDENT_DETAIL,
+  GET_STUDENT_USERID,
 } from "../../actiontypes/student/studentdatatype";
 
-export const GET_DETAILS = (url, type) => {
+export const GET_DETAILS = (url, type, filter) => {
   return function (dispatch) {
-    axiosInstance
-      .get(url)
-      .then(({ data: { results } }) => {
-        dispatch({
-          type: type,
-          payload: results,
-        });
-      })
-      .catch((error) => console.log(error));
+    filter
+      ? axiosInstance
+          .get(`${url}/?${filter}`)
+          .then(({ data: { results } }) => {
+            dispatch({
+              type: type,
+              payload: results,
+            });
+          })
+          .catch((error) => console.log(error))
+      : axiosInstance
+          .get(url)
+          .then(({ data: { results } }) => {
+            dispatch({
+              type: type,
+              payload: results,
+            });
+          })
+          .catch((error) => console.log(error));
   };
 };
 
@@ -28,6 +38,20 @@ export const StudentClassById = (id) => {
         dispatch({
           type: GET_STUDENTCLASS_SID,
           payload: data,
+        });
+      })
+      .catch((error) => console.log(error));
+  };
+};
+
+export const StudentByUserId = (id) => {
+  return function (dispatch) {
+    axiosInstance
+      .get(`/student?user=${id}`)
+      .then(({ data }) => {
+        dispatch({
+          type: GET_STUDENT_USERID,
+          payload: data.results,
         });
       })
       .catch((error) => console.log(error));

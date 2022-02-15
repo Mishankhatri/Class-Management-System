@@ -2,6 +2,7 @@ import {
   GET_STUDENT_DETAIL,
   GET_STUDENT_CLASS,
   GET_STUDENTCLASS_SID,
+  GET_STUDENT_USERID,
   GET_STUDENT_PARENTS,
   DELETE_STUDENT,
   GET_STUDENT_ATTENDANCE,
@@ -28,6 +29,9 @@ export default function studentReducer(state = initialState, action) {
 
     case GET_STUDENT_ATTENDANCE:
       return { ...state, attendance: action.payload };
+
+    case GET_STUDENT_USERID:
+      return { ...state, studentUserID: action.payload };
 
     case DELETE_STUDENT:
     case DELETE_ATTENDANCE:

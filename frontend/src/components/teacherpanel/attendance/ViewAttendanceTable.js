@@ -22,12 +22,8 @@ const ViewAttendanceTable = ({ click, setClick }) => {
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
 
-  const filterAttendance =
-    attendance &&
-    attendance.filter((value) => value.teacher.user.id === user.id);
-
   useEffect(() => {
-    dispatch(ViewStudentAttendance());
+    dispatch(ViewStudentAttendance(user.username));
   }, []);
 
   const handleDelete = (id) => {
@@ -39,24 +35,13 @@ const ViewAttendanceTable = ({ click, setClick }) => {
     () => [
       {
         Header: "Name",
-        accessor: (d) => {
-          if (d.student.middleName == null) {
-            d.student.middleName = "";
-          }
-          return `${d.student.first_name} ${d.student.middleName} ${d.student.last_name}`;
-        },
+        accessor: "student",
         SearchAble: true,
       },
-      {
-        Header: "SRN",
-        accessor: (d) => d.student.SRN,
-        SearchAble: true,
-      },
+
       {
         Header: "Class",
-        accessor: (d) => {
-          return `${d.grade.class_name}: ${d.grade.section}`;
-        },
+        accessor: "grade",
         SearchAble: true,
       },
       {
@@ -68,7 +53,7 @@ const ViewAttendanceTable = ({ click, setClick }) => {
       },
       {
         Header: "Subject",
-        accessor: "subject.subject_name",
+        accessor: "subject",
         SearchAble: true,
       },
       {
@@ -112,7 +97,7 @@ const ViewAttendanceTable = ({ click, setClick }) => {
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
         <TableContainer
           columns={columns}
-          data={filterAttendance}
+          data={attendance}
           isRangeSearch={true}
         />
       </div>

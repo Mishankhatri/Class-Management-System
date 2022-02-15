@@ -3,6 +3,7 @@ import {
   CREATE_ADMIN_ANNOUNCEMENT,
   DELETE_ADMIN_ANNOUNCEMENTS,
   GET_ADMIN_ANNOUNCEMENTS_BYID,
+  GET_ADMIN_ANNOUNCEMENT,
   CLOSE_ANNOUNCEMENTS_BYID,
 } from "../../actiontypes/admin/announcementtypes";
 import { getData } from "../dataactions";
@@ -51,6 +52,30 @@ export const AdminAnnouncementById = (id) => {
         });
       })
       .catch((error) => console.log(error));
+  };
+};
+
+export const GetAdminAnnouncement = (forType) => {
+  return function (dispatch) {
+    forType
+      ? axiosInstance
+          .get(`/adminnotices/?for=${forType}`)
+          .then(({ data }) => {
+            dispatch({
+              type: GET_ADMIN_ANNOUNCEMENT,
+              payload: data,
+            });
+          })
+          .catch((error) => console.log(error))
+      : axiosInstance
+          .get(`/adminnotices`)
+          .then(({ data }) => {
+            dispatch({
+              type: GET_ADMIN_ANNOUNCEMENT,
+              payload: data,
+            });
+          })
+          .catch((error) => console.log(error));
   };
 };
 

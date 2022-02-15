@@ -11,6 +11,7 @@ import ViewTimetable_Table from "./ViewTimetable_Table";
 
 import "./../users/UserProfile.css";
 import ChangeInput from "./../../../common/Modal/ChangeInput";
+import ViewTimetableAdmin from "./ViewTimeTables";
 
 function CreateTimetables() {
   const [selectRef, setSelectRef] = useState(null);
@@ -70,7 +71,7 @@ function CreateTimetables() {
           </form>
 
           <h2 className="h3">View All Slots</h2>
-          <ViewTimetable_Table click={click} setClick={setClick} />
+          <ViewTimetable_Table />
         </div>
       </div>
     </div>

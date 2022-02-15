@@ -15,18 +15,6 @@ function Settings() {
 
   const onSubmit = (data, e) => {
     dispatch(ChangeAdminPassword(data));
-
-    // try {
-    //   if (data.settingsNewPassword != data.settingsRePassword)
-    //     throw "New Entered Password didn't match";
-    //   else {
-    //     e.target.reset();
-    //     disp
-    //     alert.success("Password Changed Successfully!");
-    //   }
-    // } catch (error) {
-    //   alert.error(error);
-    // }
   };
 
   const settingsPasswordValue = SettingsPasswordInput();

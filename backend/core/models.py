@@ -57,6 +57,10 @@ class Subject(models.Model):
     subject_code = models.IntegerField(unique=True)
     grade = models.ForeignKey(Grade, related_name='class_subjects', on_delete=models.CASCADE)
     description = models.TextField(null=False,blank=False)
+
+    def __str__(self):
+        return '%s: %s' % (self.subject_name, self.subject_code)
+
     
 class Student(models.Model):
     SRN = models.CharField(unique=True, max_length=100) #studentid

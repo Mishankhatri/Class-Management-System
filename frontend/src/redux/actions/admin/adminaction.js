@@ -57,17 +57,27 @@ export const ChangeUserImage = (data) => {
 
 //Timetables
 
-export const GetTimetables = () => {
+export const GetAdminTimetables = (filter) => {
   return function (dispatch) {
-    axiosInstance
-      .get("/timetable")
-      .then(({ data }) => {
-        dispatch({ type: GET_TIMETABLES, payload: data.results });
-      })
-      .catch((err) => {
-        dispatch(returnErrors(err.response.data, err.response.status));
-        console.log(err.response);
-      });
+    filter
+      ? axiosInstance
+          .get(`/timetable?${filter}`)
+          .then(({ data }) => {
+            dispatch({ type: GET_TIMETABLES, payload: data.results });
+          })
+          .catch((err) => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            console.log(err.response);
+          })
+      : axiosInstance
+          .get("/timetable")
+          .then(({ data }) => {
+            dispatch({ type: GET_TIMETABLES, payload: data.results });
+          })
+          .catch((err) => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            console.log(err.response);
+          });
   };
 };
 
@@ -77,7 +87,7 @@ export const DeleteTimetables = (id) => {
       .delete(`/timetable/${id}`)
       .then(() => {
         dispatch({ type: DELETE_TIMETABLES });
-        dispatch(GetTimetables());
+        dispatch(GetAdminTimetables());
       })
       .catch((error) => console.log(error));
   };

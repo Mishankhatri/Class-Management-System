@@ -1,4 +1,6 @@
 import axiosInstance from "../../../axios";
+import axiosInstanceMedia from "../../../axios";
+
 import {
   GET_TEACHER_DETAIL,
   ADD_TEACHER_DETAIL,
@@ -45,7 +47,7 @@ export const TeacherById = (id) => {
 export const AddTeacherDetail = (data) => {
   return function (dispatch) {
     console.log(data);
-    axiosInstance
+    axiosInstanceMedia
       .post("teacher/", {
         TRN: data.teacherTRN,
         first_name: data.teacherFirstName,
@@ -54,7 +56,7 @@ export const AddTeacherDetail = (data) => {
         DOB: data.teacherDOB,
         email: data.teacherEmail,
         address: data.teacherLocation,
-        photo: data.teacherPhoto?.name,
+        photo: data.teacherPhoto,
         contact_no: data.teacherPhone,
         gender: data.teacherGender.value,
       })
@@ -87,17 +89,27 @@ export const TeacherDelete = (id) => {
 };
 
 //Lecture Notes
-export const GetLectureNotes = () => {
+export const GetLectureNotes = (id) => {
   return function (dispatch) {
-    axiosInstance
-      .get(`/lecturenotes`)
-      .then(({ data: { results } }) => {
-        dispatch({
-          type: GET_LECTURE_NOTES,
-          payload: results,
-        });
-      })
-      .catch((error) => console.log(error));
+    id
+      ? axiosInstance
+          .get(`/lecturenotes?ordering=-id&teacher=${id}`)
+          .then(({ data: { results } }) => {
+            dispatch({
+              type: GET_LECTURE_NOTES,
+              payload: results,
+            });
+          })
+          .catch((error) => console.log(error))
+      : axiosInstance
+          .get(`/lecturenotes`)
+          .then(({ data: { results } }) => {
+            dispatch({
+              type: GET_LECTURE_NOTES,
+              payload: results,
+            });
+          })
+          .catch((error) => console.log(error));
   };
 };
 
@@ -114,10 +126,10 @@ export const DeleteLectureNotes = (id) => {
 };
 
 //Assignment
-export const GetTeacherGivenAssignment = () => {
+export const GetTeacherGivenAssignment = (username) => {
   return function (dispatch) {
     axiosInstance
-      .get(`/givenassignments`)
+      .get(`/givenassignments?teachers=${username}`)
       .then(({ data: { results } }) => {
         dispatch({
           type: GET_TEACHER_GIVEN_ASSIGNMENT,
@@ -170,17 +182,27 @@ export const GetStudentSubmittedAssignment = () => {
 };
 
 //Announcement
-export const GetTeacherAnnouncement = () => {
+export const GetTeacherAnnouncement = (username) => {
   return function (dispatch) {
-    axiosInstance
-      .get(`/teachernotices`)
-      .then(({ data: { results } }) => {
-        dispatch({
-          type: GET_TEACHER_ANNOUNCEMENT,
-          payload: results,
-        });
-      })
-      .catch((error) => console.log(error));
+    username
+      ? axiosInstance
+          .get(`/teachernotices?teacher=${username}`)
+          .then(({ data: { results } }) => {
+            dispatch({
+              type: GET_TEACHER_ANNOUNCEMENT,
+              payload: results,
+            });
+          })
+          .catch((error) => console.log(error))
+      : axiosInstance
+          .get(`/teachernotices`)
+          .then(({ data: { results } }) => {
+            dispatch({
+              type: GET_TEACHER_ANNOUNCEMENT,
+              payload: results,
+            });
+          })
+          .catch((error) => console.log(error));
   };
 };
 

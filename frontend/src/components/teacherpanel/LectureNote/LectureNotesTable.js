@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState, useMemo } from "react";
 import { SelectColumnFilter } from "./../../common/Table/filters";
 import TableContainer from "./../../common/Table/TableContainer";
@@ -6,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   DeleteLectureNotes,
   GetLectureNotes,
+  TeacherDetail,
 } from "../../../redux/actions/teacher/teacheractions";
 import Loading from "./../../common/Loading";
 import CustomConfirm from "../../common/CustomConfirm";
@@ -16,20 +16,18 @@ const LectureNotesTable = () => {
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
 
-  const { lecturenotes } = useSelector((state) => state.teachers);
+  const { lecturenotes, teacherDetail } = useSelector(
+    (state) => state.teachers
+  );
   const { user } = useSelector((state) => state.auth);
 
+  const filterTeacher =
+    teacherDetail && teacherDetail.find((value) => value.user.id === user.id);
+
   useEffect(() => {
-    dispatch(GetLectureNotes());
+    dispatch(GetLectureNotes(filterTeacher.id));
+    dispatch(TeacherDetail());
   }, []);
-
-  const handleSubmit = (row) => {
-    alert(`Click Id is ${row.id}. Downloading file!`);
-  };
-
-  const filterData =
-    lecturenotes &&
-    lecturenotes.filter((value) => value.teacher.user.id === user.id);
 
   const handleDelete = (id) => {
     setdeleteId(id);
@@ -47,16 +45,14 @@ const LectureNotesTable = () => {
       },
       {
         Header: "Subject",
-        accessor: "subject.subject_name",
+        accessor: "subject",
         SearchAble: true,
         Filter: SelectColumnFilter,
         filter: "includes",
       },
       {
         Header: "Class",
-        accessor: ({ grade }) => {
-          return `${grade.class_name} : ${grade.section}`;
-        },
+        accessor: "grade",
         SearchAble: true,
       },
 
@@ -117,7 +113,7 @@ const LectureNotesTable = () => {
         />
       )}
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        <TableContainer columns={columns} data={filterData} />
+        <TableContainer columns={columns} data={lecturenotes} />
       </div>
     </>
   ) : (

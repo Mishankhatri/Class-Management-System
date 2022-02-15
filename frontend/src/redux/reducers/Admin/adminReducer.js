@@ -4,11 +4,13 @@ import {
   GET_TIMETABLES,
   UPDATE_ADMIN_INFO,
 } from "../../actiontypes/admin/admindatatype";
+
 import {
   CLOSE_ANNOUNCEMENTS_BYID,
   CREATE_ADMIN_ANNOUNCEMENT,
   DELETE_ADMIN_ANNOUNCEMENTS,
   GET_ADMIN_ANNOUNCEMENTS_BYID,
+  GET_ADMIN_ANNOUNCEMENT,
 } from "../../actiontypes/admin/announcementtypes";
 
 import { ADD_TIMETABLES } from "./../../actiontypes/admin/admindatatype";
@@ -28,6 +30,9 @@ export default function adminReducer(state = initialState, action) {
 
     case GET_ADMIN_ANNOUNCEMENTS_BYID:
       return { ...state, adminnoticesId: action.payload, isOpen: true };
+
+    case GET_ADMIN_ANNOUNCEMENT:
+      return { ...state, adminnotices: action.payload };
 
     case CLOSE_ANNOUNCEMENTS_BYID:
       return { ...state, isOpen: false };

@@ -5,7 +5,6 @@ import * as FaIcons from "react-icons/fa";
 import CardData from "../common/DashboardCardData";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getData } from "../../redux/actions/dataactions";
 
 import { GetClass } from "../../redux/actions/classactions";
 import Moment from "react-moment";
@@ -13,17 +12,19 @@ import reverseArray from "../common/ReverseArray";
 import { GET_DETAILS } from "../../redux/actions/student/studentactions";
 import { GetTeacherAnnouncement } from "./../../redux/actions/teacher/teacheractions";
 import Loading from "../common/Loading";
+import { getData } from "./../../redux/actions/dataactions";
+import { GetAdminAnnouncement } from "../../redux/actions/admin/announcementaction";
 
 function Dashboard() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(GetClass());
+    dispatch(GetAdminAnnouncement("all"));
     dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
     dispatch(GET_DETAILS("/teacher", "GET_TEACHER_DETAIL"));
     dispatch(GetTeacherAnnouncement());
   }, [dispatch]);
 
-  const { grades } = useSelector((state) => state.classes);
   const { teacherDetail, teachernotices } = useSelector(
     (state) => state.teachers
   );
@@ -52,7 +53,7 @@ function Dashboard() {
           {student && (
             <CardData
               number={student.length}
-              name={"Students"}
+              name={"Attendance"}
               icon={<FaIcons.FaUsers style={{ color: "#FFC36D" }} />}
             />
           )}
@@ -60,7 +61,7 @@ function Dashboard() {
           {
             <CardData
               number={teacherDetail?.length}
-              name={"Teachers"}
+              name={"Assignments"}
               icon={<FaIcons.FaUserSecret style={{ color: "#FF7676" }} />}
             />
           }
@@ -73,8 +74,8 @@ function Dashboard() {
           )}
           {
             <CardData
-              number={grades?.length}
-              name={"Classes"}
+              number={111}
+              name={"Lecture Notes"}
               icon={<FaIcons.FaFile style={{ color: "#27AE60" }} />}
             />
           }

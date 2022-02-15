@@ -40,6 +40,7 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(formData);
     const { password, password2 } = formData;
     if (password !== password2) {
       dispatch(createMessage({ passwordNotMatch: "Passwords do not match" }));
