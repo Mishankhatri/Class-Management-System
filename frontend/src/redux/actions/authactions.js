@@ -1,4 +1,5 @@
 import axiosInstance from "../../axios";
+import { axiosInstanceMultipart } from "../../axios";
 import { returnErrors } from "./alertactions";
 import {
   USER_LOADED,
@@ -67,7 +68,8 @@ export const getUser = () => (dispatch) => {
 
 export const registeradmin = (postData) => (dispatch) => {
   const body = postData;
-  axiosInstance
+  console.log(body);
+  axiosInstanceMultipart
     .post(`user/register/admin/`, body)
     .then((res) => {
       dispatch({ type: REGISTER_SUCCESS, payload: res.data });

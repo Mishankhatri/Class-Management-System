@@ -26,7 +26,20 @@ function AddTeacher() {
   const dispatch = useDispatch();
 
   const onSubmitForm = (data, e) => {
-    dispatch(AddTeacherDetail(data));
+    console.log(data);
+    let postData = new FormData();
+    // postData.append("user", 14); // user id is hard coded, as foreign key
+    postData.append("TRN", data.teacherTRN);
+    postData.append("first_name", data.teacherFirstName);
+    postData.append("middle_name", data.teacherMiddleName);
+    postData.append("last_name", data.teacherLastName);
+    postData.append("DOB", data.teacherDOB);
+    postData.append("email", data.teacherEmail);
+    postData.append("address", data.teacherLocation);
+    postData.append("photo", data.teacherPhoto);
+    postData.append("contact_no", data.teacherPhone);
+    postData.append("gender", data.teacherGender.value);
+    dispatch(AddTeacherDetail(postData));
     // e.target.reset();
     // selectRef.clearValue();
   };

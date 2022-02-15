@@ -52,14 +52,10 @@ function Register() {
       postData.append("password", formData.password);
       profileImage &&
         postData.append("profile_image", profileImage.profile_image[0]);
-      console.log(postData.values());
       dispatch(registeradmin(postData));
     }
   };
 
-  if (auth.isAuthenticated) {
-    return <Navigate to="/login" />;
-  }
   return (
     <div className="main">
       <div id="logo">
@@ -113,7 +109,6 @@ function Register() {
               <input
                 type="file"
                 name="profile_image"
-                id="profile_image"
                 onChange={handleChange}
                 accept="image/*"
                 required
