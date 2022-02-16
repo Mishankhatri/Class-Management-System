@@ -54,7 +54,7 @@ class Grade(models.Model):
     
 class Subject(models.Model):
     subject_name = models.CharField(max_length=55)
-    subject_code = models.IntegerField(unique=True)
+    subject_code = models.CharField(max_length=255,unique=True)
     grade = models.ForeignKey(Grade, related_name='class_subjects', on_delete=models.CASCADE)
     description = models.TextField(null=False,blank=False)
 
