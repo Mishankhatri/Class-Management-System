@@ -23,6 +23,13 @@ export const GetClass = () => {
   };
 };
 
+export const GetClassPaginated = (page, pageSize) => {
+  const offset = page * pageSize;
+  return function (dispatch) {
+    axiosInstance.get(`/grades?page=${page}`);
+  };
+};
+
 export const DeleteClassSec = (id) => {
   return function (dispatch) {
     axiosInstance
