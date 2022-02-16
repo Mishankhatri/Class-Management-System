@@ -17,6 +17,7 @@ import "./components/adminpanel/pages/student/CustomView.css";
 
 import "./components/common/css/Announcement.css";
 import "./components/common/css/CustomConfirm.css";
+import { getUser } from "./redux/actions/authactions";
 //Alert options
 const alertOptions = {
   timeout: 2000,
@@ -25,6 +26,10 @@ const alertOptions = {
     zIndex: 99999,
   },
 };
+const token = localStorage.getItem("access_token");
+if (token) {
+  store.dispatch(getUser());
+}
 
 ReactDOM.render(
   <BrowserRouter>
