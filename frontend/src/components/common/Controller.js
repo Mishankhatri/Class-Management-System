@@ -9,8 +9,6 @@ function CustomController({
   control,
   refClear,
   Controller,
-  errors,
-  ErrorMessage,
   isCustom,
   isCustom2 = false,
   hasFile = false,
@@ -59,9 +57,7 @@ function CustomController({
                   isRequired={value.isRequired}
                   isImageFile={value?.isImageFile}
                   options={value?.options}
-                  errors={errors}
                   refClear={refClear}
-                  ErrorMessage={ErrorMessage}
                 />
               )}
             />

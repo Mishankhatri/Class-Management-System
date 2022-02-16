@@ -16,8 +16,6 @@ function InputField({
   isCustomInput,
   isTextArea,
   refClear,
-  ErrorMessage,
-  errors,
   isImageFile,
   disabled = false,
 }) {
@@ -30,8 +28,6 @@ function InputField({
         title={title}
         icon={icon}
         isRequired={isRequired}
-        ErrorMessage={ErrorMessage}
-        errors={errors}
         name={name}
       />
 

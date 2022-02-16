@@ -1,6 +1,7 @@
 import {
   ADD_CLASS,
   DELETE_CLASSSEC,
+  FILTER_CLASS,
   GET_CLASS,
 } from "../actiontypes/classtype";
 import { DELETE_SUBJECTS, VIEW_SUBJECTS } from "../actiontypes/subjecttypes";
@@ -14,6 +15,9 @@ export default function (state = [], action) {
 
     case GET_CLASS:
       return { ...state, grades: action.payload };
+
+    case FILTER_CLASS:
+      return { ...state, filterClass: action.payload };
 
     case VIEW_SUBJECTS:
       return { ...state, subjects: action.payload };

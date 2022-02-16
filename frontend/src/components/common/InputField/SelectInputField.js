@@ -31,6 +31,7 @@ function SelectInputField({
           ) : (
             <Select
               menuPortalTarget={document.body}
+              onChange={onChangeHandler}
               options={options}
               name={name}
               className="input-select custom-input"

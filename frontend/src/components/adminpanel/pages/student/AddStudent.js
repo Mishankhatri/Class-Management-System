@@ -4,7 +4,6 @@ import * as MdIcons from "react-icons/md";
 import * as FaIcons from "react-icons/fa";
 import InputField from "../../../common//InputField/InputField";
 import CustomController from "../../../common/Controller";
-import axios from "axios";
 
 import {
   getParentInfoValues,
@@ -13,39 +12,13 @@ import {
 } from "../../../values/AdminPanel/StudentInputField";
 
 import { useForm, Controller } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
-
-// student obtained values
-const studentInitialValue = {
-  //Student Info
-  studentFirstName: "",
-  studentMiddleName: "",
-  studentLastName: "",
-  studentGender: "",
-  studentDOB: "",
-  studentPhone: "",
-  studentEmail: "",
-  studentLocation: "",
-  studentPhoto: "",
-
-  //Parent Info
-  studentFatherName: "",
-  studentMotherName: "",
-  parentAddress: "",
-  parentState: "",
-  parentContact: "",
-  parentAdditionalContact: "",
-  parentEmail: "",
-  parentPhoto: "",
-
-  //Academic Info
-  studentClass: "",
-  studentSection: "",
-  studentRoll: "",
-};
+import PasswordInputField from "../../../common/InputField/PasswordInputField";
+import { useDispatch } from "react-redux";
+import { AddStudentDetail } from "./../../../../redux/actions/student/studentactions";
 
 function AddStudent() {
   const addAcademicValues = getAcademicValues();
+  const dispatch = useDispatch();
 
   //For Reseting Select Options while Submitting
   const [selectRefStudent, setSelectRefStudent] = useState(null);
@@ -54,15 +27,7 @@ function AddStudent() {
   const [selectRefAcademicSecond, setSelectRefAcademicSecond] = useState(null);
 
   //Define requirements from useform
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm({
-    studentInitialValue,
-  });
-
-  //Reset Value using ref for Select Options
+  const { handleSubmit, control } = useForm();
 
   //Clearing Student Info Select
   const refClearStudent = (ref) => setSelectRefStudent(ref);
@@ -75,13 +40,59 @@ function AddStudent() {
   const optionsSection = addAcademicValues[1].options;
 
   const onSubmitForm = (data, e) => {
-    console.log(data);
+    let postStudentData = new FormData();
+    let postParentData = new FormData();
+    let postUserLogin = new FormData();
+
+    //Assigning Student Info
+    postStudentData.append("current_grade", 15); //Temp grade id
+    postStudentData.append("user", 90); //Temp user id
+    postStudentData.append("SRN", data.studentSRN);
+    postStudentData.append("first_name", data.studentFirstName);
+    postStudentData.append("middle_name", data.studentMiddleName);
+    postStudentData.append("last_name", data.studentLastName);
+    postStudentData.append("gender", data.studentGender.value);
+    postStudentData.append("DOB", data.studentDOB);
+    postStudentData.append("contact_no", data.studentPhone);
+    postStudentData.append("email", data.studentEmail);
+    postStudentData.append("address", data.studentLocation);
+    postStudentData.append("photo", data.studentPhoto);
+
+    //Assigni Paraent Info
+    postParentData.append("father_name", data.studentFatherName);
+    postParentData.append("mother_name", data.studentMotherName);
+    postParentData.append("parent_address", data.parentAddress);
+    postParentData.append("parent_state", data.parentState.value);
+    postParentData.append("parent_contact_no", data.parentContact);
+    postParentData.append(
+      "parent_additional_contact_no",
+      data.parentAdditionalContact
+    );
+    postParentData.append("parent_email", data.parentEmail);
+    postParentData.append("student", 90); // Hard Coded Student;
+
+    //Assigning User Login
+    postUserLogin.append("password", data.studentPassword);
+    postUserLogin.append("username", data.studentUsername);
+    postUserLogin.append("email", data.studentEmail);
+    postUserLogin.append(
+      "fullname",
+      `${data.studentFirstName} ${data.studentMiddleName} ${data.studentLastName}`
+    );
+    postUserLogin.append("profile_image", data.studentPhoto);
+
+    dispatch(
+      AddStudentDetail(postStudentData, "student", "ADD_STUDENT_DETAIL")
+    );
+    dispatch(
+      AddStudentDetail(postParentData, "parent", "ADD_STUDENT_PARENT_DETAIL")
+    );
 
     // e.target.reset();
-    selectRefStudent.clearValue();
-    selectRefParent.clearValue();
-    selectRefAcademicFirst.clearValue();
-    selectRefAcademicSecond.clearValue();
+    // selectRefStudent.clearValue();
+    // selectRefParent.clearValue();
+    // selectRefAcademicFirst.clearValue();
+    // selectRefAcademicSecond.clearValue();
   };
 
   return (
@@ -97,11 +108,9 @@ function AddStudent() {
             refClear={refClearStudent}
             control={control}
             Controller={Controller}
-            errors={errors}
-            ErrorMessage={ErrorMessage}
             isCustom={false}
             hasFile={true}
-            fileRequired={true}
+            fileRequired={false}
             fileTitle={"Upload Photo"}
             fileIcon={<FaIcons.FaPhotoVideo className="mid-icon" />}
             fileName={"studentPhoto"}
@@ -115,8 +124,6 @@ function AddStudent() {
             refClear={refClearParent}
             control={control}
             Controller={Controller}
-            errors={errors}
-            ErrorMessage={ErrorMessage}
             isCustom={false}
           />
 
@@ -129,7 +136,7 @@ function AddStudent() {
               <span className="title">ACADEMIC INFO</span>
             </div>
             <div className="content-section">
-              <div className="allinputfield">
+              <div className="custom-selection">
                 <Controller
                   name={"studentClass"}
                   control={control}
@@ -149,9 +156,7 @@ function AddStudent() {
                       onChangeHandler={field.onChange}
                       isRequired={true}
                       options={optionsClass}
-                      errors={errors}
                       refClear={refClearAcademicFirst}
-                      ErrorMessage={ErrorMessage}
                     />
                   )}
                 />
@@ -175,34 +180,51 @@ function AddStudent() {
                       onChangeHandler={field.onChange}
                       isRequired={true}
                       options={optionsSection}
-                      errors={errors}
                       refClear={refClearAcademicSecond}
-                      ErrorMessage={ErrorMessage}
                     />
                   )}
                 />
+              </div>
+            </div>
+          </div>
 
+          {/* Academic Info  */}
+          <div className="card-section">
+            <div className="heading">
+              <span className="title-icon">
+                <FaIcons.FaBook />
+              </span>
+              <span className="title">STUDENT LOGIN INFO</span>
+            </div>
+            <div className="content-section">
+              <div className="custom-selection">
                 <Controller
-                  name={"studentRoll"}
+                  name={"studentUsername"}
                   control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: `Student Roll is required`,
-                    },
-                  }}
                   defaultValue=""
                   render={({ field }) => (
                     <InputField
-                      title={"Student Roll".toUpperCase()}
-                      input={"number"}
-                      icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
-                      placeholder={"Enter Roll No"}
-                      name={"studentRoll"}
+                      title={"Username".toUpperCase()}
+                      input={"text"}
+                      icon={<MdIcons.MdVerifiedUser className="mid-icon" />}
+                      placeholder={"Enter Username"}
+                      name={"studentUsername"}
                       onChangeHandler={field.onChange}
                       isRequired={true}
-                      errors={errors}
-                      ErrorMessage={ErrorMessage}
+                    />
+                  )}
+                />
+                <Controller
+                  name={"studentPassword"}
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <PasswordInputField
+                      title={"Password".toUpperCase()}
+                      placeholder={"**********"}
+                      name={"studentPassword"}
+                      onChangeHandler={field.onChange}
+                      isRequired={true}
                     />
                   )}
                 />

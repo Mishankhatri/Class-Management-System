@@ -5,35 +5,36 @@ import * as FaIcons from "react-icons/fa";
 
 import { useForm, Controller } from "react-hook-form";
 import InputField from "../../../common/InputField/InputField";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 import { AddClassActions } from "./../../../../redux/actions/classactions";
+import axiosInstance from "./../../../../axios";
 
 function AddClass() {
-  const { grades: classes } = useSelector((state) => state.classes);
   const alert = useAlert();
   const dispatch = useDispatch();
 
   const { handleSubmit, control } = useForm();
 
   const onSubmitForm = (data, e) => {
-    const dataFound = classes.find(
-      (value) => value.class_name == data.className
-    );
-
-    try {
-      if (dataFound) {
-        throw `Class "${data.className}" Already Exist`;
-      } else {
-        dispatch(AddClassActions(data));
-        alert.success(
-          `Class "${data.className}" Added Succefully with Section A`
-        );
-      }
-    } catch (error) {
-      alert.error(error);
-    }
     e.target.reset();
+    if (data.className != 0) {
+      axiosInstance
+        .get(`/grades/?classname=${data.className}`)
+        .then(({ data: values }) => {
+          if (values.count == 0) {
+            dispatch(AddClassActions(data.className));
+            alert.success(
+              `Class "${data.className}" Added Succefully with Section A`
+            );
+          } else {
+            throw `Class "${data.className}" Already Exist`;
+          }
+        })
+        .catch((error) => {
+          alert.error(error);
+        });
+    } else alert.error("Class 0 Can't be added");
   };
 
   return (
@@ -50,6 +51,9 @@ function AddClass() {
             </div>
 
             <div className="content-section">
+              <div className="message">
+                By Default, Current Section will be <b>"A"</b>
+              </div>
               <Controller
                 name={"className"}
                 control={control}

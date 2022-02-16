@@ -1,4 +1,4 @@
-import axiosInstance from "../../../axios";
+import axiosInstance, { axiosInstanceMultipart } from "../../../axios";
 
 import {
   GET_STUDENTCLASS_SID,
@@ -68,5 +68,26 @@ export const StudentDelete = (id) => {
         dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
       })
       .catch((error) => console.log(error));
+  };
+};
+
+export const AddStudentDetail = (postData, url, type) => {
+  return function (dispatch) {
+    console.log(postData);
+    const body = postData;
+    axiosInstanceMultipart
+      .post(`${url}/`, body)
+      .then(() => {
+        dispatch({
+          type: type,
+        });
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log("Response", error.response);
+        } else if (error.request) {
+          console.log("Request", error.request);
+        } else console.log(error);
+      });
   };
 };

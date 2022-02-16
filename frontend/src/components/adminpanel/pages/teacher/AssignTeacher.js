@@ -3,12 +3,21 @@ import InnerHeader from "../../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
 import SelectInputField from "./../../../common/InputField/SelectInputField";
 import { useForm, Controller } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { AssignTeacherSubjects } from "../../../../redux/actions/teacher/teacheractions";
 
 function AssignTeacher() {
   const { handleSubmit, control } = useForm();
+  const dispatch = useDispatch();
 
-  const onSubmit = (data) => {
+  const onSubmitData = (data) => {
     console.log(data);
+    let postData = new FormData();
+
+    postData.append("grade", 18);
+    postData.append("subject", 19);
+    postData.append("teacher", 50);
+    dispatch(AssignTeacherSubjects(postData));
   };
   return (
     <React.Fragment>
@@ -21,19 +30,18 @@ function AssignTeacher() {
           <span className="title">ASSIGN TEACHERS</span> {/*Custom  */}
         </div>
         <div className="content-section">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmitData)}>
             <div className="allinputfield">
               <Controller
                 name="selectClass"
                 control={control}
-                rules={{ required: true }}
                 defaultValue=""
                 render={({ field }) => (
                   <SelectInputField
                     title={"Select Class"}
                     icon={<MdIcons.MdDepartureBoard className="mid-icon" />}
                     name={"selectClass"}
-                    onChange={field.onChange}
+                    onChangeHandler={field.onChange}
                     options={[{ label: "12 ", value: "12" }]}
                   />
                 )}
@@ -42,14 +50,13 @@ function AssignTeacher() {
               <Controller
                 name="selectSection"
                 control={control}
-                rules={{ required: true }}
                 defaultValue=""
                 render={({ field }) => (
                   <SelectInputField
                     title={"Select Section"}
                     icon={<MdIcons.MdCode className="mid-icon" />}
                     name={"selectSection"}
-                    onChange={field.onChange}
+                    onChangeHandler={field.onChange}
                     options={[{ label: "A ", value: "A" }]}
                   />
                 )}
@@ -58,7 +65,6 @@ function AssignTeacher() {
               <Controller
                 name="selectSubject"
                 control={control}
-                rules={{ required: true }}
                 defaultValue=""
                 render={({ field }) => (
                   <SelectInputField
@@ -66,7 +72,7 @@ function AssignTeacher() {
                     icon={<MdIcons.MdSubject className="mid-icon" />}
                     options={[{ label: "Social", value: "Social" }]}
                     name={"selectSubject"}
-                    onChange={field.onChange}
+                    onChangeHandler={field.onChange}
                   />
                 )}
               />
@@ -74,14 +80,13 @@ function AssignTeacher() {
               <Controller
                 name="selectTeacher"
                 control={control}
-                rules={{ required: true }}
                 defaultValue=""
                 render={({ field }) => (
                   <SelectInputField
                     title={"Assign Teacher"}
                     icon={<MdIcons.MdVerified className="mid-icon" />}
                     name={"selectTeacher"}
-                    onChange={field.onChange}
+                    onChangeHandler={field.onChange}
                     options={[{ label: "Mishan ", value: "Mishan" }]}
                   />
                 )}

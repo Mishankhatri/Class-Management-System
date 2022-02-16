@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import "./Login.css";
 import Logo from "../assets/logo/Image_Logo.png";
 import CampusLogo from "../assets/logo/campusLogo.png";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/actions/authactions";
 import { Navigate } from "react-router-dom";
+import * as FiIcons from "react-icons/fi";
 
 function Login() {
   const auth = useSelector((state) => state.auth);
@@ -65,18 +65,23 @@ function Login() {
 
             <div className="input-field password">
               <label>Password</label>
-              <input
-                type={passwordShown ? "text" : "password"}
-                name="password"
-                id="password"
-                placeholder="Enter password"
-                onChange={handleChange}
-              />
-              {passwordShown ? (
-                <FaEyeSlash className="icons" onClick={handleClick} />
-              ) : (
-                <FaEye className="icons" onClick={handleClick} />
-              )}
+              <div className="input-icon-container">
+                <input
+                  type={passwordShown ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  placeholder="Enter password"
+                  onChange={handleChange}
+                />
+                <button
+                  className="fa eye-button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPasswordShow(!passwordShown);
+                  }}>
+                  {!passwordShown ? <FiIcons.FiEye /> : <FiIcons.FiEyeOff />}
+                </button>
+              </div>
             </div>
             <div className="section">
               <span className="section__remember">
