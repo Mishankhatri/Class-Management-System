@@ -5,22 +5,18 @@ import * as FaIcons from "react-icons/fa";
 
 import { useForm, Controller } from "react-hook-form";
 import InputField from "../../../common/InputField/InputField";
+import { GetGradeOptions } from "../../../GetOptions";
 
 function AddSection() {
-  //For Reseting Select Options while Submitting
   const [selectRef, setSelectRef] = useState(null);
-
-  //Define requirements from useform
   const { handleSubmit, control } = useForm();
-
-  //Reset Value using ref for Select Options
   const refClear = (ref) => setSelectRef(ref);
+  const section = GetGradeOptions();
+  // console.log(section);
 
   const onSubmitForm = (data, e) => {
     console.log(data);
-    //CLear Input Field Value
     e.target.reset();
-    //Clear Select Value
     selectRef.clearValue();
   };
 

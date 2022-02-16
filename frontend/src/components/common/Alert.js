@@ -23,6 +23,7 @@ export class Alerts extends Component {
       if (error.msg.password) alert.error(`${error.msg.password}`);
       if (error.msg.detail) alert.error(`${error.msg.detail}`);
       if (error.msg.statusText) alert.error(`${error.msg.statusText}`);
+      if (error.msg.class_name[0]) alert.error(`${error.msg.class_name[0]}`);
       if (error.msg.old_password.old_password)
         alert.error(`${error.msg.old_password.old_password}`);
     }

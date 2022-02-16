@@ -13,6 +13,7 @@ import {
   GET_SUBMITTED_ASSIGNMENT,
   GET_TEACHER_ANNOUNCEMENT,
   DELETE_TEACHER_ANNOUNCEMENT,
+  ASSIGN_TEACHER_SUBJECTS,
 } from "./../../actiontypes/teacher/teacherdatatype";
 
 export const TeacherDetail = () => {
@@ -52,6 +53,27 @@ export const AddTeacherDetail = (postData) => {
       .then(() => {
         dispatch({
           type: ADD_TEACHER_DETAIL,
+        });
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log("Response", error.response);
+        } else if (error.request) {
+          console.log("Request", error.request);
+        } else console.log(error);
+      });
+  };
+};
+
+export const AssignTeacherSubjects = (postData) => {
+  return function (dispatch) {
+    console.log(postData);
+    const body = postData;
+    axiosInstance
+      .post("AssignTeacherToSubjectsAPI/", body)
+      .then(() => {
+        dispatch({
+          type: ASSIGN_TEACHER_SUBJECTS,
         });
       })
       .catch((error) => {

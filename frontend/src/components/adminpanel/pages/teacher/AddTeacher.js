@@ -5,7 +5,6 @@ import * as FaIcons from "react-icons/fa";
 import { getTeacherInputValues } from "../../../values/AdminPanel/TeacherInputField";
 
 import { useForm, Controller } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
 import CustomController from "./../../../common/Controller";
 import { useDispatch } from "react-redux";
 import { AddTeacherDetail } from "../../../../redux/actions/teacher/teacheractions";
@@ -13,15 +12,12 @@ import PasswordInputField from "./../../../common/InputField/PasswordInputField"
 import InputField from "../../../common/InputField/InputField";
 
 function AddTeacher() {
-  //For Reseting Select Options while Submitting
   const [selectRef, setSelectRef] = useState(null);
-
-  //Define requirements from useform
   const { handleSubmit, control } = useForm();
+  const dispatch = useDispatch();
 
   //Reset Value using ref for Select Options
   const refClear = (ref) => setSelectRef(ref);
-  const dispatch = useDispatch();
 
   const onSubmitForm = (data, e) => {
     let postData = new FormData();
