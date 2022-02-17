@@ -17,9 +17,10 @@ import AcademicEditModal from "../../AcademicEditModal";
 function StudentFullDetail() {
   let { id } = useParams();
   const dispatch = useDispatch();
-  const { studentId: data, studentParent } = useSelector(
-    (state) => state.students
-  );
+  const { studentParentID } = useSelector((state) => state.students);
+
+  const data = studentParentID && studentParentID[0].student;
+  const parents = studentParentID && studentParentID[0];
 
   useEffect(() => {
     dispatch(StudentClassById(id));
@@ -68,8 +69,6 @@ function StudentFullDetail() {
     console.log(data);
     setClickStudentAcademic(false);
   };
-
-  const parents = studentParent.find((value) => value.student.id == id);
 
   return data ? (
     <React.Fragment>
@@ -194,56 +193,145 @@ function StudentFullDetail() {
 
       {/* Modal Section Input End  */}
       <InnerHeader icon={<MdIcons.MdPerson />} name={`Student`} />
-      <div className="main-content">
-        {/* Student Info  */}
-        <div className="heading-section">
-          <div className="card-section">
-            <div className="heading">
-              <span className="title-icon">
-                <MdIcons.MdPerson />
-              </span>
-              <span className="title">Students Personal Info</span>
-            </div>
-            <div className="content-section">
-              <div className="custom-info-show">
-                <div
-                  className="content-image-p"
-                  onClick={() => setClick(!click)}>
-                  <div className="content-overlay"></div>
-                  <img
-                    className="content-image"
-                    src={data.photo}
-                    alt="Profile-Image"
-                    title="Change Profile Picture"
-                  />
-                  <div className="content-details fadeIn-bottom">
-                    <h3 className="content-title">
-                      <MdIcons.MdCamera style={{ fontSize: 40 }} />
-                    </h3>
-                    <p className="content-text" style={{ fontSize: 20 }}>
-                      Change Photo
-                    </p>
+      {parents && (
+        <div className="main-content">
+          {/* Student Info  */}
+          <div className="heading-section">
+            <div className="card-section">
+              <div className="heading">
+                <span className="title-icon">
+                  <MdIcons.MdPerson />
+                </span>
+                <span className="title">Students Personal Info</span>
+              </div>
+              <div className="content-section">
+                <div className="custom-info-show">
+                  <div
+                    className="content-image-p"
+                    onClick={() => setClick(!click)}>
+                    <div className="content-overlay"></div>
+                    <img
+                      className="content-image"
+                      src={data.photo}
+                      alt="Profile-Image"
+                      title="Change Profile Picture"
+                    />
+                    <div className="content-details fadeIn-bottom">
+                      <h3 className="content-title">
+                        <MdIcons.MdCamera style={{ fontSize: 40 }} />
+                      </h3>
+                      <p className="content-text" style={{ fontSize: 20 }}>
+                        Change Photo
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="information">
+                    <div className="information__info">
+                      <ViewModal
+                        title={"Full Name"}
+                        value={`${data.first_name} ${
+                          data.middleName ? data.middleName : ""
+                        } ${data.last_name}`}
+                      />
+                      <ViewModal title={"Gender"} value={data.gender} />
+                      <ViewModal title={"Date of Birth"} value={data.DOB} />
+                      <ViewModal title={"Phone"} value={data.contact_no} />
+                      <ViewModal title={"Email"} value={data.email} />
+                      <ViewModal title={"Address"} value={data.address} />
+                    </div>
+                    <button
+                      className="btn-edit"
+                      style={{ marginTop: 20 }}
+                      onClick={() => setClickStudent(!clickStudent)}>
+                      Edit
+                    </button>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
 
+          {/* Parent Info  */}
+          <div className="heading-section">
+            <div className="card-section">
+              <div className="heading">
+                <span className="title-icon">
+                  <MdIcons.MdPerson />
+                </span>
+                <span className="title">Students Parents Info</span>
+                {/*Custom  */}
+              </div>
+              <div className="content-section">
+                <div className="allinputfield">
+                  <ViewModal
+                    title={"Father Name"}
+                    value={parents.father_name}
+                  />
+                  <ViewModal
+                    title={"Mother Name"}
+                    value={parents.mother_name}
+                  />
+                  <ViewModal
+                    title={"Phone"}
+                    value={parents.parent_contact_no}
+                  />
+                  <ViewModal
+                    title={"Alternate Phone"}
+                    value={
+                      parents.parent_additional_contact_no === null
+                        ? ""
+                        : parents.parent_additional_contact_no
+                    }
+                  />
+                  <ViewModal
+                    title={"Email"}
+                    value={
+                      parents.parent_email === null ? "" : parents.parent_email
+                    }
+                  />
+                  <ViewModal title={"Address"} value={parents.parent_address} />
+                  <ViewModal title={"State"} value={parents.parent_state} />
+                </div>
+                <button
+                  className="btn-edit"
+                  style={{ marginTop: 20 }}
+                  onClick={() => setClickParent(!clickParent)}>
+                  Edit
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Academic Info  */}
+          <div className="heading-section">
+            <div className="card-section">
+              <div className="heading">
+                <span className="title-icon">
+                  <MdIcons.MdPerson />
+                </span>
+                <span className="title">Students Academic Info</span>
+                {/*Custom  */}
+              </div>
+              <div className="content-section">
                 <div className="information">
                   <div className="information__info">
                     <ViewModal
-                      title={"Full Name"}
-                      value={`${data.first_name} ${
-                        data.middleName ? data.middleName : ""
-                      } ${data.last_name}`}
+                      title={"Class"}
+                      value={data.current_grade.class_name}
                     />
-                    <ViewModal title={"Gender"} value={data.gender} />
-                    <ViewModal title={"Date of Birth"} value={data.DOB} />
-                    <ViewModal title={"Phone"} value={data.contact_no} />
-                    <ViewModal title={"Email"} value={data.email} />
-                    <ViewModal title={"Address"} value={data.address} />
+                    <ViewModal
+                      title={"Section"}
+                      value={data.current_grade.section}
+                    />
+                    <ViewModal title={"SRN No"} value={data.SRN} />
                   </div>
                   <button
                     className="btn-edit"
                     style={{ marginTop: 20 }}
-                    onClick={() => setClickStudent(!clickStudent)}>
+                    onClick={() =>
+                      setClickStudentAcademic(!clickStudentAcademic)
+                    }>
                     Edit
                   </button>
                 </div>
@@ -251,85 +339,7 @@ function StudentFullDetail() {
             </div>
           </div>
         </div>
-
-        {/* Parent Info  */}
-        <div className="heading-section">
-          <div className="card-section">
-            <div className="heading">
-              <span className="title-icon">
-                <MdIcons.MdPerson />
-              </span>
-              <span className="title">Students Parents Info</span>
-              {/*Custom  */}
-            </div>
-            <div className="content-section">
-              <div className="allinputfield">
-                <ViewModal title={"Father Name"} value={parents.father_name} />
-                <ViewModal title={"Mother Name"} value={parents.mother_name} />
-                <ViewModal title={"Phone"} value={parents.parent_contact_no} />
-                <ViewModal
-                  title={"Alternate Phone"}
-                  value={
-                    parents.parent_additional_contact_no === null
-                      ? ""
-                      : parents.parent_additional_contact_no
-                  }
-                />
-                <ViewModal
-                  title={"Email"}
-                  value={
-                    parents.parent_email === null ? "" : parents.parent_email
-                  }
-                />
-                <ViewModal title={"Address"} value={parents.parent_address} />
-                <ViewModal title={"State"} value={parents.parent_state} />
-              </div>
-              <button
-                className="btn-edit"
-                style={{ marginTop: 20 }}
-                onClick={() => setClickParent(!clickParent)}>
-                Edit
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Academic Info  */}
-        <div className="heading-section">
-          <div className="card-section">
-            <div className="heading">
-              <span className="title-icon">
-                <MdIcons.MdPerson />
-              </span>
-              <span className="title">Students Academic Info</span>
-              {/*Custom  */}
-            </div>
-            <div className="content-section">
-              <div className="information">
-                <div className="information__info">
-                  <ViewModal
-                    title={"Class"}
-                    value={data.current_grade.class_name}
-                  />
-                  <ViewModal
-                    title={"Section"}
-                    value={data.current_grade.section}
-                  />
-                  <ViewModal title={"SRN No"} value={data.SRN} />
-                </div>
-                <button
-                  className="btn-edit"
-                  style={{ marginTop: 20 }}
-                  onClick={() =>
-                    setClickStudentAcademic(!clickStudentAcademic)
-                  }>
-                  Edit
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      )}
     </React.Fragment>
   ) : (
     <Loading />

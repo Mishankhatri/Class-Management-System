@@ -90,6 +90,7 @@ body {
 .navigation .navbar .right-section .not-image {
   display: grid;
   grid-template-columns: repeat(2, 0.8fr);
+  align-items: center;
 }
 
 .navigation .navbar .right-section .profile-image {

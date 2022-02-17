@@ -17,6 +17,7 @@ import "./components/adminpanel/pages/student/CustomView.css";
 
 import "./components/common/css/Announcement.css";
 import "./components/common/css/CustomConfirm.css";
+import "./components/common/css/PasswordToggle.css";
 import { getUser } from "./redux/actions/authactions";
 //Alert options
 const alertOptions = {

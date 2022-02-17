@@ -24,14 +24,21 @@ function CreateAnnouncement() {
 
   const onSubmitForm = (data, e) => {
     console.log(data);
-    dispatch(CreateAdminAnnouncement(data, user));
-    //CLear Input Field Value
-    // e.target.reset();
+    const postData = new FormData();
+    postData.append("created_by", user.id);
+    postData.append("type", data.announcementTypeName.value);
+    postData.append("title", data.announcementTitle);
+    postData.append("details", data.announcementSubjects);
+    postData.append("announcement_for", data.announcementFor.value);
+    postData.append("files_by_admin", data.announcementFile);
+
+    dispatch(CreateAdminAnnouncement(postData));
+
+    e.target.reset();
     selectRefType.clearValue();
     selectRefFor.clearValue();
   };
 
-  function checkStudent(data) {}
   return (
     <div>
       <InnerHeader icon={<MdIcons.MdDashboard />} name={"Announcements"} />
@@ -93,7 +100,6 @@ function CreateAnnouncement() {
                       icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
                       name={"announcementFor"}
                       onChangeHandler={(event) => {
-                        checkStudent(event);
                         return props.field.onChange(event);
                       }}
                       isRequired={true}
@@ -123,18 +129,18 @@ function CreateAnnouncement() {
                   )}
                 />
                 <Controller
-                  name={"announcemntFile"}
+                  name={"announcementFile"}
                   control={control}
                   defaultValue=""
                   render={(props) => (
                     <FileInput
-                      name={"announcemntFile"}
+                      name={"announcementFile"}
                       title={"Upload File"}
                       icon={<FaIcons.FaFile className="mid-icon" />}
                       isRequired={false}
                       isImageFile={false}
                       onChange={(event) =>
-                        props.field.onChange(event.target.files)
+                        props.field.onChange(event.target.files[0])
                       }
                     />
                   )}

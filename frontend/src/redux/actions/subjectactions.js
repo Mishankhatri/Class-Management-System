@@ -1,36 +1,14 @@
-import { ADD_SUBJECT } from "../actiontypes/classtype";
 import {
   DELETE_ATTENDANCE,
   GET_STUDENT_ATTENDANCE,
 } from "../actiontypes/student/studentdatatype";
 import axiosInstance from "./../../axios";
-import { DELETE_SUBJECTS, VIEW_SUBJECTS } from "./../actiontypes/subjecttypes";
-
-const AddSubject = (data, grades) => {
-  const classID = grades.find(
-    (value) =>
-      value.class_name == data.subjectsClassName.value &&
-      value.section == data.subjectsSection.value
-  );
-
-  return function (dispatch) {
-    axiosInstance
-      .post("subjects/", {
-        subject_name: data.subjectsName,
-        subject_code: data.subjectsCode,
-        description: data.subjectsDescription,
-        grade: classID,
-      })
-      .then(() => {
-        dispatch({
-          type: ADD_SUBJECT,
-        });
-      })
-      .catch((error) => console.log(error.response));
-  };
-};
-
-export default AddSubject;
+import { returnSuccess, returnErrors } from "./alertactions";
+import {
+  ADD_SUBJECT,
+  DELETE_SUBJECTS,
+  VIEW_SUBJECTS,
+} from "./../actiontypes/subjecttypes";
 
 export const ViewSubjects = () => {
   return function (dispatch) {
@@ -71,5 +49,22 @@ export const DeleteAttendance = (id) => {
         dispatch(ViewStudentAttendance());
       })
       .catch((error) => console.log(error));
+  };
+};
+
+export const ADD__SUBJECTS = (postData) => {
+  const body = postData;
+  return function (dispatch) {
+    axiosInstance
+      .post(`subjects/`, body)
+      .then(() => {
+        dispatch({
+          type: ADD_SUBJECT,
+        });
+        alert("Inserted");
+      })
+      .catch((error) => {
+        dispatch(returnErrors(error.response.data, error.response.status));
+      });
   };
 };

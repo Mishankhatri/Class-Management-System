@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import errors from "./errors";
+import success from "./success";
 import messages from "./messages";
 import auth from "./auth";
 import data from "./data";
@@ -10,6 +11,7 @@ import adminReducer from "./Admin/adminReducer";
 
 export default combineReducers({
   errors,
+  success,
   messages,
   auth,
   data,

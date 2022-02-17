@@ -138,7 +138,7 @@ export function getSectionValue() {
 }
 
 export function getAddSubjectsValue() {
-  return subjectsValue;
+  return [subjectsValue[0], subjectsValue[1]];
 }
 
 //Exporting for Modal

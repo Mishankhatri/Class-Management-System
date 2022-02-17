@@ -1,4 +1,8 @@
-import { CREATE_MESSAGES, GET_ERRORS } from "../actiontypes/alerttypes";
+import {
+  CREATE_MESSAGES,
+  GET_ERRORS,
+  GET_SUCCESS,
+} from "../actiontypes/alerttypes";
 
 //Create message
 export const createMessage = (msg) => {
@@ -13,5 +17,13 @@ export const returnErrors = (msg, status) => {
   return {
     type: GET_ERRORS,
     payload: { msg, status },
+  };
+};
+
+//Return errors
+export const returnSuccess = (msg) => {
+  return {
+    type: GET_SUCCESS,
+    payload: { msg },
   };
 };

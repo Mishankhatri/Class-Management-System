@@ -1,5 +1,6 @@
 import {
   ADD_CLASS,
+  ADD_CLASS_SECTION,
   DELETE_CLASSSEC,
   FILTER_CLASS,
   GET_CLASS,
@@ -11,6 +12,7 @@ export default function (state = [], action) {
     case ADD_CLASS:
     case DELETE_CLASSSEC:
     case DELETE_SUBJECTS:
+    case ADD_CLASS_SECTION:
       return { ...state };
 
     case GET_CLASS:
