@@ -1,3 +1,4 @@
+from pydoc import classname
 from rest_framework  import viewsets,permissions,parsers,filters
 from core.models import Grade,Subject,Student,Parent,Teacher,AssignTeacherToSubjects,AdminAnnouncement,TeachersAnnouncement,GivenAssignments,SubmittedAssignments,LectureNotes,Attendance,TimeTable
 from .serializers import *
@@ -279,12 +280,14 @@ class TeacherAnnoucementAPI(viewsets.ModelViewSet):
         created_by = self.request.query_params.get('teacher')
         title = self.request.query_params.get('title')
         created_at = self.request.query_params.get('created_at')
+        announcement_for_class = self.request.query_params.get('classname')
         if title is not None:
             queryset = queryset.filter(title=title)
         if created_by is not None:
             queryset = queryset.filter(created_by__username=created_by)
-        if created_at is not None:
-            queryset = queryset.filter(created_at=created_at)
+        if announcement_for_class is not None:
+            queryset = queryset.filter(announcement_for_class__id=announcement_for_class)
+
         return queryset
 
 class GivenAssignmentsAPI(viewsets.ModelViewSet):

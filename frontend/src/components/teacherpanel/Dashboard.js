@@ -5,11 +5,9 @@ import * as FaIcons from "react-icons/fa";
 import CardData from "../common/DashboardCardData";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getData } from "../../redux/actions/dataactions";
 
 import { GetClass } from "../../redux/actions/classactions";
 import Moment from "react-moment";
-import reverseArray from "../common/ReverseArray";
 import { GET_DETAILS } from "./../../redux/actions/student/studentactions";
 import { GetAdminFilterAnnouncement } from "./../../redux/actions/admin/announcementaction";
 

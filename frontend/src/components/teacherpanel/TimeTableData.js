@@ -4,8 +4,6 @@ import TableContainer from "../common/Table/TableContainer";
 
 import moment from "moment";
 import { SelectColumnFilter } from "../common/Table/filters";
-import { GetAdminTimetables } from "../../redux/actions/admin/adminaction";
-import { TeacherDetail } from "./../../redux/actions/teacher/teacheractions";
 import axiosInstance from "../../axios";
 
 const TimeTableData = () => {
