@@ -9,24 +9,24 @@ import {
 } from "../../../redux/actions/teacher/teacheractions";
 import Loading from "./../../common/Loading";
 import CustomConfirm from "../../common/CustomConfirm";
+import axiosInstance from "../../../axios";
 
 const LectureNotesTable = () => {
-  const dispatch = useDispatch();
-
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
-
-  const { lecturenotes, teacherDetail } = useSelector(
-    (state) => state.teachers
-  );
+  const [lecturenotes, setLectureNotes] = useState([]);
   const { user } = useSelector((state) => state.auth);
 
-  const filterTeacher =
-    teacherDetail && teacherDetail.find((value) => value.user.id === user.id);
-
   useEffect(() => {
-    dispatch(GetLectureNotes(filterTeacher.id));
-    dispatch(TeacherDetail());
+    axiosInstance
+      .get(`/teacher?user=${user.id}`)
+      .then(({ data: { results } }) => {
+        axiosInstance
+          .get(`/lecturenotes?teacher=${results[0].id}`)
+          .then(({ data: { results } }) => {
+            setLectureNotes(results);
+          });
+      });
   }, []);
 
   const handleDelete = (id) => {

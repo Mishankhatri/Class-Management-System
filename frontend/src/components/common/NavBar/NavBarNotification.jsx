@@ -30,7 +30,7 @@ function NavBarNotification({ showDropDown, setDropDown, name }) {
   const { user } = useSelector((state) => state.auth);
 
   const currentStudentDetail =
-    student && student.find((value) => (value.user.id = user.id));
+    student && student.results.find((value) => (value.user.id = user.id));
 
   const adminnotices = results && reverseArray(results);
   const reverseTeacherNotices =

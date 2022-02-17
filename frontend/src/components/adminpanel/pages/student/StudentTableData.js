@@ -108,7 +108,9 @@ const StudentTableData = () => {
         />
       )}
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        {fetchData && <TableContainer columns={columns} data={fetchData} />}
+        {fetchData && (
+          <TableContainer columns={columns} data={fetchData.results} />
+        )}
       </div>
     </>
   );

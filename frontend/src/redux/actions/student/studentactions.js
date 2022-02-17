@@ -11,19 +11,19 @@ export const GET_DETAILS = (url, type, filter) => {
     filter
       ? axiosInstance
           .get(`${url}/?${filter}`)
-          .then(({ data: { results } }) => {
+          .then(({ data }) => {
             dispatch({
               type: type,
-              payload: results,
+              payload: data,
             });
           })
           .catch((error) => console.log(error))
       : axiosInstance
           .get(url)
-          .then(({ data: { results } }) => {
+          .then(({ data }) => {
             dispatch({
               type: type,
-              payload: results,
+              payload: data,
             });
           })
           .catch((error) => console.log(error));

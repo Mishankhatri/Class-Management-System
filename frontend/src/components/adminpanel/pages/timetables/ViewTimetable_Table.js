@@ -1,18 +1,24 @@
-import React, { useState, useMemo } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useMemo, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import TableContainer from "../../../common/Table/TableContainer";
-import reverseArray from "./../../../common/ReverseArray";
 import moment from "moment";
 import { SelectColumnFilter } from "../../../common/Table/filters";
 import CustomConfirm from "../../../common/CustomConfirm";
-import { DeleteTimetables } from "../../../../redux/actions/admin/adminaction";
+import {
+  DeleteTimetables,
+  GetAdminTimetables,
+} from "../../../../redux/actions/admin/adminaction";
 
 const ViewTimetable_Table = ({ click, setClick }) => {
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
+  const dispatch = useDispatch();
 
   const { timetables } = useSelector((state) => state.admins);
-  const reverseTimetable = timetables && reverseArray(timetables);
+
+  useEffect(() => {
+    dispatch(GetAdminTimetables("ordering=-id"));
+  }, []);
 
   const handleDelete = (id) => {
     setdeleteId(id);
@@ -97,9 +103,7 @@ const ViewTimetable_Table = ({ click, setClick }) => {
         />
       )}
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        {timetables && (
-          <TableContainer columns={columns} data={reverseTimetable} />
-        )}
+        {timetables && <TableContainer columns={columns} data={timetables} />}
       </div>
     </>
   );

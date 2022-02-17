@@ -1,37 +1,24 @@
 import React, { useMemo, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { SelectColumnFilter } from "../../common/Table/filters";
+import { useSelector } from "react-redux";
 import TableContainer from "../../common/Table/TableContainer";
 import Moment from "react-moment";
-
-import reverseArray from "../../common/ReverseArray";
-
-import { GetTeacherAnnouncement } from "./../../../redux/actions/teacher/teacheractions";
-import Loading from "./../../common/Loading";
+import axiosInstance from "../../../axios";
 
 const AnnouncementTeacher = () => {
-  const { teachernotices: data } = useSelector((state) => state.teachers);
-
   const { user } = useSelector((state) => state.auth);
-  const { student } = useSelector((state) => state.students);
+  const [teachernotices, setAnnouncements] = useState([]);
 
-  const filterStudent =
-    student && student.find((value) => value.user.id === user.id);
-
-  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(GetTeacherAnnouncement());
-  }, [dispatch]);
-
-  const newArray =
-    data &&
-    reverseArray(data).filter(
-      (value) =>
-        value.announcement_for_class.class_name ==
-          filterStudent.current_grade.class_name &&
-        value.announcement_for_class.section ==
-          filterStudent.current_grade.section
-    );
+    axiosInstance
+      .get(`/student?user=${user.id}`)
+      .then(({ data: { results } }) => {
+        axiosInstance
+          .get(`/teachernotices?classname=${results[0].current_grade.id}`)
+          .then(({ data: { results } }) => {
+            setAnnouncements(results);
+          });
+      });
+  }, []);
 
   // console.log(data.reverse());
   const columns = useMemo(
@@ -97,20 +84,19 @@ const AnnouncementTeacher = () => {
     []
   );
 
-  return student ? (
+  return (
     <>
+      {console.log(teachernotices)}
       <div>
-        {data && (
+        {teachernotices && (
           <TableContainer
             columns={columns}
-            data={newArray}
+            data={teachernotices}
             showSearch={false}
           />
         )}
       </div>
     </>
-  ) : (
-    <Loading />
   );
 };
 

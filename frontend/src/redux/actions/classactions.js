@@ -24,8 +24,8 @@ export const AddClassActions = (data) => {
 
 export const GetClass = () => {
   return function (dispatch) {
-    axiosInstance.get("/grades").then(({ data: { results } }) => {
-      dispatch({ type: GET_CLASS, payload: results });
+    axiosInstance.get("/grades").then(({ data }) => {
+      dispatch({ type: GET_CLASS, payload: data });
     });
   };
 };

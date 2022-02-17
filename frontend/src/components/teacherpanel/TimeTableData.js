@@ -1,26 +1,25 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import TableContainer from "../common/Table/TableContainer";
 
 import moment from "moment";
 import { SelectColumnFilter } from "../common/Table/filters";
-import { GetAdminTimetables } from "../../redux/actions/admin/adminaction";
-import { TeacherDetail } from "./../../redux/actions/teacher/teacheractions";
+import axiosInstance from "../../axios";
 
 const TimeTableData = () => {
-  const { timetables } = useSelector((state) => state.admins);
   const { user } = useSelector((state) => state.auth);
-  const { teacherDetail } = useSelector((state) => state.teachers);
-
-  const filterTeacher = teacherDetail.find(
-    (value) => value.user.id === user.id
-  );
-
-  const dispatch = useDispatch();
+  const [timetablesData, settimetables] = useState([]);
 
   useEffect(() => {
-    dispatch(TeacherDetail());
-    dispatch(GetAdminTimetables(`teacher=${filterTeacher.id}`));
+    axiosInstance
+      .get(`/teacher?user=${user.id}`)
+      .then(({ data: { results } }) => {
+        axiosInstance
+          .get(`/timetable?teacher=${results[0].id}`)
+          .then(({ data: { results } }) => {
+            settimetables(results);
+          });
+      });
   }, []);
 
   const columns = useMemo(
@@ -66,7 +65,9 @@ const TimeTableData = () => {
   return (
     <>
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        {timetables && <TableContainer columns={columns} data={timetables} />}
+        {timetablesData && (
+          <TableContainer columns={columns} data={timetablesData} />
+        )}
       </div>
     </>
   );

@@ -10,7 +10,7 @@ import {
 } from "../../../../redux/actions/classactions";
 
 const ClassTableData = ({ click, setClick }) => {
-  const { grades: classes } = useSelector((state) => state.classes);
+  const { grades } = useSelector((state) => state.classes);
   const dispatch = useDispatch();
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
@@ -89,8 +89,8 @@ const ClassTableData = ({ click, setClick }) => {
             <span className="title">View Class With Section</span>
           </div>
           <div className="content-section" style={{ margin: "20px 30px" }}>
-            {classes ? (
-              <TableContainer columns={columns} data={classes} />
+            {grades ? (
+              <TableContainer columns={columns} data={grades.results} />
             ) : (
               <Loading />
             )}
