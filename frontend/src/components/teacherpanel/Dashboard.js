@@ -11,24 +11,22 @@ import { GetClass } from "../../redux/actions/classactions";
 import Moment from "react-moment";
 import reverseArray from "../common/ReverseArray";
 import { GET_DETAILS } from "./../../redux/actions/student/studentactions";
+import { GetAdminFilterAnnouncement } from "./../../redux/actions/admin/announcementaction";
 
 function Dashboard() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getData("adminnotices"));
+    dispatch(GetAdminFilterAnnouncement("ordering=-id"));
     dispatch(GetClass());
     dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
     dispatch(GET_DETAILS("/teacher", "GET_TEACHER_DETAIL"));
   }, [dispatch]);
-  const {
-    adminnotices: { results },
-  } = useSelector((state) => state.data);
+  const { adminfilternotices } = useSelector((state) => state.admins);
 
   const { grades } = useSelector((state) => state.classes);
   const { teacherDetail } = useSelector((state) => state.teachers);
   const { student } = useSelector((state) => state.students);
-
-  const adminnotices = results && reverseArray(results);
+  const adminnotices = adminfilternotices && adminfilternotices.results;
 
   return (
     <div>
@@ -37,7 +35,7 @@ function Dashboard() {
         <div className="cardelement">
           {student && (
             <CardData
-              number={student.length}
+              number={student.count}
               name={"Students"}
               icon={<FaIcons.FaUsers style={{ color: "#FFC36D" }} />}
             />
@@ -45,21 +43,21 @@ function Dashboard() {
 
           {
             <CardData
-              number={teacherDetail?.length}
+              number={teacherDetail?.count}
               name={"Teachers"}
               icon={<FaIcons.FaUserSecret style={{ color: "#FF7676" }} />}
             />
           }
           {
             <CardData
-              number={adminnotices?.length}
+              number={adminfilternotices?.count}
               name={"Announcements"}
               icon={<FaIcons.FaBullhorn style={{ color: "#009DDC" }} />}
             />
           }
           {
             <CardData
-              number={grades?.length}
+              number={grades?.count}
               name={"Classes"}
               icon={<FaIcons.FaFile style={{ color: "#27AE60" }} />}
             />

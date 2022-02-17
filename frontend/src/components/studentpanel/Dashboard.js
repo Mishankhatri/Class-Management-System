@@ -12,7 +12,6 @@ import reverseArray from "../common/ReverseArray";
 import { GET_DETAILS } from "../../redux/actions/student/studentactions";
 import { GetTeacherAnnouncement } from "./../../redux/actions/teacher/teacheractions";
 import Loading from "../common/Loading";
-import { getData } from "./../../redux/actions/dataactions";
 import { GetAdminAnnouncement } from "../../redux/actions/admin/announcementaction";
 
 function Dashboard() {

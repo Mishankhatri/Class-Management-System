@@ -19,8 +19,8 @@ function StudentFullDetail() {
   const dispatch = useDispatch();
   const { studentParentID } = useSelector((state) => state.students);
 
-  const data = studentParentID && studentParentID[0].student;
-  const parents = studentParentID && studentParentID[0];
+  const data = studentParentID && studentParentID.results[0].student;
+  const parents = studentParentID && studentParentID.results[0];
 
   useEffect(() => {
     dispatch(StudentClassById(id));

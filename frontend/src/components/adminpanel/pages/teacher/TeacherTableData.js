@@ -16,7 +16,8 @@ const TeacherTableData = () => {
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
 
-  const { teacherDetail: data } = useSelector((state) => state.teachers);
+  const { teacherDetail } = useSelector((state) => state.teachers);
+  const data = teacherDetail && teacherDetail.results;
 
   useEffect(() => {
     dispatch(TeacherDetail());

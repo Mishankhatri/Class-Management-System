@@ -20,10 +20,10 @@ export const TeacherDetail = () => {
   return function (dispatch) {
     axiosInstance
       .get(`/teacher`)
-      .then(({ data: { results } }) => {
+      .then(({ data }) => {
         dispatch({
           type: GET_TEACHER_DETAIL,
-          payload: results,
+          payload: data,
         });
       })
       .catch((error) => console.log(error));
