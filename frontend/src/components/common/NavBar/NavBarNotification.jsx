@@ -8,9 +8,13 @@ import {
   AdminAnnouncementById,
   TeacherAnnouncementById,
 } from "./../../../redux/actions/admin/announcementaction";
+import { getData } from "../../../redux/actions/dataactions";
 
 function NavBarNotification({ showDropDown, setDropDown, name }) {
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getData("adminnotices"));
+  }, [dispatch]);
 
   const className = showDropDown
     ? "menu active notification"
@@ -39,11 +43,11 @@ function NavBarNotification({ showDropDown, setDropDown, name }) {
           currentStudentDetail?.current_grade.section
     );
 
-  const notices = name == "student" ? reverseTeacherNotices : adminnotices;
+  const notices = name === "student" ? reverseTeacherNotices : adminnotices;
 
   const handleChange = (data) => {
     setDropDown(false);
-    if (name == "student") {
+    if (name === "student") {
       dispatch(TeacherAnnouncementById(data));
     } else dispatch(AdminAnnouncementById(data));
   };
