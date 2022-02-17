@@ -11,7 +11,8 @@ import ViewTimetable_Table from "./ViewTimetable_Table";
 
 import "./../users/UserProfile.css";
 import ChangeInput from "./../../../common/Modal/ChangeInput";
-import ViewTimetableAdmin from "./ViewTimeTables";
+import { useDispatch } from "react-redux";
+import { AddTimetables } from "../../../../redux/actions/admin/adminaction";
 
 function CreateTimetables() {
   const [selectRef, setSelectRef] = useState(null);
@@ -23,11 +24,19 @@ function CreateTimetables() {
   } = useForm();
 
   const refClear = (ref) => setSelectRef(ref);
+  const dispatch = useDispatch();
 
   const onSubmitForm = (data, e) => {
     console.log(data);
-    e.target.reset();
-    selectRef.clearValue();
+    const postData = new FormData();
+    postData.append("day", data.scheduleDay.value);
+    postData.append("startTime", data.scheduleStartTime);
+    postData.append("endTime", data.scheduleEndTime);
+    // postData.append("assigned_id"); Need Assigned Id
+
+    dispatch(AddTimetables(postData));
+    // e.target.reset();
+    // selectRef.clearValue();
   };
 
   const [click, setClick] = useState(false);

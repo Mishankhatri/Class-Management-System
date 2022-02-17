@@ -3,15 +3,20 @@ import * as BsIcons from "react-icons/bs";
 import * as BiIcons from "react-icons/bi";
 import * as RiIcons from "react-icons/ri";
 import * as FaIcons from "react-icons/fa";
+import * as VscIcons from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import NavBarNotification from "./NavBarNotification";
 
 import AnnouncementCard from "../AnnouncementCard";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { OpenNotification } from "./../../../redux/actions/admin/announcementaction";
 
 function NavBar({ onClickHandler, username, show, image, name }) {
   const [showDropDown, setDropDown] = useState(false);
+  const dispatch = useDispatch();
+
   const [showDropDownNotification, setDropDownNotification] = useState(false);
+  const isNewNotification = false;
 
   const adminnotices = useSelector((state) => state.admins);
   const teachernotices = useSelector((state) => state.teachers);
@@ -36,11 +41,15 @@ function NavBar({ onClickHandler, username, show, image, name }) {
             <div className="not-image">
               <div
                 className="notification"
-                onClick={() =>
-                  setDropDownNotification(!showDropDownNotification)
-                }>
-                <div className="notification__symbol"></div>
-                <BsIcons.BsBell className="notification__icon" />
+                onClick={() => {
+                  setDropDownNotification(!showDropDownNotification);
+                  dispatch(OpenNotification());
+                }}>
+                {!adminnotices.showNewNotification ? (
+                  <VscIcons.VscBell className="notification__icon" />
+                ) : (
+                  <VscIcons.VscBellDot className="notification__icon" />
+                )}
               </div>
               <img src={image} alt="profile-img" className="profile-image" />
             </div>

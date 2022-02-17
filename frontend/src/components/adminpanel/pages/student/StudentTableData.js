@@ -19,10 +19,12 @@ const StudentTableData = () => {
 
   useEffect(() => {
     dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
-    dispatch(GET_DETAILS("/parent", "GET_STUDENT_PARENTS"));
   }, []);
 
   const onOpen = (post) => {
+    dispatch(
+      GET_DETAILS(`/parent?student=${post.id}`, "GET_STUDENT_PARENTS_BYID")
+    );
     navigate(`${post.id}`);
   };
 

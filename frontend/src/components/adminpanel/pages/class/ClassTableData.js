@@ -3,6 +3,7 @@ import { SelectColumnFilter } from "../../../common/Table/filters";
 import TableContainer from "../../../common/Table/TableContainer";
 import { useSelector, useDispatch } from "react-redux";
 import CustomConfirm from "./../../../common/CustomConfirm";
+import Loading from "./../../../common/Loading";
 import {
   DeleteClassSec,
   GetClass,
@@ -88,7 +89,11 @@ const ClassTableData = ({ click, setClick }) => {
             <span className="title">View Class With Section</span>
           </div>
           <div className="content-section" style={{ margin: "20px 30px" }}>
-            <TableContainer columns={columns} data={classes} />
+            {classes ? (
+              <TableContainer columns={columns} data={classes} />
+            ) : (
+              <Loading />
+            )}
           </div>
         </div>
       </div>

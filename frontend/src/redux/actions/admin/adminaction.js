@@ -92,3 +92,18 @@ export const DeleteTimetables = (id) => {
       .catch((error) => console.log(error));
   };
 };
+
+export const AddTimetables = (postdata) => {
+  return function (dispatch) {
+    const body = postdata;
+    axiosInstance
+      .post(`timetable/`, body)
+      .then(() => {
+        dispatch({ type: ADD_TIMETABLES });
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+        console.log(err.response);
+      });
+  };
+};

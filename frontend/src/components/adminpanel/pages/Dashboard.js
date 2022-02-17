@@ -5,30 +5,29 @@ import * as FaIcons from "react-icons/fa";
 import CardData from "../../common/DashboardCardData";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getData } from "../../../redux/actions/dataactions";
 
 import { GetClass } from "../../../redux/actions/classactions";
 import Moment from "react-moment";
-import reverseArray from "../../common/ReverseArray";
 import { GET_DETAILS } from "../../../redux/actions/student/studentactions";
+import { GetAdminFilterAnnouncement } from "./../../../redux/actions/admin/announcementaction";
 
 function Dashboard() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getData("adminnotices"));
+    // dispatch(getData("adminnotices?ordering=-id"));
+    dispatch(GetAdminFilterAnnouncement("ordering=-id"));
     dispatch(GetClass());
     dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
     dispatch(GET_DETAILS("/teacher", "GET_TEACHER_DETAIL"));
   }, [dispatch]);
-  const {
-    adminnotices: { results },
-  } = useSelector((state) => state.data);
+  const { adminfilternotices } = useSelector((state) => state.admins);
 
   const { grades } = useSelector((state) => state.classes);
   const { teacherDetail } = useSelector((state) => state.teachers);
   const { student } = useSelector((state) => state.students);
 
-  const adminnotices = results && reverseArray(results);
+  const adminnotices = adminfilternotices && adminfilternotices.results;
+  console.log(adminfilternotices);
 
   return (
     <div>

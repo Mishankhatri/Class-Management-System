@@ -1,0 +1,74 @@
+Block 2 After Paragraph_1
+<!-- Ezoic - under_first_paragraph - under_first_paragraph -->
+<div id="ezoic-pub-ad-placeholder-118"> </div>
+<!-- End Ezoic - under_first_paragraph - under_first_paragraph -->
+
+Block 3 __BeforePost
+<!-- Ezoic - under page title - under_page_title -->
+<div id="ezoic-pub-ad-placeholder-120"> </div>
+<!-- End Ezoic - under page title - under_page_title -->
+
+Block 4 After Paragraph_6
+<!-- Ezoic - incontent_5 - incontent_5 -->
+<div id="ezoic-pub-ad-placeholder-125"> </div>
+<!-- End Ezoic - incontent_5 - incontent_5 -->
+
+Block 5 After Paragraph_12
+<!-- Ezoic - incontent_7 - incontent_6 -->
+<div id="ezoic-pub-ad-placeholder-127"> </div>
+<!-- End Ezoic - incontent_7 - incontent_6 -->
+
+Block 6 After Paragraph_18
+<!-- Ezoic - incontent_8 - incontent_8 -->
+<div id="ezoic-pub-ad-placeholder-128"> </div>
+<!-- End Ezoic - incontent_8 - incontent_8 -->
+
+Block 7 After Paragraph_24
+<!-- Ezoic - incontent_9 - incontent_9 -->
+<div id="ezoic-pub-ad-placeholder-129"> </div>
+<!-- End Ezoic - incontent_9 - incontent_9 -->
+
+Block 8 After Paragraph_34
+<!-- Ezoic - incontent_10 - incontent_10 -->
+<div id="ezoic-pub-ad-placeholder-130"> </div>
+<!-- End Ezoic - incontent_10 - incontent_10 -->
+
+Block 9 After Paragraph_44
+<!-- Ezoic - incontent_13 - incontent_13 -->
+<div id="ezoic-pub-ad-placeholder-131"> </div>
+<!-- End Ezoic - incontent_13 - incontent_13 -->
+
+Block 10 After Paragraph_54
+<!-- Ezoic - longest_content - incontent_14 -->
+<div id="ezoic-pub-ad-placeholder-132"> </div>
+<!-- End Ezoic - longest_content - incontent_14 -->
+
+Block 11 After Paragraph_64
+<!-- Ezoic - incontent_11 - incontent_11 -->
+<div id="ezoic-pub-ad-placeholder-138"> </div>
+<!-- End Ezoic - incontent_11 - incontent_11 -->
+
+Block 12 After Paragraph_74
+<!-- Ezoic - incontent_15 - incontent_15 -->
+<div id="ezoic-pub-ad-placeholder-139"> </div>
+<!-- End Ezoic - incontent_15 - incontent_15 -->
+
+Block 13 After Paragraph_84
+<!-- Ezoic - incontent_29 - incontent_29 -->
+<div id="ezoic-pub-ad-placeholder-141"> </div>
+<!-- End Ezoic - incontent_29 - incontent_29 -->
+
+Block 14 After Paragraph_94
+<!-- Ezoic - incontent_12 - incontent_12 -->
+<div id="ezoic-pub-ad-placeholder-151"> </div>
+<!-- End Ezoic - incontent_12 - incontent_12 -->
+
+Block 15 After Paragraph_104
+<!-- Ezoic - mid_content - mid_content -->
+<div id="ezoic-pub-ad-placeholder-154"> </div>
+<!-- End Ezoic - mid_content - mid_content -->
+
+Block 16 After Content
+<!-- Ezoic - bottom of page - bottom_of_page -->
+<div id="ezoic-pub-ad-placeholder-144"> </div>
+<!-- End Ezoic - bottom of page - bottom_of_page -->

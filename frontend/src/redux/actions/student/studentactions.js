@@ -91,3 +91,23 @@ export const AddStudentDetail = (postData, url, type) => {
       });
   };
 };
+
+export const AddGeneralDetails = (postData, url, type) => {
+  return function (dispatch) {
+    const body = postData;
+    axiosInstance
+      .post(`${url}/`, body)
+      .then(() => {
+        dispatch({
+          type: type,
+        });
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log("Response", error.response);
+        } else if (error.request) {
+          console.log("Request", error.request);
+        } else console.log(error);
+      });
+  };
+};

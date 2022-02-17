@@ -162,7 +162,7 @@ const addSlot = [
   },
   {
     title: "Start Time",
-    input: "text",
+    input: "time",
     icon: <FaIcons.FaUser className="mid-icon" />,
     placeholder: "Start Time",
     name: "scheduleStartTime",
@@ -170,7 +170,7 @@ const addSlot = [
   },
   {
     title: "EndTime",
-    input: "text",
+    input: "time",
     icon: <FaIcons.FaUser className="mid-icon" />,
     placeholder: "End Time",
     name: "scheduleEndTime",
