@@ -10,6 +10,7 @@ import {
   ADD_STUDENT_DETAIL,
   GET_STUDENT_PARENTS_BYID,
   ADD_STUDENT_PARENT_DETAIL,
+  GET_STUDENT_ATTENDANCE_FILTER,
 } from "../../actiontypes/student/studentdatatype";
 
 const initialState = {
@@ -35,6 +36,9 @@ export default function studentReducer(state = initialState, action) {
 
     case GET_STUDENT_ATTENDANCE:
       return { ...state, attendance: action.payload };
+
+    case GET_STUDENT_ATTENDANCE_FILTER:
+      return { ...state, attendanceFilter: action.payload };
 
     case GET_STUDENT_USERID:
       return { ...state, studentUserID: action.payload };

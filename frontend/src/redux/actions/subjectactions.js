@@ -1,6 +1,7 @@
 import {
   DELETE_ATTENDANCE,
   GET_STUDENT_ATTENDANCE,
+  GET_STUDENT_ATTENDANCE_FILTER,
 } from "../actiontypes/student/studentdatatype";
 import axiosInstance from "./../../axios";
 import { returnSuccess, returnErrors } from "./alertactions";
@@ -37,6 +38,14 @@ export const ViewStudentAttendance = (username) => {
       .then(({ data: { results } }) => {
         dispatch({ type: GET_STUDENT_ATTENDANCE, payload: results });
       });
+  };
+};
+
+export const ViewStudentAttendanceByFilter = (filter) => {
+  return function (dispatch) {
+    axiosInstance.get(`/attendance?${filter}`).then(({ data: { results } }) => {
+      dispatch({ type: GET_STUDENT_ATTENDANCE_FILTER, payload: results });
+    });
   };
 };
 
