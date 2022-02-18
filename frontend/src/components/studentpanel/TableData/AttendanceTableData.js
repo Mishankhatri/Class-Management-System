@@ -1,22 +1,12 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import TableContainer from "../../common/Table/TableContainer";
 import {
   DateRangeColumnFilter,
   SelectColumnFilter,
 } from "./../../common/Table/filters";
 
-import { useSelector, useDispatch } from "react-redux";
-import { ViewStudentAttendance } from "../../../redux/actions/subjectactions";
-import Loading from "./../../common/Loading";
-import reverseArray from "../../common/ReverseArray";
-
 const AttendanceTableData = ({ attendance }) => {
-  // const filterAttendance =
-  //   attendance &&
-  //   reverseArray(attendance).filter(
-  //     (value) => value.student.user.id === user.id
-  //   );
-
+  console.log(attendance);
   const columns = useMemo(
     () => [
       {
@@ -45,7 +35,7 @@ const AttendanceTableData = ({ attendance }) => {
     []
   );
 
-  return attendance ? (
+  return (
     <>
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
         <TableContainer
@@ -55,8 +45,6 @@ const AttendanceTableData = ({ attendance }) => {
         />
       </div>
     </>
-  ) : (
-    <Loading />
   );
 };
 
