@@ -5,7 +5,11 @@ import {
   FILTER_CLASS,
   GET_CLASS,
 } from "../actiontypes/classtype";
-import { DELETE_SUBJECTS, VIEW_SUBJECTS } from "../actiontypes/subjecttypes";
+import {
+  DELETE_SUBJECTS,
+  VIEW_SUBJECTS,
+  VIEW_SUBJECTS_ID,
+} from "../actiontypes/subjecttypes";
 
 export default function (state = [], action) {
   switch (action.type) {
@@ -23,6 +27,9 @@ export default function (state = [], action) {
 
     case VIEW_SUBJECTS:
       return { ...state, subjects: action.payload };
+
+    case VIEW_SUBJECTS_ID:
+      return { ...state, subjectsId: action.payload };
 
     default:
       return state;

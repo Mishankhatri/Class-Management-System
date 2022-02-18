@@ -9,7 +9,7 @@ import {
   GetClass,
 } from "../../../../redux/actions/classactions";
 
-const ClassTableData = ({ click, setClick }) => {
+const ClassTableData = () => {
   const { grades } = useSelector((state) => state.classes);
   const dispatch = useDispatch();
   const [clickDelete, setClickDelete] = useState(false);
@@ -51,11 +51,6 @@ const ClassTableData = ({ click, setClick }) => {
         Cell: ({ row }) => {
           return (
             <>
-              <button
-                onClick={() => setClick(!click)}
-                className="btn-primary btn-1 btn-custom">
-                Edit
-              </button>
               <button
                 className="btn-danger btn-custom"
                 onClick={() => handleDelete(row.original.id)}>

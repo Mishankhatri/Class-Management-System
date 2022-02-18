@@ -63,8 +63,8 @@ function StudentFullDetail() {
     }
     return new File([u8arr], filename, { type: mime });
   }
-
   const defaultImage = dataURLtoFile(BlankProfile, "default.jpg");
+
   //React Hook Form For Parents
   const {
     handleSubmit: handleSubmitParent,

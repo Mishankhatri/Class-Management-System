@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import BlankProfile from "../../../assets/profiles/blank-profile.jpg";
 
 function ChangePhoto({
@@ -29,13 +29,7 @@ function ChangePhoto({
             click
               ? "model-section upload-image visible"
               : "model-section upload-image"
-          }
-          //This for selecting outside modal
-          onClick={(event) => {
-            if (event.target.className.includes("model-section")) {
-              setClick(false);
-            }
-          }}>
+          }>
           <div className="modal-content">
             <form onSubmit={onSubmit}>
               <span

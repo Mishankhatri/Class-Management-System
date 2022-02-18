@@ -9,7 +9,10 @@ import ViewModal from "../../../common/Modal/ViewModal";
 import ChangePhoto from "../../../common/Modal/ChangePhoto";
 
 import { useDispatch, useSelector } from "react-redux";
-import { TeacherById } from "../../../../redux/actions/teacher/teacheractions";
+import {
+  ChangeTeacherDetail,
+  TeacherById,
+} from "../../../../redux/actions/teacher/teacheractions";
 import TeacherEditModal from "../../TeacherEditModal";
 import { Controller, useForm } from "react-hook-form";
 
@@ -33,13 +36,26 @@ function TeacherFullDetail() {
     e.preventDefault();
     setPreviosImage(BlankProfile);
     setClick(false);
-    console.log(uploadedImage); //Uploaded Image
+
+    const postData = new FormData();
+    postData.append("photo", uploadedImage);
+    dispatch(ChangeTeacherDetail(id, "UPDATE_TEACHER_PHOTO", postData));
   };
 
   const onSubmitTeacherInput = (data, e) => {
     e.target.reset();
-    console.log(data);
     setClickTeacher(false);
+
+    let postData = new FormData();
+    postData.append("first_name", data.teacherFirstName);
+    postData.append("middle_name", data.teacherMiddleName);
+    postData.append("last_name", data.teacherLastName);
+    postData.append("DOB", data.teacherDOB);
+    postData.append("email", data.teacherEmail);
+    postData.append("address", data.teacherAddress);
+    postData.append("contact_no", data.teacherPhone);
+    postData.append("gender", data.gender.value);
+    dispatch(ChangeTeacherDetail(id, "UPDATE_TEACHER_DETAIL", postData));
   };
 
   return data ? (
@@ -127,7 +143,7 @@ function TeacherFullDetail() {
                     <ViewModal
                       title={"Full Name"}
                       value={`${data.first_name} ${
-                        data.middleName ? data.middleName : ""
+                        data.middle_name ? data.middle_name : ""
                       } ${data.last_name}`}
                     />
                     <ViewModal title={"Gender"} value={data.gender} />

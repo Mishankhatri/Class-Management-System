@@ -50,6 +50,9 @@ const AddSubjects = React.lazy(() =>
 const ViewSubjects = React.lazy(() =>
   import("./components/adminpanel/pages/subject/ViewSubjects")
 );
+const SubjectDetail = React.lazy(() =>
+  import("./components/adminpanel/pages/subject/SubjectDetail")
+);
 const CreateTimetables = React.lazy(() =>
   import("./components/adminpanel/pages/timetables/CreateTimetables")
 );
@@ -159,6 +162,7 @@ function AdminPanel() {
             {/* Subject  */}
             <Route path="admin/subject/add" element={<AddSubjects />} />
             <Route path="admin/subject/view" element={<ViewSubjects />} />
+            <Route path="admin/subject/view/:id" element={<SubjectDetail />} />
             {/* <Route
               path='/subject/view/:id'
               element={<SubjectFullDetail />}

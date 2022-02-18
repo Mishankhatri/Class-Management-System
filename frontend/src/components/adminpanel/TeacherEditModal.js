@@ -10,25 +10,25 @@ function TeacherEditModal({ register, data, Controller, control }) {
           title={"FirstName"}
           register={register}
           disabled={false}
-          name={"studentFirstName"}
+          name={"teacherFirstName"}
           value={data.first_name}
         />
         <ViewModal
           title={"MiddleName"}
           register={register}
           disabled={false}
-          name={"studentMiddleName"}
-          value={data.middle_name == null ? data.middle_name : ""}
+          name={"teacherMiddleName"}
+          value={data.middle_name}
         />
         <ViewModal
           title={"LastName"}
           register={register}
           disabled={false}
-          name={"studentLastName"}
+          name={"teacherLastName"}
           value={data.last_name}
         />
         <Controller
-          name="state"
+          name="gender"
           control={control}
           defaultValue={{
             label: data.gender,
@@ -56,7 +56,7 @@ function TeacherEditModal({ register, data, Controller, control }) {
           title={"Date of Birth"}
           register={register}
           disabled={false}
-          name={"studentDOB"}
+          name={"teacherDOB"}
           value={data.DOB}
           type={"date"}
         />
@@ -64,7 +64,7 @@ function TeacherEditModal({ register, data, Controller, control }) {
           title={"Phone"}
           register={register}
           disabled={false}
-          name={"studentPhone"}
+          name={"teacherPhone"}
           value={data.contact_no}
           type={"number"}
         />
@@ -72,7 +72,7 @@ function TeacherEditModal({ register, data, Controller, control }) {
           title={"Email"}
           register={register}
           disabled={false}
-          name={"studentEmail"}
+          name={"teacherEmail"}
           value={data.email}
           type={"email"}
         />
@@ -80,7 +80,7 @@ function TeacherEditModal({ register, data, Controller, control }) {
           title={"Address"}
           register={register}
           disabled={false}
-          name={"studentAddress"}
+          name={"teacherAddress"}
           value={data.address}
         />
       </div>

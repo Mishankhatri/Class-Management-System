@@ -8,13 +8,23 @@ import { returnSuccess, returnErrors } from "./alertactions";
 import {
   ADD_SUBJECT,
   DELETE_SUBJECTS,
+  UPDATE_SUBJECT_DETAIL,
   VIEW_SUBJECTS,
+  VIEW_SUBJECTS_ID,
 } from "./../actiontypes/subjecttypes";
 
 export const ViewSubjects = () => {
   return function (dispatch) {
     axiosInstance.get("/subjects").then(({ data: { results } }) => {
       dispatch({ type: VIEW_SUBJECTS, payload: results });
+    });
+  };
+};
+
+export const ViewSubjectsFilter = (filter) => {
+  return function (dispatch) {
+    axiosInstance.get(`/subjects/${filter}`).then(({ data }) => {
+      dispatch({ type: VIEW_SUBJECTS_ID, payload: data });
     });
   };
 };
@@ -74,6 +84,23 @@ export const ADD__SUBJECTS = (postData) => {
       })
       .catch((error) => {
         dispatch(returnErrors(error.response.data, error.response.status));
+      });
+  };
+};
+
+export const ChangeSubjectDetail = (id, postdata) => {
+  return function (dispatch) {
+    const body = postdata;
+    axiosInstance
+      .patch(`subjects/${id}/`, body)
+      .then(() => {
+        dispatch({ type: UPDATE_SUBJECT_DETAIL });
+        dispatch(ViewSubjectsFilter(id));
+      })
+      .catch((error) => {
+        if (error.request) console.log(error.request);
+        else if (error.response) console.log(error.response);
+        else console.log(error);
       });
   };
 };
