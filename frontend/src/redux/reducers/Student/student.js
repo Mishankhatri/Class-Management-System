@@ -1,4 +1,9 @@
 import {
+  UPDATE_STUDENT_PARENT_DETAIL,
+  UPDATE_STUDENT_ACADEMIC_DETAIL,
+} from "../../actiontypes/student/studentdatatype";
+
+import {
   GET_STUDENT_DETAIL,
   GET_STUDENT_CLASS,
   GET_STUDENTCLASS_SID,
@@ -11,6 +16,8 @@ import {
   GET_STUDENT_PARENTS_BYID,
   ADD_STUDENT_PARENT_DETAIL,
   GET_STUDENT_ATTENDANCE_FILTER,
+  UPDATE_STUDENT_PHOTO,
+  UPDATE_STUDENT_DETAIL,
 } from "../../actiontypes/student/studentdatatype";
 
 const initialState = {
@@ -47,6 +54,10 @@ export default function studentReducer(state = initialState, action) {
     case DELETE_ATTENDANCE:
     case ADD_STUDENT_DETAIL:
     case ADD_STUDENT_PARENT_DETAIL:
+    case UPDATE_STUDENT_PHOTO:
+    case UPDATE_STUDENT_DETAIL:
+    case UPDATE_STUDENT_ACADEMIC_DETAIL:
+    case UPDATE_STUDENT_PARENT_DETAIL:
       return { ...state };
 
     default:

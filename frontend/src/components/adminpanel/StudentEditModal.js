@@ -18,7 +18,7 @@ function StudentEditModal({ register, data, Controller, control }) {
           register={register}
           disabled={false}
           name={"studentMiddleName"}
-          value={data.middle_name == null ? data.middle_name : ""}
+          value={data.middle_name}
         />
         <ViewModal
           title={"LastName"}
@@ -28,7 +28,7 @@ function StudentEditModal({ register, data, Controller, control }) {
           value={data.last_name}
         />
         <Controller
-          name="state"
+          name="studentGender"
           control={control}
           defaultValue={{
             label: data.gender,
@@ -37,7 +37,7 @@ function StudentEditModal({ register, data, Controller, control }) {
           render={({ field }) => (
             <SelectInputField
               title={"Gender"}
-              name="gender"
+              name="studentGender"
               hasValue={true}
               onChangeHandler={field.onChange}
               value={{

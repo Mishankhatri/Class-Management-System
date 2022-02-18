@@ -52,33 +52,32 @@ function NavBarNotification({ showDropDown, setDropDown, name }) {
     } else dispatch(AdminAnnouncementById(data));
   };
 
-  return notices ? (
+  return (
     <React.Fragment>
       <div className={className}>
         <div className="heading">Notifications</div>
-        {notices.map((value, index) => {
-          const stringLength = value.details.length;
-          const messageText =
-            stringLength > 80
-              ? value.details.slice(0, 80).concat("...")
-              : value.details;
-          const dates = <Moment fromNow>{value.created_at}</Moment>;
+        {notices &&
+          notices.map((value, index) => {
+            const stringLength = value.details.length;
+            const messageText =
+              stringLength > 80
+                ? value.details.slice(0, 80).concat("...")
+                : value.details;
+            const dates = <Moment fromNow>{value.created_at}</Moment>;
 
-          return (
-            <NotificationMessage
-              messageText={messageText}
-              by={value.created_by.fullname}
-              time={dates}
-              ProfileImage={value.created_by.profile_image}
-              key={index}
-              onClick={() => handleChange(value.id)}
-            />
-          );
-        })}
+            return (
+              <NotificationMessage
+                messageText={messageText}
+                by={value.created_by.fullname}
+                time={dates}
+                ProfileImage={value.created_by.profile_image}
+                key={index}
+                onClick={() => handleChange(value.id)}
+              />
+            );
+          })}
       </div>
     </React.Fragment>
-  ) : (
-    <Loading />
   );
 }
 

@@ -24,13 +24,7 @@ function ViewModal({
               {...register(name)}
             />
           ) : (
-            <input
-              type={type}
-              className="input"
-              disabled={disabled}
-              defaultValue={value}
-              name={name}
-            />
+            <div className="input">{value}</div>
           )}
         </div>
       </div>
