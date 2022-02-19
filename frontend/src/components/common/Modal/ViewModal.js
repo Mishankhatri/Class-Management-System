@@ -8,11 +8,12 @@ function ViewModal({
   name = "",
   register,
   type = "text",
+  icon = "",
 }) {
   return (
     <div className="info">
       <div className="mid-content">
-        <HeaderInputField title={title} />
+        <HeaderInputField title={title} icon={icon} />
         <div className="label-input">
           {register ? (
             <input

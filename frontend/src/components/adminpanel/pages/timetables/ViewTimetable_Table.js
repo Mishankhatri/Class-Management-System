@@ -62,7 +62,10 @@ const ViewTimetable_Table = ({ click, setClick }) => {
       },
       {
         Header: "Teacher",
-        accessor: "assigned.teacher",
+        // accessor: "assigned.teacher",
+        accessor: (d) => {
+          return `${d.assigned.teacher.first_name} ${d.assigned.teacher.middle_name} ${d.assigned.teacher.last_name}`;
+        },
         SearchAble: true,
       },
       {
@@ -99,6 +102,7 @@ const ViewTimetable_Table = ({ click, setClick }) => {
           falseActivity={"Cancel"}
           setDelete={setClickDelete}
           id={deleteId}
+          reverse={true}
           PeformDelete={DeleteTimetables}
         />
       )}

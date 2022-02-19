@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InnerHeader from "./../../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
 import * as FaIcons from "react-icons/fa";
 
-import CustomController from "../../../common/Controller";
 import { useForm, Controller } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
 import { addSlot } from "../../../values/AdminPanel/TimetableValues";
 import ViewTimetable_Table from "./ViewTimetable_Table";
 
@@ -13,28 +11,142 @@ import "./../users/UserProfile.css";
 import ChangeInput from "./../../../common/Modal/ChangeInput";
 import { useDispatch } from "react-redux";
 import { AddTimetables } from "../../../../redux/actions/admin/adminaction";
+import ViewModal from "./../../../common/Modal/ViewModal";
+import SelectInputField from "../../../common/InputField/SelectInputField";
+import { UniqueArray } from "../../../common/ReverseArray";
+import { GetPaginatedPromise } from "../../../GetOptions";
+import axiosInstance from "../../../../axios";
 
 function CreateTimetables() {
   const [selectRef, setSelectRef] = useState(null);
-
-  const {
-    handleSubmit: handleSubmit_1,
-    control: control_1,
-    formState: { errors: errors_1 },
-  } = useForm();
-
-  const refClear = (ref) => setSelectRef(ref);
+  const { handleSubmit, control, register } = useForm();
   const dispatch = useDispatch();
 
-  const onSubmitForm = (data, e) => {
-    console.log(data);
-    const postData = new FormData();
-    postData.append("day", data.scheduleDay.value);
-    postData.append("startTime", data.scheduleStartTime);
-    postData.append("endTime", data.scheduleEndTime);
-    // postData.append("assigned_id"); Need Assigned Id
+  const refClear = (ref) => setSelectRef(ref);
 
-    dispatch(AddTimetables(postData));
+  //Getting Whole Array form database
+  const [grade, setGrade] = useState([]);
+  const [teacherDB, setTeacherDB] = useState([]);
+
+  //Dynamic Options
+  const [section, setSection] = useState([]);
+  const [subject, setSubject] = useState([]);
+  const [teacher, setTeacher] = useState([]);
+
+  //Setting Click Reference to find Subject
+  const [classRef, setClassRef] = useState([]);
+  const [sectionRef, setSectionRef] = useState([]);
+  const uniqueGrade = UniqueArray(grade, "class_name");
+
+  useEffect(() => {
+    const GetOptions = async () => {
+      try {
+        const got = await GetPaginatedPromise("grades");
+        const teachers = await GetPaginatedPromise("teacher");
+        setGrade(got);
+        setTeacherDB(teachers);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    GetOptions();
+  }, []);
+
+  //Getting Section Options based on Class Input
+  const getSection = (data) => {
+    const sectionOptions = grade.filter(
+      (value) => value.class_name == data.value
+    );
+
+    return sectionOptions.map((value) => ({
+      label: value.section,
+      value: value.section,
+    }));
+  };
+
+  //Getting Subjects
+  const getSubjects = (data) => {
+    return data.map((value) => ({
+      label: value.subject_name,
+      value: value.id,
+    }));
+  };
+
+  const getTeacherDetail = (data) => {
+    return data.map((value) => ({
+      label: `${value.teacher.first_name} ${
+        value.teacher.middle_name ? value.teacher.middle_name : ""
+      } ${value.teacher.last_name}`,
+      value: value.teacher.id,
+    }));
+  };
+
+  //Making Class Options
+  const classOptions = uniqueGrade.map((value) => ({
+    label: value,
+    value: value,
+  }));
+
+  //Set Section from Selecting Class
+  const handleClass = (data) => {
+    setClassRef(data.value);
+    const sectionLabel = getSection(data);
+    setSection(sectionLabel);
+  };
+
+  //Set Subject after selecting both class and section
+  const handleSection = (data) => {
+    //Setting Teacher Options
+    setSectionRef(data.value);
+
+    //Setting Subject Option based on Class
+    axiosInstance
+      .get(`/subjects?classname=${classRef}&section=${data.value}`)
+      .then(({ data: { results } }) => {
+        const subjects = getSubjects(results);
+        setSubject(subjects);
+      });
+  };
+
+  const handleSubject = (data) => {
+    axiosInstance
+      .get(`/grades?classname=${classRef}&section=${sectionRef}`)
+      .then(({ data: { results } }) => {
+        axiosInstance
+          .get(
+            `/AssignTeacherToSubjectsAPI?grade=${results[0].id}&subject=${data.value}`
+          )
+          .then(({ data: { results } }) => {
+            const teachers = getTeacherDetail(results);
+            setTeacher(teachers);
+          });
+      });
+  };
+
+  const onSubmitForm = (data, e) => {
+    const postData = new FormData();
+    postData.append("day", data.day.value);
+    postData.append("startTime", data.startTime);
+    postData.append("endTime", data.endTime);
+
+    axiosInstance
+      .get(
+        `/grades?classname=${data.class.value}&section=${data.section.value}`
+      )
+      .then(({ data: { results } }) => {
+        axiosInstance
+          .get(
+            `/AssignTeacherToSubjectsAPI?grade=${results[0].id}&subject=${data.subject.value}&teacher=${data.teacher.value}`
+          )
+          .then(({ data: { results } }) => {
+            postData.append("assigned", results[0].id);
+            dispatch(AddTimetables(postData));
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     // e.target.reset();
     // selectRef.clearValue();
   };
@@ -62,21 +174,121 @@ function CreateTimetables() {
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"Create Timetables"} />
       <div className="main-content">
         <div className="timetable">
-          <form onSubmit={handleSubmit_1(onSubmitForm)}>
-            <CustomController
-              title={"ADD SLOT"}
-              icon={<FaIcons.FaUser />}
-              ValueArray={addSlot}
-              refClear={refClear}
-              control={control_1}
-              Controller={Controller}
-              errors={errors_1}
-              ErrorMessage={ErrorMessage}
-              isCustom={false}
-            />
-            <button className="morebutton btn" type="submit">
-              Submit
-            </button>
+          <form onSubmit={handleSubmit(onSubmitForm)}>
+            <div className={"card-section"}>
+              <div className="heading">
+                <span className="title-icon">{<MdIcons.MdTableView />}</span>
+                <span className="title">Create Timetables</span> {/*Custom  */}
+              </div>
+
+              <div className={"content-section"}>
+                <div className="allinputfield">
+                  <Controller
+                    name="day"
+                    control={control}
+                    render={({ field }) => (
+                      <SelectInputField
+                        title={"Day"}
+                        name="day"
+                        icon={<FaIcons.FaUser className="mid-icon" />}
+                        onChangeHandler={field.onChange}
+                        options={[
+                          { value: "Sunday", label: "Sunday" },
+                          { value: "Monday", label: "Monday" },
+                          { value: "Tuesday", label: "Tuesday" },
+                          { value: "Wednesday", label: "Wedday" },
+                          { value: "Thursday", label: "Thursday" },
+                          { value: "Friday", label: "Friday" },
+                        ]}
+                      />
+                    )}
+                  />
+                  <ViewModal
+                    title={"Start Time"}
+                    register={register}
+                    disabled={false}
+                    name={"startTime"}
+                    type={"time"}
+                    icon={<FaIcons.FaUser className="mid-icon" />}
+                  />
+                  <ViewModal
+                    title={"End Time"}
+                    register={register}
+                    disabled={false}
+                    name={"endTime"}
+                    type={"time"}
+                    icon={<FaIcons.FaUser className="mid-icon" />}
+                  />
+                  <Controller
+                    name="class"
+                    control={control}
+                    render={({ field }) => (
+                      <SelectInputField
+                        title={"Class"}
+                        name="class"
+                        icon={<FaIcons.FaCode className="mid-icon" />}
+                        onChangeHandler={(data) => {
+                          handleClass(data);
+                          field.onChange(data);
+                        }}
+                        options={classOptions}
+                      />
+                    )}
+                  />
+                  <Controller
+                    name="section"
+                    control={control}
+                    render={({ field }) => (
+                      <SelectInputField
+                        title={"Section"}
+                        icon={<FaIcons.FaCode className="mid-icon" />}
+                        name="section"
+                        onChangeHandler={(data) => {
+                          handleSection(data);
+                          field.onChange(data);
+                        }}
+                        options={section}
+                      />
+                    )}
+                  />
+                  <Controller
+                    name="subject"
+                    control={control}
+                    render={({ field }) => (
+                      <SelectInputField
+                        title={"Subject"}
+                        name="subject"
+                        icon={<MdIcons.MdBook className="mid-icon" />}
+                        options={subject}
+                        onChangeHandler={(data) => {
+                          handleSubject(data);
+                          field.onChange(data);
+                        }}
+                      />
+                    )}
+                  />
+                  <Controller
+                    name="teacher"
+                    control={control}
+                    render={({ field }) => (
+                      <SelectInputField
+                        title={"Teacher"}
+                        name="teacher"
+                        icon={<FaIcons.FaUser className="mid-icon" />}
+                        onChangeHandler={field.onChange}
+                        options={teacher}
+                      />
+                    )}
+                  />
+                </div>
+                <button
+                  className="morebutton btn"
+                  type="submit"
+                  style={{ marginTop: 30 }}>
+                  Submit
+                </button>
+              </div>
+            </div>
           </form>
 
           <h2 className="h3">View All Slots</h2>

@@ -64,7 +64,11 @@ const ViewTimetableAdmin = () => {
       },
       {
         Header: "Teacher",
-        accessor: "assigned.teacher",
+        accessor: (d) => {
+          return `${d.assigned.teacher.first_name} ${
+            d.assigned.teacher.middle_name ? d.assigned.teacher.middle_name : ""
+          } ${d.assigned.teacher.last_name}`;
+        },
         SearchAble: true,
       },
       {
