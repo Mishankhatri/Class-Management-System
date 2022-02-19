@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InnerHeader from "./../../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
 import * as FaIcons from "react-icons/fa";
@@ -10,6 +10,8 @@ import axiosInstance from "../../../../axios";
 import { useAlert } from "react-alert";
 import { useDispatch } from "react-redux";
 import { AddGeneralDetails } from "../../../../redux/actions/student/studentactions";
+import { GetPaginatedGradePromise } from "../../../GetOptions";
+import { UniqueArray } from "../../../common/ReverseArray";
 
 function AddSection() {
   const [selectClassRef, setClassRef] = useState(null);
@@ -22,17 +24,25 @@ function AddSection() {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const GetOptions = async () => {
-  //     try {
-  //       const got = await GetPaginatedGradePromise();
-  //       console.log(got);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   GetOptions();
-  // }, []);
+  const [grade, setGrade] = useState([]);
+
+  useEffect(() => {
+    const GetOptions = async () => {
+      try {
+        const got = await GetPaginatedGradePromise();
+        setGrade(got);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    GetOptions();
+  }, []);
+
+  const uniqueGrade = UniqueArray(grade, "class_name");
+  const classOptions = uniqueGrade.map((value) => ({
+    label: value,
+    value: value,
+  }));
 
   // GetOptions();
   const onSubmitForm = (data, e) => {
@@ -95,16 +105,7 @@ function AddSection() {
                     name={"studentClass"}
                     onChangeHandler={field.onChange}
                     isRequired={true}
-                    options={[
-                      { value: "12", label: "12" },
-                      { value: "11", label: "11" },
-                      { value: "10", label: "10" },
-                      { value: "9", label: "9" },
-                      { value: "8", label: "8" },
-                      { value: "7", label: "7" },
-                      { value: "6", label: "6" },
-                      { value: "5", label: "5" },
-                    ]}
+                    options={classOptions}
                     refClear={refClearClass}
                   />
                 )}

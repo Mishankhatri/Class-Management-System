@@ -6,3 +6,12 @@ export default function reverseArray(data) {
   }
   return newReverseArray;
 }
+
+export function UniqueArray(array, field) {
+  return array.reduce((accumulator, current) => {
+    if (!accumulator.includes(current[field])) {
+      accumulator.push(current[field]);
+    }
+    return accumulator;
+  }, []);
+}

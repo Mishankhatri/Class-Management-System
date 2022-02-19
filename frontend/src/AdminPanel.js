@@ -59,6 +59,10 @@ const CreateTimetables = React.lazy(() =>
 const ViewTimetables = React.lazy(() =>
   import("./components/adminpanel/pages/timetables/ViewTimeTables")
 );
+const TimeTableDetails = React.lazy(() =>
+  import("./components/adminpanel/pages/timetables/TimetableDetail")
+);
+
 const Attendance = React.lazy(() =>
   import("./components/adminpanel/pages/reports/Attendance")
 );
@@ -174,6 +178,10 @@ function AdminPanel() {
               element={<CreateTimetables />}
             />
             <Route path="admin/timetables/view" element={<ViewTimetables />} />
+            <Route
+              path="admin/timetables/view/:id"
+              element={<TimeTableDetails />}
+            />
 
             {/* Reports  */}
             <Route path="admin/reports/attendance" element={<Attendance />} />

@@ -24,7 +24,7 @@ function SubjectDetail() {
     dispatch(ViewSubjectsFilter(id));
   }, [id]);
 
-  const [clickParent, setClickParent] = useState(false);
+  const [clickSubjects, setClickSubjects] = useState(false);
 
   //React Hook form Initialization fot editing
   const { handleSubmit, control, register } = useForm();
@@ -32,7 +32,7 @@ function SubjectDetail() {
   //On Editing Parents Info
   const onSubmitParentInput = (data, e) => {
     e.target.reset();
-    setClickParent(false);
+    setClickSubjects(false);
 
     console.log(data);
     const postSubjectData = new FormData();
@@ -56,15 +56,17 @@ function SubjectDetail() {
 
   return subjectsId ? (
     <React.Fragment>
-      {clickParent && (
+      {clickSubjects && (
         <div className="modal">
           <div
-            className={clickParent ? "model-section visible" : "model-section"}>
+            className={
+              clickSubjects ? "model-section visible" : "model-section"
+            }>
             <div className="modal-content">
               <form onSubmit={handleSubmit(onSubmitParentInput)}>
                 <span
                   className="close"
-                  onClick={() => setClickParent(!clickParent)}>
+                  onClick={() => setClickSubjects(!clickSubjects)}>
                   &times;
                 </span>
                 <div className="content">
@@ -119,7 +121,7 @@ function SubjectDetail() {
                   </div>
 
                   <div className="instruction_info">
-                    <h4>Instruction</h4>
+                    <h4>Description</h4>
                     <div className="content">{subjectsId.description}</div>
                   </div>
                 </div>
@@ -127,7 +129,7 @@ function SubjectDetail() {
               <button
                 className="btn-edit"
                 style={{ marginTop: 20 }}
-                onClick={() => setClickParent(!clickParent)}>
+                onClick={() => setClickSubjects(!clickSubjects)}>
                 Edit
               </button>
             </div>

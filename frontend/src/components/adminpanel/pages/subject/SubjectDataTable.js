@@ -51,11 +51,7 @@ const SubjectDataTable = ({ click, setClick }) => {
         },
         SearchAble: true,
       },
-      {
-        Header: "Description",
-        accessor: "description",
-        SearchAble: false,
-      },
+
       {
         Header: "Action",
         SearchAble: false,

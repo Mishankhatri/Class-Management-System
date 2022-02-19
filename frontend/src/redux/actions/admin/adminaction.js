@@ -5,7 +5,9 @@ import {
   CHANGE_ADMIN_PASSWORD,
   DELETE_TIMETABLES,
   GET_TIMETABLES,
+  GET_TIMETABLES_ID,
   UPDATE_ADMIN_INFO,
+  UPDATE_TIMETABLES,
 } from "./../../actiontypes/admin/admindatatype";
 
 export const ChangeAdminPassword = (data) => {
@@ -104,6 +106,37 @@ export const AddTimetables = (postdata) => {
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));
         console.log(err.response);
+      });
+  };
+};
+
+export const GetAdminTimetablesByID = (id) => {
+  return function (dispatch) {
+    axiosInstance
+      .get(`/timetable/${id}`)
+      .then(({ data }) => {
+        dispatch({ type: GET_TIMETABLES_ID, payload: data });
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+        console.log(err.response);
+      });
+  };
+};
+
+export const ChangeTimetableDetail = (id, postdata) => {
+  return function (dispatch) {
+    const body = postdata;
+    axiosInstance
+      .patch(`timetable/${id}/`, body)
+      .then(() => {
+        dispatch({ type: UPDATE_TIMETABLES });
+        dispatch(GetAdminTimetablesByID(id));
+      })
+      .catch((error) => {
+        if (error.request) console.log(error.request);
+        else if (error.response) console.log(error.response);
+        else console.log(error);
       });
   };
 };

@@ -68,7 +68,6 @@ export const AddTeacherDetail = (postData) => {
 
 export const AssignTeacherSubjects = (postData) => {
   return function (dispatch) {
-    console.log(postData);
     const body = postData;
     axiosInstance
       .post("AssignTeacherToSubjectsAPI/", body)
