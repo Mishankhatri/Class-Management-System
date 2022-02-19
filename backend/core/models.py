@@ -78,7 +78,9 @@ class Student(models.Model):
     gender = models.CharField(max_length=50, choices=gender_choices, default='Male')
 
     def __str__(self):
-        return '%s %s %s' % (self.first_name, self.middle_name,self.last_name)
+        if self.middle_name is not None:
+            return '%s %s %s' % (self.first_name, self.middle_name,self.last_name)
+        return '%s %s' % (self.first_name,self.last_name)
     
 class Parent(models.Model):
     student = models.OneToOneField(Student,on_delete=models.CASCADE,related_name='parent_info')   
@@ -90,6 +92,8 @@ class Parent(models.Model):
     parent_additional_contact_no= models.CharField(default=0,max_length=1024,null=False,blank=False)
     parent_email=models.EmailField(_('email address'),null=False,blank=False,default='')
     
+    def __str__(self):
+        return '%s %s %s' % (self.student,self.father_name,self.mother_name)
 class Teacher(models.Model):
     TRN = models.CharField( max_length=100) #teacherid
     user = models.OneToOneField(CMS_Users, on_delete=models.CASCADE,related_name='teacher_user')
@@ -104,7 +108,9 @@ class Teacher(models.Model):
     gender = models.CharField(max_length=50, choices=gender_choices, default='Male')
 
     def __str__(self):
-        return '%s %s %s' % (self.first_name, self.middle_name,self.last_name)
+        if self.middle_name is not None:
+            return '%s %s %s' % (self.first_name, self.middle_name,self.last_name)
+        return '%s %s' % (self.first_name,self.last_name)
 class AssignTeacherToSubjects(models.Model):
     teacher = models.ForeignKey(Teacher,on_delete=models.CASCADE,related_name='teachers_assigned_subjects')
     grade = models.ForeignKey(Grade,on_delete=models.CASCADE,related_name='teacher_grade')
