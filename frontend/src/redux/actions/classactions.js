@@ -5,9 +5,9 @@ import {
   DELETE_CLASSSEC,
 } from "../actiontypes/classtype";
 import axiosInstance from "./../../axios";
-import { returnErrors } from "./alertactions";
+import { createMessage, returnErrors } from "./alertactions";
 
-export const AddClassActions = (data) => {
+export const AddClassActions = (data, msg) => {
   return function (dispatch) {
     axiosInstance
       .post("grades/", { class_name: data })
@@ -15,6 +15,13 @@ export const AddClassActions = (data) => {
         dispatch({
           type: ADD_CLASS,
         });
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            addClass: msg,
+          })
+        );
       })
       .catch((error) => {
         dispatch(returnErrors(error.response.data, error.response.status));
@@ -57,6 +64,13 @@ export const DeleteClassSec = (id) => {
       .then(() => {
         dispatch({ type: DELETE_CLASSSEC });
         dispatch(GetClass());
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            deleteClass: "Class Deleted Successully",
+          })
+        );
       })
       .catch((error) => console.log(error));
   };

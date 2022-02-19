@@ -9,7 +9,7 @@ export class Alerts extends Component {
     message: PropTypes.object.isRequired,
   };
   componentDidUpdate(prevProps) {
-    const { error, success, alert, message } = this.props;
+    const { error, alert, message } = this.props;
 
     if (error !== prevProps.error) {
       if (error.msg.name) alert.error(`Name: ${error.msg.name.join()}`);
@@ -32,6 +32,41 @@ export class Alerts extends Component {
 
     if (message !== prevProps.message) {
       if (message.passwordNotMatch) alert.error(message.passwordNotMatch);
+      if (message?.successPasswordChange)
+        alert.success(`${message.successPasswordChange}`);
+      if (message?.studentAdd) alert.success(`${message.studentAdd}`);
+      if (message?.deleteStudent) alert.success(`${message.deleteStudent}`);
+      if (message?.addGenral) alert.success(`${message.addGenral}`);
+      if (message?.studentChange) alert.success(`${message.studentChange}`);
+      if (message?.parentChange) alert.success(`${message.parentChange}`);
+      if (message?.updateUserInfo) alert.success(`${message.updateUserInfo}`);
+      if (message?.profileChange) alert.success(`${message.profileChange}`);
+      if (message?.deleteTimetables)
+        alert.success(`${message.deleteTimetables}`);
+      if (message?.addTimetables) alert.success(`${message.addTimetables}`);
+      if (message?.changeTimetable) alert.success(`${message.changeTimetable}`);
+      if (message?.createAnnouncement)
+        alert.success(`${message.createAnnouncement}`);
+      if (message?.deleteAnnouncement)
+        alert.success(`${message.deleteAnnouncement}`);
+      if (message?.addTeacher) alert.success(`${message.addTeacher}`);
+      if (message?.assignTeacher) alert.success(`${message.assignTeacher}`);
+      if (message?.deleteTeacher) alert.success(`${message.deleteTeacher}`);
+      if (message?.deleteLecture) alert.success(`${message.deleteLecture}`);
+      if (message?.deleteTeacherAssignment)
+        alert.success(`${message.deleteTeacherAssignment}`);
+      if (message?.deleteteacherAnnouncement)
+        alert.success(`${message.deleteteacherAnnouncement}`);
+      if (message?.deleteteacherAnnouncement)
+        alert.success(`${message.deleteteacherAnnouncement}`);
+      if (message?.changeTeacher) alert.success(`${message.changeTeacher}`);
+      if (message?.deleteClass) alert.success(`${message.deleteClass}`);
+      if (message?.addClass) alert.success(`${message.addClass}`);
+      if (message?.deleteSubject) alert.success(`${message.deleteSubject}`);
+      if (message?.deleteAttendance)
+        alert.success(`${message.deleteAttendance}`);
+      if (message?.addSubject) alert.success(`${message.addSubject}`);
+      if (message?.changeSubject) alert.success(`${message.changeSubject}`);
     }
   }
   render() {
@@ -41,7 +76,6 @@ export class Alerts extends Component {
 
 const mapStateToProps = (state) => ({
   error: state.errors,
-  success: state.success,
   message: state.messages,
 });
 

@@ -18,7 +18,6 @@ import { returnErrors } from "../../../../redux/actions/alertactions";
 function AddSubjects() {
   const { handleSubmit, control } = useForm();
   const dispatch = useDispatch();
-  const alert = useAlert();
 
   const [selectClassRef, setClassRef] = useState(null);
   const [selectSectionRef, setSectionRef] = useState(null);
@@ -41,7 +40,12 @@ function AddSubjects() {
         postData.append("grade", results[0].id);
       })
       .then(() => {
-        dispatch(ADD__SUBJECTS(postData));
+        dispatch(
+          ADD__SUBJECTS(
+            postData,
+            `Class ${data.studentClass.value} Added Successfully with Section "${data.studentSection.value}"`
+          )
+        );
       })
       .catch((error) => {
         if (error.response) {

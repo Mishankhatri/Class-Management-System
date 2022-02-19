@@ -34,7 +34,6 @@ function SubjectDetail() {
     e.target.reset();
     setClickSubjects(false);
 
-    console.log(data);
     const postSubjectData = new FormData();
 
     postSubjectData.append("subject_name", data.subjectName);
@@ -46,7 +45,7 @@ function SubjectDetail() {
         `/grades/?classname=${data.subjectClass.value}&section=${data.subjectSection.value}`
       )
       .then(({ data: { results } }) => {
-        postSubjectData.append("grade_id", results[0].id);
+        postSubjectData.append("grade", results[0].id);
         dispatch(ChangeSubjectDetail(id, postSubjectData));
       })
       .catch((err) => {

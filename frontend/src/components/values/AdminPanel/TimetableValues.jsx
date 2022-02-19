@@ -176,28 +176,7 @@ const addSlot = [
     name: "scheduleEndTime",
     isRequired: true,
   },
-  {
-    title: "Subject",
-    input: "text",
-    icon: <FaIcons.FaUser className="mid-icon" />,
-    placeholder: "Enter Subject",
-    name: "scheduleSubject",
-    isRequired: true,
-  },
-  {
-    title: "Teacher",
-    input: "dropdown",
-    icon: <FaIcons.FaUser className="mid-icon" />,
-    placeholder: "Assign Teacher",
-    name: "scheduleTeacher",
-    isRequired: true,
-    options: [
-      { value: "Kushal Pangeni", label: "Kushal Pangeni" },
-      { value: "Mishan Khatri", label: "Mishan Khatri" },
-      { value: "Paras Panta", label: "Paras Panta" },
-      { value: "Prabin Gautam", label: "Prabin Gautam" },
-    ],
-  },
+
   {
     title: "Class",
     input: "dropdown",
@@ -225,6 +204,28 @@ const addSlot = [
       { value: "A", label: "A" },
       { value: "B", label: "B" },
       { value: "C", label: "C" },
+    ],
+  },
+  {
+    title: "Subject",
+    input: "text",
+    icon: <FaIcons.FaUser className="mid-icon" />,
+    placeholder: "Enter Subject",
+    name: "scheduleSubject",
+    isRequired: true,
+  },
+  {
+    title: "Teacher",
+    input: "dropdown",
+    icon: <FaIcons.FaUser className="mid-icon" />,
+    placeholder: "Assign Teacher",
+    name: "scheduleTeacher",
+    isRequired: true,
+    options: [
+      { value: "Kushal Pangeni", label: "Kushal Pangeni" },
+      { value: "Mishan Khatri", label: "Mishan Khatri" },
+      { value: "Paras Panta", label: "Paras Panta" },
+      { value: "Prabin Gautam", label: "Prabin Gautam" },
     ],
   },
 ];

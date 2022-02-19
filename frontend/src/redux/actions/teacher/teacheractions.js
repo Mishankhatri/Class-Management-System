@@ -1,5 +1,6 @@
 import axiosInstance from "../../../axios";
 import { axiosInstanceMultipart } from "../../../axios";
+import { createMessage } from "../alertactions";
 import { GET_DETAILS } from "../student/studentactions";
 import {
   GET_TEACHER_DETAIL,
@@ -56,6 +57,13 @@ export const AddTeacherDetail = (postData) => {
           type: ADD_TEACHER_DETAIL,
         });
       })
+      .then(() => {
+        dispatch(
+          createMessage({
+            addTeacher: "Teacher Added Successully",
+          })
+        );
+      })
       .catch((error) => {
         if (error.response) {
           console.log("Response", error.response);
@@ -76,6 +84,13 @@ export const AssignTeacherSubjects = (postData) => {
           type: ASSIGN_TEACHER_SUBJECTS,
         });
       })
+      .then(() => {
+        dispatch(
+          createMessage({
+            assignTeacher: "Teacher Assigned Successully",
+          })
+        );
+      })
       .catch((error) => {
         if (error.response) {
           console.log("Response", error.response);
@@ -94,6 +109,13 @@ export const TeacherDelete = (id) => {
         console.log("deleted");
         dispatch({ type: DELETE_TEACHER_DETAIL });
         dispatch(TeacherDetail());
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            deleteTeacher: "Teacher Deleted Successully",
+          })
+        );
       })
       .catch((error) => console.log(error));
   };
@@ -132,6 +154,13 @@ export const DeleteLectureNotes = (id) => {
         dispatch({ type: DELETE_LECTURE_NOTES });
         dispatch(GetLectureNotes());
       })
+      .then(() => {
+        dispatch(
+          createMessage({
+            deleteLecture: "Lecture Notes Deleted Successully",
+          })
+        );
+      })
       .catch((error) => console.log(error));
   };
 };
@@ -158,6 +187,13 @@ export const DeleteTeacherGivenAssignment = (id) => {
       .then(() => {
         dispatch({ type: DELETE_TEACHER_GIVEN_ASSIGNMENT });
         dispatch(GetTeacherGivenAssignment());
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            deleteTeacherAssignment: "Assignment Deleted Successully",
+          })
+        );
       })
       .catch((error) => console.log(error));
   };
@@ -225,6 +261,13 @@ export const DeleteTeacherAnnouncements = (id) => {
         dispatch({ type: DELETE_TEACHER_ANNOUNCEMENT });
         dispatch(GetTeacherAnnouncement());
       })
+      .then(() => {
+        dispatch(
+          createMessage({
+            deleteteacherAnnouncement: "Announcement Deleted Successully",
+          })
+        );
+      })
       .catch((error) => console.log(error));
   };
 };
@@ -237,6 +280,13 @@ export const ChangeTeacherDetail = (id, type, postdata) => {
       .then(() => {
         dispatch({ type: type });
         dispatch(TeacherById(id));
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            changeTeacher: "Teacher Detail Changed Successully",
+          })
+        );
       })
       .catch((error) => {
         if (error.request) console.log(error.request);

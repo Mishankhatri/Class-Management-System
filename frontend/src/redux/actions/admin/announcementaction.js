@@ -11,7 +11,7 @@ import {
 import { getData } from "../dataactions";
 import { GET_TEACHER_ANNOUNCEMENTS_BYID } from "./../../actiontypes/teacher/teacherdatatype";
 import { axiosInstanceMultipart } from "./../../../axios";
-import { returnErrors } from "../alertactions";
+import { createMessage, returnErrors } from "../alertactions";
 
 export const CreateAdminAnnouncement = (postdata) => {
   return function (dispatch) {
@@ -23,6 +23,13 @@ export const CreateAdminAnnouncement = (postdata) => {
           type: CREATE_ADMIN_ANNOUNCEMENT,
         });
         dispatch(getData("adminnotices"));
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            createAnnouncement: "Announcement Created Successully",
+          })
+        );
       })
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));
@@ -37,6 +44,13 @@ export const AdminAnnouncementDelete = (id) => {
       .then(() => {
         dispatch({ type: DELETE_ADMIN_ANNOUNCEMENTS });
         dispatch(getData("adminnotices"));
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            deleteAnnouncement: "Announcement Deleted Successully",
+          })
+        );
       })
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));
