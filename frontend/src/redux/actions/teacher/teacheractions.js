@@ -1,5 +1,6 @@
 import axiosInstance from "../../../axios";
 import { axiosInstanceMultipart } from "../../../axios";
+import { GET_DETAILS } from "../student/studentactions";
 import {
   GET_TEACHER_DETAIL,
   ADD_TEACHER_DETAIL,
@@ -67,7 +68,6 @@ export const AddTeacherDetail = (postData) => {
 
 export const AssignTeacherSubjects = (postData) => {
   return function (dispatch) {
-    console.log(postData);
     const body = postData;
     axiosInstance
       .post("AssignTeacherToSubjectsAPI/", body)
@@ -226,5 +226,22 @@ export const DeleteTeacherAnnouncements = (id) => {
         dispatch(GetTeacherAnnouncement());
       })
       .catch((error) => console.log(error));
+  };
+};
+
+export const ChangeTeacherDetail = (id, type, postdata) => {
+  return function (dispatch) {
+    const body = postdata;
+    axiosInstanceMultipart
+      .patch(`teacher/${id}/`, body)
+      .then(() => {
+        dispatch({ type: type });
+        dispatch(TeacherById(id));
+      })
+      .catch((error) => {
+        if (error.request) console.log(error.request);
+        else if (error.response) console.log(error.response);
+        else console.log(error);
+      });
   };
 };

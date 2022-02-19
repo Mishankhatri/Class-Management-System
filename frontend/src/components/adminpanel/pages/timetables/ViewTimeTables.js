@@ -8,13 +8,13 @@ import {
   DeleteTimetables,
   GetAdminTimetables,
 } from "../../../../redux/actions/admin/adminaction";
-import ChangeInput from "../../../common/Modal/ChangeInput";
-import { addSlot } from "../../../values/AdminPanel/TimetableValues";
+import { useNavigate } from "react-router-dom";
 
 const ViewTimetableAdmin = () => {
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { timetables } = useSelector((state) => state.admins);
 
@@ -25,14 +25,6 @@ const ViewTimetableAdmin = () => {
   const handleDelete = (id) => {
     setdeleteId(id);
     setClickDelete(true);
-  };
-
-  const [click, setClick] = useState(false);
-
-  const onSubmit = (data, e) => {
-    e.target.reset();
-    console.log(data);
-    setClick(false);
   };
 
   const columns = useMemo(
@@ -53,8 +45,8 @@ const ViewTimetableAdmin = () => {
       {
         Header: "Time",
         accessor: (d) => {
-          const startTime = moment(d.startTime, "HH").format("LT");
-          const endTime = moment(d.endTime, "HH").format("LT");
+          const startTime = moment(d.startTime, "HH,mm").format("LT");
+          const endTime = moment(d.endTime, "HH,mm").format("LT");
           return `${startTime} to ${endTime}`;
         },
         SearchAble: true,
@@ -82,9 +74,11 @@ const ViewTimetableAdmin = () => {
           return (
             <>
               <button
-                onClick={() => setClick(!click)}
+                onClick={() => {
+                  navigate(`${row.original.id}`);
+                }}
                 className="btn-primary btn-1 btn-custom">
-                Edit
+                View
               </button>
               <button
                 className="btn-danger btn-custom"
@@ -101,17 +95,6 @@ const ViewTimetableAdmin = () => {
 
   return (
     <>
-      {click && (
-        <ChangeInput
-          onSubmit={onSubmit}
-          valueArray={addSlot}
-          click={click}
-          setClick={setClick}
-          heading={"View Class"}
-          isCustom1={false} //For showing grid 3
-          isCustom2={false} //For showing description
-        />
-      )}
       {clickDelete && (
         <CustomConfirm
           title={"Delete User"}

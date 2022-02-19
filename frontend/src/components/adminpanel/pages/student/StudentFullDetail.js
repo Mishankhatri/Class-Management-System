@@ -2,72 +2,169 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import InnerHeader from "./../../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
-import BlankProfile from "../../../../assets/profiles/blank-profile.jpg";
+import BlankProfile from "../../../../assets/profiles/default.png";
 
 import Loading from "./../../../common/Loading";
 import ViewModal from "../../../common/Modal/ViewModal";
 import ChangePhoto from "../../../common/Modal/ChangePhoto";
-import { StudentClassById } from "../../../../redux/actions/student/studentactions";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import StudentEditModal from "../../StudentEditModal";
 import ParentEditModal from "../../ParentEditModal";
 import AcademicEditModal from "../../AcademicEditModal";
+import {
+  ChangeStudentDetail,
+  ChangeStudentParentDetail,
+  GET_DETAILS,
+} from "./../../../../redux/actions/student/studentactions";
+import axiosInstance from "../../../../axios";
 
 function StudentFullDetail() {
+  //Getting Student Id from Parameters
   let { id } = useParams();
-  const dispatch = useDispatch();
-  const { studentParentID } = useSelector((state) => state.students);
 
+  const dispatch = useDispatch();
+
+  //Getting parents value from Redux Store
+  const { studentParentID } = useSelector((state) => state.students);
   const data = studentParentID && studentParentID.results[0].student;
   const parents = studentParentID && studentParentID.results[0];
 
+  //Calling API
   useEffect(() => {
-    dispatch(StudentClassById(id));
+    dispatch(
+      GET_DETAILS("/parent", "GET_STUDENT_PARENTS_BYID", `student=${id}`)
+    );
   }, [id]);
 
+  //For Showing Modal
   const [click, setClick] = useState(false);
   const [clickStudent, setClickStudent] = useState(false);
   const [clickParent, setClickParent] = useState(false);
   const [clickStudentAcademic, setClickStudentAcademic] = useState(false);
-  const [previousImage, setPreviosImage] = useState(BlankProfile);
-  const [uploadedImage, setUploadedImage] = useState("");
 
+  //Reference of Images while Uploading
+  const [previousImage, setPreviosImage] = useState(BlankProfile);
+  const [uploadedImage, setUploadedImage] = useState();
+
+  //React Hook form Initialization fot editing
   const { handleSubmit, control, register } = useForm();
+
+  // Getting Default image file
+  //++++++++++++++++++ For Converting Base 64 Image to File Object
+  function dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
+  const defaultImage = dataURLtoFile(BlankProfile, "default.jpg");
+
+  //React Hook Form For Parents
   const {
     handleSubmit: handleSubmitParent,
     control: controlParent,
     register: registerParent,
   } = useForm();
+
+  //For Academic
   const {
     handleSubmit: handleSubmitAcademic,
     control: controlAcademic,
     register: registerAcademic,
   } = useForm();
 
+  //On Submit Student Photo
   const onSubmitStudent = (e) => {
     e.preventDefault();
     setPreviosImage(BlankProfile);
     setClick(false);
-    console.log(uploadedImage); //Uploaded Image
+
+    const postData = new FormData();
+    postData.append("photo", uploadedImage);
+    dispatch(
+      ChangeStudentDetail("student", id, "UPDATE_STUDENT_PHOTO", postData)
+    );
   };
 
+  //On Editing Student Info
   const onSubmitStudentInput = (data, e) => {
     e.target.reset();
-    console.log(data);
     setClickStudent(false);
+
+    const postStudentData = new FormData();
+    console.log(data.studentMiddleName);
+    postStudentData.append("first_name", data.studentFirstName);
+    postStudentData.append("middle_name", data.studentMiddleName);
+    postStudentData.append("last_name", data.studentLastName);
+    postStudentData.append("gender", data.studentGender.value);
+    postStudentData.append("DOB", data.studentDOB);
+    postStudentData.append("contact_no", data.studentPhone);
+    postStudentData.append("email", data.studentEmail);
+    postStudentData.append("address", data.studentAddress);
+
+    dispatch(
+      ChangeStudentDetail(
+        "student",
+        id,
+        "UPDATE_STUDENT_DETAIL",
+        postStudentData
+      )
+    );
   };
 
+  //On Editing Parents Info
   const onSubmitParentInput = (data, e) => {
     e.target.reset();
-    console.log(data);
     setClickParent(false);
+    const postParentData = new FormData();
+
+    postParentData.append("father_name", data.studentFatherName);
+    postParentData.append("mother_name", data.studentMotherName);
+    postParentData.append("parent_address", data.parentAddress);
+    postParentData.append("parent_state", data.parentState.value);
+    postParentData.append("parent_contact_no", data.studentParentContact);
+    postParentData.append(
+      "parent_additional_contact_no",
+      data.parentAdditionalContact
+    );
+    postParentData.append("parent_email", data.parentEmail);
+    dispatch(ChangeStudentParentDetail(id, parents.id, postParentData));
   };
 
+  //On Editing Academic
   const onSubmitAcademic = (data, e) => {
+    //Id change hunna yesma hera haii
     e.target.reset();
     console.log(data);
     setClickStudentAcademic(false);
+
+    const academicData = new FormData();
+    academicData.append("SRN", data.studentSRN);
+
+    axiosInstance
+      .get(
+        `/grades/?classname=${data.className.value}&section=${data.sectionName.value}`
+      )
+      .then(({ data: { results } }) => {
+        academicData.append("current_grade_id", results[0].id);
+        dispatch(
+          ChangeStudentDetail(
+            "student",
+            id,
+            "UPDATE_STUDENT_DETAIL",
+            academicData
+          )
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return data ? (
@@ -208,7 +305,10 @@ function StudentFullDetail() {
                 <div className="custom-info-show">
                   <div
                     className="content-image-p"
-                    onClick={() => setClick(!click)}>
+                    onClick={() => {
+                      setClick(!click);
+                      setUploadedImage(""); //Check This Later
+                    }}>
                     <div className="content-overlay"></div>
                     <img
                       className="content-image"
@@ -230,8 +330,9 @@ function StudentFullDetail() {
                     <div className="information__info">
                       <ViewModal
                         title={"Full Name"}
+                        custom={true}
                         value={`${data.first_name} ${
-                          data.middleName ? data.middleName : ""
+                          data.middle_name ? data.middle_name : ""
                         } ${data.last_name}`}
                       />
                       <ViewModal title={"Gender"} value={data.gender} />

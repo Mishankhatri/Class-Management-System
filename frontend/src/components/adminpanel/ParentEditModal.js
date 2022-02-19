@@ -42,7 +42,7 @@ function ParentEditModal({ register, data, Controller, control }) {
           title={"Email"}
           register={register}
           disabled={false}
-          name={"studentEmail"}
+          name={"parentEmail"}
           value={data.parent_email}
           type={"email"}
         />
@@ -50,11 +50,11 @@ function ParentEditModal({ register, data, Controller, control }) {
           title={"Address"}
           register={register}
           disabled={false}
-          name={"studentAddress"}
+          name={"parentAddress"}
           value={data.parent_address}
         />
         <Controller
-          name="state"
+          name="parentState"
           control={control}
           defaultValue={{
             label: data.parent_state,
@@ -63,7 +63,7 @@ function ParentEditModal({ register, data, Controller, control }) {
           render={({ field }) => (
             <SelectInputField
               title={"State"}
-              name="state"
+              name="parentState"
               hasValue={true}
               onChangeHandler={field.onChange}
               value={{

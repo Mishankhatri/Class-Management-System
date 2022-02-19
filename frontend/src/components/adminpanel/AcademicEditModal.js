@@ -62,7 +62,7 @@ function AcademicEditModal({ register, data, Controller, control }) {
           )}
         />
         <ViewModal
-          title={"Roll no"}
+          title={"SRN"}
           register={register}
           disabled={false}
           name={"studentSRN"}

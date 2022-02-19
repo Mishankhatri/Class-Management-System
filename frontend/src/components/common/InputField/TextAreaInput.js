@@ -6,8 +6,23 @@ export default function TextAreaInput({
   isCustomInput,
   onChangeHandler,
   isRequired,
+  hasValue,
+  value,
 }) {
-  return (
+  return hasValue ? (
+    <textarea
+      rows="4"
+      cols="50"
+      defaultValue={value}
+      name={name}
+      required={isRequired}
+      placeholder={placeholder}
+      onChange={onChangeHandler}
+      className={
+        isCustomInput ? "input custom-input textarea" : "input textarea"
+      }
+    />
+  ) : (
     <textarea
       rows="4"
       cols="50"

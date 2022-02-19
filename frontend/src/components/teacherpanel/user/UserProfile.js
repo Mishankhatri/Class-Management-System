@@ -7,11 +7,13 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import ViewModal from "./../../common/Modal/ViewModal";
 import Loading from "./../../common/Loading";
+import { GET_DETAILS } from "../../../redux/actions/student/studentactions";
 
 function UserProfile({ image }) {
   const [click, setClick] = useState(false);
   const [previousImage, setPreviosImage] = useState(BlankProfile);
   const [uploadedImage, setUploadedImage] = useState("");
+  const dispatch = useDispatch();
 
   const { register, handleSubmit } = useForm();
   const { teacherDetail } = useSelector((state) => state.teachers);
@@ -19,7 +21,12 @@ function UserProfile({ image }) {
   const { user } = useSelector((state) => state.auth);
 
   const teacher =
-    teacherDetail && teacherDetail.find((value) => value.user.id == user.id);
+    teacherDetail &&
+    teacherDetail.results.find((value) => value.user.id == user.id);
+
+  useEffect(() => {
+    dispatch(GET_DETAILS("/teacher", "GET_TEACHER_DETAIL"));
+  }, []);
 
   const onSubmitImage = (e) => {
     e.preventDefault();

@@ -2,7 +2,9 @@ import {
   CHANGE_ADMIN_PASSWORD,
   DELETE_TIMETABLES,
   GET_TIMETABLES,
+  GET_TIMETABLES_ID,
   UPDATE_ADMIN_INFO,
+  UPDATE_TIMETABLES,
 } from "../../actiontypes/admin/admindatatype";
 
 import {
@@ -26,6 +28,7 @@ export default function adminReducer(state = initialState, action) {
     case CHANGE_ADMIN_PASSWORD:
     case UPDATE_ADMIN_INFO:
     case DELETE_TIMETABLES:
+    case UPDATE_TIMETABLES:
       return { ...state };
 
     case CREATE_ADMIN_ANNOUNCEMENT:
@@ -48,6 +51,9 @@ export default function adminReducer(state = initialState, action) {
 
     case GET_TIMETABLES:
       return { ...state, timetables: action.payload };
+
+    case GET_TIMETABLES_ID:
+      return { ...state, timetablesId: action.payload };
 
     default:
       return state;

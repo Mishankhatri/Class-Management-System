@@ -8,16 +8,16 @@ import CustomController from "../../../common/Controller";
 import {
   getParentInfoValues,
   getStudentInputValues,
-  getAcademicValues,
 } from "../../../values/AdminPanel/StudentInputField";
 
 import { useForm, Controller } from "react-hook-form";
 import PasswordInputField from "../../../common/InputField/PasswordInputField";
 import { useDispatch } from "react-redux";
 import { AddStudentDetail } from "./../../../../redux/actions/student/studentactions";
+import { GetPaginatedGradePromise } from "../../../GetOptions";
+import { UniqueArray } from "../../../common/ReverseArray";
 
 function AddStudent() {
-  const addAcademicValues = getAcademicValues();
   const dispatch = useDispatch();
 
   //For Reseting Select Options while Submitting
@@ -35,9 +35,44 @@ function AddStudent() {
   const refClearAcademicFirst = (ref) => setSelectRefAcademicFirst(ref);
   const refClearAcademicSecond = (ref) => setSelectRefAcademicSecond(ref);
 
-  //Getting options for academic info
-  const optionsClass = addAcademicValues[0].options;
-  const optionsSection = addAcademicValues[1].options;
+  const [grade, setGrade] = useState([]);
+  const [section, setSection] = useState([]);
+
+  useEffect(() => {
+    const GetOptions = async () => {
+      try {
+        const got = await GetPaginatedGradePromise();
+        setGrade(got);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    GetOptions();
+  }, []);
+
+  const uniqueGrade = UniqueArray(grade, "class_name");
+
+  const getSection = (data) => {
+    const sectionOptions = grade.filter(
+      (value) => value.class_name == data.value
+    );
+
+    return sectionOptions.map((value) => ({
+      label: value.section,
+      value: value.section,
+    }));
+  };
+
+  const classOptions = uniqueGrade.map((value) => ({
+    label: value,
+    value: value,
+  }));
+
+  const handleSection = (data) => {
+    const sectionLabel = getSection(data);
+    console.log(sectionLabel);
+    setSection(sectionLabel);
+  };
 
   const onSubmitForm = (data, e) => {
     let postStudentData = new FormData();
@@ -153,9 +188,12 @@ function AddStudent() {
                       input={"dropdown"}
                       icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
                       name={"studentClass"}
-                      onChangeHandler={field.onChange}
+                      onChangeHandler={(data) => {
+                        handleSection(data);
+                        field.onChange(data);
+                      }}
                       isRequired={true}
-                      options={optionsClass}
+                      options={classOptions}
                       refClear={refClearAcademicFirst}
                     />
                   )}
@@ -179,7 +217,7 @@ function AddStudent() {
                       name={"studentSection"}
                       onChangeHandler={field.onChange}
                       isRequired={true}
-                      options={optionsSection}
+                      options={section}
                       refClear={refClearAcademicSecond}
                     />
                   )}

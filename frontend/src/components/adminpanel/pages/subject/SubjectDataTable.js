@@ -7,11 +7,13 @@ import {
 } from "../../../../redux/actions/subjectactions";
 import Loading from "./../../../common/Loading";
 import CustomConfirm from "../../../common/CustomConfirm";
+import { useNavigate } from "react-router-dom";
 
 const SubjectDataTable = ({ click, setClick }) => {
   const { subjects: data } = useSelector((state) => state.classes);
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,11 +51,7 @@ const SubjectDataTable = ({ click, setClick }) => {
         },
         SearchAble: true,
       },
-      {
-        Header: "Description",
-        accessor: "description",
-        SearchAble: false,
-      },
+
       {
         Header: "Action",
         SearchAble: false,
@@ -61,9 +59,11 @@ const SubjectDataTable = ({ click, setClick }) => {
           return (
             <>
               <button
-                onClick={() => setClick(!click)}
+                onClick={() => {
+                  navigate(`${row.original.id}`);
+                }}
                 className="btn-primary btn-1 btn-custom">
-                Edit
+                View
               </button>
               <button
                 className="btn-danger btn-custom"

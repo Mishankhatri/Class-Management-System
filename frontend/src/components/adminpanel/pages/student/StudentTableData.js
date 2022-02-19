@@ -22,9 +22,6 @@ const StudentTableData = () => {
   }, []);
 
   const onOpen = (post) => {
-    dispatch(
-      GET_DETAILS(`/parent?student=${post.id}`, "GET_STUDENT_PARENTS_BYID")
-    );
     navigate(`${post.id}`);
   };
 
