@@ -4,7 +4,7 @@ import {
   GET_STUDENT_ATTENDANCE_FILTER,
 } from "../actiontypes/student/studentdatatype";
 import axiosInstance from "./../../axios";
-import { returnSuccess, returnErrors } from "./alertactions";
+import { returnSuccess, returnErrors, createMessage } from "./alertactions";
 import {
   ADD_SUBJECT,
   DELETE_SUBJECTS,
@@ -37,6 +37,13 @@ export const SubjectDelete = (id) => {
         dispatch({ type: DELETE_SUBJECTS });
         dispatch(ViewSubjects());
       })
+      .then(() => {
+        dispatch(
+          createMessage({
+            deleteSubject: "Selected Subjects Deleted Successully",
+          })
+        );
+      })
       .catch((error) => console.log(error));
   };
 };
@@ -67,11 +74,18 @@ export const DeleteAttendance = (id) => {
         dispatch({ type: DELETE_ATTENDANCE });
         dispatch(ViewStudentAttendance());
       })
+      .then(() => {
+        dispatch(
+          createMessage({
+            deleteAttendance: "Selected Attendance Deleted Successully",
+          })
+        );
+      })
       .catch((error) => console.log(error));
   };
 };
 
-export const ADD__SUBJECTS = (postData) => {
+export const ADD__SUBJECTS = (postData, msg) => {
   const body = postData;
   return function (dispatch) {
     axiosInstance
@@ -80,7 +94,13 @@ export const ADD__SUBJECTS = (postData) => {
         dispatch({
           type: ADD_SUBJECT,
         });
-        alert("Inserted");
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            addSubject: msg,
+          })
+        );
       })
       .catch((error) => {
         dispatch(returnErrors(error.response.data, error.response.status));
@@ -92,10 +112,17 @@ export const ChangeSubjectDetail = (id, postdata) => {
   return function (dispatch) {
     const body = postdata;
     axiosInstance
-      .patch(`subjects/${id}/`, body)
+      .put(`subjects/${id}/`, body)
       .then(() => {
         dispatch({ type: UPDATE_SUBJECT_DETAIL });
         dispatch(ViewSubjectsFilter(id));
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            changeSubject: "Selected Subjected Changed Successfully",
+          })
+        );
       })
       .catch((error) => {
         if (error.request) console.log(error.request);

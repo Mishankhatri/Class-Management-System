@@ -1,5 +1,6 @@
 import axiosInstance, { axiosInstanceMultipart } from "../../../axios";
 
+import { createMessage } from "./../alertactions";
 import {
   GET_STUDENTCLASS_SID,
   DELETE_STUDENT,
@@ -68,6 +69,11 @@ export const StudentDelete = (id) => {
         dispatch({ type: DELETE_STUDENT });
         dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
       })
+      .then(() => {
+        dispatch(
+          createMessage({ deleteStudent: "Student Deleted Successfully" })
+        );
+      })
       .catch((error) => console.log(error));
   };
 };
@@ -82,6 +88,9 @@ export const AddStudentDetail = (postData, url, type) => {
         dispatch({
           type: type,
         });
+      })
+      .then(() => {
+        dispatch(createMessage({ studentAdd: "Student Added Successfuly" }));
       })
       .catch((error) => {
         if (error.response) {
@@ -103,6 +112,9 @@ export const AddGeneralDetails = (postData, url, type) => {
           type: type,
         });
       })
+      .then(() => {
+        dispatch(createMessage({ addGenral: "Added Successfully" }));
+      })
       .catch((error) => {
         if (error.response) {
           console.log("Response", error.response);
@@ -116,15 +128,41 @@ export const AddGeneralDetails = (postData, url, type) => {
 export const ChangeStudentDetail = (url, id, type, postdata) => {
   return function (dispatch) {
     const body = postdata;
-    for (var value of body.entries()) {
-      console.log(value);
-    }
     axiosInstanceMultipart
       .patch(`${url}/${id}/`, body)
       .then(() => {
         dispatch({ type: type });
         dispatch(
           GET_DETAILS("/parent", "GET_STUDENT_PARENTS_BYID", `student=${id}`)
+        );
+      })
+      .then(() => {
+        dispatch(
+          createMessage({ studentChange: "Student detail Changed Succesfully" })
+        );
+      })
+      .catch((error) => {
+        if (error.request) console.log(error.request);
+        else if (error.response) console.log(error.response);
+        else console.log(error);
+      });
+  };
+};
+
+export const ChangeStudentClassDetail = (url, id, type, postdata) => {
+  return function (dispatch) {
+    const body = postdata;
+    axiosInstance
+      .patch(`${url}/${id}/`, body)
+      .then(() => {
+        dispatch({ type: type });
+        dispatch(
+          GET_DETAILS("/parent", "GET_STUDENT_PARENTS_BYID", `student=${id}`)
+        );
+      })
+      .then(() => {
+        dispatch(
+          createMessage({ studentChange: "Student detail Changed Succesfully" })
         );
       })
       .catch((error) => {
@@ -144,6 +182,13 @@ export const ChangeStudentParentDetail = (s_id, p_id, postdata) => {
         dispatch({ type: UPDATE_STUDENT_PARENT_DETAIL });
         dispatch(
           GET_DETAILS("/parent", "GET_STUDENT_PARENTS_BYID", `student=${s_id}`)
+        );
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            parentChange: "Student Parent Detail Changed Succesfully",
+          })
         );
       })
       .catch((error) => {

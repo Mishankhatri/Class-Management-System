@@ -1,5 +1,7 @@
 import axiosInstance from "../../../axios";
-import { returnErrors } from "../alertactions";
+import { createMessage, returnErrors } from "../alertactions";
+
+import { logout } from "./../authactions";
 import {
   ADD_TIMETABLES,
   CHANGE_ADMIN_PASSWORD,
@@ -19,6 +21,16 @@ export const ChangeAdminPassword = (data) => {
         password2: data.settingsRePassword,
       })
       .then(() => dispatch({ type: CHANGE_ADMIN_PASSWORD }))
+      .then(() => {
+        dispatch(
+          createMessage({
+            successPasswordChange: "Password Changed Successully",
+          })
+        );
+      })
+      .then(() => {
+        dispatch(logout());
+      })
       .catch(({ response }) => {
         dispatch(returnErrors(response.data, response.status));
       });
@@ -34,6 +46,13 @@ export const UpdateUserInfo = (data) => {
         fullname: data.fullname,
       })
       .then(() => dispatch({ type: UPDATE_ADMIN_INFO }))
+      .then(() => {
+        dispatch(
+          createMessage({
+            updateUserInfo: "User Info Changed Successully",
+          })
+        );
+      })
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));
         console.log(err.response);
@@ -49,6 +68,13 @@ export const ChangeUserImage = (data) => {
         // email: data.email,
         // fullname: data.fullname,
         // profile_image,
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            profileChange: "UserProfile Changed Successully",
+          })
+        );
       })
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));
@@ -91,6 +117,13 @@ export const DeleteTimetables = (id) => {
         dispatch({ type: DELETE_TIMETABLES });
         dispatch(GetAdminTimetables());
       })
+      .then(() => {
+        dispatch(
+          createMessage({
+            deleteTimetables: "Selected Timetable Deleted Changed Successully",
+          })
+        );
+      })
       .catch((error) => console.log(error));
   };
 };
@@ -102,6 +135,13 @@ export const AddTimetables = (postdata) => {
       .post(`timetable/`, body)
       .then(() => {
         dispatch({ type: ADD_TIMETABLES });
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            addTimetables: "Timetables Added Successully",
+          })
+        );
       })
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));
@@ -132,6 +172,13 @@ export const ChangeTimetableDetail = (id, postdata) => {
       .then(() => {
         dispatch({ type: UPDATE_TIMETABLES });
         dispatch(GetAdminTimetablesByID(id));
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            changeTimetable: "Selected Timetable Changed Successully",
+          })
+        );
       })
       .catch((error) => {
         if (error.request) console.log(error.request);

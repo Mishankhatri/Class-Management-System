@@ -23,9 +23,11 @@ function AddClass() {
         .get(`/grades/?classname=${data.className}`)
         .then(({ data: values }) => {
           if (values.count == 0) {
-            dispatch(AddClassActions(data.className));
-            alert.success(
-              `Class "${data.className}" Added Succefully with Section A`
+            dispatch(
+              AddClassActions(
+                data.className,
+                `Class "${data.className}" Added Succefully with Section A`
+              )
             );
           } else {
             throw `Class "${data.className}" Already Exist`;

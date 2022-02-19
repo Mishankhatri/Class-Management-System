@@ -10,7 +10,6 @@ import { ChangeAdminPassword } from "../../../../redux/actions/admin/adminaction
 
 function Settings() {
   const { handleSubmit, register } = useForm();
-  const alert = useAlert();
   const dispatch = useDispatch();
 
   const onSubmit = (data, e) => {

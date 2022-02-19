@@ -7,7 +7,6 @@ import * as MdIcons from "react-icons/md";
 import { HeaderInputField } from "../../../common/InputField/HeaderInputField";
 
 function ChangeSubjectModal({ register, data, Controller, control }) {
-  console.log(data);
   return (
     <React.Fragment>
       <div>

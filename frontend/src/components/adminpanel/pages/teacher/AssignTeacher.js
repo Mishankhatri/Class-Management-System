@@ -8,6 +8,7 @@ import { GetPaginatedPromise } from "../../../GetOptions";
 import { UniqueArray } from "../../../common/ReverseArray";
 import axiosInstance from "../../../../axios";
 import { AssignTeacherSubjects } from "../../../../redux/actions/teacher/teacheractions";
+import AssignTeacherTable from "./AssignTeacherTable";
 
 function AssignTeacher() {
   const { handleSubmit, control } = useForm();
@@ -24,6 +25,7 @@ function AssignTeacher() {
 
   //Setting Click Reference to find Subject
   const [classRef, setClassRef] = useState([]);
+  const [sectionRef, setSectionRef] = useState([]);
   const uniqueGrade = UniqueArray(grade, "class_name");
 
   useEffect(() => {
@@ -83,6 +85,7 @@ function AssignTeacher() {
   //Set Subject after selecting both class and section
   const handleSection = (data) => {
     //Setting Teacher Options
+    setSectionRef(data.value);
     const teacherOption = getTeachers(teacherDB);
     setTeacher(teacherOption);
 
@@ -116,86 +119,99 @@ function AssignTeacher() {
   return (
     <React.Fragment>
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"Assign Teacher"} />
-      <div className="main-content card-section">
-        <div className="heading">
-          <span className="title-icon">
-            <MdIcons.MdVerifiedUser />
-          </span>
-          <span className="title">ASSIGN TEACHERS</span> {/*Custom  */}
+      <div className="main-content ">
+        <div className="card-section">
+          <div className="heading">
+            <span className="title-icon">
+              <MdIcons.MdVerifiedUser />
+            </span>
+            <span className="title">ASSIGN TEACHERS</span> {/*Custom  */}
+          </div>
+          <div className="content-section">
+            <form onSubmit={handleSubmit(onSubmitData)}>
+              <div className="allinputfield">
+                <Controller
+                  name="selectClass"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <SelectInputField
+                      title={"Select Class"}
+                      icon={<MdIcons.MdDepartureBoard className="mid-icon" />}
+                      name={"selectClass"}
+                      onChangeHandler={(data) => {
+                        handleClass(data);
+                        field.onChange(data);
+                      }}
+                      options={classOptions}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name="selectSection"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <SelectInputField
+                      title={"Select Section"}
+                      icon={<MdIcons.MdCode className="mid-icon" />}
+                      name={"selectSection"}
+                      onChangeHandler={(data) => {
+                        handleSection(data);
+                        field.onChange(data);
+                      }}
+                      options={section}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name="selectSubject"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <SelectInputField
+                      title={"Select Subject"}
+                      icon={<MdIcons.MdSubject className="mid-icon" />}
+                      options={subject}
+                      name={"selectSubject"}
+                      onChangeHandler={field.onChange}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name="selectTeacher"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <SelectInputField
+                      title={"Assign Teacher"}
+                      icon={<MdIcons.MdVerified className="mid-icon" />}
+                      name={"selectTeacher"}
+                      onChangeHandler={field.onChange}
+                      options={teacher}
+                    />
+                  )}
+                />
+              </div>
+              <button className="btn-edit" style={{ marginTop: 20 }}>
+                Submit
+              </button>
+            </form>
+          </div>
         </div>
-        <div className="content-section">
-          <form onSubmit={handleSubmit(onSubmitData)}>
-            <div className="allinputfield">
-              <Controller
-                name="selectClass"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <SelectInputField
-                    title={"Select Class"}
-                    icon={<MdIcons.MdDepartureBoard className="mid-icon" />}
-                    name={"selectClass"}
-                    onChangeHandler={(data) => {
-                      handleClass(data);
-                      field.onChange(data);
-                    }}
-                    options={classOptions}
-                  />
-                )}
-              />
-
-              <Controller
-                name="selectSection"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <SelectInputField
-                    title={"Select Section"}
-                    icon={<MdIcons.MdCode className="mid-icon" />}
-                    name={"selectSection"}
-                    onChangeHandler={(data) => {
-                      handleSection(data);
-                      field.onChange(data);
-                    }}
-                    options={section}
-                  />
-                )}
-              />
-
-              <Controller
-                name="selectSubject"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <SelectInputField
-                    title={"Select Subject"}
-                    icon={<MdIcons.MdSubject className="mid-icon" />}
-                    options={subject}
-                    name={"selectSubject"}
-                    onChangeHandler={field.onChange}
-                  />
-                )}
-              />
-
-              <Controller
-                name="selectTeacher"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <SelectInputField
-                    title={"Assign Teacher"}
-                    icon={<MdIcons.MdVerified className="mid-icon" />}
-                    name={"selectTeacher"}
-                    onChangeHandler={field.onChange}
-                    options={teacher}
-                  />
-                )}
-              />
-            </div>
-            <button className="btn-edit" style={{ marginTop: 20 }}>
-              Submit
-            </button>
-          </form>
+        <div className="card-section">
+          <div className="heading">
+            <span className="title-icon">
+              <MdIcons.MdVerifiedUser />
+            </span>
+            <span className="title">VIEW ASSIGN TEACHERS</span> {/*Custom  */}
+          </div>
+          <div className="content-section" style={{ marginTop: 20 }}>
+            <AssignTeacherTable />
+          </div>
         </div>
       </div>
     </React.Fragment>
