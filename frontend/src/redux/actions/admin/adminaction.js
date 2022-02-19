@@ -109,18 +109,20 @@ export const GetAdminTimetables = (filter) => {
   };
 };
 
-export const DeleteTimetables = (id) => {
+export const DeleteTimetables = (id, reverse = false) => {
   return function (dispatch) {
     axiosInstance
       .delete(`/timetable/${id}`)
       .then(() => {
         dispatch({ type: DELETE_TIMETABLES });
-        dispatch(GetAdminTimetables());
+        reverse
+          ? dispatch(GetAdminTimetables("ordering=-id"))
+          : dispatch(GetAdminTimetables());
       })
       .then(() => {
         dispatch(
           createMessage({
-            deleteTimetables: "Selected Timetable Deleted Changed Successully",
+            deleteTimetables: "Selected Timetable Deleted  Successully",
           })
         );
       })
@@ -137,6 +139,7 @@ export const AddTimetables = (postdata) => {
         dispatch({ type: ADD_TIMETABLES });
       })
       .then(() => {
+        dispatch(GetAdminTimetables("ordering=-id"));
         dispatch(
           createMessage({
             addTimetables: "Timetables Added Successully",

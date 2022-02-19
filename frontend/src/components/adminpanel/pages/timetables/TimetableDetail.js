@@ -5,10 +5,7 @@ import * as MdIcons from "react-icons/md";
 import Loading from "./../../../common/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
-import {
-  ChangeTimetableDetail,
-  GetAdminTimetablesByID,
-} from "../../../../redux/actions/admin/adminaction";
+import { GetAdminTimetablesByID } from "../../../../redux/actions/admin/adminaction";
 import moment from "moment";
 import TimetableModal from "./TimetableModal";
 
@@ -16,7 +13,6 @@ function TimeTableDetails() {
   let { id } = useParams();
   const dispatch = useDispatch();
 
-  //Getting parents value from Redux Store
   const { timetablesId } = useSelector((state) => state.admins);
 
   //Calling API
