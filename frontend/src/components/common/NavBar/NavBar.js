@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import * as BsIcons from "react-icons/bs";
 import * as BiIcons from "react-icons/bi";
 import * as RiIcons from "react-icons/ri";
 import * as FaIcons from "react-icons/fa";
@@ -16,13 +15,13 @@ function NavBar({ onClickHandler, username, show, image, name }) {
   const dispatch = useDispatch();
 
   const [showDropDownNotification, setDropDownNotification] = useState(false);
-  const isNewNotification = false;
 
   const adminnotices = useSelector((state) => state.admins);
   const teachernotices = useSelector((state) => state.teachers);
 
   return (
     <>
+      {/* For showing announcement info card  */}
       {name === "student"
         ? teachernotices.isOpen && <AnnouncementCard name="student" />
         : adminnotices.isOpen && <AnnouncementCard />}
@@ -62,6 +61,7 @@ function NavBar({ onClickHandler, username, show, image, name }) {
             </div>
           </div>
         </div>
+        {/* //List of Announcement Latest 10 */}
         <NavBarNotification
           showDropDown={showDropDownNotification}
           setDropDown={setDropDownNotification}

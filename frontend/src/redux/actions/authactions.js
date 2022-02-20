@@ -118,6 +118,9 @@ export const logout = () => (dispatch) => {
     .then((res) => {
       dispatch({ type: LOGOUT_SUCCESS });
     })
+    .then(() => {
+      dispatch({ type: "ON_LOGOUT_RESET" });
+    })
     .catch((err) => {
       dispatch(returnErrors(err.response, err.response.status));
     });
