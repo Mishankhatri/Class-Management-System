@@ -5,9 +5,13 @@ import * as MdIcons from "react-icons/md";
 import Loading from "./../../../common/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
-import { GetAdminTimetablesByID } from "../../../../redux/actions/admin/adminaction";
+import {
+  ChangeTimetableDetail,
+  GetAdminTimetablesByID,
+} from "../../../../redux/actions/admin/adminaction";
 import moment from "moment";
 import TimetableModal from "./TimetableModal";
+import axiosInstance from "../../../../axios";
 
 function TimeTableDetails() {
   let { id } = useParams();
@@ -29,26 +33,36 @@ function TimeTableDetails() {
   const onSubmitParentInput = (data, e) => {
     e.target.reset();
     setClickTimetable(false);
-
     console.log(data);
-    const postSubjectData = new FormData();
+    const postData = new FormData();
+    postData.append("day", data.day.value);
+    postData.append("startTime", data.startTime);
+    postData.append("endTime", data.endTime);
 
-    postSubjectData.append("day", data.day.value);
-    postSubjectData.append("startTime", data.startTime);
-    postSubjectData.append("endTime", data.endTime);
-    // dispatch(ChangeTimetableDetail(id, postSubjectData));
-
-    // axiosInstance
-    //   .get(
-    //     `/grades/?classname=${data.subjectClass.value}&section=${data.subjectSection.value}`
-    //   )
-    //   .then(({ data: { results } }) => {
-    //     postSubjectData.append("grade_id", results[0].id);
-
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axiosInstance
+      .get(
+        `/grades?classname=${data.class.value}&section=${data.section.value}`
+      )
+      .then(({ data: { results } }) => {
+        axiosInstance
+          .get(
+            `/AssignTeacherToSubjectsAPI?grade=${results[0].id}&subject=${data.subject.value}&teacher=${data.teacher.value}`
+          )
+          .then(({ data: { results } }) => {
+            postData.append("assigned", results[0].id);
+            dispatch(ChangeTimetableDetail(id, postData));
+          })
+          .catch((error) => {
+            if (error.request) console.log(error.request);
+            else if (error.response) console.log(error.response);
+            else console.log(error);
+          });
+      })
+      .catch((error) => {
+        if (error.request) console.log(error.request);
+        else if (error.response) console.log(error.response);
+        else console.log(error);
+      });
   };
 
   return timetablesId ? (
@@ -104,7 +118,7 @@ function TimeTableDetails() {
                 </div>
                 <div className="info">
                   <h4>Subject</h4>
-                  <div className="content">{timetablesId.assigned.subject}</div>
+                  <div className="content">{`${timetablesId.assigned.subject.subject_name}:${timetablesId.assigned.subject.subject_code}`}</div>
                 </div>
                 <div className="info">
                   <h4>Start Time</h4>
@@ -120,7 +134,15 @@ function TimeTableDetails() {
                 </div>
                 <div className="info">
                   <h4>Teacher</h4>
-                  <div className="content">{timetablesId.assigned.teacher}</div>
+                  <div className="content">
+                    {`${timetablesId.assigned.teacher.first_name} 
+                    ${
+                      timetablesId.assigned.teacher.middle_name
+                        ? timetablesId.assigned.teacher.middle_name
+                        : ""
+                    } 
+                ${timetablesId.assigned.teacher.last_name}`}
+                  </div>
                 </div>
                 <div className="info">
                   <h4>Class</h4>

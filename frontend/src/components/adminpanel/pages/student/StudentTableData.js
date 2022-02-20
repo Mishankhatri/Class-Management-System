@@ -45,7 +45,9 @@ const StudentTableData = () => {
           if (d.middleName == null) {
             d.middleName = "";
           }
-          return `${d.first_name} ${d.middleName} ${d.last_name}`;
+          return `${d.first_name} ${d.middle_name ? d.middle_name : ""} ${
+            d.last_name
+          }`;
         },
         SearchAble: true,
       },
@@ -63,7 +65,7 @@ const StudentTableData = () => {
       {
         Header: "Class",
         accessor: (d) => {
-          return `${d.current_grade.class_name} : ${d.current_grade.section}`;
+          return `${d.current_grade?.class_name} : ${d.current_grade?.section}`;
         },
         SearchAble: true,
       },

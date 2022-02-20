@@ -8,19 +8,6 @@ import { ErrorMessage } from "@hookform/error-message";
 import CustomController from "../../common/Controller";
 import { getCreateIdInputField } from "../../values/AdminPanel/CreateIdInputField";
 
-// // teacher obtained values For references
-// const createIdInitialValue = {
-//   teacherFirstName: '',
-//   teacherMiddleName: '',
-//   teacherLastName: '',
-//   teacherGender: '',
-//   teacherDOB: '',
-//   teacherPhone: '',
-//   teacherEmail: '',
-//   teacherLocation: '',
-//   teacherPhoto: '',
-// };
-
 function CreateID() {
   //For Reseting Select Options while Submitting
   const [selectRef, setSelectRef] = useState(null);

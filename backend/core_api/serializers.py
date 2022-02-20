@@ -52,9 +52,9 @@ class TeacherPOSTSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class AssignTeacherToSubjectsLISTSerializer(serializers.ModelSerializer):
-    subject= serializers.StringRelatedField()
+    subject= SubjectsLISTSerializer(read_only=True)
     grade = serializers.StringRelatedField()
-    teacher= TeacherLISTSerializer()
+    teacher= TeacherLISTSerializer(read_only=True)
     class Meta:
         model= AssignTeacherToSubjects
         fields = '__all__'

@@ -419,11 +419,19 @@ function StudentFullDetail() {
                   <div className="information__info">
                     <ViewModal
                       title={"Class"}
-                      value={data.current_grade.class_name}
+                      value={
+                        data.current_grade?.class_name
+                          ? data.current_grade.class_name
+                          : "Class may not Exist"
+                      }
                     />
                     <ViewModal
                       title={"Section"}
-                      value={data.current_grade.section}
+                      value={
+                        data.current_grade?.section
+                          ? data.current_grade.section
+                          : "Section may not Exist"
+                      }
                     />
                     <ViewModal title={"SRN No"} value={data.SRN} />
                   </div>

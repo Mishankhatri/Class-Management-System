@@ -104,7 +104,6 @@ export const GetAdminTimetables = (filter) => {
           })
           .catch((err) => {
             dispatch(returnErrors(err.response.data, err.response.status));
-            console.log(err.response);
           });
   };
 };
@@ -148,7 +147,6 @@ export const AddTimetables = (postdata) => {
       })
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));
-        console.log(err.response);
       });
   };
 };
@@ -171,7 +169,7 @@ export const ChangeTimetableDetail = (id, postdata) => {
   return function (dispatch) {
     const body = postdata;
     axiosInstance
-      .patch(`timetable/${id}/`, body)
+      .put(`timetable/${id}/`, body)
       .then(() => {
         dispatch({ type: UPDATE_TIMETABLES });
         dispatch(GetAdminTimetablesByID(id));
@@ -183,10 +181,8 @@ export const ChangeTimetableDetail = (id, postdata) => {
           })
         );
       })
-      .catch((error) => {
-        if (error.request) console.log(error.request);
-        else if (error.response) console.log(error.response);
-        else console.log(error);
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
       });
   };
 };

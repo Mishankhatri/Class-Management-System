@@ -21,20 +21,30 @@ function AssignTeacher() {
   //Dynamic Options
   const [section, setSection] = useState([]);
   const [subject, setSubject] = useState([]);
-  const [teacher, setTeacher] = useState([]);
 
   //Setting Click Reference to find Subject
   const [classRef, setClassRef] = useState([]);
   const [sectionRef, setSectionRef] = useState([]);
   const uniqueGrade = UniqueArray(grade, "class_name");
 
+  //Resetting Select Value after submit
+  const [classReference, setClassReference] = useState(null);
+  const [sectionReference, setSectionReference] = useState(null);
+  const [subjectReference, setSubjectReference] = useState(null);
+  const [teacherReference, setTeacherReference] = useState(null);
+
+  const refClearClass = (ref) => setClassReference(ref);
+  const refClearSection = (ref) => setSectionReference(ref);
+  const refClearSubject = (ref) => setSubjectReference(ref);
+  const refClearTeacher = (ref) => setTeacherReference(ref);
+
   useEffect(() => {
     const GetOptions = async () => {
       try {
         const got = await GetPaginatedPromise("grades");
-        const teachers = await GetPaginatedPromise("teacher");
+        const teacher = await GetPaginatedPromise("teacher");
         setGrade(got);
-        setTeacherDB(teachers);
+        setTeacherDB(teacher);
       } catch (error) {
         console.log(error);
       }
@@ -44,14 +54,16 @@ function AssignTeacher() {
 
   //Getting Section Options based on Class Input
   const getSection = (data) => {
-    const sectionOptions = grade.filter(
-      (value) => value.class_name == data.value
-    );
+    if (data) {
+      const sectionOptions = grade.filter(
+        (value) => value.class_name == data.value
+      );
 
-    return sectionOptions.map((value) => ({
-      label: value.section,
-      value: value.section,
-    }));
+      return sectionOptions.map((value) => ({
+        label: value.section,
+        value: value.section,
+      }));
+    }
   };
 
   //Getting Subjects
@@ -62,40 +74,46 @@ function AssignTeacher() {
     }));
   };
 
-  const getTeachers = (data) => {
-    return data.map((value) => ({
-      label: `${value.first_name} ${value.middle_name} ${value.last_name}`,
-      value: value.id,
-    }));
-  };
-
   //Making Class Options
   const classOptions = uniqueGrade.map((value) => ({
     label: value,
     value: value,
   }));
 
+  const teacherOptions = teacherDB.map((value) => ({
+    label: `${value.first_name} ${value.middle_name} ${value.last_name}`,
+    value: value.id,
+  }));
+
   //Set Section from Selecting Class
   const handleClass = (data) => {
-    setClassRef(data.value);
-    const sectionLabel = getSection(data);
-    setSection(sectionLabel);
+    if (data) {
+      setClassRef(data.value);
+      const sectionLabel = getSection(data);
+      setSection(sectionLabel);
+
+      //Getting Default Subject Value Via changing
+      axiosInstance
+        .get(`/subjects?classname=${data.value}&section=${sectionRef}`)
+        .then(({ data: { results } }) => {
+          const subjects = getSubjects(results);
+          setSubject(subjects);
+        });
+    }
   };
 
   //Set Subject after selecting both class and section
   const handleSection = (data) => {
-    //Setting Teacher Options
-    setSectionRef(data.value);
-    const teacherOption = getTeachers(teacherDB);
-    setTeacher(teacherOption);
+    if (data) {
+      setSectionRef(data.value);
 
-    //Setting Subject Option based on Class
-    axiosInstance
-      .get(`/subjects?classname=${classRef}&section=${data.value}`)
-      .then(({ data: { results } }) => {
-        const subjects = getSubjects(results);
-        setSubject(subjects);
-      });
+      axiosInstance
+        .get(`/subjects?classname=${classRef}&section=${data.value}`)
+        .then(({ data: { results } }) => {
+          const subjects = getSubjects(results);
+          setSubject(subjects);
+        });
+    }
   };
 
   const onSubmitData = (data) => {
@@ -115,6 +133,11 @@ function AssignTeacher() {
       .catch((err) => {
         console.log(err);
       });
+
+    classReference.clearValue();
+    sectionReference.clearValue();
+    subjectReference.clearValue();
+    teacherReference.clearValue();
   };
   return (
     <React.Fragment>
@@ -139,6 +162,7 @@ function AssignTeacher() {
                       title={"Select Class"}
                       icon={<MdIcons.MdDepartureBoard className="mid-icon" />}
                       name={"selectClass"}
+                      refClear={refClearClass}
                       onChangeHandler={(data) => {
                         handleClass(data);
                         field.onChange(data);
@@ -155,6 +179,7 @@ function AssignTeacher() {
                   render={({ field }) => (
                     <SelectInputField
                       title={"Select Section"}
+                      refClear={refClearSection}
                       icon={<MdIcons.MdCode className="mid-icon" />}
                       name={"selectSection"}
                       onChangeHandler={(data) => {
@@ -175,6 +200,7 @@ function AssignTeacher() {
                       title={"Select Subject"}
                       icon={<MdIcons.MdSubject className="mid-icon" />}
                       options={subject}
+                      refClear={refClearSubject}
                       name={"selectSubject"}
                       onChangeHandler={field.onChange}
                     />
@@ -188,10 +214,11 @@ function AssignTeacher() {
                   render={({ field }) => (
                     <SelectInputField
                       title={"Assign Teacher"}
+                      refClear={refClearTeacher}
                       icon={<MdIcons.MdVerified className="mid-icon" />}
                       name={"selectTeacher"}
                       onChangeHandler={field.onChange}
-                      options={teacher}
+                      options={teacherOptions}
                     />
                   )}
                 />
