@@ -39,12 +39,9 @@ export const ChangeAdminPassword = (data) => {
 
 export const UpdateUserInfo = (data) => {
   return function (dispatch) {
+    const body = data;
     axiosInstance
-      .patch("user/profile/update/", {
-        username: data.username,
-        email: data.email,
-        fullname: data.fullname,
-      })
+      .patch(`user/profile/update/`, body)
       .then(() => dispatch({ type: UPDATE_ADMIN_INFO }))
       .then(() => {
         dispatch(

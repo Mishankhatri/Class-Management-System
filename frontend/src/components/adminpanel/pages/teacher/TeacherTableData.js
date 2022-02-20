@@ -44,10 +44,9 @@ const TeacherTableData = () => {
       {
         Header: "Full Name",
         accessor: (d) => {
-          if (d.middleName == null) {
-            d.middleName = "";
-          }
-          return `${d.first_name} ${d.middleName} ${d.last_name}`;
+          return `${d.first_name} ${d.middle_name ? d.middle_name : ""} ${
+            d.last_name
+          }`;
         },
         SearchAble: true,
       },

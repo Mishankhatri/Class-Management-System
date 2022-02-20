@@ -38,7 +38,6 @@
 .content-image-p .content-overlay {
   background: rgba(0, 0, 0, 0.7);
   position: absolute;
-  height: 300px;
   width: 300px;
   left: 0;
   top: 0;
@@ -55,24 +54,24 @@
 
 .content-image {
   width: 300px;
-  height: 300px;
+  /*height: 300px; */
   border-radius: 10px;
 }
 
 .content-details {
   position: absolute;
   text-align: center;
-  width: 100%;
+  width: 300px;
   top: 50%;
-  left: 50%;
+  /* left: 50%; */
   opacity: 0;
-  transform: translate(-50%, -50%);
+  transform: translateY(-50%);
   transition: all 0.3s ease-in-out 0s;
 }
 
 .content-image-p:hover .content-details {
   top: 50%;
-  left: 50%;
+  /* left: 50%; */
   opacity: 1;
 }
 

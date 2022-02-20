@@ -4,8 +4,19 @@ import MaterialTableContainer from "../../../../common/MaterialTableContainer";
 
 function AssignTeacherTable() {
   const columns = [
-    { title: "Teacher", field: "teacher.first_name", searchable: true },
-    { title: "Subject", field: "subject.subject_name" },
+    {
+      title: "Teacher",
+      render: (d) => {
+        return `${d.teacher.first_name} ${d.teacher.middle_name} ${d.teacher.last_name}`;
+      },
+      searchable: true,
+    },
+    {
+      title: "Subject",
+      render: (data) => {
+        return `${data.subject.subject_name} : ${data.subject.subject_code}`;
+      },
+    },
     { title: "Grade", field: "grade" },
   ];
 
