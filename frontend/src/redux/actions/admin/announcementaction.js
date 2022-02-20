@@ -48,7 +48,28 @@ export const AdminAnnouncementDelete = (id) => {
       .delete(`/adminnotices/${id}`)
       .then(() => {
         dispatch({ type: DELETE_ADMIN_ANNOUNCEMENTS });
-        dispatch(getData("adminnotices"));
+        dispatch(GetAdminFilterAnnouncement("ordering=-id&for=all"));
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            deleteAnnouncement: "Announcement Deleted Successully",
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
+  };
+};
+
+export const AdminAnnouncementDeleteSpecific = (id, user) => {
+  return function (dispatch) {
+    axiosInstance
+      .delete(`/adminnotices/${id}`)
+      .then(() => {
+        dispatch({ type: DELETE_ADMIN_ANNOUNCEMENTS });
+        dispatch(GetAdminAnnouncement(`admin=${user.username}&ordering=-id`));
       })
       .then(() => {
         dispatch(
@@ -77,11 +98,11 @@ export const AdminAnnouncementById = (id) => {
   };
 };
 
-export const GetAdminAnnouncement = (forType) => {
+export const GetAdminAnnouncement = (filter) => {
   return function (dispatch) {
-    forType
+    filter
       ? axiosInstance
-          .get(`/adminnotices/?for=${forType}`)
+          .get(`/adminnotices/?${filter}`)
           .then(({ data }) => {
             dispatch({
               type: GET_ADMIN_ANNOUNCEMENT,

@@ -7,7 +7,10 @@ import ChangePhoto from "../../../common/Modal/ChangePhoto";
 import { useDispatch, useSelector } from "react-redux";
 import ViewModal from "../../../common/Modal/ViewModal";
 import { useForm } from "react-hook-form";
-import { UpdateUserInfo } from "../../../../redux/actions/admin/adminaction";
+import {
+  ChangeUserImage,
+  UpdateUserInfo,
+} from "../../../../redux/actions/admin/adminaction";
 
 function UserProfile() {
   const [click, setClick] = useState(false);
@@ -23,7 +26,10 @@ function UserProfile() {
     e.preventDefault();
     setPreviosImage(BlankProfile);
     setClick(false);
-    console.log(uploadedImage);
+
+    const postData = new FormData();
+    postData.append("photo_image", uploadedImage);
+    dispatch(ChangeUserImage(postData));
   };
 
   const ChangeUserInfo = (data) => {

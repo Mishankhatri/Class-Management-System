@@ -4,15 +4,14 @@ import * as MdIcons from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { SettingsPasswordInput } from "../../../values/AdminPanel/SettingsValue";
 import CustomSettingsInput from "./CustomSettings";
-import { useDispatch, useSelector } from "react-redux";
-import { useAlert } from "react-alert";
+import { useDispatch } from "react-redux";
 import { ChangeAdminPassword } from "../../../../redux/actions/admin/adminaction";
 
 function Settings() {
   const { handleSubmit, register } = useForm();
   const dispatch = useDispatch();
 
-  const onSubmit = (data, e) => {
+  const onSubmit = (data) => {
     dispatch(ChangeAdminPassword(data));
   };
 

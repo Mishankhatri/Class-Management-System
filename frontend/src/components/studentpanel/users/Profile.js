@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ViewModal from "./../../common/Modal/ViewModal";
 import Loading from "./../../common/Loading";
 import { GET_DETAILS } from "../../../redux/actions/student/studentactions";
+import { UpdateUserInfo } from "../../../redux/actions/admin/adminaction";
 
 function UserProfile() {
   const [click, setClick] = useState(false);
@@ -25,11 +26,11 @@ function UserProfile() {
   const { user } = useSelector((state) => state.auth);
 
   const studentDetail =
-    student && student.find((value) => value.user.id == user.id);
+    student && student.results.find((value) => value.user.id == user.id);
 
   const parents =
     studentParent &&
-    studentParent.find((value) => value.student.user.id == user.id);
+    studentParent.results.find((value) => value.student.user.id == user.id);
 
   const onSubmitImage = (e) => {
     e.preventDefault();
@@ -39,7 +40,11 @@ function UserProfile() {
   };
 
   const ChangeUserInfo = (data) => {
-    console.log(data);
+    const postdata = new FormData();
+    postdata.append("username", data.username);
+    postdata.append("email", data.email);
+    postdata.append("fullname", data.fullname);
+    dispatch(UpdateUserInfo(postdata));
   };
 
   return student ? (
@@ -140,7 +145,9 @@ function UserProfile() {
               />
               <ViewModal
                 title={"MIDDLE NAME"}
-                value={studentDetail.middle_name}
+                value={
+                  studentDetail.middle_name ? studentDetail.middle_name : "-"
+                }
               />
               <ViewModal title={"LAST NAME"} value={studentDetail.last_name} />
               <ViewModal title={"GENDER"} value={studentDetail.gender} />
@@ -181,7 +188,11 @@ function UserProfile() {
                   />
                   <ViewModal
                     title={"Phone"}
-                    value={parents.parent_contact_no}
+                    value={
+                      parents.parent_contact_no
+                        ? parents.parent_contact_no
+                        : "-"
+                    }
                   />
                   <ViewModal
                     title={"Alternate Phone"}

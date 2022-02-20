@@ -7,12 +7,15 @@ import {
   SettingsPasswordInput,
 } from "../../values/AdminPanel/SettingsValue";
 import CustomSettingsInput from "./../../adminpanel/pages/users/CustomSettings";
+import { ChangeAdminPassword } from "../../../redux/actions/admin/adminaction";
+import { useDispatch } from "react-redux";
 
 function Settings() {
-  const { handleSubmit, register, setValue } = useForm();
+  const { handleSubmit, register } = useForm();
+  const dispatch = useDispatch();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = (data, e) => {
+    dispatch(ChangeAdminPassword(data));
   };
 
   const settingsPasswordValue = SettingsPasswordInput();

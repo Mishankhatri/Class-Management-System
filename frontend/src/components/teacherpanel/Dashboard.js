@@ -20,7 +20,6 @@ function Dashboard() {
     dispatch(GET_DETAILS("/teacher", "GET_TEACHER_DETAIL"));
   }, [dispatch]);
   const { adminfilternotices } = useSelector((state) => state.admins);
-
   const { grades } = useSelector((state) => state.classes);
   const { teacherDetail } = useSelector((state) => state.teachers);
   const { student } = useSelector((state) => state.students);

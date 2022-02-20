@@ -5,6 +5,7 @@ import {
   GET_TIMETABLES_ID,
   UPDATE_ADMIN_INFO,
   UPDATE_TIMETABLES,
+  UPDATE_USER_IMAGE,
 } from "../../actiontypes/admin/admindatatype";
 
 import {
@@ -30,6 +31,7 @@ export default function adminReducer(state = initialState, action) {
     case UPDATE_ADMIN_INFO:
     case DELETE_TIMETABLES:
     case UPDATE_TIMETABLES:
+    case UPDATE_USER_IMAGE:
       return { ...state };
 
     case CREATE_ADMIN_ANNOUNCEMENT:

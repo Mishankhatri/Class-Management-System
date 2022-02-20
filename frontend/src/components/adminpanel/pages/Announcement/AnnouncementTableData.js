@@ -1,35 +1,25 @@
-import React, { useMemo, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 import { SelectColumnFilter } from "../../../common/Table/filters";
 import TableContainer from "../../../common/Table/TableContainer";
 import Moment from "react-moment";
-import { getData } from "../../../../redux/actions/dataactions";
-import reverseArray from "../../../common/ReverseArray";
+
 import CustomConfirm from "../../../common/CustomConfirm";
 import { AdminAnnouncementDelete } from "../../../../redux/actions/admin/announcementaction";
 
 const AnnouncementTableData = () => {
-  const {
-    adminnotices: { results: data },
-  } = useSelector((state) => state.data);
+  const { adminfilternotices } = useSelector((state) => state.admins);
 
   const { user } = useSelector((state) => state.auth);
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getData("adminnotices"));
-  }, [dispatch]);
-
-  const newArray = reverseArray(data);
 
   const handleDelete = (id) => {
     setdeleteId(id);
     setClickDelete(true);
   };
 
-  // console.log(data.reverse());
+  const results = adminfilternotices && adminfilternotices.results;
   const columns = useMemo(
     () => [
       {
@@ -124,7 +114,9 @@ const AnnouncementTableData = () => {
           PeformDelete={AdminAnnouncementDelete}
         />
       )}
-      <div>{data && <TableContainer columns={columns} data={newArray} />}</div>
+      <div>
+        {results && <TableContainer columns={columns} data={results} />}
+      </div>
     </>
   );
 };

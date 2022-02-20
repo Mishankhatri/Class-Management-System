@@ -1,27 +1,35 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SelectColumnFilter } from "../../common/Table/filters";
-import TableContainer from "../../common/Table/TableContainer";
-import Moment from "react-moment";
-import { getData } from "../../../redux/actions/dataactions";
-import reverseArray from "../../common/ReverseArray";
-import CustomConfirm from "../../common/CustomConfirm";
-import {
-  AdminAnnouncementDelete,
-  GetAdminAnnouncement,
-} from "../../../redux/actions/admin/announcementaction";
 
-const AnnouncementTableData = () => {
+import TableContainer from "../../../common/Table/TableContainer";
+import Moment from "react-moment";
+import CustomConfirm from "../../../common/CustomConfirm";
+
+import {
+  AdminAnnouncementDeleteSpecific,
+  GetAdminAnnouncement,
+} from "../../../../redux/actions/admin/announcementaction";
+import { SelectColumnFilter } from "../../../common/Table/filters";
+
+const AnnounceByMeTable = () => {
   const { adminnotices } = useSelector((state) => state.admins);
+
+  const { user } = useSelector((state) => state.auth);
+  const [clickDelete, setClickDelete] = useState(false);
+  const [deleteId, setdeleteId] = useState(null);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(GetAdminAnnouncement("ordering=-id"));
+    dispatch(GetAdminAnnouncement(`admin=${user.username}&ordering=-id`));
   }, [dispatch]);
 
-  const results = adminnotices && adminnotices.results;
+  const newArray = adminnotices && adminnotices.results;
 
-  // console.log(data.reverse());
+  const handleDelete = (id) => {
+    setdeleteId(id);
+    setClickDelete(true);
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -84,17 +92,44 @@ const AnnouncementTableData = () => {
           );
         },
       },
+
+      {
+        Header: "Action",
+        accessor: (data) => {
+          if (data.created_by.username == user.username)
+            return (
+              <button
+                className="btn-danger btn-custom"
+                onClick={() => handleDelete(data.id)}>
+                Delete
+              </button>
+            );
+          else return;
+        },
+      },
     ],
     []
   );
 
   return (
     <>
+      {clickDelete && (
+        <CustomConfirm
+          title={"Delete Announcement"}
+          msg={"Are you sure you want to delete?"}
+          trueActivity={"Yes"}
+          falseActivity={"Cancel"}
+          user={user}
+          setDelete={setClickDelete}
+          id={deleteId}
+          PeformDelete={AdminAnnouncementDeleteSpecific}
+        />
+      )}
       <div>
-        {results && <TableContainer columns={columns} data={results} />}
+        {adminnotices && <TableContainer columns={columns} data={newArray} />}
       </div>
     </>
   );
 };
 
-export default AnnouncementTableData;
+export default AnnounceByMeTable;

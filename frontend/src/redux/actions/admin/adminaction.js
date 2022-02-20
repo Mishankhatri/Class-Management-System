@@ -1,7 +1,7 @@
 import axiosInstance from "../../../axios";
 import { createMessage, returnErrors } from "../alertactions";
 
-import { logout } from "./../authactions";
+import { getUser, logout } from "./../authactions";
 import {
   ADD_TIMETABLES,
   CHANGE_ADMIN_PASSWORD,
@@ -10,6 +10,7 @@ import {
   GET_TIMETABLES_ID,
   UPDATE_ADMIN_INFO,
   UPDATE_TIMETABLES,
+  UPDATE_USER_IMAGE,
 } from "./../../actiontypes/admin/admindatatype";
 
 export const ChangeAdminPassword = (data) => {
@@ -59,12 +60,12 @@ export const UpdateUserInfo = (data) => {
 
 export const ChangeUserImage = (data) => {
   return function (dispatch) {
+    const body = data;
     axiosInstance
-      .put("user/profile/update/", {
-        // username: data.username,
-        // email: data.email,
-        // fullname: data.fullname,
-        // profile_image,
+      .patch("user/profile/update/", body)
+      .then(() => {
+        dispatch({ type: UPDATE_USER_IMAGE });
+        dispatch(getUser());
       })
       .then(() => {
         dispatch(

@@ -2,20 +2,19 @@ import React from "react";
 import InnerHeader from "./../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
 import { useForm } from "react-hook-form";
-import {
-  SettingsInput,
-  SettingsPasswordInput,
-} from "../../values/AdminPanel/SettingsValue";
+import { SettingsPasswordInput } from "../../values/AdminPanel/SettingsValue";
 import CustomSettingsInput from "./../../adminpanel/pages/users/CustomSettings";
+import { ChangeAdminPassword } from "./../../../redux/actions/admin/adminaction";
+import { useDispatch } from "react-redux";
 
 function Settings() {
   const { handleSubmit, register } = useForm();
+  const dispatch = useDispatch();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = (data, e) => {
+    dispatch(ChangeAdminPassword(data));
   };
 
-  const settingsInputValue = SettingsInput();
   const settingsPasswordValue = SettingsPasswordInput();
 
   return (

@@ -282,6 +282,7 @@ class AssignTeacherToSubjectsAPI(viewsets.ModelViewSet):
         subject_id = self.request.query_params.get('subject')
         teacher_id = self.request.query_params.get('teacher')
         grade_id = self.request.query_params.get('grade')
+        
         if subject_id is not None:
             queryset = queryset.filter(subject__id=subject_id)
         if teacher_id is not None:
