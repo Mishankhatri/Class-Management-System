@@ -1,6 +1,9 @@
 from core.models import  Grade,Subject,Student,Parent,Teacher,AssignTeacherToSubjects,AdminAnnouncement,TeachersAnnouncement,GivenAssignments,SubmittedAssignments,LectureNotes,Attendance,TimeTable
 from rest_framework import serializers
 from users.serializers import CMS_UsersSerializer
+from django.contrib.auth import get_user_model
+
+CMS_Users = get_user_model()
 class GradeSerializer(serializers.ModelSerializer):
     class Meta:
         model= Grade
@@ -10,27 +13,47 @@ class SubjectsLISTSerializer(serializers.ModelSerializer):
     grade = GradeSerializer(read_only=True)
     class Meta:
         model= Subject
-        fields = '__all__'
+        fields ='__all__'
         
 class SubjectsPOSTSerializer(serializers.ModelSerializer):
     class Meta:
         model= Subject
         fields = '__all__'
         
-class StudentLISTSerializer(serializers.ModelSerializer):
+class StudentSerializer(serializers.ModelSerializer):
     user = CMS_UsersSerializer(read_only=True)
     current_grade = GradeSerializer(read_only=True)
     class Meta:
         model= Student
         fields = '__all__'
         
-class StudentPOSTSerializer(serializers.ModelSerializer):
+class StudentUserLISTSerializer(serializers.ModelSerializer):
+    user = CMS_UsersSerializer(read_only=True)
+    current_grade = GradeSerializer(read_only=True)
     class Meta:
         model= Student
         fields = '__all__'
         
+class StudentUserPOSTSerializer(serializers.ModelSerializer):
+    user = CMS_UsersSerializer()
+    current_grade = GradeSerializer()
+    class Meta:
+        model= Student
+        fields = '__all__'
+        
+    def create(self, validated_data):
+        user = self.context['request'].user
+        if not user.admin:
+            raise serializers.ValidationError({"Authorization": "You dont have permission to this api."})
+        user_data = validated_data.pop('user')
+        grade_data = validated_data.pop('current_grade')
+        user = CMS_Users.objects.create_student(**user_data)
+        current_grade,created = Grade.objects.get_or_create(**grade_data)
+        student = Student.objects.create(user=user, current_grade=current_grade,**validated_data)
+        return student
+
 class ParentLISTSerializer(serializers.ModelSerializer):
-    student = StudentLISTSerializer(read_only=True)
+    student = StudentUserLISTSerializer(read_only=True)
     class Meta:
         model= Parent
         fields = '__all__'
@@ -40,30 +63,54 @@ class ParentPOSTSerializer(serializers.ModelSerializer):
         model= Parent
         fields = '__all__'
         
-class TeacherLISTSerializer(serializers.ModelSerializer):
+class TeacherSerializer(serializers.ModelSerializer):
     user = CMS_UsersSerializer(read_only=True)
     class Meta:
         model= Teacher
         fields = '__all__'
         
-class TeacherPOSTSerializer(serializers.ModelSerializer):
+class TeacherUserLISTSerializer(serializers.ModelSerializer):
+    user = CMS_UsersSerializer(read_only=True)
     class Meta:
         model= Teacher
         fields = '__all__'
         
+class TeacherUserPOSTSerializer(serializers.ModelSerializer):
+    user = CMS_UsersSerializer()
+    class Meta:
+        model= Teacher
+        fields = '__all__'
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        if not user.admin:
+            raise serializers.ValidationError({"Authorization": "You dont have permission to this api."})
+        user_data = validated_data.pop('user')
+        user = CMS_Users.objects.create_teacher(**user_data)
+        teacher = Teacher.objects.create(user=user,**validated_data)
+        return teacher
 class AssignTeacherToSubjectsLISTSerializer(serializers.ModelSerializer):
-    subject= SubjectsLISTSerializer(read_only=True)
+    teacher= TeacherSerializer()
+    subject= serializers.StringRelatedField()
     grade = serializers.StringRelatedField()
-    teacher= TeacherLISTSerializer(read_only=True)
     class Meta:
         model= AssignTeacherToSubjects
         fields = '__all__'
+    
         
 class AssignTeacherToSubjectsPOSTSerializer(serializers.ModelSerializer):
     class Meta:
         model= AssignTeacherToSubjects
         fields = '__all__'
         
+    def validate(self,data):
+        teacher = data.get('teacher')
+        subject = data.get('subject')
+        grade = data.get('grade')
+        if self.Meta.model.objects.filter(teacher = teacher).filter(subject=subject).filter(grade=grade):
+            raise serializers.ValidationError('Data already exists.')
+        return data
+    
 class AdminAnnoucementLISTSerializer(serializers.ModelSerializer):
     created_by = CMS_UsersSerializer(read_only=True)
     class Meta:
@@ -138,6 +185,16 @@ class AttendancePOSTSerializer(serializers.ModelSerializer):
     class Meta:
         model= Attendance
         fields = '__all__'
+
+    def validate(self,data):
+        student = data.get('student')
+        teacher = data.get('teacher')
+        subject = data.get('subject')
+        grade = data.get('grade')
+        date = data.get('date')
+        if self.Meta.model.objects.filter(student=student).filter(teacher = teacher).filter(subject=subject).filter(grade=grade).filter(date=date):
+            raise serializers.ValidationError('Data already exists.')
+        return data
 
 class TimeTableLISTSerializer(serializers.ModelSerializer):
     assigned = AssignTeacherToSubjectsLISTSerializer(read_only=True)

@@ -8,27 +8,29 @@ from django.conf import settings
 CMS_Users = settings.AUTH_USER_MODEL
 
 def upload_to(instance,filename):
-    return f'profile_pics/{filename}'
+    if instance.admin is True:
+        return f'profile_pics/admin/{instance.username}_{filename}'
+    if instance.student is True:
+        return f'profile_pics/student/{instance.username}_{filename}'
+    if instance.teacher is True:
+        return f'profile_pics/teacher/{instance.username}_{filename}'
 
 class CMSUserManager(BaseUserManager):
-    
-    def create_user(self, email, username, fullname, password=None,**extrafields):
+    def create_user(self, email, username, password=None,**extrafields):
         if not email:
             raise ValueError(_('You must provide an email address'))
         if not username:
             raise ValueError(_('You must provide an username '))
-        if not fullname:
-            raise ValueError(_('You must provide a first name'))
         if not password:
             raise ValueError(_('You must provide a password'))
 
         email = self.normalize_email(email)
-        user = self.model(email=email, username=username,fullname=fullname,**extrafields)
+        user = self.model(email=email, username=username,**extrafields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, username, fullname, password,**extra_fields):
+    def create_superuser(self, email, username, password,**extra_fields):
 
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_staff', True)
@@ -48,11 +50,11 @@ class CMSUserManager(BaseUserManager):
             raise ValueError(
                 'Admin must be assigned to is_active=True.')
         user = self.create_user(
-            email, username, fullname, password,**extra_fields
+            email, username,password,**extra_fields
         )
         return user
 
-    def create_teacher(self, email, username, fullname, password, **extra_fields):
+    def create_teacher(self, email, username, password, **extra_fields):
         """
         Creates and saves a teacher user with the given email and password.
         """
@@ -66,12 +68,12 @@ class CMSUserManager(BaseUserManager):
             raise ValueError(
                 'User(Teacher) must be assigned to teacher=True.')
         user = self.create_user(
-            email, username, fullname, password,**extra_fields
+            email, username, password,**extra_fields
         )
 
         return user
             
-    def create_student(self, email, username, fullname, password, **extra_fields):
+    def create_student(self, email, username,password, **extra_fields):
         """
         Creates and saves a student user with the given email and password.
         """
@@ -85,7 +87,7 @@ class CMSUserManager(BaseUserManager):
             raise ValueError(
                 'User(Student) must be assigned to student=True.')
         user = self.create_user(
-            email, username, fullname, password, **extra_fields)
+            email, username, password, **extra_fields)
         return user
 
 
@@ -93,7 +95,6 @@ class CMSUserManager(BaseUserManager):
 class CMS_Users(AbstractBaseUser,PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     username = models.CharField(max_length=150, unique=True)
-    fullname = models.CharField(max_length=255, blank=False,null=False)
     profile_image = models.ImageField(upload_to=upload_to,default='default.jpg')
     is_active = models.BooleanField(_('active'),
         default=True,
@@ -127,7 +128,7 @@ class CMS_Users(AbstractBaseUser,PermissionsMixin):
     objects = CMSUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = [ 'username', 'fullname' ,'password',]
+    REQUIRED_FIELDS = [ 'username','password',]
     
     def save(self, *args, **kwargs):
         super(CMS_Users, self).save(*args, **kwargs)
@@ -151,4 +152,3 @@ class CMS_Users(AbstractBaseUser,PermissionsMixin):
     @property
     def is_student(self):
         return self.student
-

@@ -1,4 +1,3 @@
-from ast import Assign
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
@@ -55,7 +54,7 @@ class Grade(models.Model):
 class Subject(models.Model):
     subject_name = models.CharField(max_length=55)
     subject_code = models.CharField(max_length=255,unique=True)
-    grade = models.ForeignKey(Grade, related_name='class_subjects', on_delete=models.CASCADE)
+    grade = models.ForeignKey(Grade,related_name='class_subjects',on_delete=models.CASCADE)
     description = models.TextField(null=False,blank=False)
 
     def __str__(self):
@@ -66,13 +65,10 @@ class Student(models.Model):
     SRN = models.CharField(unique=True, max_length=100) #studentid
     user = models.OneToOneField(CMS_Users, on_delete=models.CASCADE,related_name='student_user')
     first_name = models.CharField(max_length=200,null=False,blank=False)
-    middle_name = models.CharField(default='',max_length=200,null=True,blank=True)
+    middle_name = models.CharField(max_length=200,null=True,blank=True)
     last_name = models.CharField(max_length=200,null=False,blank=False)
     DOB = models.DateField(default='2000-01-01',null=False)
-
-    email= models.EmailField(_('email address'),null=False,blank=False)
     address = models.CharField(max_length=100,null=False,blank=False)
-    photo = models.ImageField(default='default.png',upload_to='student_profile_pics')
     contact_no= models.CharField(max_length=1024,null=False,blank=False)
     current_grade = models.ForeignKey(Grade,related_name='students',on_delete=models.SET_NULL, null=True)
     gender = models.CharField(max_length=50, choices=gender_choices, default='Male')
@@ -89,21 +85,20 @@ class Parent(models.Model):
     parent_address=models.CharField(max_length=100,null=False,blank=False)
     parent_state=models.CharField(max_length=100,null=False,blank=False)
     parent_contact_no= models.CharField(max_length=1024,null=False,blank=False)
-    parent_additional_contact_no= models.CharField(default=0,max_length=1024,null=False,blank=False)
-    parent_email=models.EmailField(_('email address'),null=False,blank=False,default='')
+    parent_additional_contact_no= models.CharField(max_length=1024,null=False,blank=False)
+    parent_email=models.EmailField(_('email address'),null=False,blank=False)
     
     def __str__(self):
         return '%s %s %s' % (self.student,self.father_name,self.mother_name)
+
 class Teacher(models.Model):
-    TRN = models.CharField( max_length=100) #teacherid
+    TRN = models.CharField(max_length=100) #teacherid
     user = models.OneToOneField(CMS_Users, on_delete=models.CASCADE,related_name='teacher_user')
     first_name = models.CharField(max_length=200,null=False,blank=False)
     middle_name = models.CharField(max_length=200,null=True,blank=True)
     last_name = models.CharField(max_length=200,null=False,blank=False)
-    DOB = models.DateField(default='2000-01-01',null=False)
-    email= models.EmailField(_('email address'),null=False,blank=False)
+    DOB = models.DateField(default='1998-01-01',null=False)
     address = models.CharField(max_length=100,null=False,blank=False)
-    photo = models.ImageField(default='default.png',upload_to='teachers_profile_pics')
     contact_no=models.CharField(max_length=1024,null=False,blank=False)
     gender = models.CharField(max_length=50, choices=gender_choices, default='Male')
 
@@ -171,7 +166,7 @@ class LectureNotes(models.Model):
     grade = models.ForeignKey(Grade,on_delete=models.CASCADE,related_name='grades')
     subject = models.ForeignKey(Subject,on_delete=models.CASCADE,related_name='lectures_notes')
     notes_files = models.FileField(upload_to='lecture_notes',null=True,blank=True)
-    teacher= models.ForeignKey(Teacher,related_name='teachers_name',on_delete=models.CASCADE,default=0)
+    teacher= models.ForeignKey(Teacher,related_name='teachers_name',on_delete=models.CASCADE)
 
     def __str__(self):
             return '%s: %s,%s,%s' % (self.grade,self.title,self.subject,self.teacher)

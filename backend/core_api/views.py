@@ -1,10 +1,11 @@
-from pydoc import classname
 from rest_framework  import viewsets,permissions,parsers,filters
+from .permissions import *
 from core.models import Grade,Subject,Student,Parent,Teacher,AssignTeacherToSubjects,AdminAnnouncement,TeachersAnnouncement,GivenAssignments,SubmittedAssignments,LectureNotes,Attendance,TimeTable
 from .serializers import *
+
 class GradeAPI(viewsets.ModelViewSet):
     serializer_class = GradeSerializer
-    permissions_classes= [permissions.IsAuthenticated,]
+    permissions_classes= [IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['class_name','section']
     ordering_fields = ['id','class_name','section']
@@ -22,7 +23,7 @@ class GradeAPI(viewsets.ModelViewSet):
 
 class SubjectAPI(viewsets.ModelViewSet):
     serializer_class = SubjectsLISTSerializer
-    permissions_classes= [permissions.IsAuthenticated,]
+    permissions_classes= [IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['subject_code','subject_name']
     ordering_fields = ['id','subject_code','subject_name','grade__id']
@@ -59,13 +60,51 @@ class SubjectAPI(viewsets.ModelViewSet):
         return queryset
     
 class StudentAPI(viewsets.ModelViewSet):
-    serializer_class = StudentLISTSerializer
-    parser_classes = [parsers.MultiPartParser,parsers.FileUploadParser,parsers.FormParser]
-    permissions_classes= [permissions.IsAuthenticated,]
+    serializer_class = StudentSerializer
+    parser_classes = [parsers.MultiPartParser,parsers.FormParser,parsers.FileUploadParser]
+    permissions_classes= [IsStudentOrAdminOrReadOnly]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['first_name','last_name','email','SRN']
     ordering_fields = ['id','first_name','SRN']
     ordering=['SRN']
+        
+    def get_queryset(self):
+        queryset = Student.objects.all()
+        user_id = self.request.query_params.get('user')
+        first_name = self.request.query_params.get('first_name')
+        middle_name = self.request.query_params.get('middle_name')
+        last_name = self.request.query_params.get('last_name')
+        email = self.request.query_params.get('email')
+        address = self.request.query_params.get('address')
+        srn = self.request.query_params.get('SRN')
+        gender = self.request.query_params.get('gender')
+        if user_id is not None:
+            queryset = queryset.filter(user__id=user_id)
+        if first_name is not None:
+            queryset = queryset.filter(first_name=first_name)
+        if middle_name is not None:
+            queryset = queryset.filter(middle_name=middle_name)
+        if last_name is not None:
+            queryset = queryset.filter(last_name=last_name)
+        if email is not None:
+            queryset = queryset.filter(email=email)
+        if address is not None:
+            queryset = queryset.filter(address=address)
+        if srn is not None:
+            queryset = queryset.filter(SRN=srn)
+        if gender is not None:
+            queryset = queryset.filter(gender=gender)
+        return queryset
+    
+class StudentUserAPI(viewsets.ModelViewSet):
+    serializer_class = StudentUserLISTSerializer
+    parser_classes = [parsers.MultiPartParser,parsers.FormParser,parsers.FileUploadParser]
+    permissions_classes= [permissions.IsAdminUser,]
+    filter_backends = [filters.SearchFilter,filters.OrderingFilter]
+    search_fields = ['first_name','last_name','email','SRN']
+    ordering_fields = ['id','first_name','SRN']
+    ordering=['SRN']
+    
     
     def get_serializer_class(self):
         assert self.serializer_class is not None, (
@@ -74,10 +113,10 @@ class StudentAPI(viewsets.ModelViewSet):
             % self.__class__.__name__
         )
         if self.request.method in ('POST', 'PUT'):
-                return StudentPOSTSerializer
+                return StudentUserPOSTSerializer
         else:
             return self.serializer_class
-        
+    
     def get_queryset(self):
         queryset = Student.objects.all()
         user_id = self.request.query_params.get('user')
@@ -108,7 +147,7 @@ class StudentAPI(viewsets.ModelViewSet):
     
 class ParentAPI(viewsets.ModelViewSet):
     serializer_class = ParentLISTSerializer
-    permissions_classes= [permissions.IsAuthenticated,]
+    permissions_classes= [IsStudentOrAdminOrReadOnly]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['father_name','mother_name','parent_email','student__first_name','student__last_name','parent_address']
     ordering_fields = ['id','father_name','student__first_name']
@@ -142,9 +181,42 @@ class ParentAPI(viewsets.ModelViewSet):
         return queryset
         
 class TeacherAPI(viewsets.ModelViewSet):
-    serializer_class = TeacherLISTSerializer
-    parser_classes = [parsers.MultiPartParser,parsers.FileUploadParser,parsers.FormParser]
-    permissions_classes= [permissions.IsAuthenticated,]
+    serializer_class = TeacherSerializer
+    permissions_classes= [IsTeacherOrAdminOrReadOnly]
+    filter_backends = [filters.SearchFilter,filters.OrderingFilter]
+    search_fields = ['first_name','last_name','email','TRN']
+    ordering_fields = ['id','first_name','TRN']
+    ordering=['TRN']
+
+    def get_queryset(self):
+        queryset = Teacher.objects.all()
+        user_id = self.request.query_params.get('user')
+        first_name = self.request.query_params.get('first_name')
+        middle_name = self.request.query_params.get('middle_name')
+        last_name = self.request.query_params.get('last_name')
+        email = self.request.query_params.get('email')
+        trn = self.request.query_params.get('TRN')
+        gender = self.request.query_params.get('gender')
+        if user_id is not None:
+            queryset = queryset.filter(user__id=user_id)
+        if first_name is not None:
+            queryset = queryset.filter(first_name=first_name)
+        if middle_name is not None:
+            queryset = queryset.filter(middle_name=middle_name)
+        if last_name is not None:
+            queryset = queryset.filter(last_name=last_name)
+        if email is not None:
+            queryset = queryset.filter(email=email)
+        if trn is not None:
+            queryset = queryset.filter(TRN=trn)
+        if gender is not None:
+            queryset = queryset.filter(gender=gender)
+        return queryset
+
+class TeacherUserAPI(viewsets.ModelViewSet):
+    serializer_class = TeacherUserLISTSerializer
+    parser_classes = [parsers.MultiPartParser,parsers.FormParser,parsers.FileUploadParser]
+    permissions_classes= [permissions.IsAdminUser,]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['first_name','last_name','email','TRN']
     ordering_fields = ['id','first_name','TRN']
@@ -156,8 +228,8 @@ class TeacherAPI(viewsets.ModelViewSet):
             "or override the `get_serializer_class()` method."
             % self.__class__.__name__
         )
-        if self.request.method in ('POST', 'PUT'):
-                return TeacherPOSTSerializer
+        if self.request.method in ('POST'):
+                return TeacherUserPOSTSerializer
         else:
             return self.serializer_class
     
@@ -186,10 +258,9 @@ class TeacherAPI(viewsets.ModelViewSet):
             queryset = queryset.filter(gender=gender)
         return queryset
 
-
 class AssignTeacherToSubjectsAPI(viewsets.ModelViewSet):
     serializer_class = AssignTeacherToSubjectsLISTSerializer
-    permissions_classes= [permissions.IsAuthenticated,]
+    permissions_classes= [permissions.IsAdminUser,]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['teacher__first_name','teacher__last_name','subject__subject_name','subject__subject_code','grade__class_name','grade__section']
     ordering_fields = ['id','teacher__first_name','teacher__id']
@@ -222,7 +293,7 @@ class AssignTeacherToSubjectsAPI(viewsets.ModelViewSet):
 class AdminAnnoucementAPI(viewsets.ModelViewSet):
     serializer_class= AdminAnnoucementLISTSerializer
     permissions_classes= [permissions.IsAdminUser,]
-    parser_classes = [parsers.MultiPartParser,parsers.FileUploadParser,parsers.FormParser]
+    parser_classes = [parsers.MultiPartParser,parsers.FormParser,parsers.FileUploadParser]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['announcement_for','created_by__username','title']
     ordering_fields = ['id','announcement_for']
@@ -238,7 +309,7 @@ class AdminAnnoucementAPI(viewsets.ModelViewSet):
                 return AdminAnnoucementPOSTSerializer
         else:
             return self.serializer_class
-        
+
     def get_queryset(self):
         queryset= AdminAnnouncement.objects.all()
         created_by = self.request.query_params.get('admin')
@@ -257,8 +328,8 @@ class AdminAnnoucementAPI(viewsets.ModelViewSet):
 
 class TeacherAnnoucementAPI(viewsets.ModelViewSet):
     serializer_class= TeacherAnnoucementLISTSerializer
-    permissions_classes= [permissions.IsAuthenticated]
-    parser_classes = [parsers.MultiPartParser,parsers.FileUploadParser,parsers.FormParser]
+    permissions_classes= [IsTeacherOrReadOnly]
+    parser_classes = [parsers.MultiPartParser,parsers.FormParser,parsers.FileUploadParser]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['announcement_for_class__class_name','announcement_for_class__section','created_by__username','title']
     ordering_fields = ['id','announcement_for_class__class_name']
@@ -292,8 +363,8 @@ class TeacherAnnoucementAPI(viewsets.ModelViewSet):
 
 class GivenAssignmentsAPI(viewsets.ModelViewSet):
     serializer_class= GivenAssignmentLISTSerializer
-    permissions_classes= [permissions.IsAuthenticated,]
-    parser_classes = [parsers.MultiPartParser,parsers.FileUploadParser,parsers.FormParser]
+    permissions_classes= [IsTeacherOrReadOnly]
+    parser_classes = [parsers.MultiPartParser,parsers.FormParser,parsers.FileUploadParser]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['subject__subject_name','for_grade__class_name','created_by__username']
     ordering_fields = ['id','subject__subject_name','for_grade__class_name']
@@ -317,19 +388,19 @@ class GivenAssignmentsAPI(viewsets.ModelViewSet):
         title = self.request.query_params.get('title')
         created_at = self.request.query_params.get('created_at')
         if subject_id is not None:
-            queryset = queryset.filter(assignment__subject__id=subject_id)
+            queryset = queryset.filter(subject__id=subject_id)
         if title is not None:
-            queryset = queryset.filter(assignment__title=title)
+            queryset = queryset.filter(title=title)
         if created_by is not None:
-            queryset = queryset.filter(assignment__created_by__username=created_by)
+            queryset = queryset.filter(created_by__username=created_by)
         if created_at is not None:
             queryset = queryset.filter(created_at=created_at)
         return queryset
 
 class SubmittedAssignmentsAPI(viewsets.ModelViewSet):
     serializer_class= SubmittedAssignmentLISTSerializer
-    permissions_classes= [permissions.IsAuthenticated,]
-    parser_classes = [parsers.MultiPartParser,parsers.FileUploadParser,parsers.FormParser]
+    permissions_classes= [IsStudentOrReadOnly]
+    parser_classes = [parsers.MultiPartParser,parsers.FormParser,parsers.FileUploadParser]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['assignment__subject__subject_name','student__username','assginment__for_grade__class_name']
     ordering_fields = ['id','assignment__subject__subject_name','student__username','assginment__for_grade__class_name']
@@ -367,8 +438,8 @@ class SubmittedAssignmentsAPI(viewsets.ModelViewSet):
 
 class LectureNotesAPI(viewsets.ModelViewSet):
     serializer_class= LectureNotesLISTSerializer
-    permissions_classes= [permissions.IsAuthenticated,]
-    parser_classes = [parsers.MultiPartParser,parsers.FileUploadParser,parsers.FormParser]
+    permissions_classes= [IsTeacherOrReadOnly]
+    parser_classes = [parsers.MultiPartParser,parsers.FormParser,parsers.FileUploadParser]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['teacher__first_name', 'teacher__last_name','grade__class_name','grade__section','subject__subject_name','title']
     ordering_fields = ['id','teacher_id','grade__class_name']
@@ -388,11 +459,17 @@ class LectureNotesAPI(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset= LectureNotes.objects.all()
         grade_id = self.request.query_params.get('grade')
+        class_name = self.request.query_params.get('classname')
+        section = self.request.query_params.get('section')
         subject_id = self.request.query_params.get('subject')
         teacher_id = self.request.query_params.get('teacher')
         title = self.request.query_params.get('title')
         if grade_id is not None:
             queryset = queryset.filter(grade__id=grade_id)
+        if class_name is not None:
+            queryset = queryset.filter(grade__class_name=class_name)
+        if section is not None:
+            queryset = queryset.filter(grade__section=section)
         if subject_id is not None:
             queryset = queryset.filter(subject__id=subject_id)
         if title is not None:
@@ -403,7 +480,7 @@ class LectureNotesAPI(viewsets.ModelViewSet):
     
 class AttendanceAPI(viewsets.ModelViewSet):
     serializer_class= AttendanceListSerializer
-    permissions_classes= [permissions.IsAuthenticated,]
+    permissions_classes= [IsTeacherOrReadOnly]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['student__first_name', 'student__last_name','grade__class_name','grade__section','teacher__first_name','subject__subject_name']
     ordering_fields = ['student__first_name', 'student__last_name','grade__class_name','grade__section','teacher__first_name','subject__subject_name']
@@ -439,7 +516,7 @@ class AttendanceAPI(viewsets.ModelViewSet):
 
 class TimeTableAPI(viewsets.ModelViewSet):
     serializer_class = TimeTableLISTSerializer
-    permissions_classes= [permissions.IsAuthenticated,]
+    permissions_classes= [permissions.IsAdminUser,]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['assigned__teacher__first_name', 'assigned__teacher__last_name','assigned__grade__class_name','assigned__grade__section','assigned__subject__subject_name','day']
     ordering_fields = ['id','day','assigned__teacher_id','assigned__grade__class_name']
