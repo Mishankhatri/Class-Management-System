@@ -15,18 +15,15 @@ import ViewModal from "./../../../common/Modal/ViewModal";
 import SelectInputField from "../../../common/InputField/SelectInputField";
 import { UniqueArray } from "../../../common/ReverseArray";
 import { GetPaginatedPromise } from "../../../GetOptions";
-import axiosInstance from "../../../../axios";
+import axiosInstance from "./../../../../axios";
+import { createMessage } from "../../../../redux/actions/alertactions";
 
 function CreateTimetables() {
-  const [selectRef, setSelectRef] = useState(null);
   const { handleSubmit, control, register } = useForm();
   const dispatch = useDispatch();
 
-  const refClear = (ref) => setSelectRef(ref);
-
   //Getting Whole Array form database
   const [grade, setGrade] = useState([]);
-  const [teacherDB, setTeacherDB] = useState([]);
 
   //Dynamic Options
   const [section, setSection] = useState([]);
@@ -36,15 +33,27 @@ function CreateTimetables() {
   //Setting Click Reference to find Subject
   const [classRef, setClassRef] = useState([]);
   const [sectionRef, setSectionRef] = useState([]);
+  const [subjectRef, setSubjectRef] = useState([]);
   const uniqueGrade = UniqueArray(grade, "class_name");
+
+  //Resetting Select Value after submit
+  const [classReference, setClassReference] = useState(null);
+  const [sectionReference, setSectionReference] = useState(null);
+  const [subjectReference, setSubjectReference] = useState(null);
+  const [teacherReference, setTeacherReference] = useState(null);
+  const [dayReference, setDayReference] = useState(null);
+
+  const refClearClass = (ref) => setClassReference(ref);
+  const refClearSection = (ref) => setSectionReference(ref);
+  const refClearSubject = (ref) => setSubjectReference(ref);
+  const refClearTeacher = (ref) => setTeacherReference(ref);
+  const refClearDay = (ref) => setDayReference(ref);
 
   useEffect(() => {
     const GetOptions = async () => {
       try {
         const got = await GetPaginatedPromise("grades");
-        const teachers = await GetPaginatedPromise("teacher");
         setGrade(got);
-        setTeacherDB(teachers);
       } catch (error) {
         console.log(error);
       }
@@ -54,14 +63,16 @@ function CreateTimetables() {
 
   //Getting Section Options based on Class Input
   const getSection = (data) => {
-    const sectionOptions = grade.filter(
-      (value) => value.class_name == data.value
-    );
+    if (data) {
+      const sectionOptions = grade.filter(
+        (value) => value.class_name == data.value
+      );
 
-    return sectionOptions.map((value) => ({
-      label: value.section,
-      value: value.section,
-    }));
+      return sectionOptions.map((value) => ({
+        label: value.section,
+        value: value.section,
+      }));
+    }
   };
 
   //Getting Subjects
@@ -89,66 +100,100 @@ function CreateTimetables() {
 
   //Set Section from Selecting Class
   const handleClass = (data) => {
-    setClassRef(data.value);
-    const sectionLabel = getSection(data);
-    setSection(sectionLabel);
+    if (data) {
+      setClassRef(data.value);
+      const sectionLabel = getSection(data);
+      setSection(sectionLabel);
+
+      //Getting Default Subject Value Via changing
+      axiosInstance
+        .get(`/subjects?classname=${data.value}&section=${sectionRef}`)
+        .then(({ data: { results } }) => {
+          const subjects = getSubjects(results);
+          setSubject(subjects);
+        });
+    }
   };
 
   //Set Subject after selecting both class and section
   const handleSection = (data) => {
-    //Setting Teacher Options
-    setSectionRef(data.value);
+    if (data) {
+      setSectionRef(data.value);
 
-    //Setting Subject Option based on Class
-    axiosInstance
-      .get(`/subjects?classname=${classRef}&section=${data.value}`)
-      .then(({ data: { results } }) => {
-        const subjects = getSubjects(results);
-        setSubject(subjects);
-      });
+      axiosInstance
+        .get(`/subjects?classname=${classRef}&section=${data.value}`)
+        .then(({ data: { results } }) => {
+          const subjects = getSubjects(results);
+          setSubject(subjects);
+        });
+    }
   };
 
   const handleSubject = (data) => {
-    axiosInstance
-      .get(`/grades?classname=${classRef}&section=${sectionRef}`)
-      .then(({ data: { results } }) => {
-        axiosInstance
-          .get(
-            `/AssignTeacherToSubjectsAPI?grade=${results[0].id}&subject=${data.value}`
-          )
-          .then(({ data: { results } }) => {
-            const teachers = getTeacherDetail(results);
-            setTeacher(teachers);
-          });
-      });
+    if (data) {
+      setSubjectRef(data.value);
+      axiosInstance
+        .get(`/grades?classname=${classRef}&section=${sectionRef}`)
+        .then(({ data: { results } }) => {
+          axiosInstance
+            .get(
+              `/AssignTeacherToSubjectsAPI?grade=${results[0].id}&subject=${data.value}`
+            )
+            .then(({ data: { results } }) => {
+              const teachers = getTeacherDetail(results);
+              setTeacher(teachers);
+            });
+        });
+    }
   };
 
   const onSubmitForm = (data, e) => {
+    console.log(data);
     const postData = new FormData();
-    postData.append("day", data.day.value);
-    postData.append("startTime", data.startTime);
-    postData.append("endTime", data.endTime);
-
-    axiosInstance
-      .get(
-        `/grades?classname=${data.class.value}&section=${data.section.value}`
-      )
-      .then(({ data: { results } }) => {
+    try {
+      if (
+        data.day == undefined ||
+        data.startTime === "" ||
+        data.endTime === "" ||
+        data.class === undefined ||
+        data.section === undefined ||
+        data.subject === undefined ||
+        data.teacher === undefined
+      ) {
+        dispatch(createMessage({ allfields: "All fields are required." }));
+      } else {
+        postData.append("day", data.day.value);
+        postData.append("startTime", data.startTime);
+        postData.append("endTime", data.endTime);
         axiosInstance
           .get(
-            `/AssignTeacherToSubjectsAPI?grade=${results[0].id}&subject=${data.subject.value}&teacher=${data.teacher.value}`
+            `/grades?classname=${data.class.value}&section=${data.section.value}`
           )
           .then(({ data: { results } }) => {
-            postData.append("assigned", results[0].id);
-            dispatch(AddTimetables(postData));
+            axiosInstance
+              .get(
+                `/AssignTeacherToSubjectsAPI?grade=${results[0].id}&subject=${data.subject.value}&teacher=${data.teacher.value}`
+              )
+              .then(({ data: { results } }) => {
+                postData.append("assigned", results[0].id);
+                dispatch(AddTimetables(postData));
+              })
+              .catch((err) => {
+                throw err;
+              });
           });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }
+    } catch (error) {
+      console.log(error);
+    }
 
-    // e.target.reset();
-    // selectRef.clearValue();
+    e.target.reset();
+    // ;
+    classReference.clearValue();
+    sectionReference.clearValue();
+    dayReference.clearValue();
+    subjectReference.clearValue();
+    teacherReference.clearValue();
   };
 
   const [click, setClick] = useState(false);
@@ -190,6 +235,7 @@ function CreateTimetables() {
                       <SelectInputField
                         title={"Day"}
                         name="day"
+                        refClear={refClearDay}
                         icon={<FaIcons.FaUser className="mid-icon" />}
                         onChangeHandler={field.onChange}
                         options={[
@@ -226,6 +272,7 @@ function CreateTimetables() {
                       <SelectInputField
                         title={"Class"}
                         name="class"
+                        refClear={refClearClass}
                         icon={<FaIcons.FaCode className="mid-icon" />}
                         onChangeHandler={(data) => {
                           handleClass(data);
@@ -243,6 +290,7 @@ function CreateTimetables() {
                         title={"Section"}
                         icon={<FaIcons.FaCode className="mid-icon" />}
                         name="section"
+                        refClear={refClearSection}
                         onChangeHandler={(data) => {
                           handleSection(data);
                           field.onChange(data);
@@ -258,6 +306,7 @@ function CreateTimetables() {
                       <SelectInputField
                         title={"Subject"}
                         name="subject"
+                        refClear={refClearSubject}
                         icon={<MdIcons.MdBook className="mid-icon" />}
                         options={subject}
                         onChangeHandler={(data) => {
@@ -274,6 +323,7 @@ function CreateTimetables() {
                       <SelectInputField
                         title={"Teacher"}
                         name="teacher"
+                        refClear={refClearTeacher}
                         icon={<FaIcons.FaUser className="mid-icon" />}
                         onChangeHandler={field.onChange}
                         options={teacher}

@@ -4,6 +4,7 @@ import TableContainer from "../../../common/Table/TableContainer";
 import moment from "moment";
 import { SelectColumnFilter } from "../../../common/Table/filters";
 import CustomConfirm from "../../../common/CustomConfirm";
+import { useNavigate } from "react-router-dom";
 import {
   DeleteTimetables,
   GetAdminTimetables,
@@ -13,6 +14,7 @@ const ViewTimetable_Table = ({ click, setClick }) => {
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { timetables } = useSelector((state) => state.admins);
 
@@ -43,8 +45,8 @@ const ViewTimetable_Table = ({ click, setClick }) => {
       {
         Header: "Time",
         accessor: (d) => {
-          const startTime = moment(d.startTime, "HH").format("LT");
-          const endTime = moment(d.endTime, "HH").format("LT");
+          const startTime = moment(d.startTime, "HH,mm").format("LT");
+          const endTime = moment(d.endTime, "HH,mm").format("LT");
           return `${startTime} to ${endTime}`;
         },
         SearchAble: true,
@@ -57,7 +59,9 @@ const ViewTimetable_Table = ({ click, setClick }) => {
       },
       {
         Header: "Subject",
-        accessor: "assigned.subject",
+        accessor: (data) => {
+          return `${data.assigned.subject.subject_name}:${data.assigned.subject.subject_code}`;
+        },
         SearchAble: true,
       },
       {
@@ -75,7 +79,9 @@ const ViewTimetable_Table = ({ click, setClick }) => {
           return (
             <>
               <button
-                onClick={() => setClick(!click)}
+                onClick={() => {
+                  navigate(`/admin/timetables/view/${row.original.id}`);
+                }}
                 className="btn-primary btn-1 btn-custom">
                 Edit
               </button>

@@ -10,6 +10,7 @@ function SelectInputField({
   hasValue = false,
   options,
   onChangeHandler,
+  refClear,
 }) {
   return (
     <React.Fragment>
@@ -24,6 +25,7 @@ function SelectInputField({
               className="input-select custom-input"
               onChange={onChangeHandler}
               maxMenuHeight={200}
+              ref={refClear}
               defaultValue={value}
               menuPlacement={"auto"}
               styles={{ menuPortal: (base) => ({ ...base, zIndex: 10002 }) }}
@@ -34,6 +36,7 @@ function SelectInputField({
               onChange={onChangeHandler}
               options={options}
               name={name}
+              ref={refClear}
               className="input-select custom-input"
               maxMenuHeight={200}
               menuPlacement={"auto"}

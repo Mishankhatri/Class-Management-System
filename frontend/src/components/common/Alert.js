@@ -67,6 +67,7 @@ export class Alerts extends Component {
         alert.success(`${message.deleteAttendance}`);
       if (message?.addSubject) alert.success(`${message.addSubject}`);
       if (message?.changeSubject) alert.success(`${message.changeSubject}`);
+      if (message?.allfields) alert.error(`${message.allfields}`);
     }
   }
   render() {

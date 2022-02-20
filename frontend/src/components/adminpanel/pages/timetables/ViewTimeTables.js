@@ -59,7 +59,9 @@ const ViewTimetableAdmin = () => {
       },
       {
         Header: "Subject",
-        accessor: "assigned.subject",
+        accessor: (data) => {
+          return `${data.assigned.subject.subject_name}:${data.assigned.subject.subject_code}`;
+        },
         SearchAble: true,
       },
       {
