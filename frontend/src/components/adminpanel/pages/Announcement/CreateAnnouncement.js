@@ -106,7 +106,6 @@ function CreateAnnouncement() {
                       options={[
                         { value: "all", label: "All" },
                         { value: "teachers", label: "Teachers" },
-                        { value: "students", label: "Student" },
                       ]}
                       refClear={refClearFor}
                     />

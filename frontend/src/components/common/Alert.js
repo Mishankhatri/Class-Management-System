@@ -57,8 +57,6 @@ export class Alerts extends Component {
         alert.success(`${message.deleteTeacherAssignment}`);
       if (message?.deleteteacherAnnouncement)
         alert.success(`${message.deleteteacherAnnouncement}`);
-      if (message?.deleteteacherAnnouncement)
-        alert.success(`${message.deleteteacherAnnouncement}`);
       if (message?.changeTeacher) alert.success(`${message.changeTeacher}`);
       if (message?.deleteClass) alert.success(`${message.deleteClass}`);
       if (message?.addClass) alert.success(`${message.addClass}`);

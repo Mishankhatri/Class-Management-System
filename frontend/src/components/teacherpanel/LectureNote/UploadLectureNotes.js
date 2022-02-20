@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as MdIcons from "react-icons/md";
 import * as FaIcons from "react-icons/fa";
 
@@ -7,17 +7,44 @@ import { useForm, Controller } from "react-hook-form";
 import InnerHeader from "../../common/InnerHeader";
 import InputField from "../../common/InputField/InputField";
 import { FileInput } from "../../common/InputField/FileInput";
+import axiosInstance from "./../../../axios";
+import { useSelector } from "react-redux";
+import { UniqueArray } from "../../common/ReverseArray";
 
 function UploadLectureNotes() {
   const [selectRefClass, setSelectRefClass] = useState(null);
   const [selectRefSection, setSelectRefSection] = useState(null);
   const [selectRefCourse, setSelectRefCourse] = useState(null);
+  const { user } = useSelector((state) => state.auth);
 
   const { handleSubmit, control } = useForm();
+  const [assignTeacher, setAssignTeacher] = useState([]);
 
   const refClearClass = (ref) => setSelectRefClass(ref);
   const refClearSection = (ref) => setSelectRefSection(ref);
   const refClearCourse = (ref) => setSelectRefCourse(ref);
+
+  useEffect(() => {
+    axiosInstance
+      .get(`/teacher?user=${user.id}`)
+      .then(({ data: { results } }) => {
+        axiosInstance
+          .get(`/AssignTeacherToSubjectsAPI?teacher=${results[0].id}`)
+          .then(({ data: { results } }) => {
+            setAssignTeacher(results);
+          });
+      });
+  }, []);
+
+  const gradeFromAssignSubject = UniqueArray(assignTeacher, "grade"); //Getting Uniqye Class with Section
+
+  //Getting grade and section splitted
+  const splitGradeSection = gradeFromAssignSubject.map((value) => {
+    let splitData = value.split(":");
+    return [splitData[0], splitData[1].trim()];
+  });
+
+  // for (let i = 0; i < splitGradeSection.length; i++) {}
 
   const onSubmitForm = (data, e) => {
     console.log(data);

@@ -1,7 +1,6 @@
 import React from "react";
 import * as MdIcons from "react-icons/md";
 import { useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
 
 function CustomConfirm({
   title,

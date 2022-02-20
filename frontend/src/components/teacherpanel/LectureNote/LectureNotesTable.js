@@ -22,7 +22,7 @@ const LectureNotesTable = () => {
       .get(`/teacher?user=${user.id}`)
       .then(({ data: { results } }) => {
         axiosInstance
-          .get(`/lecturenotes?teacher=${results[0].id}`)
+          .get(`/lecturenotes?ordering=-id&teacher=${results[0].id}`)
           .then(({ data: { results } }) => {
             setLectureNotes(results);
           });

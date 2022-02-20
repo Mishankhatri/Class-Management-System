@@ -1,35 +1,52 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import InnerHeader from "../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
 import * as FaIcons from "react-icons/fa";
 
 import { useForm, Controller } from "react-hook-form";
 import InputField from "../../common/InputField/InputField";
-import { ErrorMessage } from "@hookform/error-message";
 import { FileInput } from "../../common/InputField/FileInput";
+import { useDispatch, useSelector } from "react-redux";
+import axiosInstance from "../../../axios";
+import { CreateTeacherAnnouncement } from "../../../redux/actions/teacher/teacheractions";
 
 function CreateAnnouncement() {
-  const [selectRefType, setSelectRefType] = useState(null);
-  const [selectRefFor, setSelectRefFor] = useState(null);
   const [selectRefForClass, setSelectRefForClass] = useState(null);
   const [selectRefForSection, setSelectRefForSection] = useState(null);
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm();
+  const { handleSubmit, control } = useForm();
 
   const refClearForClass = (ref) => setSelectRefForClass(ref);
   const refClearForSection = (ref) => setSelectRefForSection(ref);
-  const refClearType = (ref) => setSelectRefType(ref);
 
   const onSubmitForm = (data, e) => {
-    console.log(data);
+    console.log(data.announcementFile);
 
-    // e.target.reset();
-    selectRefType.clearValue();
+    const postdata = new FormData();
 
+    postdata.append("created_by", user.id);
+    postdata.append("details", data.announcementSubjects);
+    postdata.append("title", data.announcementTypeName);
+    postdata.append("files_by_teachers", data.announcementFile);
+
+    //Generate Id from above
+    axiosInstance
+      .get(
+        `/grades/?classname=${data.announcementForClass.value}&section=${data.announcementForSection.value}`
+      )
+      .then(({ data: { results } }) => {
+        postdata.append("announcement_for_class", results[0].id);
+        dispatch(CreateTeacherAnnouncement(postdata));
+      })
+      .catch((err) => {
+        // console.log("Response", err?.response);
+        // console.log("Request", err?.request);
+        console.log(err);
+      });
+
+    e.target.reset();
     selectRefForClass.clearValue();
     selectRefForSection.clearValue();
   };
@@ -52,66 +69,19 @@ function CreateAnnouncement() {
                 <Controller
                   name={"announcementTypeName"}
                   control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: `Announcement Type is required`,
-                    },
-                  }}
+                  rules={{ required: true }}
                   defaultValue=""
                   render={({ field }) => (
                     <InputField
-                      title={"Type".toUpperCase()}
-                      input={"dropdown"}
+                      title={"Title".toUpperCase()}
+                      input={"text"}
                       icon={<FaIcons.FaCogs className="mid-icon" />}
                       name={"announcementTypeName"}
                       onChangeHandler={field.onChange}
                       isRequired={true}
-                      options={[
-                        { value: "Academic", label: "Academic" },
-                        { value: "Admistration", label: "Admistration" },
-                        { value: "Admission", label: "Admission" },
-                        { value: "Others", label: "Others" },
-                      ]}
-                      errors={errors}
-                      refClear={refClearType}
-                      ErrorMessage={ErrorMessage}
                     />
                   )}
                 />
-                {/* 
-                <Controller
-                  name={"announcementFor"}
-                  control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: `Announcement For is required`,
-                    },
-                  }}
-                  defaultValue=""
-                  render={(props) => (
-                    <InputField
-                      title={"For".toUpperCase()}
-                      input={"dropdown"}
-                      icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
-                      name={"announcementFor"}
-                      onChangeHandler={(event) => {
-                        checkStudent(event);
-                        return props.field.onChange(event);
-                      }}
-                      isRequired={true}
-                      options={[
-                        { value: "All", label: "All" },
-                        { value: "Teacher", label: "Teacher" },
-                        { value: "Student", label: "Student" },
-                      ]}
-                      errors={errors}
-                      refClear={refClearFor}
-                      ErrorMessage={ErrorMessage}
-                    />
-                  )}
-                /> */}
                 <Controller
                   name={"announcementForClass"}
                   control={control}
@@ -129,9 +99,7 @@ function CreateAnnouncement() {
                         { value: "11", label: "11" },
                         { value: "10", label: "10" },
                       ]}
-                      errors={errors}
                       refClear={refClearForClass}
-                      ErrorMessage={ErrorMessage}
                     />
                   )}
                 />
@@ -152,9 +120,7 @@ function CreateAnnouncement() {
                         { value: "B", label: "B" },
                         { value: "C", label: "C" },
                       ]}
-                      errors={errors}
                       refClear={refClearForSection}
-                      ErrorMessage={ErrorMessage}
                     />
                   )}
                 />
@@ -177,27 +143,25 @@ function CreateAnnouncement() {
                     name={"announcementSubjects"}
                     onChangeHandler={field.onChange}
                     isRequired={true}
-                    errors={errors}
                     isTextArea={true}
                     isCustomInput={true}
-                    ErrorMessage={ErrorMessage}
                   />
                 )}
               />
 
               <Controller
-                name={"announcemntFile"}
+                name={"announcementFile"}
                 control={control}
                 defaultValue=""
                 render={(props) => (
                   <FileInput
-                    name={"announcemntFile"}
+                    name={"announcementFile"}
                     title={"Upload File"}
                     icon={<FaIcons.FaFile className="mid-icon" />}
-                    isRequired={true}
+                    isRequired={false}
                     isImageFile={false}
                     onChange={(event) =>
-                      props.field.onChange(event.target.files)
+                      props.field.onChange(event.target.files[0])
                     }
                   />
                 )}

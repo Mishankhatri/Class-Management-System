@@ -1,6 +1,6 @@
 import axiosInstance from "../../../axios";
 import { axiosInstanceMultipart } from "../../../axios";
-import { createMessage } from "../alertactions";
+import { createMessage, returnErrors } from "../alertactions";
 import { GET_DETAILS } from "../student/studentactions";
 import {
   GET_TEACHER_DETAIL,
@@ -16,6 +16,7 @@ import {
   GET_TEACHER_ANNOUNCEMENT,
   DELETE_TEACHER_ANNOUNCEMENT,
   ASSIGN_TEACHER_SUBJECTS,
+  POST_TEACHER_ANNOUNCEMENT,
 } from "./../../actiontypes/teacher/teacherdatatype";
 
 export const TeacherDetail = () => {
@@ -253,13 +254,13 @@ export const GetTeacherAnnouncement = (username) => {
   };
 };
 
-export const DeleteTeacherAnnouncements = (id) => {
+export const DeleteTeacherAnnouncements = (id, user) => {
   return function (dispatch) {
     axiosInstance
       .delete(`/teachernotices/${id}`)
       .then(() => {
         dispatch({ type: DELETE_TEACHER_ANNOUNCEMENT });
-        dispatch(GetTeacherAnnouncement());
+        dispatch(GetTeacherAnnouncement(user.username));
       })
       .then(() => {
         dispatch(
@@ -292,6 +293,29 @@ export const ChangeTeacherDetail = (id, type, postdata) => {
         if (error.request) console.log(error.request);
         else if (error.response) console.log(error.response);
         else console.log(error);
+      });
+  };
+};
+
+export const CreateTeacherAnnouncement = (postdata) => {
+  return function (dispatch) {
+    const body = postdata;
+    axiosInstanceMultipart
+      .post("teachernotices/", body)
+      .then(() => {
+        dispatch({
+          type: POST_TEACHER_ANNOUNCEMENT,
+        });
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            createAnnouncement: "Announcement Created Successully",
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
       });
   };
 };

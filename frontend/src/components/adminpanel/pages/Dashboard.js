@@ -9,12 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetClass } from "../../../redux/actions/classactions";
 import Moment from "react-moment";
 import { GET_DETAILS } from "../../../redux/actions/student/studentactions";
-import { GetAdminFilterAnnouncement } from "./../../../redux/actions/admin/announcementaction";
 
 function Dashboard() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(GetAdminFilterAnnouncement("ordering=-id"));
     dispatch(GetClass());
     dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
     dispatch(GET_DETAILS("/teacher", "GET_TEACHER_DETAIL"));

@@ -57,7 +57,6 @@ const AnnouncementTeacherTable = () => {
                     <span className="date">
                       Date: {rowData.created_at.slice(0, 10)}
                     </span>
-
                     <span>
                       <span className="createdat">{dates}</span>
                     </span>
@@ -107,6 +106,7 @@ const AnnouncementTeacherTable = () => {
           trueActivity={"Yes"}
           falseActivity={"Cancel"}
           setDelete={setClickDelete}
+          user={user}
           id={deleteId}
           PeformDelete={DeleteTeacherAnnouncements}
         />

@@ -40,8 +40,8 @@ const TimeTableData = () => {
       {
         Header: "Time",
         accessor: (d) => {
-          const startTime = moment(d.startTime, "HH").format("LT");
-          const endTime = moment(d.endTime, "HH").format("LT");
+          const startTime = moment(d.startTime, "HH,mm").format("LT");
+          const endTime = moment(d.endTime, "HH,mm").format("LT");
           return `${startTime} to ${endTime}`;
         },
         SearchAble: true,
@@ -49,12 +49,16 @@ const TimeTableData = () => {
 
       {
         Header: "Subject",
-        accessor: "assigned.subject",
+        accessor: (data) => {
+          return `${data.assigned.subject.subject_name} : ${data.assigned.subject.subject_code}`;
+        },
         SearchAble: true,
       },
       {
         Header: "Class",
-        accessor: "assigned.grade",
+        accessor: (data) => {
+          return `${data.assigned.subject.grade.class_name} : ${data.assigned.subject.grade.section}`;
+        },
         SearchAble: true,
         Filter: SelectColumnFilter,
       },

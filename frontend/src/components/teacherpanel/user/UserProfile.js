@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ViewModal from "./../../common/Modal/ViewModal";
 import Loading from "./../../common/Loading";
 import { GET_DETAILS } from "../../../redux/actions/student/studentactions";
+import { UpdateUserInfo } from "../../../redux/actions/admin/adminaction";
 
 function UserProfile({ image }) {
   const [click, setClick] = useState(false);
@@ -36,7 +37,11 @@ function UserProfile({ image }) {
   };
 
   const ChangeUserInfo = (data) => {
-    console.log(data);
+    const postdata = new FormData();
+    postdata.append("username", data.username);
+    postdata.append("email", data.email);
+    postdata.append("fullname", data.fullname);
+    dispatch(UpdateUserInfo(postdata));
   };
 
   return teacherDetail ? (
@@ -132,7 +137,10 @@ function UserProfile({ image }) {
             <div className="allinputfield">
               <ViewModal title={"TRN"} value={teacher.TRN} />
               <ViewModal title={"FIRST NAME"} value={teacher.first_name} />
-              <ViewModal title={"MIDDLE NAME"} value={teacher.middle_name} />
+              <ViewModal
+                title={"MIDDLE NAME"}
+                value={teacher.middle_name ? teacher.middle_name : "-"}
+              />
               <ViewModal title={"LAST NAME"} value={teacher.last_name} />
               <ViewModal title={"GENDER"} value={teacher.gender} />
               <ViewModal title={"DATE OF BIRTH"} value={teacher.DOB} />
