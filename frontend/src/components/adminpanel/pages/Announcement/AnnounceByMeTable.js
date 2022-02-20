@@ -1,25 +1,35 @@
-import React, { useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { SelectColumnFilter } from "../../../common/Table/filters";
+import React, { useMemo, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import TableContainer from "../../../common/Table/TableContainer";
 import Moment from "react-moment";
-
 import CustomConfirm from "../../../common/CustomConfirm";
-import { AdminAnnouncementDelete } from "../../../../redux/actions/admin/announcementaction";
 
-const AnnouncementTableData = () => {
-  const { adminfilternotices } = useSelector((state) => state.admins);
+import {
+  AdminAnnouncementDeleteSpecific,
+  GetAdminAnnouncement,
+} from "../../../../redux/actions/admin/announcementaction";
+import { SelectColumnFilter } from "../../../common/Table/filters";
+
+const AnnounceByMeTable = () => {
+  const { adminnotices } = useSelector((state) => state.admins);
 
   const { user } = useSelector((state) => state.auth);
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(GetAdminAnnouncement(`admin=${user.username}&ordering=-id`));
+  }, [dispatch]);
+
+  const newArray = adminnotices && adminnotices.results;
 
   const handleDelete = (id) => {
     setdeleteId(id);
     setClickDelete(true);
   };
 
-  const results = adminfilternotices && adminfilternotices.results;
   const columns = useMemo(
     () => [
       {
@@ -109,16 +119,17 @@ const AnnouncementTableData = () => {
           msg={"Are you sure you want to delete?"}
           trueActivity={"Yes"}
           falseActivity={"Cancel"}
+          user={user}
           setDelete={setClickDelete}
           id={deleteId}
-          PeformDelete={AdminAnnouncementDelete}
+          PeformDelete={AdminAnnouncementDeleteSpecific}
         />
       )}
       <div>
-        {results && <TableContainer columns={columns} data={results} />}
+        {adminnotices && <TableContainer columns={columns} data={newArray} />}
       </div>
     </>
   );
 };
 
-export default AnnouncementTableData;
+export default AnnounceByMeTable;
