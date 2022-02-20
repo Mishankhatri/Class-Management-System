@@ -11,7 +11,7 @@ class Admin(admin.ModelAdmin):
 
 @admin.register(Student)
 class Admin(admin.ModelAdmin):
-    list_display = ('SRN', 'user', 'first_name', 'middle_name', 'last_name', 'DOB', 'email', 'photo', 'contact_no', 'current_grade', 'gender', )
+    list_display = ('SRN', 'user', 'first_name', 'middle_name', 'last_name', 'DOB','contact_no', 'current_grade', 'gender', )
 
 @admin.register(Parent)
 class Admin(admin.ModelAdmin):
@@ -19,7 +19,7 @@ class Admin(admin.ModelAdmin):
 
 @admin.register(Teacher)
 class Admin(admin.ModelAdmin):
-    list_display = ('TRN', 'user', 'first_name', 'middle_name', 'last_name', 'DOB', 'email', 'photo', 'contact_no', 'gender', )
+    list_display = ('TRN', 'user', 'first_name', 'middle_name', 'last_name', 'DOB', 'contact_no', 'gender', )
 
 @admin.register(AssignTeacherToSubjects)
 class Admin(admin.ModelAdmin):
