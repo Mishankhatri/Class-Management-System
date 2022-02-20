@@ -9,7 +9,7 @@ import ViewModal from "../../../common/Modal/ViewModal";
 import { useForm } from "react-hook-form";
 import { UpdateUserInfo } from "../../../../redux/actions/admin/adminaction";
 
-function UserProfile({ image }) {
+function UserProfile() {
   const [click, setClick] = useState(false);
   const [previousImage, setPreviosImage] = useState(BlankProfile);
   const [uploadedImage, setUploadedImage] = useState("");
@@ -27,7 +27,11 @@ function UserProfile({ image }) {
   };
 
   const ChangeUserInfo = (data) => {
-    dispatch(UpdateUserInfo(data));
+    const postdata = new FormData();
+    postdata.append("username", data.username);
+    postdata.append("email", data.email);
+    postdata.append("fullname", data.fullname);
+    dispatch(UpdateUserInfo(postdata, user.id));
   };
 
   return (

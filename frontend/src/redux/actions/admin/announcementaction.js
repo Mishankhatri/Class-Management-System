@@ -7,9 +7,13 @@ import {
   CLOSE_ANNOUNCEMENTS_BYID,
   OPEN_NOTIFICATION,
   GET_ADMIN_FILTER_ANNOUNCEMENT,
+  GET_ADMIN_TEACHER_FILTER_ANNOUNCEMENT,
 } from "../../actiontypes/admin/announcementtypes";
 import { getData } from "../dataactions";
-import { GET_TEACHER_ANNOUNCEMENTS_BYID } from "./../../actiontypes/teacher/teacherdatatype";
+import {
+  GET_TEACHER_ANNOUNCEMENT,
+  GET_TEACHER_ANNOUNCEMENTS_BYID,
+} from "./../../actiontypes/teacher/teacherdatatype";
 import { axiosInstanceMultipart } from "./../../../axios";
 import { createMessage, returnErrors } from "../alertactions";
 
@@ -22,7 +26,8 @@ export const CreateAdminAnnouncement = (postdata) => {
         dispatch({
           type: CREATE_ADMIN_ANNOUNCEMENT,
         });
-        dispatch(getData("adminnotices"));
+        dispatch(GetAdminFilterAnnouncement("ordering=-id&for=all"));
+        dispatch(GetAdminAnnouncement());
       })
       .then(() => {
         dispatch(
@@ -96,6 +101,30 @@ export const GetAdminAnnouncement = (forType) => {
   };
 };
 
+export const GetTeacherAnnouncement = (filter) => {
+  return function (dispatch) {
+    filter
+      ? axiosInstance
+          .get(`/teachernotices${filter}`)
+          .then(({ data }) => {
+            dispatch({
+              type: GET_TEACHER_ANNOUNCEMENT,
+              payload: data,
+            });
+          })
+          .catch((error) => console.log(error))
+      : axiosInstance
+          .get(`/teachernotices`)
+          .then(({ data }) => {
+            dispatch({
+              type: GET_TEACHER_ANNOUNCEMENT,
+              payload: data,
+            });
+          })
+          .catch((error) => console.log(error));
+  };
+};
+
 export const GetAdminFilterAnnouncement = (filter) => {
   return function (dispatch) {
     axiosInstance
@@ -130,4 +159,18 @@ export const CloseAnnouncementModal = () => {
 
 export const OpenNotification = () => {
   return { type: OPEN_NOTIFICATION };
+};
+
+export const GetAdminNotices_forTeacher = (filter) => {
+  return function (dispatch) {
+    axiosInstance
+      .get(`/adminnotices?${filter}`)
+      .then(({ data }) => {
+        dispatch({
+          type: GET_ADMIN_TEACHER_FILTER_ANNOUNCEMENT,
+          payload: data,
+        });
+      })
+      .catch((error) => console.log(error));
+  };
 };

@@ -15,6 +15,7 @@ import {
   GET_ADMIN_ANNOUNCEMENT,
   OPEN_NOTIFICATION,
   GET_ADMIN_FILTER_ANNOUNCEMENT,
+  GET_ADMIN_TEACHER_FILTER_ANNOUNCEMENT,
 } from "../../actiontypes/admin/announcementtypes";
 
 const initialState = {
@@ -32,6 +33,7 @@ export default function adminReducer(state = initialState, action) {
       return { ...state };
 
     case CREATE_ADMIN_ANNOUNCEMENT:
+    case "ON_LOGOUT_RESET":
       return { ...state, showNewNotification: true };
 
     case GET_ADMIN_ANNOUNCEMENTS_BYID:
@@ -42,6 +44,9 @@ export default function adminReducer(state = initialState, action) {
 
     case GET_ADMIN_FILTER_ANNOUNCEMENT:
       return { ...state, adminfilternotices: action.payload };
+
+    case GET_ADMIN_TEACHER_FILTER_ANNOUNCEMENT:
+      return { ...state, teacherfilternotices: action.payload };
 
     case CLOSE_ANNOUNCEMENTS_BYID:
       return { ...state, isOpen: false };
