@@ -9,6 +9,7 @@ function ViewModal({
   register,
   type = "text",
   icon = "",
+  file = false,
 }) {
   return (
     <div className="info">
@@ -16,14 +17,28 @@ function ViewModal({
         <HeaderInputField title={title} icon={icon} />
         <div className="label-input">
           {register ? (
-            <input
-              type={type}
-              className="input"
-              disabled={disabled}
-              defaultValue={value}
-              name={name}
-              {...register(name)}
-            />
+            file ? (
+              <div className="image-component">
+                <input
+                  type={"file"}
+                  className="input upload-image"
+                  disabled={disabled}
+                  defaultValue={value}
+                  accept="image/*"
+                  name={name}
+                  {...register(name)}
+                />
+              </div>
+            ) : (
+              <input
+                type={type}
+                className="input"
+                disabled={disabled}
+                defaultValue={value}
+                name={name}
+                {...register(name)}
+              />
+            )
           ) : (
             <div className="input">{value}</div>
           )}

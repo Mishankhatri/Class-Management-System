@@ -129,11 +129,11 @@ export const ChangeStudentDetail = (url, id, type, postdata) => {
   return function (dispatch) {
     const body = postdata;
     axiosInstanceMultipart
-      .patch(`${url}/${id}/`, body)
+      .put(`${url}/${id}/`, body)
       .then(() => {
         dispatch({ type: type });
         dispatch(
-          GET_DETAILS("/parent", "GET_STUDENT_PARENTS_BYID", `student=${id}`)
+          StudentClassById(id)
         );
       })
       .then(() => {

@@ -27,7 +27,7 @@ function UserProfile() {
     setPreviosImage(BlankProfile);
     setClick(false);
 
-    const postData = new FormData();
+const postData = new FormData();
     postData.append("photo_image", uploadedImage);
     dispatch(ChangeUserImage(postData));
   };
@@ -35,8 +35,8 @@ function UserProfile() {
   const ChangeUserInfo = (data) => {
     const postdata = new FormData();
     postdata.append("username", data.username);
-    postdata.append("email", data.email);
-    postdata.append("fullname", data.fullname);
+    // postdata.append("email", data.email);
+
     dispatch(UpdateUserInfo(postdata, user.id));
   };
 
@@ -85,13 +85,6 @@ function UserProfile() {
                 <div className="information">
                   <form onSubmit={handleSubmit(ChangeUserInfo)}>
                     <div className="information__info">
-                      <ViewModal
-                        title={"Full Name"}
-                        disabled={false}
-                        value={user.fullname}
-                        name={"fullname"}
-                        register={register}
-                      />
                       <ViewModal
                         title={"Email"}
                         disabled={false}
