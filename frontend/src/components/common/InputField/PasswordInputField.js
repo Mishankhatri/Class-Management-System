@@ -10,9 +10,9 @@ function PasswordInputField({
   placeholder = "Enter Password",
   onChangeHandler,
   disabled = false,
-  id,
+  id_name,
 }) {
-  const [showPass, setShowPass] = useState(false);
+  const [showPass, setShowPass] = useState(true);
   return (
     <React.Fragment>
       <div className="mid-content">
@@ -27,6 +27,7 @@ function PasswordInputField({
               type={showPass ? "password" : "text"}
               className={"input"}
               placeholder={placeholder}
+              id={id_name}
               onChange={onChangeHandler}
               required={isRequired}
               disabled={disabled}
