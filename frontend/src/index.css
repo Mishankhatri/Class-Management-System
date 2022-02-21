@@ -85,14 +85,10 @@ body {
   color: white;
 }
 
-/* .navigation .navbar .backbtn:focus {
-  outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-} */
-
-/* /* Left section of Navbar styling END*/
-
-/* /* RIght section of Navbar styling Start*/
+.navigation .navbar .middle-section {
+  align-self: center;
+  font: bold 26px "RobotoBold", sans-serif;
+}
 
 .navigation .navbar .right-section {
   display: flex;

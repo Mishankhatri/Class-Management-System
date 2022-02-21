@@ -19,12 +19,14 @@ function StudentFullDetail() {
   const dispatch = useDispatch();
 
   const { studentId: data } = useSelector((state) => state.students);
+  console.log(data);
 
   useEffect(() => {
     dispatch(StudentClassById(id));
   }, [id]);
 
   const [clickStudent, setClickStudent] = useState(false);
+  const [clickUser, setCLickUser] = useState(false);
 
   //React Hook form Initialization fot editing
   const { handleSubmit, control, register } = useForm();
@@ -34,8 +36,6 @@ function StudentFullDetail() {
     // e.target.reset();
     setClickStudent(false);
 
-    console.log(data);
-
     const postStudentData = new FormData();
     postStudentData.append("first_name", data.studentFirstName);
     postStudentData.append("middle_name", data.studentMiddleName);
@@ -43,10 +43,8 @@ function StudentFullDetail() {
     postStudentData.append("gender", data.studentGender.value);
     postStudentData.append("DOB", data.studentDOB);
     postStudentData.append("contact_no", data.studentPhone);
-    postStudentData.append("email", data.studentEmail);
     postStudentData.append("address", data.studentAddress);
     postStudentData.append("SRN", data.studentSRN);
-    postStudentData.append("user.profile_image", data.studentPhoto[0]);
 
     axiosInstance
       .get(
@@ -122,6 +120,55 @@ function StudentFullDetail() {
                 <span className="title">Students Personal Info</span>
               </div>
               <div className="content-section">
+                <div className="allinputfield">
+                  <ViewModal
+                    title={"Full Name"}
+                    custom={true}
+                    value={`${data.first_name} ${
+                      data.middle_name ? data.middle_name : ""
+                    } ${data.last_name}`}
+                  />
+                  <ViewModal title={"Gender"} value={data.gender} />
+                  <ViewModal title={"Date of Birth"} value={data.DOB} />
+                  <ViewModal title={"Phone"} value={data.contact_no} />
+                  <ViewModal title={"Address"} value={data.address} />
+                  <ViewModal
+                    title={"Class"}
+                    value={
+                      data.current_grade?.class_name
+                        ? data.current_grade.class_name
+                        : "Class may not Exist"
+                    }
+                  />
+                  <ViewModal
+                    title={"Section"}
+                    value={
+                      data.current_grade?.section
+                        ? data.current_grade.section
+                        : "Section may not Exist"
+                    }
+                  />
+                  <ViewModal title={"SRN No"} value={data.SRN} />
+                </div>
+                <button
+                  className="btn-edit"
+                  style={{ marginTop: 20 }}
+                  onClick={() => setClickStudent(!clickStudent)}>
+                  Edit
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="heading-section">
+            <div className="card-section">
+              <div className="heading">
+                <span className="title-icon">
+                  <MdIcons.MdPerson />
+                </span>
+                <span className="title">Students Login Info</span>
+              </div>
+              <div className="content-section">
                 <div className="custom-info-show">
                   <div className="content-image-p">
                     <img
@@ -131,44 +178,9 @@ function StudentFullDetail() {
                       title="Change Profile Picture"
                     />
                   </div>
-
                   <div className="information">
-                    <div className="information__info">
-                      <ViewModal
-                        title={"Full Name"}
-                        custom={true}
-                        value={`${data.first_name} ${
-                          data.middle_name ? data.middle_name : ""
-                        } ${data.last_name}`}
-                      />
-                      <ViewModal title={"Gender"} value={data.gender} />
-                      <ViewModal title={"Date of Birth"} value={data.DOB} />
-                      <ViewModal title={"Phone"} value={data.contact_no} />
-                      <ViewModal title={"Address"} value={data.address} />
-                      <ViewModal
-                        title={"Class"}
-                        value={
-                          data.current_grade?.class_name
-                            ? data.current_grade.class_name
-                            : "Class may not Exist"
-                        }
-                      />
-                      <ViewModal
-                        title={"Section"}
-                        value={
-                          data.current_grade?.section
-                            ? data.current_grade.section
-                            : "Section may not Exist"
-                        }
-                      />
-                      <ViewModal title={"SRN No"} value={data.SRN} />
-                    </div>
-                    <button
-                      className="btn-edit"
-                      style={{ marginTop: 20 }}
-                      onClick={() => setClickStudent(!clickStudent)}>
-                      Edit
-                    </button>
+                    <ViewModal title={"User Name"} value={data.user.username} />
+                    <ViewModal title={"Email"} value={data.user.email} />
                   </div>
                 </div>
               </div>

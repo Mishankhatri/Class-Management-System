@@ -35,6 +35,7 @@ function NavBar({ onClickHandler, username, show, image, name }) {
               <FaIcons.FaAlignLeft className="btn-outline-info" />
             </button>
           </div>
+          <div className="middle-section">Class Management System</div>
 
           <div className="right-section">
             <div className="not-image">

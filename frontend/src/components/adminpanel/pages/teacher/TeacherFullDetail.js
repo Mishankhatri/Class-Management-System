@@ -27,20 +27,7 @@ function TeacherFullDetail() {
     dispatch(TeacherById(id));
   }, []);
 
-  const [click, setClick] = useState(false);
   const [clickTeacher, setClickTeacher] = useState(false);
-  const [previousImage, setPreviosImage] = useState(BlankProfile);
-  const [uploadedImage, setUploadedImage] = useState("");
-
-  const onSubmitTeacher = (e) => {
-    e.preventDefault();
-    setPreviosImage(BlankProfile);
-    setClick(false);
-
-    const postData = new FormData();
-    postData.append("photo", uploadedImage);
-    dispatch(ChangeTeacherDetail(id, "UPDATE_TEACHER_PHOTO", postData));
-  };
 
   const onSubmitTeacherInput = (data, e) => {
     e.target.reset();
@@ -51,7 +38,7 @@ function TeacherFullDetail() {
     postData.append("middle_name", data.teacherMiddleName);
     postData.append("last_name", data.teacherLastName);
     postData.append("DOB", data.teacherDOB);
-    postData.append("email", data.teacherEmail);
+    postData.append("TRN", data.teacherTRN);
     postData.append("address", data.teacherAddress);
     postData.append("contact_no", data.teacherPhone);
     postData.append("gender", data.gender.value);
@@ -60,17 +47,6 @@ function TeacherFullDetail() {
 
   return data ? (
     <React.Fragment>
-      {click && (
-        <ChangePhoto
-          click={click}
-          setClick={setClick}
-          onSubmit={onSubmitTeacher}
-          setPreviosImage={setPreviosImage}
-          setUploadedImage={setUploadedImage}
-          previousImage={previousImage}
-        />
-      )}
-
       {clickTeacher && (
         <div className="modal">
           <div
@@ -85,7 +61,7 @@ function TeacherFullDetail() {
                   &times;
                 </span>
                 <div className="content">
-                  <h2>Edit Student's Info</h2>
+                  <h2>Edit Teacher's Info</h2>
                   <div className="content-section">
                     <TeacherEditModal
                       register={register}
@@ -108,56 +84,61 @@ function TeacherFullDetail() {
 
       <InnerHeader icon={<MdIcons.MdPerson />} name={`Teacher`} />
       <div className="main-content">
+        {/* Student Info  */}
         <div className="heading-section">
           <div className="card-section">
             <div className="heading">
               <span className="title-icon">
                 <MdIcons.MdPerson />
               </span>
-              <span className="title">Students Personal Info</span>
-              {/*Custom  */}
+              <span className="title">Teachers Personal Info</span>
+            </div>
+            <div className="content-section">
+              <div className="allinputfield">
+                <ViewModal
+                  title={"Full Name"}
+                  custom={true}
+                  value={`${data.first_name} ${
+                    data.middle_name ? data.middle_name : ""
+                  } ${data.last_name}`}
+                />
+                <ViewModal title={"Gender"} value={data.gender} />
+                <ViewModal title={"Date of Birth"} value={data.DOB} />
+                <ViewModal title={"Phone"} value={data.contact_no} />
+                <ViewModal title={"Address"} value={data.address} />
+                <ViewModal title={"TRN No"} value={data.TRN} />
+              </div>
+              <button
+                className="btn-edit"
+                style={{ marginTop: 20 }}
+                onClick={() => setClickTeacher(!clickTeacher)}>
+                Edit
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="heading-section">
+          <div className="card-section">
+            <div className="heading">
+              <span className="title-icon">
+                <MdIcons.MdPerson />
+              </span>
+              <span className="title">Teachers Login Info</span>
             </div>
             <div className="content-section">
               <div className="custom-info-show">
-                <div
-                  className="content-image-p"
-                  onClick={() => setClick(!click)}>
-                  <div className="content-overlay"></div>
+                <div className="content-image-p">
                   <img
                     className="content-image"
-                    src={data.photo}
+                    src={data.user.profile_image}
                     alt="Profile-Image"
                     title="Change Profile Picture"
                   />
-                  <div className="content-details fadeIn-bottom">
-                    <h3 className="content-title">
-                      <MdIcons.MdCamera style={{ fontSize: 40 }} />
-                    </h3>
-                    <p className="content-text" style={{ fontSize: 20 }}>
-                      Change Photo
-                    </p>
-                  </div>
                 </div>
                 <div className="information">
-                  <div className="information__info">
-                    <ViewModal
-                      title={"Full Name"}
-                      value={`${data.first_name} ${
-                        data.middle_name ? data.middle_name : ""
-                      } ${data.last_name}`}
-                    />
-                    <ViewModal title={"Gender"} value={data.gender} />
-                    <ViewModal title={"Date of Birth"} value={data.DOB} />
-                    <ViewModal title={"Phone"} value={data.contact_no} />
-                    <ViewModal title={"Email"} value={data.email} />
-                    <ViewModal title={"Address"} value={data.address} />
-                  </div>
-                  <button
-                    className="btn-edit"
-                    style={{ marginTop: 20 }}
-                    onClick={() => setClickTeacher(!clickTeacher)}>
-                    Edit
-                  </button>
+                  <ViewModal title={"User Name"} value={data.user.username} />
+                  <ViewModal title={"Email"} value={data.user.email} />
                 </div>
               </div>
             </div>

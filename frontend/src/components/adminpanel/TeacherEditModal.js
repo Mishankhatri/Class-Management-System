@@ -69,12 +69,12 @@ function TeacherEditModal({ register, data, Controller, control }) {
           type={"number"}
         />
         <ViewModal
-          title={"Email"}
+          title={"TRN"}
           register={register}
           disabled={false}
-          name={"teacherEmail"}
-          value={data.email}
-          type={"email"}
+          name={"teacherTRN"}
+          value={data.TRN}
+          type={"text"}
         />
         <ViewModal
           title={"Address"}

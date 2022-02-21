@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { AddTeacherDetail } from "../../../../redux/actions/teacher/teacheractions";
 import PasswordInputField from "./../../../common/InputField/PasswordInputField";
 import InputField from "../../../common/InputField/InputField";
+import { FileInput } from "../../../common/InputField/FileInput";
 
 function AddTeacher() {
   const [selectRef, setSelectRef] = useState(null);
@@ -21,8 +22,7 @@ function AddTeacher() {
 
   const onSubmitForm = (data, e) => {
     let postData = new FormData();
-    let postUserLogin = new FormData();
-    // postData.append("user", 30); // user id is hard coded, as foreign key
+
     postData.append("TRN", data.teacherTRN);
     postData.append("first_name", data.teacherFirstName);
     postData.append("middle_name", data.teacherMiddleName);
@@ -34,20 +34,16 @@ function AddTeacher() {
     postData.append("contact_no", data.teacherPhone);
     postData.append("gender", data.teacherGender.value);
 
-    //Assigning User Login
-    postUserLogin.append("password", data.teacherPassword);
-    postUserLogin.append("username", data.teacherUsername);
-    postUserLogin.append("email", data.teacherEmail);
-    postUserLogin.append(
-      "fullname",
-      `${data.teacherFirstName} ${data.teacherMiddleName} ${data.teacherLastName}`
-    );
-    postUserLogin.append("profile_image", data.teacherPhoto);
+    //Assigning Login Info
+    postData.append("user.password", data.teacherPassword);
+    postData.append("user.username", data.teacherUsername);
+    postData.append("user.email", data.teacherEmail);
+    postData.append("user.profile_image", data.teacherPhoto);
+    postData.append("user.teacher", true);
+    dispatch(AddTeacherDetail(postData, "teacher_user", "ADD_TEACHER_DETAIL"));
 
-    dispatch(AddTeacherDetail(postData));
-
-    // e.target.reset();
-    // selectRef.clearValue();
+    e.target.reset();
+    selectRef.clearValue();
   };
 
   return (
@@ -63,10 +59,6 @@ function AddTeacher() {
             control={control}
             Controller={Controller}
             isCustom={false}
-            hasFile={true}
-            fileTitle={"Upload Photo"}
-            fileIcon={<FaIcons.FaPhotoVideo className="mid-icon" />}
-            fileName={"teacherPhoto"}
           />
 
           <div className="card-section">
@@ -74,10 +66,26 @@ function AddTeacher() {
               <span className="title-icon">
                 <FaIcons.FaBook />
               </span>
-              <span className="title">TEACHER LOGIN INFO</span>
+              <span className="title">STUDENT LOGIN INFO</span>
             </div>
             <div className="content-section">
               <div className="custom-selection">
+                <Controller
+                  name={"teacherEmail"}
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <InputField
+                      title={"Email".toUpperCase()}
+                      input={"email"}
+                      icon={<MdIcons.MdEmail className="mid-icon" />}
+                      placeholder={"Enter Login Email"}
+                      name={"teacherEmail"}
+                      onChangeHandler={field.onChange}
+                      isRequired={true}
+                    />
+                  )}
+                />
                 <Controller
                   name={"teacherUsername"}
                   control={control}
@@ -88,7 +96,7 @@ function AddTeacher() {
                       input={"text"}
                       icon={<MdIcons.MdVerifiedUser className="mid-icon" />}
                       placeholder={"Enter Username"}
-                      name={"studentUsername"}
+                      name={"teacherUsername"}
                       onChangeHandler={field.onChange}
                       isRequired={true}
                     />
@@ -102,9 +110,27 @@ function AddTeacher() {
                     <PasswordInputField
                       title={"Password".toUpperCase()}
                       placeholder={"**********"}
-                      name={"studentPassword"}
+                      name={"teacherPassword"}
                       onChangeHandler={field.onChange}
                       isRequired={true}
+                      id_name={"user_profile"}
+                    />
+                  )}
+                />
+                <Controller
+                  name={"teacherPhoto"}
+                  control={control}
+                  defaultValue=""
+                  render={(props) => (
+                    <FileInput
+                      name={"teacherPhoto"}
+                      title={"User Photo"}
+                      icon={<MdIcons.MdPhotoCamera className="mid-icon" />}
+                      isRequired={false}
+                      isImageFile={true}
+                      onChange={(event) =>
+                        props.field.onChange(event.target.files[0])
+                      }
                     />
                   )}
                 />

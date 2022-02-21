@@ -56,11 +56,6 @@ const TeacherTableData = () => {
         SearchAble: true,
       },
       {
-        Header: "Email",
-        accessor: "email",
-        SearchAble: true,
-      },
-      {
         Header: "TRN NO",
         accessor: "TRN",
         SearchAble: true,
