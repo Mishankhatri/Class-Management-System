@@ -15,9 +15,9 @@ Consists Styling of
   width: auto !important;
 }
 
-::-webkit-file-upload-button {
+/* ::-webkit-file-upload-button {
   display: none;
-}
+} */
 
 .image-component {
   display: flex;

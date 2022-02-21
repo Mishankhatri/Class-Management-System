@@ -8,13 +8,11 @@ import CustomController from "../../../common/Controller";
 import { getStudentInputValues } from "../../../values/AdminPanel/StudentInputField";
 
 import { useForm, Controller } from "react-hook-form";
-import PasswordInputField from "../../../common/InputField/PasswordInputField";
 import { useDispatch } from "react-redux";
 import { AddStudentDetail } from "./../../../../redux/actions/student/studentactions";
 import { GetPaginatedGradePromise } from "../../../GetOptions";
 import { UniqueArray } from "../../../common/ReverseArray";
 import { FileInput } from "../../../common/InputField/FileInput";
-import axiosInstance from "../../../../axios";
 
 function AddStudent() {
   const dispatch = useDispatch();
@@ -66,14 +64,29 @@ function AddStudent() {
   }));
 
   const handleSection = (data) => {
-    const sectionLabel = getSection(data);
-    setSection(sectionLabel);
+    if (data) {
+      const sectionLabel = getSection(data);
+      setSection(sectionLabel);
+    }
   };
 
   const onSubmitForm = (data, e) => {
+    const studentRoll =
+      data.studentSRN.length === 1
+        ? `00${data.studentSRN}`
+        : data.studentSRN.length === 2
+        ? `0${data.studentSRN}`
+        : data.studentSRN;
+
+    const studentClassGen =
+      data.studentClass.length === 1
+        ? `00${data.studentClass}`
+        : data.studentSRN.length === 2
+        ? `0${data.studentClass}`
+        : data.studentClass;
     let postStudentData = new FormData();
 
-    //Assigning Student Info
+    // Assigning Student Info
     postStudentData.append("SRN", data.studentSRN);
     postStudentData.append("first_name", data.studentFirstName);
     postStudentData.append("middle_name", data.studentMiddleName);
@@ -84,7 +97,10 @@ function AddStudent() {
     postStudentData.append("address", data.studentLocation);
 
     //Assigning Login Info
-    postStudentData.append("user.password", data.studentPassword);
+    postStudentData.append(
+      "user.password",
+      `CMS0${studentClassGen}${data.studentSection.value}${studentRoll}`
+    );
     postStudentData.append("user.username", data.studentUsername);
     postStudentData.append("user.email", data.studentEmail);
     postStudentData.append("user.profile_image", data.studentPhoto);
@@ -222,21 +238,7 @@ function AddStudent() {
                     />
                   )}
                 />
-                <Controller
-                  name={"studentPassword"}
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <PasswordInputField
-                      title={"Password".toUpperCase()}
-                      placeholder={"**********"}
-                      name={"studentPassword"}
-                      onChangeHandler={field.onChange}
-                      isRequired={true}
-                      id_name={"user_profile"}
-                    />
-                  )}
-                />
+
                 <Controller
                   name={"studentPhoto"}
                   control={control}

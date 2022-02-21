@@ -76,7 +76,6 @@ export const ChangeUserImage = (data) => {
       })
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));
-        console.log(err.response);
       });
   };
 };

@@ -21,6 +21,13 @@ function AddTeacher() {
   const refClear = (ref) => setSelectRef(ref);
 
   const onSubmitForm = (data, e) => {
+    const teacherTRN_GEN =
+      data.teacherTRN.length === 1
+        ? `00${data.teacherTRN}`
+        : data.teacherTRN.length === 2
+        ? `0${data.teacherTRN}`
+        : data.teacherTRN;
+
     let postData = new FormData();
 
     postData.append("TRN", data.teacherTRN);
@@ -35,7 +42,7 @@ function AddTeacher() {
     postData.append("gender", data.teacherGender.value);
 
     //Assigning Login Info
-    postData.append("user.password", data.teacherPassword);
+    postData.append("user.password", `CMST${teacherTRN_GEN}`);
     postData.append("user.username", data.teacherUsername);
     postData.append("user.email", data.teacherEmail);
     postData.append("user.profile_image", data.teacherPhoto);
@@ -102,21 +109,7 @@ function AddTeacher() {
                     />
                   )}
                 />
-                <Controller
-                  name={"teacherPassword"}
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <PasswordInputField
-                      title={"Password".toUpperCase()}
-                      placeholder={"**********"}
-                      name={"teacherPassword"}
-                      onChangeHandler={field.onChange}
-                      isRequired={true}
-                      id_name={"user_profile"}
-                    />
-                  )}
-                />
+
                 <Controller
                   name={"teacherPhoto"}
                   control={control}

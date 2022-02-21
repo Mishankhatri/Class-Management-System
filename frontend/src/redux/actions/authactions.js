@@ -1,6 +1,6 @@
 import axiosInstance from "../../axios";
 import { axiosInstanceMultipart } from "../../axios";
-import { returnErrors } from "./alertactions";
+import { createMessage, returnErrors } from "./alertactions";
 import {
   USER_LOADED,
   USER_LOADING,
@@ -73,6 +73,9 @@ export const registeradmin = (postData) => (dispatch) => {
     .post(`user/register/admin/`, body)
     .then((res) => {
       dispatch({ type: REGISTER_SUCCESS, payload: res.data });
+      dispatch(
+        createMessage({ accountCreate: "Account Created Successfully" })
+      );
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));

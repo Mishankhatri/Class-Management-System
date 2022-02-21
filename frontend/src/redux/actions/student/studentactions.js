@@ -1,6 +1,6 @@
 import axiosInstance, { axiosInstanceMultipart } from "../../../axios";
 
-import { createMessage } from "./../alertactions";
+import { createMessage, returnErrors } from "./../alertactions";
 import {
   GET_STUDENTCLASS_SID,
   DELETE_STUDENT,
@@ -19,7 +19,9 @@ export const GET_DETAILS = (url, type, filter) => {
               payload: data,
             });
           })
-          .catch((error) => console.log(error))
+          .catch((err) => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+          })
       : axiosInstance
           .get(url)
           .then(({ data }) => {
@@ -28,7 +30,9 @@ export const GET_DETAILS = (url, type, filter) => {
               payload: data,
             });
           })
-          .catch((error) => console.log(error));
+          .catch((err) => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+          });
   };
 };
 
@@ -42,7 +46,9 @@ export const StudentClassById = (id) => {
           payload: data,
         });
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
   };
 };
 
@@ -56,7 +62,9 @@ export const StudentByUserId = (id) => {
           payload: data.results,
         });
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
   };
 };
 
@@ -74,7 +82,9 @@ export const StudentDelete = (id) => {
           createMessage({ deleteStudent: "Student Deleted Successfully" })
         );
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
   };
 };
 
@@ -91,12 +101,8 @@ export const AddStudentDetail = (postData, url, type) => {
       .then(() => {
         dispatch(createMessage({ studentAdd: "Student Added Successfuly" }));
       })
-      .catch((error) => {
-        if (error.response) {
-          console.log("Response", error.response);
-        } else if (error.request) {
-          console.log("Request", error.request);
-        } else console.log(error);
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
       });
   };
 };
@@ -114,12 +120,8 @@ export const AddGeneralDetails = (postData, url, type) => {
       .then(() => {
         dispatch(createMessage({ addGenral: "Added Successfully" }));
       })
-      .catch((error) => {
-        if (error.response) {
-          console.log("Response", error.response);
-        } else if (error.request) {
-          console.log("Request", error.request);
-        } else console.log(error);
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
       });
   };
 };
@@ -138,10 +140,8 @@ export const ChangeStudentDetail = (url, id, type, postdata) => {
           createMessage({ studentChange: "Student detail Changed Succesfully" })
         );
       })
-      .catch((error) => {
-        if (error.request) console.log(error.request);
-        else if (error.response) console.log(error.response);
-        else console.log(error);
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
       });
   };
 };
@@ -162,10 +162,8 @@ export const ChangeStudentClassDetail = (url, id, type, postdata) => {
           createMessage({ studentChange: "Student detail Changed Succesfully" })
         );
       })
-      .catch((error) => {
-        if (error.request) console.log(error.request);
-        else if (error.response) console.log(error.response);
-        else console.log(error);
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
       });
   };
 };
@@ -188,10 +186,8 @@ export const ChangeStudentParentDetail = (s_id, p_id, postdata) => {
           })
         );
       })
-      .catch((error) => {
-        if (error.request) console.log(error.request);
-        else if (error.response) console.log(error.response);
-        else console.log(error);
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
       });
   };
 };
