@@ -80,7 +80,6 @@ export const StudentDelete = (id) => {
 
 export const AddStudentDetail = (postData, url, type) => {
   return function (dispatch) {
-    console.log(postData);
     const body = postData;
     axiosInstanceMultipart
       .post(`${url}/`, body)
@@ -132,9 +131,7 @@ export const ChangeStudentDetail = (url, id, type, postdata) => {
       .put(`${url}/${id}/`, body)
       .then(() => {
         dispatch({ type: type });
-        dispatch(
-          StudentClassById(id)
-        );
+        dispatch(StudentClassById(id));
       })
       .then(() => {
         dispatch(

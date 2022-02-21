@@ -5,10 +5,7 @@ import * as FaIcons from "react-icons/fa";
 import InputField from "../../../common//InputField/InputField";
 import CustomController from "../../../common/Controller";
 
-import {
-  getParentInfoValues,
-  getStudentInputValues,
-} from "../../../values/AdminPanel/StudentInputField";
+import { getStudentInputValues } from "../../../values/AdminPanel/StudentInputField";
 
 import { useForm, Controller } from "react-hook-form";
 import PasswordInputField from "../../../common/InputField/PasswordInputField";
@@ -16,13 +13,14 @@ import { useDispatch } from "react-redux";
 import { AddStudentDetail } from "./../../../../redux/actions/student/studentactions";
 import { GetPaginatedGradePromise } from "../../../GetOptions";
 import { UniqueArray } from "../../../common/ReverseArray";
+import { FileInput } from "../../../common/InputField/FileInput";
+import axiosInstance from "../../../../axios";
 
 function AddStudent() {
   const dispatch = useDispatch();
 
   //For Reseting Select Options while Submitting
   const [selectRefStudent, setSelectRefStudent] = useState(null);
-  const [selectRefParent, setSelectRefParent] = useState(null);
   const [selectRefAcademicFirst, setSelectRefAcademicFirst] = useState(null);
   const [selectRefAcademicSecond, setSelectRefAcademicSecond] = useState(null);
 
@@ -31,7 +29,6 @@ function AddStudent() {
 
   //Clearing Student Info Select
   const refClearStudent = (ref) => setSelectRefStudent(ref);
-  const refClearParent = (ref) => setSelectRefParent(ref);
   const refClearAcademicFirst = (ref) => setSelectRefAcademicFirst(ref);
   const refClearAcademicSecond = (ref) => setSelectRefAcademicSecond(ref);
 
@@ -70,18 +67,13 @@ function AddStudent() {
 
   const handleSection = (data) => {
     const sectionLabel = getSection(data);
-    console.log(sectionLabel);
     setSection(sectionLabel);
   };
 
   const onSubmitForm = (data, e) => {
     let postStudentData = new FormData();
-    let postParentData = new FormData();
-    let postUserLogin = new FormData();
 
     //Assigning Student Info
-    postStudentData.append("current_grade", 15); //Temp grade id
-    postStudentData.append("user", 90); //Temp user id
     postStudentData.append("SRN", data.studentSRN);
     postStudentData.append("first_name", data.studentFirstName);
     postStudentData.append("middle_name", data.studentMiddleName);
@@ -89,43 +81,22 @@ function AddStudent() {
     postStudentData.append("gender", data.studentGender.value);
     postStudentData.append("DOB", data.studentDOB);
     postStudentData.append("contact_no", data.studentPhone);
-    postStudentData.append("email", data.studentEmail);
     postStudentData.append("address", data.studentLocation);
-    postStudentData.append("photo", data.studentPhoto);
 
-    //Assigni Paraent Info
-    postParentData.append("father_name", data.studentFatherName);
-    postParentData.append("mother_name", data.studentMotherName);
-    postParentData.append("parent_address", data.parentAddress);
-    postParentData.append("parent_state", data.parentState.value);
-    postParentData.append("parent_contact_no", data.parentContact);
-    postParentData.append(
-      "parent_additional_contact_no",
-      data.parentAdditionalContact
-    );
-    postParentData.append("parent_email", data.parentEmail);
-    postParentData.append("student", 90); // Hard Coded Student;
-
-    //Assigning User Login
-    postUserLogin.append("password", data.studentPassword);
-    postUserLogin.append("username", data.studentUsername);
-    postUserLogin.append("email", data.studentEmail);
-    postUserLogin.append(
-      "fullname",
-      `${data.studentFirstName} ${data.studentMiddleName} ${data.studentLastName}`
-    );
-    postUserLogin.append("profile_image", data.studentPhoto);
-
+    //Assigning Login Info
+    postStudentData.append("user.password", data.studentPassword);
+    postStudentData.append("user.username", data.studentUsername);
+    postStudentData.append("user.email", data.studentEmail);
+    postStudentData.append("user.profile_image", data.studentPhoto);
+    postStudentData.append("current_grade.class_name", data.studentClass.value);
+    postStudentData.append("current_grade.section", data.studentSection.value);
+    postStudentData.append("user.student", true);
     dispatch(
-      AddStudentDetail(postStudentData, "student", "ADD_STUDENT_DETAIL")
-    );
-    dispatch(
-      AddStudentDetail(postParentData, "parent", "ADD_STUDENT_PARENT_DETAIL")
+      AddStudentDetail(postStudentData, "student_user", "ADD_STUDENT_DETAIL")
     );
 
     // e.target.reset();
     // selectRefStudent.clearValue();
-    // selectRefParent.clearValue();
     // selectRefAcademicFirst.clearValue();
     // selectRefAcademicSecond.clearValue();
   };
@@ -141,22 +112,6 @@ function AddStudent() {
             icon={<FaIcons.FaUser />}
             ValueArray={getStudentInputValues()}
             refClear={refClearStudent}
-            control={control}
-            Controller={Controller}
-            isCustom={false}
-            hasFile={true}
-            fileRequired={false}
-            fileTitle={"Upload Photo"}
-            fileIcon={<FaIcons.FaPhotoVideo className="mid-icon" />}
-            fileName={"studentPhoto"}
-          />
-
-          {/* Parent Info  */}
-          <CustomController
-            title={"ADD PARENT"}
-            icon={<FaIcons.FaUser />}
-            ValueArray={getParentInfoValues()}
-            refClear={refClearParent}
             control={control}
             Controller={Controller}
             isCustom={false}
@@ -237,6 +192,22 @@ function AddStudent() {
             <div className="content-section">
               <div className="custom-selection">
                 <Controller
+                  name={"studentEmail"}
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <InputField
+                      title={"Email".toUpperCase()}
+                      input={"email"}
+                      icon={<MdIcons.MdEmail className="mid-icon" />}
+                      placeholder={"Enter Login Email"}
+                      name={"studentEmail"}
+                      onChangeHandler={field.onChange}
+                      isRequired={true}
+                    />
+                  )}
+                />
+                <Controller
                   name={"studentUsername"}
                   control={control}
                   defaultValue=""
@@ -263,6 +234,24 @@ function AddStudent() {
                       name={"studentPassword"}
                       onChangeHandler={field.onChange}
                       isRequired={true}
+                      id_name={"user_profile"}
+                    />
+                  )}
+                />
+                <Controller
+                  name={"studentPhoto"}
+                  control={control}
+                  defaultValue=""
+                  render={(props) => (
+                    <FileInput
+                      name={"studentPhoto"}
+                      title={"User Photo"}
+                      icon={<MdIcons.MdPhotoCamera className="mid-icon" />}
+                      isRequired={false}
+                      isImageFile={true}
+                      onChange={(event) =>
+                        props.field.onChange(event.target.files[0])
+                      }
                     />
                   )}
                 />
