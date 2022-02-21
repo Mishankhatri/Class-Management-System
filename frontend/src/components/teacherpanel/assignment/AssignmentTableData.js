@@ -64,7 +64,7 @@ const AssignmentTableData = () => {
       {
         Header: "Time due",
         accessor: (d) => {
-          return moment(d.time_due, "HH").format("LT");
+          return moment(d.time_due, "HH,mm").format("LT");
         },
         SearchAble: false,
       },

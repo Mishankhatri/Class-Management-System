@@ -91,7 +91,7 @@ class TeacherUserPOSTSerializer(serializers.ModelSerializer):
         return teacher
 class AssignTeacherToSubjectsLISTSerializer(serializers.ModelSerializer):
     teacher= TeacherSerializer()
-    subject= serializers.StringRelatedField()
+    subject= SubjectsLISTSerializer()
     grade = serializers.StringRelatedField()
     class Meta:
         model= AssignTeacherToSubjects

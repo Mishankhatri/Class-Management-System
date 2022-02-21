@@ -51,22 +51,22 @@ const StudentTableData = () => {
         },
         SearchAble: true,
       },
-
-      {
-        Header: "Phone",
-        accessor: "contact_no",
-        SearchAble: true,
-      },
-      {
-        Header: "Email",
-        accessor: "email",
-        SearchAble: true,
-      },
       {
         Header: "Class",
         accessor: (d) => {
           return `${d.current_grade?.class_name} : ${d.current_grade?.section}`;
         },
+        SearchAble: true,
+      },
+      {
+        Header: "SRN",
+        accessor: "SRN",
+        SearchAble: true,
+      },
+
+      {
+        Header: "Phone",
+        accessor: "contact_no",
         SearchAble: true,
       },
       {

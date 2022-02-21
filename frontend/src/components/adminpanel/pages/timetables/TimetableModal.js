@@ -16,6 +16,7 @@ function TimetableModal({ register, data, Controller, control }) {
   const [classRef, setClassRef] = useState([]);
   const [sectionRef, setSectionRef] = useState([]);
   const uniqueGrade = UniqueArray(grade, "class_name");
+  console.log(uniqueGrade);
 
   const gradeName = +data.assigned.grade.slice(0, 2);
   const sectionName = data.assigned.grade.slice(4, 5);
@@ -50,7 +51,10 @@ function TimetableModal({ register, data, Controller, control }) {
     value: gradeName,
   });
 
-  const [section, setSection] = useState(selectSection);
+  const initialData = [...selectSection] 
+  console.log(initialData);
+
+  const [section, setSection] = useState(initialData);
   //Getting Subjects
 
   const getSubjects = (data) => {
@@ -76,9 +80,11 @@ function TimetableModal({ register, data, Controller, control }) {
   }));
 
   //Set Section from Selecting Class
+  // {label: 1, value: 1}
   const handleClass = (data) => {
     setClassRef(data.value);
     const sectionLabel = getSection(data);
+    // console.log("Se", sectionLabel);
     setSection(sectionLabel);
 
     axiosInstance

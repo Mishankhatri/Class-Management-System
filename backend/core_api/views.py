@@ -282,6 +282,8 @@ class AssignTeacherToSubjectsAPI(viewsets.ModelViewSet):
         subject_id = self.request.query_params.get('subject')
         teacher_id = self.request.query_params.get('teacher')
         grade_id = self.request.query_params.get('grade')
+        class_name = self.request.query_params.get('classname')
+        section = self.request.query_params.get('section')
         
         if subject_id is not None:
             queryset = queryset.filter(subject__id=subject_id)
@@ -289,6 +291,11 @@ class AssignTeacherToSubjectsAPI(viewsets.ModelViewSet):
             queryset = queryset.filter(teacher__id=teacher_id)
         if grade_id is not None:
             queryset = queryset.filter(grade__id=grade_id)
+        if class_name is not None:
+            queryset = queryset.filter(grade__class_name=class_name)
+        if section is not None:
+            queryset = queryset.filter(grade__section=section)
+
         return queryset
 
 class AdminAnnoucementAPI(viewsets.ModelViewSet):

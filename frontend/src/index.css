@@ -15,6 +15,22 @@ Consists Styling of
   width: auto !important;
 }
 
+::-webkit-file-upload-button {
+  display: none;
+}
+
+.image-component {
+  display: flex;
+}
+
+.display-image {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  right: 20%;
+  bottom: 20%;
+}
+
 body {
   background-color: #f1f2f7 !important;
   font-family: "Open Sans", sans-serif;
