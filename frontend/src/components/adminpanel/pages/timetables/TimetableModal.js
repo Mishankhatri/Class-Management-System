@@ -16,7 +16,6 @@ function TimetableModal({ register, data, Controller, control }) {
   const [classRef, setClassRef] = useState([]);
   const [sectionRef, setSectionRef] = useState([]);
   const uniqueGrade = UniqueArray(grade, "class_name");
-  console.log(uniqueGrade);
 
   const gradeName = +data.assigned.grade.slice(0, 2);
   const sectionName = data.assigned.grade.slice(4, 5);
@@ -51,8 +50,7 @@ function TimetableModal({ register, data, Controller, control }) {
     value: gradeName,
   });
 
-  const initialData = [...selectSection] 
-  console.log(initialData);
+  const initialData = [...selectSection];
 
   const [section, setSection] = useState(initialData);
   //Getting Subjects

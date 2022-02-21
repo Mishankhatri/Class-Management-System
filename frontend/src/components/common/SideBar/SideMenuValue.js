@@ -105,9 +105,9 @@ const menuadminValue = [
   },
 
   {
-    name: "Create Id",
+    name: "Register Admin",
     hasSubMenu: false,
-    icon: <FaIcons.FaUser />,
+    icon: <MdIcons.MdAdminPanelSettings />,
     to: "/admin/createid",
   },
   {

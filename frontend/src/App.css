@@ -277,6 +277,7 @@ input[type="file"] {
 
 .required {
   color: red;
+  font-size: 20px;
 }
 
 .content-section.custom-content,

@@ -42,10 +42,11 @@ export default function (state = initialState, action) {
         isLoading: false,
       };
     case REGISTER_SUCCESS:
+    case REGISTER_FAILED:
       return {
         ...state,
         ...action.payload,
-        isAuthenticated: false,
+        isAuthenticated: true,
         isLoading: false,
       };
     case AUTH_ERR:

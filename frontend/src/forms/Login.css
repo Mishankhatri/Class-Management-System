@@ -19,6 +19,11 @@
 }
 
 @font-face {
+  font-family: Open Sans;
+  src: url(../assets/fonts/OpenSans/OpenSans-Regular.ttf);
+}
+
+@font-face {
   font-family: RobotoBold;
   src: url(../assets/fonts/RobotoCondensed/RobotoCondensed-Bold.ttf);
 }

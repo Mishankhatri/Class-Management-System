@@ -28,6 +28,10 @@ export class Alerts extends Component {
         alert.error(`${error.msg?.old_password?.old_password}`);
       if (error.msg?.subject_code) alert.error(`${error.msg.subject_code}`);
       if (error.msg?.files_by_admin) alert.error(`${error.msg.files_by_admin}`);
+
+      //Student Add
+      if (error.msg?.SRN) alert.error(`${error.msg.SRN}`);
+      if (error.msg?.TRN) alert.error(`${error.msg.TRN}`);
     }
 
     if (message !== prevProps.message) {
@@ -65,6 +69,7 @@ export class Alerts extends Component {
         alert.success(`${message.deleteAttendance}`);
       if (message?.addSubject) alert.success(`${message.addSubject}`);
       if (message?.changeSubject) alert.success(`${message.changeSubject}`);
+      if (message?.accountCreate) alert.success(`${message.accountCreate}`);
       if (message?.allfields) alert.error(`${message.allfields}`);
     }
   }
