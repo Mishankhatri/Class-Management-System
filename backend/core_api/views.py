@@ -35,7 +35,7 @@ class SubjectAPI(viewsets.ModelViewSet):
             "or override the `get_serializer_class()` method."
             % self.__class__.__name__
         )
-        if self.request.method in ('POST', 'PUT'):
+        if self.request.method in ('POST', 'PUT','PATCH'):
                 return SubjectsPOSTSerializer
         else:
             return self.serializer_class
@@ -67,7 +67,18 @@ class StudentAPI(viewsets.ModelViewSet):
     search_fields = ['first_name','last_name','email','SRN']
     ordering_fields = ['id','first_name','SRN']
     ordering=['SRN']
-        
+
+    def get_serializer_class(self):
+        assert self.serializer_class is not None, (
+            "'%s' should either include a `serializer_class` attribute, "
+            "or override the `get_serializer_class()` method."
+            % self.__class__.__name__
+        )
+        if self.request.method in ('POST', 'PUT','PATCH'):
+                return StudentPOSTSerializer
+        else:
+            return self.serializer_class
+
     def get_queryset(self):
         queryset = Student.objects.all()
         user_id = self.request.query_params.get('user')
@@ -112,7 +123,7 @@ class StudentUserAPI(viewsets.ModelViewSet):
             "or override the `get_serializer_class()` method."
             % self.__class__.__name__
         )
-        if self.request.method in ('POST', 'PUT'):
+        if self.request.method in ('POST'):
                 return StudentUserPOSTSerializer
         else:
             return self.serializer_class
@@ -159,8 +170,10 @@ class ParentAPI(viewsets.ModelViewSet):
             "or override the `get_serializer_class()` method."
             % self.__class__.__name__
         )
-        if self.request.method in ('POST', 'PUT'):
+        if self.request.method in ('POST'):
                 return ParentPOSTSerializer
+        elif self.request.method in ('PUT','PATCH'):
+            return ParentUPDATESerializer
         else:
             return self.serializer_class
     
@@ -272,7 +285,7 @@ class AssignTeacherToSubjectsAPI(viewsets.ModelViewSet):
             "or override the `get_serializer_class()` method."
             % self.__class__.__name__
         )
-        if self.request.method in ('POST', 'PUT'):
+        if self.request.method in ('POST','PUT','PATCH'):
                 return AssignTeacherToSubjectsPOSTSerializer
         else:
             return self.serializer_class
@@ -313,7 +326,7 @@ class AdminAnnoucementAPI(viewsets.ModelViewSet):
             "or override the `get_serializer_class()` method."
             % self.__class__.__name__
         )
-        if self.request.method in ('POST', 'PUT'):
+        if self.request.method in ('POST','PUT','PATCH'):
                 return AdminAnnoucementPOSTSerializer
         else:
             return self.serializer_class
@@ -349,7 +362,7 @@ class TeacherAnnoucementAPI(viewsets.ModelViewSet):
             "or override the `get_serializer_class()` method."
             % self.__class__.__name__
         )
-        if self.request.method in ('POST', 'PUT'):
+        if self.request.method in ('POST','PUT','PATCH'):
                 return TeacherAnnoucementPOSTSerializer
         else:
             return self.serializer_class
@@ -384,7 +397,7 @@ class GivenAssignmentsAPI(viewsets.ModelViewSet):
             "or override the `get_serializer_class()` method."
             % self.__class__.__name__
         )
-        if self.request.method in ('POST', 'PUT'):
+        if self.request.method in ('POST','PUT','PATCH'):
                 return GivenAssignmentPOSTSerializer
         else:
             return self.serializer_class
@@ -420,7 +433,7 @@ class SubmittedAssignmentsAPI(viewsets.ModelViewSet):
             "or override the `get_serializer_class()` method."
             % self.__class__.__name__
         )
-        if self.request.method in ('POST', 'PUT'):
+        if self.request.method in ('POST'):
                 return SubmittedAssignmentPOSTSerializer
         else:
             return self.serializer_class
@@ -459,7 +472,7 @@ class LectureNotesAPI(viewsets.ModelViewSet):
             "or override the `get_serializer_class()` method."
             % self.__class__.__name__
         )
-        if self.request.method in ('POST', 'PUT'):
+        if self.request.method in ('POST','PUT','PATCH'):
                 return LectureNotesPOSTSerializer
         else:
             return self.serializer_class
@@ -500,7 +513,7 @@ class AttendanceAPI(viewsets.ModelViewSet):
             "or override the `get_serializer_class()` method."
             % self.__class__.__name__
         )
-        if self.request.method in ('POST', 'PUT'):
+        if self.request.method in ('POST','PUT','PATCH'):
                 return AttendancePOSTSerializer
         else:
             return self.serializer_class
@@ -536,7 +549,7 @@ class TimeTableAPI(viewsets.ModelViewSet):
             "or override the `get_serializer_class()` method."
             % self.__class__.__name__
         )
-        if self.request.method in ('POST', 'PUT'):
+        if self.request.method in ('POST','PUT','PATCH'):
                 return TimeTablePOSTSerializer
         else:
             return self.serializer_class

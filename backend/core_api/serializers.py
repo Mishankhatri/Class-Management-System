@@ -26,6 +26,11 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model= Student
         fields = '__all__'
+class StudentPOSTSerializer(serializers.ModelSerializer):
+    user = CMS_UsersSerializer(read_only=True)
+    class Meta:
+        model= Student
+        fields = '__all__'
         
 class StudentUserLISTSerializer(serializers.ModelSerializer):
     user = CMS_UsersSerializer(read_only=True)
@@ -59,6 +64,11 @@ class ParentLISTSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class ParentPOSTSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Parent
+        fields = '__all__'
+class ParentUPDATESerializer(serializers.ModelSerializer):
+    student = StudentUserLISTSerializer(read_only=True)
     class Meta:
         model= Parent
         fields = '__all__'
