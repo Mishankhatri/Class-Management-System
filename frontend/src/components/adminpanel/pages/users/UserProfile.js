@@ -27,7 +27,7 @@ function UserProfile() {
     setPreviosImage(BlankProfile);
     setClick(false);
 
-const postData = new FormData();
+    const postData = new FormData();
     postData.append("photo_image", uploadedImage);
     dispatch(ChangeUserImage(postData));
   };
@@ -35,7 +35,7 @@ const postData = new FormData();
   const ChangeUserInfo = (data) => {
     const postdata = new FormData();
     postdata.append("username", data.username);
-    // postdata.append("email", data.email);
+    postdata.append("email", data.email);
 
     dispatch(UpdateUserInfo(postdata, user.id));
   };

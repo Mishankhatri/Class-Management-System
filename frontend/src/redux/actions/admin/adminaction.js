@@ -12,6 +12,7 @@ import {
   UPDATE_TIMETABLES,
   UPDATE_USER_IMAGE,
 } from "./../../actiontypes/admin/admindatatype";
+import { UPDATE_SUCCESS } from "../../actiontypes/authtypes";
 
 export const ChangeAdminPassword = (data) => {
   return function (dispatch) {
@@ -45,6 +46,7 @@ export const UpdateUserInfo = (data) => {
       .patch(`user/profile/update/`, body)
       .then(() => dispatch({ type: UPDATE_ADMIN_INFO }))
       .then(() => {
+        dispatch({ type: UPDATE_SUCCESS });
         dispatch(
           createMessage({
             updateUserInfo: "User Info Changed Successully",
