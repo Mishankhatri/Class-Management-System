@@ -64,14 +64,6 @@ const TeacherFieldValue = [
     name: "teacherPhone",
   },
   {
-    title: "EMAIL",
-    input: "email",
-    icon: <FaIcons.FaEnvelope className="mid-icon" />,
-    placeholder: "example@example.com",
-    isRequired: true,
-    name: "teacherEmail",
-  },
-  {
     title: "LOCATION",
     input: "text",
     icon: <FaIcons.FaLocationArrow className="mid-icon" />,

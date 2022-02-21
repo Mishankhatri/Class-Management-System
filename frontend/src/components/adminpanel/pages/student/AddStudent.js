@@ -95,10 +95,10 @@ function AddStudent() {
       AddStudentDetail(postStudentData, "student_user", "ADD_STUDENT_DETAIL")
     );
 
-    // e.target.reset();
-    // selectRefStudent.clearValue();
-    // selectRefAcademicFirst.clearValue();
-    // selectRefAcademicSecond.clearValue();
+    e.target.reset();
+    selectRefStudent.clearValue();
+    selectRefAcademicFirst.clearValue();
+    selectRefAcademicSecond.clearValue();
   };
 
   return (
@@ -181,7 +181,6 @@ function AddStudent() {
             </div>
           </div>
 
-          {/* Academic Info  */}
           <div className="card-section">
             <div className="heading">
               <span className="title-icon">

@@ -128,7 +128,7 @@ export const ChangeStudentDetail = (url, id, type, postdata) => {
   return function (dispatch) {
     const body = postdata;
     axiosInstanceMultipart
-      .put(`${url}/${id}/`, body)
+      .patch(`${url}/${id}/`, body)
       .then(() => {
         dispatch({ type: type });
         dispatch(StudentClassById(id));

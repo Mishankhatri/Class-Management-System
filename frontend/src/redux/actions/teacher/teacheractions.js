@@ -29,7 +29,9 @@ export const TeacherDetail = () => {
           payload: data,
         });
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
   };
 };
 
@@ -43,34 +45,27 @@ export const TeacherById = (id) => {
           payload: data,
         });
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
   };
 };
 
-export const AddTeacherDetail = (postData) => {
+export const AddTeacherDetail = (postData, url, type) => {
   return function (dispatch) {
-    console.log(postData);
     const body = postData;
     axiosInstanceMultipart
-      .post("teacher/", body)
+      .post(`${url}/`, body)
       .then(() => {
         dispatch({
-          type: ADD_TEACHER_DETAIL,
+          type: type,
         });
       })
       .then(() => {
-        dispatch(
-          createMessage({
-            addTeacher: "Teacher Added Successully",
-          })
-        );
+        dispatch(createMessage({ teacherAdd: "Teacher Added Successfuly" }));
       })
-      .catch((error) => {
-        if (error.response) {
-          console.log("Response", error.response);
-        } else if (error.request) {
-          console.log("Request", error.request);
-        } else console.log(error);
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
       });
   };
 };
@@ -92,12 +87,8 @@ export const AssignTeacherSubjects = (postData) => {
           })
         );
       })
-      .catch((error) => {
-        if (error.response) {
-          console.log("Response", error.response);
-        } else if (error.request) {
-          console.log("Request", error.request);
-        } else console.log(error);
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
       });
   };
 };
@@ -118,7 +109,9 @@ export const TeacherDelete = (id) => {
           })
         );
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
   };
 };
 
@@ -143,7 +136,9 @@ export const GetLectureNotes = (id) => {
               payload: results,
             });
           })
-          .catch((error) => console.log(error));
+          .catch((err) => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+          });
   };
 };
 
@@ -162,7 +157,9 @@ export const DeleteLectureNotes = (id) => {
           })
         );
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
   };
 };
 
@@ -177,7 +174,9 @@ export const GetTeacherGivenAssignment = (username) => {
           payload: results,
         });
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
   };
 };
 
@@ -196,7 +195,9 @@ export const DeleteTeacherGivenAssignment = (id) => {
           })
         );
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
   };
 };
 
@@ -210,7 +211,9 @@ export const AssignmentGivenById = (id) => {
           payload: data,
         });
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
   };
 };
 
@@ -225,7 +228,9 @@ export const GetStudentSubmittedAssignment = () => {
           payload: results,
         });
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
   };
 };
 
@@ -250,7 +255,9 @@ export const GetTeacherAnnouncement = (username) => {
               payload: results,
             });
           })
-          .catch((error) => console.log(error));
+          .catch((err) => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+          });
   };
 };
 
@@ -269,7 +276,9 @@ export const DeleteTeacherAnnouncements = (id, user) => {
           })
         );
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
   };
 };
 
@@ -289,10 +298,8 @@ export const ChangeTeacherDetail = (id, type, postdata) => {
           })
         );
       })
-      .catch((error) => {
-        if (error.request) console.log(error.request);
-        else if (error.response) console.log(error.response);
-        else console.log(error);
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
       });
   };
 };
