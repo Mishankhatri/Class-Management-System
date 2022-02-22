@@ -1,5 +1,8 @@
 import { CLOSE_ANNOUNCEMENTS_BYID } from "../../actiontypes/admin/announcementtypes";
-import { ADD_TEACHER_ASSIGNMENT } from "./../../actiontypes/teacher/teacherdatatype";
+import {
+  ADD_TEACHER_ASSIGNMENT,
+  CHANGE_TEACHER_ASSIGNMENT,
+} from "./../../actiontypes/teacher/teacherdatatype";
 import {
   GET_TEACHER_DETAIL,
   ADD_TEACHER_DETAIL,
@@ -39,6 +42,7 @@ export default function teacherReducer(state = initialState, action) {
     case UPDATE_TEACHER_DETAIL:
     case POST_TEACHER_ANNOUNCEMENT:
     case ADD_TEACHER_ASSIGNMENT:
+    case CHANGE_TEACHER_ASSIGNMENT:
       return { ...state };
 
     case GET_TEACHER_BYID:

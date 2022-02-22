@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InnerHeader from "../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
 import * as FaIcons from "react-icons/fa";
@@ -10,12 +10,64 @@ import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from "../../../axios";
 import { CreateTeacherAnnouncement } from "../../../redux/actions/teacher/teacheractions";
 import { createMessage } from "../../../redux/actions/alertactions";
+import { GetPaginatedAssignedPromise } from "./../../GetOptions";
+import { UniqueArray } from "../../common/ReverseArray";
 
 function CreateAnnouncement() {
   const [selectRefForClass, setSelectRefForClass] = useState(null);
-  const [selectRefForSection, setSelectRefForSection] = useState(null);
+  const [selectRefSection, setSelectRefForSection] = useState(null);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  const [assignedTeacher, setAssignedTeacher] = useState([]);
+  const [section, setSection] = useState([]);
+
+  useEffect(() => {
+    const GetOptions = async () => {
+      try {
+        const got = await GetPaginatedAssignedPromise(
+          "AssignTeacherToSubjectsAPI",
+          user.id
+        );
+
+        setAssignedTeacher(got);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    GetOptions();
+  }, []);
+
+  const uniqueGrade = UniqueArray(assignedTeacher, "grade");
+  const classOptions = UniqueArray(uniqueGrade, "class_name")
+    .sort()
+    .map((data) => ({
+      label: data,
+      value: data,
+    }));
+
+  const getSection = (data) => {
+    const section = data.map((value) => value.grade);
+    const uniqueSection = UniqueArray(section, "section").sort();
+
+    return uniqueSection.map((section) => ({
+      label: section,
+      value: section,
+    }));
+  };
+
+  const handleClass = (data) => {
+    if (data) {
+      axiosInstance
+        .get(
+          `AssignTeacherToSubjectsAPI/?user=${user.id}&classname=${data.value}`
+        )
+        .then(({ data: { results } }) => {
+          const sectionData = getSection(results);
+          setSection(sectionData);
+        });
+    }
+  };
 
   const { handleSubmit, control } = useForm();
 
@@ -50,7 +102,7 @@ function CreateAnnouncement() {
 
       e.target.reset();
       selectRefForClass.clearValue();
-      selectRefForSection.clearValue();
+      selectRefSection.clearValue();
     }
   };
 
@@ -95,13 +147,14 @@ function CreateAnnouncement() {
                       input={"dropdown"}
                       icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
                       name={"announcementForClass"}
-                      onChangeHandler={field.onChange}
+                      onChangeHandler={(data) => {
+                        selectRefSection.clearValue();
+                        setSection([]);
+                        handleClass(data);
+                        field.onChange(data);
+                      }}
                       isRequired={false}
-                      options={[
-                        { value: "12", label: "12" },
-                        { value: "11", label: "11" },
-                        { value: "10", label: "10" },
-                      ]}
+                      options={classOptions}
                       refClear={refClearForClass}
                     />
                   )}
@@ -116,13 +169,11 @@ function CreateAnnouncement() {
                       input={"dropdown"}
                       icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
                       name={"announcementForSection"}
-                      onChangeHandler={field.onChange}
+                      onChangeHandler={(data) => {
+                        field.onChange(data);
+                      }}
                       isRequired={true}
-                      options={[
-                        { value: "A", label: "A" },
-                        { value: "B", label: "B" },
-                        { value: "C", label: "C" },
-                      ]}
+                      options={section}
                       refClear={refClearForSection}
                     />
                   )}

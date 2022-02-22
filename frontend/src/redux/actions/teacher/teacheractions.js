@@ -1,10 +1,8 @@
 import axiosInstance from "../../../axios";
 import { axiosInstanceMultipart } from "../../../axios";
 import { createMessage, returnErrors } from "../alertactions";
-import { GET_DETAILS } from "../student/studentactions";
 import {
   GET_TEACHER_DETAIL,
-  ADD_TEACHER_DETAIL,
   GET_TEACHER_BYID,
   DELETE_TEACHER_DETAIL,
   GET_LECTURE_NOTES,
@@ -19,6 +17,7 @@ import {
   POST_TEACHER_ANNOUNCEMENT,
   GET_TEACHER_ASSIGN,
   ADD_TEACHER_ASSIGNMENT,
+  CHANGE_TEACHER_ASSIGNMENT,
 } from "./../../actiontypes/teacher/teacherdatatype";
 
 export const TeacherDetail = () => {
@@ -231,6 +230,33 @@ export const AssignmentGivenById = (id) => {
       })
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));
+      });
+  };
+};
+
+export const ChangeTeacherAssignment = (postdata, id) => {
+  return function (dispatch) {
+    const body = postdata;
+    axiosInstance
+      .patch(`/givenassignments/${id}`, body)
+      .then(({ data }) => {
+        dispatch({
+          type: CHANGE_TEACHER_ASSIGNMENT,
+          payload: data,
+        });
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            assignmentChanged: "Assignment Details Changed Successfully",
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+        if (err.response) console.log(err.response);
+        else if (err.request) console.log(err.request);
+        else console.log(err);
       });
   };
 };

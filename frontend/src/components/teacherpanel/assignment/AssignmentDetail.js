@@ -4,26 +4,30 @@ import * as MdIcons from "react-icons/md";
 import { useParams } from "react-router-dom";
 import AssignmentStudentTable from "./AssignmentStudentTable";
 import ChangeInput from "./../../common/Modal/ChangeInput";
-import { AssignmentInputValue } from "../../values/TeacherPanel/AssignmentInputValue";
 import { useDispatch, useSelector } from "react-redux";
 import {
   AssignmentGivenById,
+  ChangeTeacherAssignment,
   GetStudentSubmittedAssignment,
 } from "./../../../redux/actions/teacher/teacheractions";
 import Loading from "../../common/Loading";
 import moment from "moment";
+import AssignmentEditModal from "./AssignmentEditModal";
+import { useForm, Controller } from "react-hook-form";
+import { createMessage } from "../../../redux/actions/alertactions";
+import axiosInstance from "../../../axios";
 
 function AssignmentDetail() {
   const [click, setClick] = useState(false);
   const [remarkClick, setRemarkClick] = useState(false);
   const { id } = useParams();
 
+  const { handleSubmit, control, register } = useForm();
+
   const dispatch = useDispatch();
   const { assignmentId, submittedAssignment } = useSelector(
     (state) => state.teachers
   );
-
-  // const filterSubmittedViaClass = submittedAssignment.filter(value => )
 
   useEffect(() => {
     dispatch(AssignmentGivenById(id));
@@ -31,25 +35,69 @@ function AssignmentDetail() {
   }, []);
 
   const onSubmit = (data) => {
-    console.log(data);
-    setClick(false);
+    if (!data.class) {
+      dispatch(createMessage({ classRequired: "Class Field is Required" }));
+    } else if (!data.section) {
+      dispatch(createMessage({ sectionRequired: "Section Field is Required" }));
+    } else if (!data.subject) {
+      dispatch(createMessage({ classRequired: "Subject Field is Required" }));
+    } else {
+      console.log(data);
+      const postdata = new FormData();
+      postdata.append("date_due", data.dateDue);
+      postdata.append("related_files", data.file);
+      postdata.append("instructions", data.subject);
+      postdata.append("time_due", data.timeDue);
+      postdata.append("title", data.title);
+
+      axiosInstance
+        .get(
+          `/grades/?classname=${data.class.value}&section=${data.section.value}`
+        )
+        .then(({ data: { results } }) => {
+          postdata.append("for_grade", results[0].id);
+          dispatch(ChangeTeacherAssignment(postdata, id));
+        })
+        .catch((err) => {
+          if (err.response) console.log(err.response);
+          else if (err.request) console.log(err.request);
+          else console.log(err);
+        });
+
+      setClick(false);
+    }
   };
 
   return assignmentId ? (
     <React.Fragment>
       {click && (
-        <ChangeInput
-          onSubmit={onSubmit}
-          valueArray={AssignmentInputValue()}
-          click={click}
-          setClick={setClick}
-          heading={"Edit Assignment"}
-          isCustom2={true}
-          hasFile={true}
-          fileName={"assignmentFile"}
-          fileTitle={"Upload File"}
-          fileIcon={<MdIcons.MdFileUpload className="mid-icon" />}
-        />
+        <div className="modal">
+          <div className={click ? "model-section visible" : "model-section"}>
+            <div className="modal-content">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <span className="close" onClick={() => setClick(!click)}>
+                  &times;
+                </span>
+                <div className="content">
+                  <h2>Edit Student's Info</h2>
+                  <div className="content-section">
+                    <AssignmentEditModal
+                      register={register}
+                      data={assignmentId}
+                      Controller={Controller}
+                      control={control}
+                    />
+                  </div>
+                  <button
+                    className="btn-submit"
+                    style={{ marginLeft: "40px", marginTop: "20px" }}>
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       )}
       {remarkClick && (
         <ChangeInput
@@ -133,9 +181,9 @@ function AssignmentDetail() {
             </div>
           </div>
         </div>
-        <button className="btn-edit" onClick={() => setClick(!click)}>
+        {/* <button className="btn-edit" onClick={() => setClick(!click)}>
           Edit
-        </button>
+        </button> */}
 
         <div className="card-section">
           <h2 className="heading">Student Performance</h2>
