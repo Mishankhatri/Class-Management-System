@@ -145,7 +145,7 @@ class TeacherAnnoucementPOSTSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class GivenAssignmentLISTSerializer(serializers.ModelSerializer):
-    created_by = serializers.StringRelatedField()
+    created_by = CMS_UsersSerializer(read_only=True)
     for_grade = serializers.StringRelatedField()
     subject = serializers.StringRelatedField()
     class Meta:

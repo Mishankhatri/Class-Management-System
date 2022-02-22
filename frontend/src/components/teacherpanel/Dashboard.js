@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import InnerHeader from "../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
 import * as FaIcons from "react-icons/fa";
+import * as SiIcons from "react-icons/si";
 import CardData from "../common/DashboardCardData";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,9 +11,14 @@ import { GetClass } from "../../redux/actions/classactions";
 import Moment from "react-moment";
 import { GET_DETAILS } from "./../../redux/actions/student/studentactions";
 import { GetAdminFilterAnnouncement } from "./../../redux/actions/admin/announcementaction";
+import { GetPaginatedAssignedPromise } from "../GetOptions";
+import { UniqueArray } from "../common/ReverseArray";
 
 function Dashboard() {
   const dispatch = useDispatch();
+  const [assignedTeacher, setAssignedTeacher] = useState([]);
+  const [assignment, setAssignment] = useState([]);
+
   useEffect(() => {
     dispatch(GetAdminFilterAnnouncement("ordering=-id"));
     dispatch(GetClass());
@@ -20,10 +26,33 @@ function Dashboard() {
     dispatch(GET_DETAILS("/teacher", "GET_TEACHER_DETAIL"));
   }, [dispatch]);
   const { adminfilternotices } = useSelector((state) => state.admins);
-  const { grades } = useSelector((state) => state.classes);
   const { teacherDetail } = useSelector((state) => state.teachers);
   const { student } = useSelector((state) => state.students);
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    const GetOptions = async () => {
+      try {
+        const got = await GetPaginatedAssignedPromise(
+          "AssignTeacherToSubjectsAPI",
+          user.id
+        );
+        const homework = await GetPaginatedAssignedPromise(
+          "givenassignments",
+          user.id
+        );
+
+        setAssignedTeacher(got);
+        setAssignment(homework);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    GetOptions();
+  }, []);
+
   const adminnotices = adminfilternotices && adminfilternotices.results;
+  const uniqueclass = UniqueArray(assignedTeacher, "grade");
 
   return (
     <div>
@@ -40,23 +69,23 @@ function Dashboard() {
 
           {
             <CardData
-              number={teacherDetail?.count}
-              name={"Teachers"}
-              icon={<FaIcons.FaUserSecret style={{ color: "#FF7676" }} />}
+              number={assignment?.length}
+              name={"Assignments"}
+              icon={<MdIcons.MdHomeWork style={{ color: "#FF7676" }} />}
             />
           }
           {
             <CardData
               number={adminfilternotices?.count}
               name={"Announcements"}
-              icon={<FaIcons.FaBullhorn style={{ color: "#009DDC" }} />}
+              icon={<MdIcons.MdAnnouncement style={{ color: "#009DDC" }} />}
             />
           }
           {
             <CardData
-              number={grades?.count}
+              number={uniqueclass?.length}
               name={"Classes"}
-              icon={<FaIcons.FaFile style={{ color: "#27AE60" }} />}
+              icon={<SiIcons.SiGoogleclassroom style={{ color: "#27AE60" }} />}
             />
           }
         </div>
@@ -95,6 +124,14 @@ function Dashboard() {
                             <span className="createdat">{dates}</span>
                           </span>
                         </div>
+                        <span>
+                          Catagory: For {"  "}
+                          <span
+                            className="createdat"
+                            style={{ textTransform: "capitalize" }}>
+                            {rowData.announcement_for}
+                          </span>
+                        </span>
                       </div>
                     </div>
                     {rowData.files_by_admin ? (

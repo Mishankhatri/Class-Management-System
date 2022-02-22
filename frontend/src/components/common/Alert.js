@@ -79,6 +79,8 @@ export class Alerts extends Component {
       if (message?.subjectRequired) alert.error(`${message.subjectRequired}`);
       if (message?.teacherRequired) alert.error(`${message.teacherRequired}`);
       if (message?.dayRequired) alert.error(`${message.dayRequired}`);
+      if (message?.typeRequired) alert.error(`${message.typeRequired}`);
+      if (message?.forRequired) alert.error(`${message.forRequired}`);
     }
   }
   render() {

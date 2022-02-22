@@ -16,6 +16,7 @@ import {
   UPDATE_TEACHER_DETAIL,
   UPDATE_TEACHER_PHOTO,
   POST_TEACHER_ANNOUNCEMENT,
+  GET_TEACHER_ASSIGN,
 } from "../../actiontypes/teacher/teacherdatatype";
 
 const initialState = {
@@ -61,6 +62,9 @@ export default function teacherReducer(state = initialState, action) {
 
     case GET_TEACHER_ANNOUNCEMENT:
       return { ...state, teachernotices: action.payload };
+
+    case GET_TEACHER_ASSIGN:
+      return { ...state, assignedTeacherByUser: action.payload };
 
     default:
       return state;
