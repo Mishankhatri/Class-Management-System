@@ -15,17 +15,17 @@ import { createMessage } from "./../../../redux/actions/alertactions";
 import { AddTeacherAssignment } from "../../../redux/actions/teacher/teacheractions";
 
 function CreateAssignment() {
+  const { handleSubmit, control } = useForm();
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
   const [selectRefClass, setSelectRefClass] = useState(null);
   const [selectRefSection, setSelectRefSection] = useState(null);
   const [selectRefCourse, setSelectRefCourse] = useState(null);
 
-  const { handleSubmit, control } = useForm();
-
   const refClearClass = (ref) => setSelectRefClass(ref);
   const refClearSection = (ref) => setSelectRefSection(ref);
   const refClearCourse = (ref) => setSelectRefCourse(ref);
-  const { user } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
 
   const [assignedTeacher, setAssignedTeacher] = useState([]);
   const [section, setSection] = useState([]);

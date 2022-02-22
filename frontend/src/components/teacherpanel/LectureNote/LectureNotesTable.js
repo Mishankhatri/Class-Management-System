@@ -14,18 +14,18 @@ import axiosInstance from "../../../axios";
 const LectureNotesTable = () => {
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
-  const [lecturenotes, setLectureNotes] = useState([]);
   const { user } = useSelector((state) => state.auth);
+  const { lecturenotes } = useSelector((state) => state.teachers);
+  const [teacherId, setTeacherId] = useState(null);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axiosInstance
       .get(`/teacher?user=${user.id}`)
       .then(({ data: { results } }) => {
-        axiosInstance
-          .get(`/lecturenotes?ordering=-id&teacher=${results[0].id}`)
-          .then(({ data: { results } }) => {
-            setLectureNotes(results);
-          });
+        setTeacherId(results[0].id);
+        dispatch(GetLectureNotes(results[0].id));
       });
   }, []);
 
@@ -109,6 +109,7 @@ const LectureNotesTable = () => {
           falseActivity={"Cancel"}
           setDelete={setClickDelete}
           id={deleteId}
+          user={teacherId}
           PeformDelete={DeleteLectureNotes}
         />
       )}

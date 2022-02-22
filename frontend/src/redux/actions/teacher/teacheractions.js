@@ -1,10 +1,8 @@
 import axiosInstance from "../../../axios";
 import { axiosInstanceMultipart } from "../../../axios";
 import { createMessage, returnErrors } from "../alertactions";
-import { GET_DETAILS } from "../student/studentactions";
 import {
   GET_TEACHER_DETAIL,
-  ADD_TEACHER_DETAIL,
   GET_TEACHER_BYID,
   DELETE_TEACHER_DETAIL,
   GET_LECTURE_NOTES,
@@ -19,6 +17,8 @@ import {
   POST_TEACHER_ANNOUNCEMENT,
   GET_TEACHER_ASSIGN,
   ADD_TEACHER_ASSIGNMENT,
+  CHANGE_TEACHER_ASSIGNMENT,
+  ADD_LECTURE_NOTES,
 } from "./../../actiontypes/teacher/teacherdatatype";
 
 export const TeacherDetail = () => {
@@ -160,13 +160,13 @@ export const GetLectureNotes = (id) => {
   };
 };
 
-export const DeleteLectureNotes = (id) => {
+export const DeleteLectureNotes = (id, teacherId) => {
   return function (dispatch) {
     axiosInstance
       .delete(`/lecturenotes/${id}`)
       .then(() => {
         dispatch({ type: DELETE_LECTURE_NOTES });
-        dispatch(GetLectureNotes());
+        dispatch(GetLectureNotes(teacherId));
       })
       .then(() => {
         dispatch(
@@ -231,6 +231,33 @@ export const AssignmentGivenById = (id) => {
       })
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));
+      });
+  };
+};
+
+export const ChangeTeacherAssignment = (postdata, id) => {
+  return function (dispatch) {
+    const body = postdata;
+    axiosInstance
+      .patch(`/givenassignments/${id}`, body)
+      .then(({ data }) => {
+        dispatch({
+          type: CHANGE_TEACHER_ASSIGNMENT,
+          payload: data,
+        });
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            assignmentChanged: "Assignment Details Changed Successfully",
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+        if (err.response) console.log(err.response);
+        else if (err.request) console.log(err.request);
+        else console.log(err);
       });
   };
 };
@@ -356,7 +383,29 @@ export const AddTeacherAssignment = (postdata) => {
       .then(() => {
         dispatch(
           createMessage({
-            assignmentAdded: "Assignment Added Changed Successully",
+            assignmentAdded: "Assignment Added Successully",
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+        console.log(err.request);
+      });
+  };
+};
+
+export const AddLectureNotes = (postdata) => {
+  return function (dispatch) {
+    const body = postdata;
+    axiosInstanceMultipart
+      .post(`lecturenotes/`, body)
+      .then(() => {
+        dispatch({ type: ADD_LECTURE_NOTES });
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            addLectureNotes: "Lecture Notes Added  Successully",
           })
         );
       })
