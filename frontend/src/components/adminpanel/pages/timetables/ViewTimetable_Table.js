@@ -53,7 +53,9 @@ const ViewTimetable_Table = ({ click, setClick }) => {
       },
       {
         Header: "Class",
-        accessor: "assigned.grade",
+        accessor: (data) => {
+          return `${data.assigned.grade.class_name}:${data.assigned.grade.section}`;
+        },
         SearchAble: true,
         Filter: SelectColumnFilter,
       },

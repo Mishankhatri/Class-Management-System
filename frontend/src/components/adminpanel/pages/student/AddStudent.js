@@ -171,6 +171,7 @@ function AddStudent() {
                       icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
                       name={"studentClass"}
                       onChangeHandler={(data) => {
+                        selectRefAcademicSecond.clearValue();
                         handleSection(data);
                         field.onChange(data);
                       }}

@@ -161,6 +161,7 @@ function AddSubjects() {
                         name={"studentClass"}
                         onChangeHandler={(data) => {
                           handleSection(data);
+                          selectSectionRef.clearValue();
                           field.onChange(data);
                         }}
                         isRequired={true}

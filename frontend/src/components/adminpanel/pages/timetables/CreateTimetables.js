@@ -104,14 +104,6 @@ function CreateTimetables() {
       setClassRef(data.value);
       const sectionLabel = getSection(data);
       setSection(sectionLabel);
-
-      //Getting Default Subject Value Via changing
-      axiosInstance
-        .get(`/subjects?classname=${data.value}&section=${sectionRef}`)
-        .then(({ data: { results } }) => {
-          const subjects = getSubjects(results);
-          setSubject(subjects);
-        });
     }
   };
 
@@ -279,6 +271,11 @@ function CreateTimetables() {
                         isRequired={true}
                         icon={<FaIcons.FaCode className="mid-icon" />}
                         onChangeHandler={(data) => {
+                          sectionReference.clearValue();
+                          subjectReference.clearValue();
+                          teacherReference.clearValue();
+                          setSubject([]);
+                          setTeacher([]);
                           handleClass(data);
                           field.onChange(data);
                         }}
@@ -297,6 +294,9 @@ function CreateTimetables() {
                         name="section"
                         refClear={refClearSection}
                         onChangeHandler={(data) => {
+                          subjectReference.clearValue();
+                          teacherReference.clearValue();
+                          setTeacher([]);
                           handleSection(data);
                           field.onChange(data);
                         }}
@@ -316,6 +316,7 @@ function CreateTimetables() {
                         options={subject}
                         isRequired={true}
                         onChangeHandler={(data) => {
+                          teacherReference.clearValue();
                           handleSubject(data);
                           field.onChange(data);
                         }}

@@ -74,9 +74,7 @@ function AssignmentDetail() {
               <div className="assignment_left">
                 <div className="info">
                   <h4>Course</h4>
-                  <div className="content">
-                    {assignmentId.subject.subject_name}
-                  </div>
+                  <div className="content">{assignmentId.subject}</div>
                 </div>
                 <div className="info">
                   <h4>Class</h4>
@@ -93,7 +91,7 @@ function AssignmentDetail() {
                 <div className="info">
                   <h4>Teacher</h4>
                   <div className="content">
-                    {assignmentId.created_by.fullname}
+                    {assignmentId.created_by.username}
                   </div>
                 </div>
               </div>
@@ -115,12 +113,16 @@ function AssignmentDetail() {
                 <div className="info">
                   <h4>File</h4>
                   <div className="content">
-                    <a
-                      href={assignmentId.related_files}
-                      style={{ textDecoration: "none" }}
-                      className="btn-edit">
-                      Preview File
-                    </a>
+                    {assignmentId.related_files ? (
+                      <a
+                        href={assignmentId.related_files}
+                        style={{ textDecoration: "none" }}
+                        className="btn-edit">
+                        Preview File
+                      </a>
+                    ) : (
+                      "No file Provided"
+                    )}
                   </div>
                 </div>
               </div>

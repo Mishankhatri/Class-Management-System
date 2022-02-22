@@ -17,8 +17,18 @@ function TimetableModal({ register, data, Controller, control }) {
   const [sectionRef, setSectionRef] = useState([]);
   const uniqueGrade = UniqueArray(grade, "class_name");
 
-  const gradeName = +data.assigned.grade.slice(0, 2);
-  const sectionName = data.assigned.grade.slice(4, 5);
+  const gradeName = +data.assigned.grade.class_name;
+
+  //Resetting Select Value after submit
+  const [classReference, setClassReference] = useState(null);
+  const [sectionReference, setSectionReference] = useState(null);
+  const [subjectReference, setSubjectReference] = useState(null);
+  const [teacherReference, setTeacherReference] = useState(null);
+
+  const refClearClass = (ref) => setClassReference(ref);
+  const refClearSection = (ref) => setSectionReference(ref);
+  const refClearSubject = (ref) => setSubjectReference(ref);
+  const refClearTeacher = (ref) => setTeacherReference(ref);
 
   useEffect(() => {
     const GetOptions = async () => {
@@ -80,51 +90,44 @@ function TimetableModal({ register, data, Controller, control }) {
   //Set Section from Selecting Class
   // {label: 1, value: 1}
   const handleClass = (data) => {
-    setClassRef(data.value);
-    const sectionLabel = getSection(data);
-    // console.log("Se", sectionLabel);
-    setSection(sectionLabel);
-
-    axiosInstance
-      .get(`/subjects?classname=${data.value}&section=${sectionRef}`)
-      .then(({ data: { results } }) => {
-        const subjects = getSubjects(results);
-        setSubject(subjects);
-      });
+    if (data) {
+      setClassRef(data.value);
+      const sectionLabel = getSection(data);
+      setSection(sectionLabel);
+    }
   };
 
   //Set Subject after selecting both class and section
   const handleSection = (data) => {
-    //Setting Teacher Options
-    setSectionRef(data.value);
+    if (data) {
+      setSectionRef(data.value);
 
-    //Setting Subject Option based on Class
-    axiosInstance
-      .get(`/subjects?classname=${classRef}&section=${data.value}`)
-      .then(({ data: { results } }) => {
-        const subjects = getSubjects(results);
-        setSubject(subjects);
-      });
+      //Setting Subject Option based on Class
+      axiosInstance
+        .get(`/subjects?classname=${classRef}&section=${data.value}`)
+        .then(({ data: { results } }) => {
+          const subjects = getSubjects(results);
+          setSubject(subjects);
+        });
+    }
   };
 
   const handleSubject = (data) => {
-    axiosInstance
-      .get(`/grades?classname=${classRef}&section=${sectionRef}`)
-      .then(({ data: { results } }) => {
-        axiosInstance
-          .get(
-            `/AssignTeacherToSubjectsAPI?grade=${results[0].id}&subject=${data.value}`
-          )
-          .then(({ data: { results } }) => {
-            const teachers = getTeacherDetail(results);
-            setTeacher(teachers);
-          });
-      });
+    if (data) {
+      axiosInstance
+        .get(`/grades?classname=${classRef}&section=${sectionRef}`)
+        .then(({ data: { results } }) => {
+          axiosInstance
+            .get(
+              `/AssignTeacherToSubjectsAPI?grade=${results[0].id}&subject=${data.value}`
+            )
+            .then(({ data: { results } }) => {
+              const teachers = getTeacherDetail(results);
+              setTeacher(teachers);
+            });
+        });
+    }
   };
-
-  const teacherFullName = `${data.assigned.teacher.first_name} ${
-    data.assigned.teacher.middle_name ? data.assigned.teacher.middle_name : ""
-  } ${data.assigned.teacher.last_name}`;
 
   return (
     <React.Fragment>
@@ -185,7 +188,13 @@ function TimetableModal({ register, data, Controller, control }) {
                 title={"Class"}
                 name="class"
                 hasValue={false}
+                refClear={refClearClass}
                 onChangeHandler={(data) => {
+                  sectionReference.clearValue();
+                  subjectReference.clearValue();
+                  teacherReference.clearValue();
+                  setSubject([]);
+                  setTeacher([]);
                   handleClass(data);
                   field.onChange(data);
                 }}
@@ -203,7 +212,11 @@ function TimetableModal({ register, data, Controller, control }) {
                   title={"Section"}
                   name="section"
                   hasValue={false}
+                  refClear={refClearSection}
                   onChangeHandler={(data) => {
+                    subjectReference.clearValue();
+                    teacherReference.clearValue();
+                    setTeacher([]);
                     handleSection(data);
                     field.onChange(data);
                   }}
@@ -223,7 +236,9 @@ function TimetableModal({ register, data, Controller, control }) {
                   name="subject"
                   options={subject}
                   hasValue={false}
+                  refClear={refClearSubject}
                   onChangeHandler={(data) => {
+                    teacherReference.clearValue();
                     handleSubject(data);
                     field.onChange(data);
                   }}
@@ -241,6 +256,7 @@ function TimetableModal({ register, data, Controller, control }) {
                   title={"Teacher"}
                   name="teacher"
                   hasValue={false}
+                  refClear={refClearTeacher}
                   onChangeHandler={field.onChange}
                   options={teacher}
                 />

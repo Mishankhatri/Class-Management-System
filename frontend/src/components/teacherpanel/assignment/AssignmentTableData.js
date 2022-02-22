@@ -40,7 +40,7 @@ const AssignmentTableData = () => {
     () => [
       {
         Header: "Class",
-        accessor: "for_grade",
+        accessor: (d) => `${d.for_grade.class_name}: ${d.for_grade.section}`,
         SearchAble: true,
         Filter: SelectColumnFilter,
       },
@@ -102,6 +102,7 @@ const AssignmentTableData = () => {
           falseActivity={"Cancel"}
           setDelete={setClickDelete}
           id={deleteId}
+          user={user}
           PeformDelete={DeleteTeacherGivenAssignment}
         />
       )}

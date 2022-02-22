@@ -92,14 +92,6 @@ function AssignTeacher() {
       setClassRef(data.value);
       const sectionLabel = getSection(data);
       setSection(sectionLabel);
-
-      //Getting Default Subject Value Via changing
-      axiosInstance
-        .get(`/subjects?classname=${data.value}&section=${sectionRef}`)
-        .then(({ data: { results } }) => {
-          const subjects = getSubjects(results);
-          setSubject(subjects);
-        });
     }
   };
 
@@ -175,6 +167,9 @@ function AssignTeacher() {
                       isRequired={true}
                       refClear={refClearClass}
                       onChangeHandler={(data) => {
+                        sectionReference.clearValue();
+                        subjectReference.clearValue();
+                        setSubject([]);
                         handleClass(data);
                         field.onChange(data);
                       }}
@@ -195,6 +190,7 @@ function AssignTeacher() {
                       icon={<MdIcons.MdCode className="mid-icon" />}
                       name={"selectSection"}
                       onChangeHandler={(data) => {
+                        subjectReference.clearValue();
                         handleSection(data);
                         field.onChange(data);
                       }}
