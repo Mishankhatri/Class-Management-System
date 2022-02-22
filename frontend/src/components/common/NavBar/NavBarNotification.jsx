@@ -82,7 +82,7 @@ function NavBarNotification({ showDropDown, setDropDown, name }) {
             return (
               <NotificationMessage
                 messageText={messageText}
-                by={value.created_by.fullname}
+                by={value.created_by.username}
                 time={dates}
                 ProfileImage={value.created_by.profile_image}
                 key={index}

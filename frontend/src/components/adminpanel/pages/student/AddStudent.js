@@ -13,6 +13,7 @@ import { AddStudentDetail } from "./../../../../redux/actions/student/studentact
 import { GetPaginatedGradePromise } from "../../../GetOptions";
 import { UniqueArray } from "../../../common/ReverseArray";
 import { FileInput } from "../../../common/InputField/FileInput";
+import { createMessage } from "./../../../../redux/actions/alertactions";
 
 function AddStudent() {
   const dispatch = useDispatch();
@@ -71,50 +72,66 @@ function AddStudent() {
   };
 
   const onSubmitForm = (data, e) => {
-    const studentRoll =
-      data.studentSRN.length === 1
-        ? `00${data.studentSRN}`
-        : data.studentSRN.length === 2
-        ? `0${data.studentSRN}`
-        : data.studentSRN;
-
-    const studentClassGen =
-      data.studentClass.length === 1
-        ? `00${data.studentClass}`
-        : data.studentSRN.length === 2
-        ? `0${data.studentClass}`
-        : data.studentClass;
     let postStudentData = new FormData();
 
-    // Assigning Student Info
-    postStudentData.append("SRN", data.studentSRN);
-    postStudentData.append("first_name", data.studentFirstName);
-    postStudentData.append("middle_name", data.studentMiddleName);
-    postStudentData.append("last_name", data.studentLastName);
-    postStudentData.append("gender", data.studentGender.value);
-    postStudentData.append("DOB", data.studentDOB);
-    postStudentData.append("contact_no", data.studentPhone);
-    postStudentData.append("address", data.studentLocation);
+    if (!data.studentGender) {
+      dispatch(createMessage({ gender: "Gender Field is Required" }));
+    } else if (!data.studentClass) {
+      dispatch(createMessage({ classRequired: "Class Field is Required" }));
+    } else if (!data.studentSection) {
+      dispatch(createMessage({ sectionRequired: "Section Field is Required" }));
+    } else {
+      const studentRoll =
+        data.studentSRN.length === 1
+          ? `00${data.studentSRN}`
+          : data.studentSRN.length === 2
+          ? `0${data.studentSRN}`
+          : data.studentSRN;
 
-    //Assigning Login Info
-    postStudentData.append(
-      "user.password",
-      `CMS0${studentClassGen}${data.studentSection.value}${studentRoll}`
-    );
-    postStudentData.append("user.username", data.studentUsername);
-    postStudentData.append("user.email", data.studentEmail);
-    postStudentData.append("user.profile_image", data.studentPhoto);
-    postStudentData.append("current_grade.class_name", data.studentClass.value);
-    postStudentData.append("current_grade.section", data.studentSection.value);
-    postStudentData.append("user.student", true);
-    dispatch(
-      AddStudentDetail(postStudentData, "student_user", "ADD_STUDENT_DETAIL")
-    );
+      const studentClassGen =
+        `${data.studentClass.value}`.length === 1
+          ? `00${data.studentClass.value}`
+          : `${data.studentClass.value}`.length === 2
+          ? `0${data.studentClass.value}`
+          : data.studentClass.value;
 
-    e.target.reset();
-    selectRefStudent.clearValue();
-    selectRefAcademicFirst.clearValue();
-    selectRefAcademicSecond.clearValue();
+      // Assigning Student Info
+      postStudentData.append("SRN", data.studentSRN);
+      postStudentData.append("first_name", data.studentFirstName);
+      postStudentData.append("middle_name", data.studentMiddleName);
+      postStudentData.append("last_name", data.studentLastName);
+      postStudentData.append("gender", data.studentGender.value);
+      postStudentData.append("DOB", data.studentDOB);
+      postStudentData.append("contact_no", data.studentPhone);
+      postStudentData.append("address", data.studentLocation);
+
+      //Assigning Login Info
+      postStudentData.append(
+        "user.password",
+        `CMS${studentClassGen}${data.studentSection.value}${studentRoll}`
+      );
+
+      postStudentData.append("user.username", data.studentUsername);
+      postStudentData.append("user.email", data.studentEmail);
+      postStudentData.append("user.profile_image", data.studentPhoto);
+      postStudentData.append(
+        "current_grade.class_name",
+        data.studentClass.value
+      );
+      postStudentData.append(
+        "current_grade.section",
+        data.studentSection.value
+      );
+      postStudentData.append("user.student", true);
+      dispatch(
+        AddStudentDetail(postStudentData, "student_user", "ADD_STUDENT_DETAIL")
+      );
+
+      e.target.reset();
+      selectRefStudent.clearValue();
+      selectRefAcademicFirst.clearValue();
+      selectRefAcademicSecond.clearValue();
+    }
   };
 
   return (
@@ -146,12 +163,6 @@ function AddStudent() {
                 <Controller
                   name={"studentClass"}
                   control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: `Student Class is required`,
-                    },
-                  }}
                   defaultValue=""
                   render={({ field }) => (
                     <InputField
@@ -173,12 +184,6 @@ function AddStudent() {
                 <Controller
                   name={"studentSection"}
                   control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: `Student Section is required`,
-                    },
-                  }}
                   defaultValue=""
                   render={({ field }) => (
                     <InputField
@@ -205,6 +210,10 @@ function AddStudent() {
               <span className="title">STUDENT LOGIN INFO</span>
             </div>
             <div className="content-section">
+              <div className="message">
+                By Default, Password will be{" "}
+                <b>CMS'class_name' 'section' 'SRN'</b> <b>Eg: CMS012A012</b>
+              </div>
               <div className="custom-selection">
                 <Controller
                   name={"studentEmail"}

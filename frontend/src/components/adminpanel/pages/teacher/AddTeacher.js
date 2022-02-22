@@ -11,6 +11,7 @@ import { AddTeacherDetail } from "../../../../redux/actions/teacher/teacheractio
 import PasswordInputField from "./../../../common/InputField/PasswordInputField";
 import InputField from "../../../common/InputField/InputField";
 import { FileInput } from "../../../common/InputField/FileInput";
+import { createMessage } from "./../../../../redux/actions/alertactions";
 
 function AddTeacher() {
   const [selectRef, setSelectRef] = useState(null);
@@ -21,36 +22,42 @@ function AddTeacher() {
   const refClear = (ref) => setSelectRef(ref);
 
   const onSubmitForm = (data, e) => {
-    const teacherTRN_GEN =
-      data.teacherTRN.length === 1
-        ? `00${data.teacherTRN}`
-        : data.teacherTRN.length === 2
-        ? `0${data.teacherTRN}`
-        : data.teacherTRN;
+    if (!data.teacherGender) {
+      dispatch(createMessage({ gender: "Gender Field is required" }));
+    } else {
+      const teacherTRN_GEN =
+        data.teacherTRN.length === 1
+          ? `00${data.teacherTRN}`
+          : data.teacherTRN.length === 2
+          ? `0${data.teacherTRN}`
+          : data.teacherTRN;
 
-    let postData = new FormData();
+      let postData = new FormData();
 
-    postData.append("TRN", data.teacherTRN);
-    postData.append("first_name", data.teacherFirstName);
-    postData.append("middle_name", data.teacherMiddleName);
-    postData.append("last_name", data.teacherLastName);
-    postData.append("DOB", data.teacherDOB);
-    postData.append("email", data.teacherEmail);
-    postData.append("address", data.teacherLocation);
-    postData.append("photo", data.teacherPhoto);
-    postData.append("contact_no", data.teacherPhone);
-    postData.append("gender", data.teacherGender.value);
+      postData.append("TRN", data.teacherTRN);
+      postData.append("first_name", data.teacherFirstName);
+      postData.append("middle_name", data.teacherMiddleName);
+      postData.append("last_name", data.teacherLastName);
+      postData.append("DOB", data.teacherDOB);
+      postData.append("email", data.teacherEmail);
+      postData.append("address", data.teacherLocation);
+      postData.append("photo", data.teacherPhoto);
+      postData.append("contact_no", data.teacherPhone);
+      postData.append("gender", data.teacherGender.value);
 
-    //Assigning Login Info
-    postData.append("user.password", `CMST${teacherTRN_GEN}`);
-    postData.append("user.username", data.teacherUsername);
-    postData.append("user.email", data.teacherEmail);
-    postData.append("user.profile_image", data.teacherPhoto);
-    postData.append("user.teacher", true);
-    dispatch(AddTeacherDetail(postData, "teacher_user", "ADD_TEACHER_DETAIL"));
+      //Assigning Login Info
+      postData.append("user.password", `CMST${teacherTRN_GEN}`);
+      postData.append("user.username", data.teacherUsername);
+      postData.append("user.email", data.teacherEmail);
+      postData.append("user.profile_image", data.teacherPhoto);
+      postData.append("user.teacher", true);
+      dispatch(
+        AddTeacherDetail(postData, "teacher_user", "ADD_TEACHER_DETAIL")
+      );
 
-    e.target.reset();
-    selectRef.clearValue();
+      e.target.reset();
+      selectRef.clearValue();
+    }
   };
 
   return (

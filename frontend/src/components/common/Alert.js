@@ -70,7 +70,15 @@ export class Alerts extends Component {
       if (message?.addSubject) alert.success(`${message.addSubject}`);
       if (message?.changeSubject) alert.success(`${message.changeSubject}`);
       if (message?.accountCreate) alert.success(`${message.accountCreate}`);
+
+      //Error
       if (message?.allfields) alert.error(`${message.allfields}`);
+      if (message?.gender) alert.error(`${message.gender}`);
+      if (message?.classRequired) alert.error(`${message.classRequired}`);
+      if (message?.sectionRequired) alert.error(`${message.sectionRequired}`);
+      if (message?.subjectRequired) alert.error(`${message.subjectRequired}`);
+      if (message?.teacherRequired) alert.error(`${message.teacherRequired}`);
+      if (message?.dayRequired) alert.error(`${message.dayRequired}`);
     }
   }
   render() {

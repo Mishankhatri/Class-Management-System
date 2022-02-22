@@ -50,7 +50,7 @@ const AnnouncementTableData = () => {
                     <span className="announced">
                       Announced By:{"  "}
                       <span className="createdby">
-                        {rowData.created_by.fullname}
+                        {rowData.created_by.username}
                       </span>
                     </span>
                     <span>

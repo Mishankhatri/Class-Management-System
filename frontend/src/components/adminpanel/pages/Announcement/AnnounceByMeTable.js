@@ -60,11 +60,22 @@ const AnnounceByMeTable = () => {
                     <span className="announced">
                       Announced By:{"  "}
                       <span className="createdby">
-                        {rowData.created_by.fullname}
+                        {rowData.created_by.username}
                       </span>
                     </span>
                     <span>
                       <span className="createdat">{dates}</span>
+                    </span>
+                  </div>
+                  <div className="info">
+                    <span>
+                      For:{" "}
+                      <span
+                        className="createdat"
+                        style={{ textTransform: "capitalize" }}>
+                        {rowData.announcement_for}
+                        {}
+                      </span>
                     </span>
                   </div>
                 </div>

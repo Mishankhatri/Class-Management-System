@@ -40,7 +40,7 @@ const StudentFieldValue = [
     icon: <FaIcons.FaVenus className="mid-icon" />,
     placeholder: "Gender",
     name: "studentGender",
-    isRequired: true,
+    isRequired: false,
 
     options: [
       { value: "Male", label: "Male" },

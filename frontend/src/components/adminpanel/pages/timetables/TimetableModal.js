@@ -179,20 +179,12 @@ function TimetableModal({ register, data, Controller, control }) {
           <Controller
             name="class"
             control={control}
-            defaultValue={{
-              label: gradeName,
-              value: gradeName,
-            }}
             rules={{ required: true }}
             render={({ field }) => (
               <SelectInputField
                 title={"Class"}
                 name="class"
-                hasValue={true}
-                value={{
-                  label: gradeName,
-                  value: gradeName,
-                }}
+                hasValue={false}
                 onChangeHandler={(data) => {
                   handleClass(data);
                   field.onChange(data);
@@ -205,20 +197,12 @@ function TimetableModal({ register, data, Controller, control }) {
             <Controller
               name="section"
               control={control}
-              defaultValue={{
-                label: sectionName,
-                value: sectionName,
-              }}
               rules={{ required: true }}
               render={({ field }) => (
                 <SelectInputField
                   title={"Section"}
                   name="section"
-                  hasValue={true}
-                  value={{
-                    label: sectionName,
-                    value: sectionName,
-                  }}
+                  hasValue={false}
                   onChangeHandler={(data) => {
                     handleSection(data);
                     field.onChange(data);
@@ -233,20 +217,12 @@ function TimetableModal({ register, data, Controller, control }) {
               name="subject"
               control={control}
               rules={{ required: true }}
-              defaultValue={{
-                label: data.assigned.subject.subject_name,
-                value: data.assigned.subject.id,
-              }}
               render={({ field }) => (
                 <SelectInputField
                   title={"Subject"}
                   name="subject"
                   options={subject}
-                  hasValue={true}
-                  value={{
-                    label: data.assigned.subject.subject_name,
-                    value: data.assigned.subject.id,
-                  }}
+                  hasValue={false}
                   onChangeHandler={(data) => {
                     handleSubject(data);
                     field.onChange(data);
@@ -260,19 +236,11 @@ function TimetableModal({ register, data, Controller, control }) {
               name="teacher"
               control={control}
               rules={{ required: true }}
-              defaultValue={{
-                label: teacherFullName,
-                value: data.assigned.teacher.id,
-              }}
               render={({ field }) => (
                 <SelectInputField
                   title={"Teacher"}
                   name="teacher"
-                  hasValue={true}
-                  value={{
-                    label: teacherFullName,
-                    value: data.assigned.teacher.id,
-                  }}
+                  hasValue={false}
                   onChangeHandler={field.onChange}
                   options={teacher}
                 />
