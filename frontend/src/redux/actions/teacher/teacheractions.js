@@ -18,6 +18,7 @@ import {
   GET_TEACHER_ASSIGN,
   ADD_TEACHER_ASSIGNMENT,
   CHANGE_TEACHER_ASSIGNMENT,
+  ADD_LECTURE_NOTES,
 } from "./../../actiontypes/teacher/teacherdatatype";
 
 export const TeacherDetail = () => {
@@ -159,13 +160,13 @@ export const GetLectureNotes = (id) => {
   };
 };
 
-export const DeleteLectureNotes = (id) => {
+export const DeleteLectureNotes = (id, teacherId) => {
   return function (dispatch) {
     axiosInstance
       .delete(`/lecturenotes/${id}`)
       .then(() => {
         dispatch({ type: DELETE_LECTURE_NOTES });
-        dispatch(GetLectureNotes());
+        dispatch(GetLectureNotes(teacherId));
       })
       .then(() => {
         dispatch(
@@ -382,7 +383,29 @@ export const AddTeacherAssignment = (postdata) => {
       .then(() => {
         dispatch(
           createMessage({
-            assignmentAdded: "Assignment Added Changed Successully",
+            assignmentAdded: "Assignment Added Successully",
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+        console.log(err.request);
+      });
+  };
+};
+
+export const AddLectureNotes = (postdata) => {
+  return function (dispatch) {
+    const body = postdata;
+    axiosInstanceMultipart
+      .post(`lecturenotes/`, body)
+      .then(() => {
+        dispatch({ type: ADD_LECTURE_NOTES });
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            addLectureNotes: "Lecture Notes Added  Successully",
           })
         );
       })

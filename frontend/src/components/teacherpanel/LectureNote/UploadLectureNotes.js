@@ -8,49 +8,152 @@ import InnerHeader from "../../common/InnerHeader";
 import InputField from "../../common/InputField/InputField";
 import { FileInput } from "../../common/InputField/FileInput";
 import axiosInstance from "./../../../axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { UniqueArray } from "../../common/ReverseArray";
+import { GetPaginatedAssignedPromise } from "./../../GetOptions";
+import { createMessage } from "../../../redux/actions/alertactions";
+import { AddLectureNotes } from "./../../../redux/actions/teacher/teacheractions";
 
 function UploadLectureNotes() {
+  const { user } = useSelector((state) => state.auth);
+  const { handleSubmit, control } = useForm();
+
+  const dispatch = useDispatch();
+
   const [selectRefClass, setSelectRefClass] = useState(null);
   const [selectRefSection, setSelectRefSection] = useState(null);
   const [selectRefCourse, setSelectRefCourse] = useState(null);
-  const { user } = useSelector((state) => state.auth);
-
-  const { handleSubmit, control } = useForm();
-  const [assignTeacher, setAssignTeacher] = useState([]);
 
   const refClearClass = (ref) => setSelectRefClass(ref);
   const refClearSection = (ref) => setSelectRefSection(ref);
   const refClearCourse = (ref) => setSelectRefCourse(ref);
 
+  const [assignedTeacher, setAssignedTeacher] = useState([]);
+  const [section, setSection] = useState([]);
+  const [course, setCourse] = useState([]);
+
+  //Setting reference of class
+  const [classRef, setClassRef] = useState([]);
+  const [sectionRef, setSectionRef] = useState([]);
+
   useEffect(() => {
-    axiosInstance
-      .get(`/teacher?user=${user.id}`)
-      .then(({ data: { results } }) => {
-        axiosInstance
-          .get(`/AssignTeacherToSubjectsAPI?teacher=${results[0].id}`)
-          .then(({ data: { results } }) => {
-            setAssignTeacher(results);
-          });
-      });
+    const GetOptions = async () => {
+      try {
+        const got = await GetPaginatedAssignedPromise(
+          "AssignTeacherToSubjectsAPI",
+          user.id
+        );
+
+        setAssignedTeacher(got);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    GetOptions();
   }, []);
 
-  const gradeFromAssignSubject = UniqueArray(assignTeacher, "grade"); //Getting Uniqye Class with Section
+  const uniqueGrade = UniqueArray(assignedTeacher, "grade");
+  const classOptions = UniqueArray(uniqueGrade, "class_name")
+    .sort()
+    .map((data) => ({
+      label: data,
+      value: data,
+    }));
 
-  //Getting grade and section splitted
-  const splitGradeSection = gradeFromAssignSubject.map((value) => {
-    let splitData = value.split(":");
-    return [splitData[0], splitData[1].trim()];
-  });
+  const getSection = (data) => {
+    const section = data.map((value) => value.grade);
+    const uniqueSection = UniqueArray(section, "section").sort();
 
-  // for (let i = 0; i < splitGradeSection.length; i++) {}
+    return uniqueSection.map((section) => ({
+      label: section,
+      value: section,
+    }));
+  };
+
+  const getSubjects = (data) => {
+    const subjects = data.map((value) => value.subject.subject_name);
+    return subjects.map((section) => ({
+      label: section,
+      value: section,
+    }));
+  };
+
+  const handleClass = (data) => {
+    if (data) {
+      setClassRef(data.value);
+
+      axiosInstance
+        .get(
+          `AssignTeacherToSubjectsAPI/?user=${user.id}&classname=${data.value}`
+        )
+        .then(({ data: { results } }) => {
+          const sectionData = getSection(results);
+          setSection(sectionData);
+        });
+    }
+  };
+
+  const handleSection = (data) => {
+    if (data) {
+      setSectionRef(data.value);
+      axiosInstance
+        .get(
+          `AssignTeacherToSubjectsAPI/?user=${user.id}&classname=${classRef}&section=${data.value}`
+        )
+        .then(({ data: { results } }) => {
+          const subjectData = getSubjects(results);
+          setCourse(subjectData);
+        });
+    }
+  };
 
   const onSubmitForm = (data, e) => {
     console.log(data);
+    if (!data.studentClass) {
+      dispatch(createMessage({ classRequired: "Class Field is Required" }));
+    } else if (!data.studentSection) {
+      dispatch(createMessage({ sectionRequired: "Section Field is Required" }));
+    } else if (!data.studentCourse) {
+      dispatch(createMessage({ subjectRequired: "Course Field is Required" }));
+    } else {
+      const postdata = new FormData();
+
+      postdata.append("notes_files", data.noteFile);
+      postdata.append("description", data.noteRemark);
+      postdata.append("title", data.title);
+      postdata.append("created_by", user.id);
+
+      axiosInstance
+        .get(`/teacher?user=${user.id}`)
+        .then(({ data: { results } }) => {
+          postdata.append("teacher", results[0].id);
+        })
+        .then(() => {
+          axiosInstance
+            .get(
+              `/grades/?classname=${data.studentClass.value}&section=${data.studentSection.value}`
+            )
+            .then(({ data: { results } }) => {
+              postdata.append("grade", results[0].id);
+            })
+            .then(() => {
+              axiosInstance
+                .get(
+                  `/subjects/?classname=${data.studentClass.value}&section=${data.studentSection.value}`
+                )
+                .then(({ data: { results } }) => {
+                  const subject = results.find(
+                    (value) => value.subject_name === data.studentCourse.value
+                  );
+                  postdata.append("subject", subject.id);
+                  dispatch(AddLectureNotes(postdata));
+                });
+            });
+        });
+    }
 
     //CLear Input Field Value
-    // e.target.reset();
+    e.target.reset();
     selectRefClass.clearValue(); // Clear Select Value
     selectRefSection.clearValue(); // Clear Select Value
     selectRefCourse.clearValue(); // Clear Select Value
@@ -68,7 +171,7 @@ function UploadLectureNotes() {
               <span className="title">UPLOAD LECTURE NOTES</span>
             </div>
             <div className="content-section">
-              <div className="custom-modal-input ">
+              <div className="allinputfield">
                 <Controller
                   name={"studentClass"}
                   control={control}
@@ -79,18 +182,16 @@ function UploadLectureNotes() {
                       input={"dropdown"}
                       icon={<FaIcons.FaChess className="mid-icon" />}
                       name={"studentClass"}
-                      onChangeHandler={field.onChange}
+                      onChangeHandler={(data) => {
+                        selectRefSection.clearValue();
+                        selectRefCourse.clearValue();
+                        setSection([]);
+                        setCourse([]);
+                        handleClass(data);
+                        field.onChange(data);
+                      }}
                       isRequired={true}
-                      options={[
-                        { value: "12", label: "12" },
-                        { value: "11", label: "11" },
-                        { value: "10", label: "10" },
-                        { value: "9", label: "9" },
-                        { value: "8", label: "8" },
-                        { value: "7", label: "7" },
-                        { value: "6", label: "6" },
-                        { value: "5", label: "5" },
-                      ]}
+                      options={classOptions}
                       refClear={refClearClass}
                     />
                   )}
@@ -106,13 +207,14 @@ function UploadLectureNotes() {
                       input={"dropdown"}
                       icon={<FaIcons.FaCode className="mid-icon" />}
                       name={"studentSection"}
-                      onChangeHandler={field.onChange}
+                      onChangeHandler={(data) => {
+                        selectRefCourse.clearValue();
+                        setCourse([]);
+                        handleSection(data);
+                        field.onChange(data);
+                      }}
                       isRequired={true}
-                      options={[
-                        { value: "A", label: "A" },
-                        { value: "B", label: "B" },
-                        { value: "C", label: "C" },
-                      ]}
+                      options={section}
                       refClear={refClearSection}
                     />
                   )}
@@ -130,12 +232,24 @@ function UploadLectureNotes() {
                       name={"studentCourse"}
                       onChangeHandler={field.onChange}
                       isRequired={true}
-                      options={[
-                        { value: "Social", label: "Social" },
-                        { value: "Science", label: "Science" },
-                        { value: "Math", label: "Math" },
-                      ]}
+                      options={course}
                       refClear={refClearCourse}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name={"title"}
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <InputField
+                      title={"Notes Title".toUpperCase()}
+                      input={"text"}
+                      icon={<FaIcons.FaBookOpen className="mid-icon" />}
+                      name={"title"}
+                      onChangeHandler={field.onChange}
+                      isRequired={true}
                     />
                   )}
                 />
@@ -151,7 +265,7 @@ function UploadLectureNotes() {
                     icon={<FaIcons.FaBookOpen className="mid-icon" />}
                     name={"noteRemark"}
                     onChangeHandler={field.onChange}
-                    isRequired={false}
+                    isRequired={true}
                     isTextArea={true}
                   />
                 )}
@@ -168,7 +282,7 @@ function UploadLectureNotes() {
                     isRequired={true}
                     isImageFile={false}
                     onChange={(event) =>
-                      props.field.onChange(event.target.files)
+                      props.field.onChange(event.target.files[0])
                     }
                   />
                 )}
