@@ -17,7 +17,12 @@ function AssignTeacherTable() {
         return `${data.subject.subject_name} : ${data.subject.subject_code}`;
       },
     },
-    { title: "Grade", field: "grade" },
+    {
+      title: "Grade",
+      render: (data) => {
+        return `${data.grade.class_name} : ${data.grade.section}`;
+      },
+    },
   ];
 
   const url = `${baseURL}AssignTeacherToSubjectsAPI?`;

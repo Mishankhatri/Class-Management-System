@@ -33,7 +33,6 @@ function TimeTableDetails() {
   const onSubmitParentInput = (data, e) => {
     e.target.reset();
     setClickTimetable(false);
-    console.log(data);
     const postData = new FormData();
     postData.append("day", data.day.value);
     postData.append("startTime", data.startTime);
@@ -146,7 +145,7 @@ function TimeTableDetails() {
                 </div>
                 <div className="info">
                   <h4>Class</h4>
-                  <div className="content">{timetablesId.assigned.grade}</div>
+                  <div className="content">{`${timetablesId.assigned.grade?.class_name} : ${timetablesId.assigned.grade?.section}`}</div>
                 </div>
               </div>
               <button

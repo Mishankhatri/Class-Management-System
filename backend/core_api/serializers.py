@@ -102,7 +102,7 @@ class TeacherUserPOSTSerializer(serializers.ModelSerializer):
 class AssignTeacherToSubjectsLISTSerializer(serializers.ModelSerializer):
     teacher= TeacherSerializer()
     subject= SubjectsLISTSerializer()
-    grade = serializers.StringRelatedField()
+    grade = GradeSerializer()
     class Meta:
         model= AssignTeacherToSubjects
         fields = '__all__'
@@ -145,8 +145,8 @@ class TeacherAnnoucementPOSTSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class GivenAssignmentLISTSerializer(serializers.ModelSerializer):
-    created_by = serializers.StringRelatedField()
-    for_grade = serializers.StringRelatedField()
+    created_by = CMS_UsersSerializer(read_only=True)
+    for_grade = GradeSerializer(read_only=True)
     subject = serializers.StringRelatedField()
     class Meta:
         model= GivenAssignments

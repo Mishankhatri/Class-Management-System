@@ -1,4 +1,5 @@
 import { CLOSE_ANNOUNCEMENTS_BYID } from "../../actiontypes/admin/announcementtypes";
+import { ADD_TEACHER_ASSIGNMENT } from "./../../actiontypes/teacher/teacherdatatype";
 import {
   GET_TEACHER_DETAIL,
   ADD_TEACHER_DETAIL,
@@ -16,6 +17,7 @@ import {
   UPDATE_TEACHER_DETAIL,
   UPDATE_TEACHER_PHOTO,
   POST_TEACHER_ANNOUNCEMENT,
+  GET_TEACHER_ASSIGN,
 } from "../../actiontypes/teacher/teacherdatatype";
 
 const initialState = {
@@ -36,6 +38,7 @@ export default function teacherReducer(state = initialState, action) {
     case UPDATE_TEACHER_PHOTO:
     case UPDATE_TEACHER_DETAIL:
     case POST_TEACHER_ANNOUNCEMENT:
+    case ADD_TEACHER_ASSIGNMENT:
       return { ...state };
 
     case GET_TEACHER_BYID:
@@ -61,6 +64,9 @@ export default function teacherReducer(state = initialState, action) {
 
     case GET_TEACHER_ANNOUNCEMENT:
       return { ...state, teachernotices: action.payload };
+
+    case GET_TEACHER_ASSIGN:
+      return { ...state, assignedTeacherByUser: action.payload };
 
     default:
       return state;

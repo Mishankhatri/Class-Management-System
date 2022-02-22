@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InnerHeader from "./../../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
 import * as FaIcons from "react-icons/fa";
@@ -6,14 +6,17 @@ import * as FaIcons from "react-icons/fa";
 import { getAddSubjectsValue } from "../../../values/AdminPanel/ClassValue";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
 import InputField from "../../../common/InputField/InputField";
 import TextAreaInput from "../../../common/InputField/TextAreaInput";
 import { HeaderInputField } from "../../../common/InputField/HeaderInputField";
 import axiosInstance from "../../../../axios";
-import { AddGeneralDetails } from "../../../../redux/actions/student/studentactions";
 import { ADD__SUBJECTS } from "./../../../../redux/actions/subjectactions";
-import { returnErrors } from "../../../../redux/actions/alertactions";
+import {
+  returnErrors,
+  createMessage,
+} from "../../../../redux/actions/alertactions";
+import { GetPaginatedGradePromise } from "./../../../GetOptions";
+import { UniqueArray } from "../../../common/ReverseArray";
 
 function AddSubjects() {
   const { handleSubmit, control } = useForm();
@@ -25,39 +28,85 @@ function AddSubjects() {
   const refClearClass = (ref) => setClassRef(ref);
   const refClearSection = (ref) => setSectionRef(ref);
 
+  const [grade, setGrade] = useState([]);
+  const [section, setSection] = useState([]);
+
+  useEffect(() => {
+    const GetOptions = async () => {
+      try {
+        const got = await GetPaginatedGradePromise();
+        setGrade(got);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    GetOptions();
+  }, []);
+
+  const uniqueGrade = UniqueArray(grade, "class_name");
+
+  const getSection = (data) => {
+    const sectionOptions = grade.filter(
+      (value) => value.class_name == data.value
+    );
+
+    return sectionOptions.map((value) => ({
+      label: value.section,
+      value: value.section,
+    }));
+  };
+
+  const classOptions = uniqueGrade.map((value) => ({
+    label: value,
+    value: value,
+  }));
+
+  const handleSection = (data) => {
+    if (data) {
+      const sectionLabel = getSection(data);
+      setSection(sectionLabel);
+    }
+  };
+
   const onSubmitForm = (data, e) => {
     const postData = new FormData();
 
-    postData.append("subject_name", data.subjectsName);
-    postData.append("subject_code", data.subjectsCode);
-    postData.append("description", data.description);
+    if (!data.studentClass) {
+      dispatch(createMessage({ classRequired: "Class is Required" }));
+    } else if (!data.studentSection) {
+      dispatch(createMessage({ sectionRequired: "Section is Required" }));
+    } else {
+      postData.append("subject_name", data.subjectsName);
+      postData.append("subject_code", data.subjectsCode);
+      postData.append("description", data.description);
 
-    axiosInstance
-      .get(
-        `/grades?classname=${data.studentClass.value}&section=${data.studentSection.value}`
-      )
-      .then(({ data: { results } }) => {
-        postData.append("grade", results[0].id);
-      })
-      .then(() => {
-        dispatch(
-          ADD__SUBJECTS(
-            postData,
-            `Class ${data.studentClass.value} Added Successfully with Section "${data.studentSection.value}"`
-          )
-        );
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log("Response", error.response);
-        } else if (error.request) {
-          console.log("Request", error.request);
-        } else console.log(error);
-        dispatch(returnErrors(error.response.data, error.response.status));
-      });
-
-    // selectClassRef.clearValue();
-    // selectSectionRef.clearValue();
+      axiosInstance
+        .get(
+          `/grades?classname=${data.studentClass.value}&section=${data.studentSection.value}`
+        )
+        .then(({ data: { results } }) => {
+          postData.append("grade", results[0].id);
+        })
+        .then(() => {
+          dispatch(
+            ADD__SUBJECTS(
+              postData,
+              `Subject ${data.subjectsName} Added Successfully for Class "${data.studentClass.value}:${data.studentSection.value}"`
+            )
+          );
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log("Response", error.response);
+          } else if (error.request) {
+            console.log("Request", error.request);
+          } else console.log(error);
+          dispatch(returnErrors(error.response.data, error.response.status));
+        });
+      e.target.reset();
+      selectClassRef.clearValue();
+      selectSectionRef.clearValue();
+    }
   };
 
   return (
@@ -110,18 +159,13 @@ function AddSubjects() {
                         input={"dropdown"}
                         icon={<FaIcons.FaPhotoVideo className="mid-icon" />}
                         name={"studentClass"}
-                        onChangeHandler={field.onChange}
+                        onChangeHandler={(data) => {
+                          handleSection(data);
+                          selectSectionRef.clearValue();
+                          field.onChange(data);
+                        }}
                         isRequired={true}
-                        options={[
-                          { value: "12", label: "12" },
-                          { value: "11", label: "11" },
-                          { value: "10", label: "10" },
-                          { value: "9", label: "9" },
-                          { value: "8", label: "8" },
-                          { value: "7", label: "7" },
-                          { value: "6", label: "6" },
-                          { value: "5", label: "5" },
-                        ]}
+                        options={classOptions}
                         refClear={refClearClass}
                       />
                     )}
@@ -139,14 +183,7 @@ function AddSubjects() {
                         name={"studentSection"}
                         onChangeHandler={field.onChange}
                         isRequired={true}
-                        options={[
-                          { value: "A", label: "A" },
-                          { value: "B", label: "B" },
-                          { value: "C", label: "C" },
-                          { value: "D", label: "D" },
-                          { value: "E", label: "E" },
-                          { value: "F", label: "F" },
-                        ]}
+                        options={section}
                         refClear={refClearSection}
                       />
                     )}

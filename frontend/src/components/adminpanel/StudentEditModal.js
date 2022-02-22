@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axiosInstance from "../../axios";
 import SelectInputField from "../common/InputField/SelectInputField";
 import ViewModal from "../common/Modal/ViewModal";
 import { UniqueArray } from "../common/ReverseArray";
@@ -11,7 +10,6 @@ function StudentEditModal({ register, data, Controller, control }) {
 
   //Dynamic Options
   const [section, setSection] = useState([]);
-  const [subject, setSubject] = useState([]);
 
   //Setting Click Reference to find Subject
   const [classRef, setClassRef] = useState([]);
@@ -156,7 +154,9 @@ function StudentEditModal({ register, data, Controller, control }) {
               title={"Class"}
               name="className"
               hasValue={true}
+              refClear={refClearClass}
               onChangeHandler={(data) => {
+                sectionReference.clearValue();
                 handleClass(data);
                 field.onChange(data);
               }}
@@ -179,6 +179,7 @@ function StudentEditModal({ register, data, Controller, control }) {
             <SelectInputField
               title={"Section"}
               name="sectionName"
+              refClear={refClearSection}
               hasValue={true}
               onChangeHandler={field.onChange}
               value={{

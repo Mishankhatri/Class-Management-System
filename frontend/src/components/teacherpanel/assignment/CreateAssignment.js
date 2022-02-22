@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as MdIcons from "react-icons/md";
 import * as FaIcons from "react-icons/fa";
 
@@ -7,6 +7,12 @@ import { useForm, Controller } from "react-hook-form";
 import InnerHeader from "../../common/InnerHeader";
 import InputField from "../../common/InputField/InputField";
 import { FileInput } from "../../common/InputField/FileInput";
+import { GetPaginatedAssignedPromise } from "../../GetOptions";
+import { useDispatch, useSelector } from "react-redux";
+import { UniqueArray } from "../../common/ReverseArray";
+import axiosInstance from "./../../../axios";
+import { createMessage } from "./../../../redux/actions/alertactions";
+import { AddTeacherAssignment } from "../../../redux/actions/teacher/teacheractions";
 
 function CreateAssignment() {
   const [selectRefClass, setSelectRefClass] = useState(null);
@@ -18,9 +24,128 @@ function CreateAssignment() {
   const refClearClass = (ref) => setSelectRefClass(ref);
   const refClearSection = (ref) => setSelectRefSection(ref);
   const refClearCourse = (ref) => setSelectRefCourse(ref);
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const [assignedTeacher, setAssignedTeacher] = useState([]);
+  const [section, setSection] = useState([]);
+  const [course, setCourse] = useState([]);
+
+  //Setting reference of class
+  const [classRef, setClassRef] = useState([]);
+  const [sectionRef, setSectionRef] = useState([]);
+
+  useEffect(() => {
+    const GetOptions = async () => {
+      try {
+        const got = await GetPaginatedAssignedPromise(
+          "AssignTeacherToSubjectsAPI",
+          user.id
+        );
+
+        setAssignedTeacher(got);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    GetOptions();
+  }, []);
+
+  const uniqueGrade = UniqueArray(assignedTeacher, "grade");
+  const classOptions = UniqueArray(uniqueGrade, "class_name")
+    .sort()
+    .map((data) => ({
+      label: data,
+      value: data,
+    }));
+
+  const getSection = (data) => {
+    const section = data.map((value) => value.grade);
+    const uniqueSection = UniqueArray(section, "section").sort();
+
+    return uniqueSection.map((section) => ({ label: section, value: section }));
+  };
+
+  const getSubjects = (data) => {
+    const subjects = data.map((value) => value.subject.subject_name);
+    return subjects.map((section) => ({
+      label: section,
+      value: section,
+    }));
+  };
+
+  const handleClass = (data) => {
+    if (data) {
+      setClassRef(data.value);
+
+      axiosInstance
+        .get(
+          `AssignTeacherToSubjectsAPI/?user=${user.id}&classname=${data.value}`
+        )
+        .then(({ data: { results } }) => {
+          const sectionData = getSection(results);
+          setSection(sectionData);
+        });
+    }
+  };
+
+  const handleSection = (data) => {
+    if (data) {
+      setSectionRef(data.value);
+      axiosInstance
+        .get(
+          `AssignTeacherToSubjectsAPI/?user=${user.id}&classname=${classRef}&section=${data.value}`
+        )
+        .then(({ data: { results } }) => {
+          const subjectData = getSubjects(results);
+          setCourse(subjectData);
+        });
+    }
+  };
 
   const onSubmitForm = (data, e) => {
-    console.log(data);
+    if (!data.studentClass) {
+      dispatch(createMessage({ classRequired: "Class Field is Required" }));
+    } else if (!data.studentSection) {
+      dispatch(createMessage({ sectionRequired: "Section Field is Required" }));
+    } else if (!data.studentCourse) {
+      dispatch(createMessage({ subjectRequired: "Course Field is Required" }));
+    } else {
+      const postdata = new FormData();
+
+      postdata.append("related_files", data.assigmentFile);
+      postdata.append("instructions", data.assignmentInstruction);
+      postdata.append("title", data.assignmentTitle);
+      postdata.append("date_due", data.dateDue);
+      postdata.append("time_due", data.timeDue);
+      postdata.append("created_by", user.id);
+
+      axiosInstance
+        .get(
+          `/grades/?classname=${data.studentClass.value}&section=${data.studentSection.value}`
+        )
+        .then(({ data: { results } }) => {
+          postdata.append("for_grade", results[0].id);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      axiosInstance
+        .get(
+          `/subjects/?classname=${data.studentClass.value}&section=${data.studentSection.value}`
+        )
+        .then(({ data: { results } }) => {
+          const subject = results.find(
+            (value) => value.subject_name === data.studentCourse.value
+          );
+          postdata.append("subject", subject.id);
+          dispatch(AddTeacherAssignment(postdata));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
 
     //CLear Input Field Value
     e.target.reset();
@@ -72,18 +197,16 @@ function CreateAssignment() {
                       input={"dropdown"}
                       icon={<FaIcons.FaChess className="mid-icon" />}
                       name={"studentClass"}
-                      onChangeHandler={field.onChange}
+                      onChangeHandler={(data) => {
+                        selectRefSection.clearValue();
+                        selectRefCourse.clearValue();
+                        setSection([]);
+                        setCourse([]);
+                        handleClass(data);
+                        field.onChange(data);
+                      }}
                       isRequired={true}
-                      options={[
-                        { value: "12", label: "12" },
-                        { value: "11", label: "11" },
-                        { value: "10", label: "10" },
-                        { value: "9", label: "9" },
-                        { value: "8", label: "8" },
-                        { value: "7", label: "7" },
-                        { value: "6", label: "6" },
-                        { value: "5", label: "5" },
-                      ]}
+                      options={classOptions}
                       refClear={refClearClass}
                     />
                   )}
@@ -99,13 +222,14 @@ function CreateAssignment() {
                       input={"dropdown"}
                       icon={<FaIcons.FaCode className="mid-icon" />}
                       name={"studentSection"}
-                      onChangeHandler={field.onChange}
+                      onChangeHandler={(data) => {
+                        selectRefCourse.clearValue();
+                        setCourse([]);
+                        handleSection(data);
+                        field.onChange(data);
+                      }}
                       isRequired={true}
-                      options={[
-                        { value: "A", label: "A" },
-                        { value: "B", label: "B" },
-                        { value: "C", label: "C" },
-                      ]}
+                      options={section}
                       refClear={refClearSection}
                     />
                   )}
@@ -123,11 +247,7 @@ function CreateAssignment() {
                       name={"studentCourse"}
                       onChangeHandler={field.onChange}
                       isRequired={true}
-                      options={[
-                        { value: "Social", label: "Social" },
-                        { value: "Science", label: "Science" },
-                        { value: "Math", label: "Math" },
-                      ]}
+                      options={course}
                       refClear={refClearCourse}
                     />
                   )}
@@ -174,7 +294,7 @@ function CreateAssignment() {
                       name={"assigmentFile"}
                       title={"Upload File"}
                       icon={<FaIcons.FaFile className="mid-icon" />}
-                      isRequired={true}
+                      isRequired={false}
                       isImageFile={false}
                       onChange={(event) =>
                         props.field.onChange(event.target.files)
@@ -195,7 +315,7 @@ function CreateAssignment() {
                     icon={<FaIcons.FaBookOpen className="mid-icon" />}
                     name={"assignmentInstruction"}
                     onChangeHandler={field.onChange}
-                    isRequired={false}
+                    isRequired={true}
                     isTextArea={true}
                   />
                 )}

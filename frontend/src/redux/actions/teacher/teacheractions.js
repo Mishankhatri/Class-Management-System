@@ -17,6 +17,8 @@ import {
   DELETE_TEACHER_ANNOUNCEMENT,
   ASSIGN_TEACHER_SUBJECTS,
   POST_TEACHER_ANNOUNCEMENT,
+  GET_TEACHER_ASSIGN,
+  ADD_TEACHER_ASSIGNMENT,
 } from "./../../actiontypes/teacher/teacherdatatype";
 
 export const TeacherDetail = () => {
@@ -26,6 +28,22 @@ export const TeacherDetail = () => {
       .then(({ data }) => {
         dispatch({
           type: GET_TEACHER_DETAIL,
+          payload: data,
+        });
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
+  };
+};
+
+export const GetTeacherAssign = (userId) => {
+  return function (dispatch) {
+    axiosInstance
+      .get(`/AssignTeacherToSubjectsAPI?user=${userId}`)
+      .then(({ data }) => {
+        dispatch({
+          type: GET_TEACHER_ASSIGN,
           payload: data,
         });
       })
@@ -167,7 +185,7 @@ export const DeleteLectureNotes = (id) => {
 export const GetTeacherGivenAssignment = (username) => {
   return function (dispatch) {
     axiosInstance
-      .get(`/givenassignments?teachers=${username}`)
+      .get(`/givenassignments?teacher=${username}`)
       .then(({ data: { results } }) => {
         dispatch({
           type: GET_TEACHER_GIVEN_ASSIGNMENT,
@@ -180,13 +198,13 @@ export const GetTeacherGivenAssignment = (username) => {
   };
 };
 
-export const DeleteTeacherGivenAssignment = (id) => {
+export const DeleteTeacherGivenAssignment = (id, user) => {
   return function (dispatch) {
     axiosInstance
       .delete(`/givenassignments/${id}`)
       .then(() => {
         dispatch({ type: DELETE_TEACHER_GIVEN_ASSIGNMENT });
-        dispatch(GetTeacherGivenAssignment());
+        dispatch(GetTeacherGivenAssignment(user.username));
       })
       .then(() => {
         dispatch(
@@ -323,6 +341,28 @@ export const CreateTeacherAnnouncement = (postdata) => {
       })
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));
+      });
+  };
+};
+
+export const AddTeacherAssignment = (postdata) => {
+  return function (dispatch) {
+    const body = postdata;
+    axiosInstanceMultipart
+      .post(`givenassignments/`, body)
+      .then(() => {
+        dispatch({ type: ADD_TEACHER_ASSIGNMENT });
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            assignmentAdded: "Assignment Added Changed Successully",
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+        console.log(err.request);
       });
   };
 };

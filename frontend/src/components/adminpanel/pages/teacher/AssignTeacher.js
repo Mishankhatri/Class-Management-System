@@ -9,6 +9,7 @@ import { UniqueArray } from "../../../common/ReverseArray";
 import axiosInstance from "../../../../axios";
 import { AssignTeacherSubjects } from "../../../../redux/actions/teacher/teacheractions";
 import AssignTeacherTable from "./AssignTeacherTable";
+import { createMessage } from "../../../../redux/actions/alertactions";
 
 function AssignTeacher() {
   const { handleSubmit, control } = useForm();
@@ -91,14 +92,6 @@ function AssignTeacher() {
       setClassRef(data.value);
       const sectionLabel = getSection(data);
       setSection(sectionLabel);
-
-      //Getting Default Subject Value Via changing
-      axiosInstance
-        .get(`/subjects?classname=${data.value}&section=${sectionRef}`)
-        .then(({ data: { results } }) => {
-          const subjects = getSubjects(results);
-          setSubject(subjects);
-        });
     }
   };
 
@@ -117,27 +110,36 @@ function AssignTeacher() {
   };
 
   const onSubmitData = (data) => {
-    console.log(data);
     let postData = new FormData();
-    postData.append("subject", data.selectSubject.value);
-    postData.append("teacher", data.selectTeacher.value);
+    if (!data.selectClass) {
+      dispatch(createMessage({ classRequired: "Class is Required" }));
+    } else if (!data.selectSection) {
+      dispatch(createMessage({ sectionRequired: "Section is Required" }));
+    } else if (!data.selectSubject) {
+      dispatch(createMessage({ subjectRequired: "Subject is Required" }));
+    } else if (!data.selectTeacher) {
+      dispatch(createMessage({ teacherRequired: "Teacher is Required" }));
+    } else {
+      postData.append("subject", data.selectSubject.value);
+      postData.append("teacher", data.selectTeacher.value);
 
-    axiosInstance
-      .get(
-        `/grades/?classname=${data.selectClass.value}&section=${data.selectSection.value}`
-      )
-      .then(({ data: { results } }) => {
-        postData.append("grade", results[0].id);
-        dispatch(AssignTeacherSubjects(postData));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      axiosInstance
+        .get(
+          `/grades/?classname=${data.selectClass.value}&section=${data.selectSection.value}`
+        )
+        .then(({ data: { results } }) => {
+          postData.append("grade", results[0].id);
+          dispatch(AssignTeacherSubjects(postData));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-    classReference.clearValue();
-    sectionReference.clearValue();
-    subjectReference.clearValue();
-    teacherReference.clearValue();
+      classReference.clearValue();
+      sectionReference.clearValue();
+      subjectReference.clearValue();
+      teacherReference.clearValue();
+    }
   };
   return (
     <React.Fragment>
@@ -162,8 +164,12 @@ function AssignTeacher() {
                       title={"Select Class"}
                       icon={<MdIcons.MdDepartureBoard className="mid-icon" />}
                       name={"selectClass"}
+                      isRequired={true}
                       refClear={refClearClass}
                       onChangeHandler={(data) => {
+                        sectionReference.clearValue();
+                        subjectReference.clearValue();
+                        setSubject([]);
                         handleClass(data);
                         field.onChange(data);
                       }}
@@ -180,9 +186,11 @@ function AssignTeacher() {
                     <SelectInputField
                       title={"Select Section"}
                       refClear={refClearSection}
+                      isRequired={true}
                       icon={<MdIcons.MdCode className="mid-icon" />}
                       name={"selectSection"}
                       onChangeHandler={(data) => {
+                        subjectReference.clearValue();
                         handleSection(data);
                         field.onChange(data);
                       }}
@@ -201,6 +209,7 @@ function AssignTeacher() {
                       icon={<MdIcons.MdSubject className="mid-icon" />}
                       options={subject}
                       refClear={refClearSubject}
+                      isRequired={true}
                       name={"selectSubject"}
                       onChangeHandler={field.onChange}
                     />
@@ -217,6 +226,7 @@ function AssignTeacher() {
                       refClear={refClearTeacher}
                       icon={<MdIcons.MdVerified className="mid-icon" />}
                       name={"selectTeacher"}
+                      isRequired={true}
                       onChangeHandler={field.onChange}
                       options={teacherOptions}
                     />

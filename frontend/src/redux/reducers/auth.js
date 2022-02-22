@@ -8,6 +8,7 @@ import {
   LOGIN_FAILED,
   AUTH_ERR,
   USER_LOADING,
+  UPDATE_SUCCESS,
 } from "../actiontypes/authtypes";
 
 const initialState = {
@@ -49,6 +50,14 @@ export default function (state = initialState, action) {
         isAuthenticated: true,
         isLoading: false,
       };
+
+    case UPDATE_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: false,
+        isLoading: false,
+      };
+
     case AUTH_ERR:
     case LOGIN_FAILED:
     case LOGOUT_SUCCESS:

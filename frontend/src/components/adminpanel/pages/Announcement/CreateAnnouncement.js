@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import InnerHeader from "../../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
 import * as FaIcons from "react-icons/fa";
@@ -8,6 +8,7 @@ import InputField from "../../../common/InputField/InputField";
 import { FileInput } from "../../../common/InputField/FileInput";
 import { useDispatch, useSelector } from "react-redux";
 import { CreateAdminAnnouncement } from "./../../../../redux/actions/admin/announcementaction";
+import { createMessage } from "../../../../redux/actions/alertactions";
 
 function CreateAnnouncement() {
   const [selectRefType, setSelectRefType] = useState(null);
@@ -15,28 +16,32 @@ function CreateAnnouncement() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-  const [student, setStudent] = useState(false);
-
   const { handleSubmit, control } = useForm();
 
   const refClearFor = (ref) => setSelectRefFor(ref);
   const refClearType = (ref) => setSelectRefType(ref);
 
   const onSubmitForm = (data, e) => {
-    console.log(data);
     const postData = new FormData();
-    postData.append("created_by", user.id);
-    postData.append("type", data.announcementTypeName.value);
-    postData.append("title", data.announcementTitle);
-    postData.append("details", data.announcementSubjects);
-    postData.append("announcement_for", data.announcementFor.value);
-    postData.append("files_by_admin", data.announcementFile);
 
-    dispatch(CreateAdminAnnouncement(postData));
+    if (!data.announcementTypeName) {
+      dispatch(createMessage({ typeRequired: "Type Field is Required" }));
+    } else if (!data.announcementFor) {
+      dispatch(createMessage({ forRequired: "For field is Required" }));
+    } else {
+      postData.append("created_by", user.id);
+      postData.append("type", data.announcementTypeName.value);
+      postData.append("title", data.announcementTitle);
+      postData.append("details", data.announcementSubjects);
+      postData.append("announcement_for", data.announcementFor.value);
+      postData.append("files_by_admin", data.announcementFile);
 
-    e.target.reset();
-    selectRefType.clearValue();
-    selectRefFor.clearValue();
+      dispatch(CreateAdminAnnouncement(postData));
+
+      e.target.reset();
+      selectRefType.clearValue();
+      selectRefFor.clearValue();
+    }
   };
 
   return (
@@ -57,12 +62,6 @@ function CreateAnnouncement() {
                 <Controller
                   name={"announcementTypeName"}
                   control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: `Announcement Type is required`,
-                    },
-                  }}
                   defaultValue=""
                   render={({ field }) => (
                     <InputField
@@ -86,12 +85,6 @@ function CreateAnnouncement() {
                 <Controller
                   name={"announcementFor"}
                   control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: `Announcement For is required`,
-                    },
-                  }}
                   defaultValue=""
                   render={(props) => (
                     <InputField

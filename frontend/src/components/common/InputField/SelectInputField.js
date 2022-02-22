@@ -11,11 +11,16 @@ function SelectInputField({
   options,
   onChangeHandler,
   refClear,
+  isRequired = false,
 }) {
   return (
     <React.Fragment>
       <div className="mid-content">
-        <HeaderInputField title={title.toUpperCase()} icon={icon} />
+        <HeaderInputField
+          title={title.toUpperCase()}
+          icon={icon}
+          isRequired={isRequired}
+        />
         <div className="label-input">
           {hasValue ? (
             <Select

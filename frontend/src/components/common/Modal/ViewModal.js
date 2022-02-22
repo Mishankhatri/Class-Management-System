@@ -10,11 +10,12 @@ function ViewModal({
   type = "text",
   icon = "",
   file = false,
+  isRequired = false,
 }) {
   return (
     <div className="info">
       <div className="mid-content">
-        <HeaderInputField title={title} icon={icon} />
+        <HeaderInputField title={title} icon={icon} isRequired={isRequired} />
         <div className="label-input">
           {register ? (
             file ? (
@@ -25,6 +26,7 @@ function ViewModal({
                   disabled={disabled}
                   defaultValue={value}
                   accept="image/*"
+                  required={isRequired}
                   name={name}
                   {...register(name)}
                 />
@@ -35,6 +37,7 @@ function ViewModal({
                 className="input"
                 disabled={disabled}
                 defaultValue={value}
+                required={isRequired}
                 name={name}
                 {...register(name)}
               />

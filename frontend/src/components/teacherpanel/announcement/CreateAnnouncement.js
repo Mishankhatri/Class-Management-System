@@ -9,6 +9,7 @@ import { FileInput } from "../../common/InputField/FileInput";
 import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from "../../../axios";
 import { CreateTeacherAnnouncement } from "../../../redux/actions/teacher/teacheractions";
+import { createMessage } from "../../../redux/actions/alertactions";
 
 function CreateAnnouncement() {
   const [selectRefForClass, setSelectRefForClass] = useState(null);
@@ -22,33 +23,35 @@ function CreateAnnouncement() {
   const refClearForSection = (ref) => setSelectRefForSection(ref);
 
   const onSubmitForm = (data, e) => {
-    console.log(data.announcementFile);
-
     const postdata = new FormData();
 
-    postdata.append("created_by", user.id);
-    postdata.append("details", data.announcementSubjects);
-    postdata.append("title", data.announcementTypeName);
-    postdata.append("files_by_teachers", data.announcementFile);
+    if (!data.announcementForClass) {
+      dispatch(createMessage({ classRequired: "Subject Field is Required" }));
+    } else if (!data.announcementForSection) {
+      dispatch(createMessage({ sectionRequired: "Type field is Required" }));
+    } else {
+      postdata.append("created_by", user.id);
+      postdata.append("details", data.announcementSubjects);
+      postdata.append("title", data.announcementTypeName);
+      postdata.append("files_by_teachers", data.announcementFile);
 
-    //Generate Id from above
-    axiosInstance
-      .get(
-        `/grades/?classname=${data.announcementForClass.value}&section=${data.announcementForSection.value}`
-      )
-      .then(({ data: { results } }) => {
-        postdata.append("announcement_for_class", results[0].id);
-        dispatch(CreateTeacherAnnouncement(postdata));
-      })
-      .catch((err) => {
-        // console.log("Response", err?.response);
-        // console.log("Request", err?.request);
-        console.log(err);
-      });
+      //Generate Id from above
+      axiosInstance
+        .get(
+          `/grades/?classname=${data.announcementForClass.value}&section=${data.announcementForSection.value}`
+        )
+        .then(({ data: { results } }) => {
+          postdata.append("announcement_for_class", results[0].id);
+          dispatch(CreateTeacherAnnouncement(postdata));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-    e.target.reset();
-    selectRefForClass.clearValue();
-    selectRefForSection.clearValue();
+      e.target.reset();
+      selectRefForClass.clearValue();
+      selectRefForSection.clearValue();
+    }
   };
 
   return (

@@ -104,14 +104,6 @@ function CreateTimetables() {
       setClassRef(data.value);
       const sectionLabel = getSection(data);
       setSection(sectionLabel);
-
-      //Getting Default Subject Value Via changing
-      axiosInstance
-        .get(`/subjects?classname=${data.value}&section=${sectionRef}`)
-        .then(({ data: { results } }) => {
-          const subjects = getSubjects(results);
-          setSubject(subjects);
-        });
     }
   };
 
@@ -151,16 +143,16 @@ function CreateTimetables() {
     console.log(data);
     const postData = new FormData();
     try {
-      if (
-        data.day == undefined ||
-        data.startTime === "" ||
-        data.endTime === "" ||
-        data.class === undefined ||
-        data.section === undefined ||
-        data.subject === undefined ||
-        data.teacher === undefined
-      ) {
-        dispatch(createMessage({ allfields: "All fields are required." }));
+      if (!data.day) {
+        dispatch(createMessage({ dayRequired: "Day is Required" }));
+      } else if (!data.class) {
+        dispatch(createMessage({ classRequired: "Class is Required" }));
+      } else if (!data.section) {
+        dispatch(createMessage({ sectionRequired: "Section is Required" }));
+      } else if (!data.subject) {
+        dispatch(createMessage({ subjectRequired: "Subject is Required" }));
+      } else if (!data.teacher) {
+        dispatch(createMessage({ teacherRequired: "Teacher is Required" }));
       } else {
         postData.append("day", data.day.value);
         postData.append("startTime", data.startTime);
@@ -236,6 +228,7 @@ function CreateTimetables() {
                         title={"Day"}
                         name="day"
                         refClear={refClearDay}
+                        isRequired={true}
                         icon={<FaIcons.FaUser className="mid-icon" />}
                         onChangeHandler={field.onChange}
                         options={[
@@ -254,6 +247,7 @@ function CreateTimetables() {
                     register={register}
                     disabled={false}
                     name={"startTime"}
+                    isRequired={true}
                     type={"time"}
                     icon={<FaIcons.FaUser className="mid-icon" />}
                   />
@@ -261,6 +255,7 @@ function CreateTimetables() {
                     title={"End Time"}
                     register={register}
                     disabled={false}
+                    isRequired={true}
                     name={"endTime"}
                     type={"time"}
                     icon={<FaIcons.FaUser className="mid-icon" />}
@@ -273,8 +268,14 @@ function CreateTimetables() {
                         title={"Class"}
                         name="class"
                         refClear={refClearClass}
+                        isRequired={true}
                         icon={<FaIcons.FaCode className="mid-icon" />}
                         onChangeHandler={(data) => {
+                          sectionReference.clearValue();
+                          subjectReference.clearValue();
+                          teacherReference.clearValue();
+                          setSubject([]);
+                          setTeacher([]);
                           handleClass(data);
                           field.onChange(data);
                         }}
@@ -288,10 +289,14 @@ function CreateTimetables() {
                     render={({ field }) => (
                       <SelectInputField
                         title={"Section"}
+                        isRequired={true}
                         icon={<FaIcons.FaCode className="mid-icon" />}
                         name="section"
                         refClear={refClearSection}
                         onChangeHandler={(data) => {
+                          subjectReference.clearValue();
+                          teacherReference.clearValue();
+                          setTeacher([]);
                           handleSection(data);
                           field.onChange(data);
                         }}
@@ -309,7 +314,9 @@ function CreateTimetables() {
                         refClear={refClearSubject}
                         icon={<MdIcons.MdBook className="mid-icon" />}
                         options={subject}
+                        isRequired={true}
                         onChangeHandler={(data) => {
+                          teacherReference.clearValue();
                           handleSubject(data);
                           field.onChange(data);
                         }}
@@ -323,6 +330,7 @@ function CreateTimetables() {
                       <SelectInputField
                         title={"Teacher"}
                         name="teacher"
+                        isRequired={true}
                         refClear={refClearTeacher}
                         icon={<FaIcons.FaUser className="mid-icon" />}
                         onChangeHandler={field.onChange}
