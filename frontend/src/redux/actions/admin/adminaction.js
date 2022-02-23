@@ -1,4 +1,4 @@
-import axiosInstance from "../../../axios";
+import axiosInstance, { axiosInstanceMultipart } from "../../../axios";
 import { createMessage, returnErrors } from "../alertactions";
 
 import { getUser, logout } from "./../authactions";
@@ -63,11 +63,10 @@ export const UpdateUserInfo = (data) => {
 export const ChangeUserImage = (data) => {
   return function (dispatch) {
     const body = data;
-    axiosInstance
+    axiosInstanceMultipart
       .patch("user/profile/update/", body)
       .then(() => {
         dispatch({ type: UPDATE_USER_IMAGE });
-        dispatch(getUser());
       })
       .then(() => {
         dispatch(
@@ -75,6 +74,7 @@ export const ChangeUserImage = (data) => {
             profileChange: "UserProfile Changed Successully",
           })
         );
+        dispatch(getUser());
       })
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));

@@ -11,16 +11,19 @@ function PasswordInputField({
   onChangeHandler,
   disabled = false,
   id_name,
+  hasHeader = true,
 }) {
   const [showPass, setShowPass] = useState(true);
   return (
     <React.Fragment>
       <div className="mid-content">
-        <HeaderInputField
-          title={title}
-          icon={<MdIcons.MdPassword className="mid-icon" />}
-          isRequired={isRequired}
-        />
+        {hasHeader && (
+          <HeaderInputField
+            title={title}
+            icon={<MdIcons.MdPassword className="mid-icon" />}
+            isRequired={isRequired}
+          />
+        )}
         <div className="label-input">
           <div className="input-icon-container">
             <input

@@ -28,7 +28,7 @@ function UserProfile() {
     setClick(false);
 
     const postData = new FormData();
-    postData.append("photo_image", uploadedImage);
+    postData.append("profile_image", uploadedImage);
     dispatch(ChangeUserImage(postData));
   };
 
