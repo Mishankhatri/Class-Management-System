@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import "./App.css";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./forms/Login";
 import Logout from "./forms/Logout";
@@ -20,6 +21,9 @@ import "./components/common/css/Announcement.css";
 import "./components/common/css/CustomConfirm.css";
 import "./components/common/css/PasswordToggle.css";
 import { getUser } from "./redux/actions/authactions";
+import ForgetPassword from "./ForgetPassword";
+import SetPassword from "./SetPassword";
+
 //Alert options
 const alertOptions = {
   timeout: 2000,
@@ -43,6 +47,8 @@ ReactDOM.render(
           <Route path={"/login"} element={<Login />} />
           <Route path={"/logout"} element={<Logout />} />
           <Route path={"/register/admin/"} element={<Register />} />
+          <Route path={"/forget"} element={<ForgetPassword />} />
+          <Route path={"/set"} element={<SetPassword />} />
         </Routes>
       </AlertProvider>
     </Provider>
