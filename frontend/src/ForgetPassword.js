@@ -47,9 +47,7 @@ function ForgetPassword() {
                   </div>
                 </div>
 
-                <button className="btn-custom btn-primary">
-                  Set New Password
-                </button>
+                <button className="btn-custom btn-primary">Send Email</button>
               </form>
             </div>
           </div>

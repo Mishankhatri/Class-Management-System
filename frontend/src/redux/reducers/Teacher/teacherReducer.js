@@ -2,6 +2,9 @@ import { CLOSE_ANNOUNCEMENTS_BYID } from "../../actiontypes/admin/announcementty
 import {
   ADD_TEACHER_ASSIGNMENT,
   CHANGE_TEACHER_ASSIGNMENT,
+  GET_LECTURE_NOTES_FILTER,
+  GET_TEACHER_ANNOUNCEMENT_FILTER,
+  GET_TEACHER_ASSIGNMENT_FILTER,
 } from "./../../actiontypes/teacher/teacherdatatype";
 import {
   GET_TEACHER_DETAIL,
@@ -57,6 +60,9 @@ export default function teacherReducer(state = initialState, action) {
     case GET_TEACHER_ASSIGNMENT_BYID:
       return { ...state, assignmentId: action.payload };
 
+    case GET_TEACHER_ASSIGNMENT_FILTER:
+      return { ...state, assignmentFilter: action.payload };
+
     case GET_TEACHER_ANNOUNCEMENTS_BYID:
       return { ...state, teacherNoticeId: action.payload, isOpen: true };
 
@@ -71,6 +77,12 @@ export default function teacherReducer(state = initialState, action) {
 
     case GET_TEACHER_ASSIGN:
       return { ...state, assignedTeacherByUser: action.payload };
+
+    case GET_LECTURE_NOTES_FILTER:
+      return { ...state, lectureNotesFilter: action.payload };
+
+    case GET_TEACHER_ANNOUNCEMENT_FILTER:
+      return { ...state, teacherNoticesFilter: action.payload };
 
     default:
       return state;

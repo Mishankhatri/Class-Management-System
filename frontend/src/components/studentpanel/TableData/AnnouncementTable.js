@@ -3,22 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { SelectColumnFilter } from "../../common/Table/filters";
 import TableContainer from "../../common/Table/TableContainer";
 import Moment from "react-moment";
-import { getData } from "../../../redux/actions/dataactions";
 import reverseArray from "../../common/ReverseArray";
+import { GetAdminFilterAnnouncement } from "./../../../redux/actions/admin/announcementaction";
 
 const AnnouncementTable = () => {
-  const {
-    adminnotices: { results: data },
-  } = useSelector((state) => state.data);
-
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getData("adminnotices"));
+    dispatch(GetAdminFilterAnnouncement("ordering=-id&for=all"));
   }, [dispatch]);
 
-  const newArray =
-    data &&
-    reverseArray(data).filter((value) => value.announcement_for == "all");
+  const { adminfilternotices } = useSelector((state) => state.admins);
+  const data = adminfilternotices && adminfilternotices.results;
 
   // console.log(data.reverse());
   const columns = useMemo(
@@ -89,7 +84,7 @@ const AnnouncementTable = () => {
 
   return (
     <>
-      <div>{data && <TableContainer columns={columns} data={newArray} />}</div>
+      <div>{data && <TableContainer columns={columns} data={data} />}</div>
     </>
   );
 };

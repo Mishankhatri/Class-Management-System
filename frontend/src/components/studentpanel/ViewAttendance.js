@@ -9,17 +9,13 @@ import { ViewStudentAttendanceByFilter } from "../../redux/actions/subjectaction
 import axiosInstance from "../../axios";
 
 function ViewAttendance() {
-  // const { attendanceFilter } = useSelector((state) => state.students);
   const { user } = useSelector((state) => state.auth);
   const [attendance, setAttendance] = useState([]);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     axiosInstance
       .get(`/student?user=${user.id}`)
       .then(({ data: { results } }) => {
-        // dispatch(ViewStudentAttendanceByFilter(`student=${results[0].id}`));
         axiosInstance
           .get(`/attendance?student=${results[0].id}`)
           .then(({ data: { results } }) => {

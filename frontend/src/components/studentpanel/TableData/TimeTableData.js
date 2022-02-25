@@ -7,18 +7,22 @@ import { SelectColumnFilter } from "../../common/Table/filters";
 import { GetAdminTimetables } from "../../../redux/actions/admin/adminaction";
 import { StudentByUserId } from "./../../../redux/actions/student/studentactions";
 import Loading from "./../../common/Loading";
+import axiosInstance from "../../../axios";
 
 const TimeTableData = () => {
   const { timetables } = useSelector((state) => state.admins);
   const { user } = useSelector((state) => state.auth);
-  const { studentUserID } = useSelector((state) => state.students);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // dispatch(StudentByUserId(user.id));
-    // dispatch(GetAdminTimetables(`grade=${studentUserID[0].current_grade.id}`));
-    dispatch(GetAdminTimetables());
+    axiosInstance
+      .get(`/student?user=${user.id}`)
+      .then(({ data: { results } }) => {
+        dispatch(
+          GetAdminTimetables(`ordering=id&grade=${results[0].current_grade.id}`)
+        );
+      });
   }, []);
 
   const columns = useMemo(
@@ -48,12 +52,16 @@ const TimeTableData = () => {
 
       {
         Header: "Subject",
-        accessor: "assigned.subject",
+        accessor: (data) => {
+          return `${data.assigned.subject.subject_name}:${data.assigned.subject.subject_code}`;
+        },
         SearchAble: true,
       },
       {
         Header: "Teacher",
-        accessor: "assigned.teacher",
+        accessor: (d) => {
+          return `${d.assigned.teacher.first_name} ${d.assigned.teacher.middle_name} ${d.assigned.teacher.last_name}`;
+        },
         SearchAble: true,
       },
     ],

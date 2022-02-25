@@ -411,6 +411,7 @@ class GivenAssignmentsAPI(viewsets.ModelViewSet):
         created_by = self.request.query_params.get('teacher')
         created_by_id = self.request.query_params.get('user')
         title = self.request.query_params.get('title')
+        grade = self.request.query_params.get('grade')
         created_at = self.request.query_params.get('created_at')
         if subject_id is not None:
             queryset = queryset.filter(subject__id=subject_id)
@@ -422,6 +423,8 @@ class GivenAssignmentsAPI(viewsets.ModelViewSet):
             queryset = queryset.filter(created_by__id=created_by_id)
         if created_at is not None:
             queryset = queryset.filter(created_at=created_at)
+        if grade is not None:
+            queryset = queryset.filter(for_grade__id=grade)
         return queryset
 
 class SubmittedAssignmentsAPI(viewsets.ModelViewSet):

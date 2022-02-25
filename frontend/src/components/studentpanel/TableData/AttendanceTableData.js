@@ -6,7 +6,6 @@ import {
 } from "./../../common/Table/filters";
 
 const AttendanceTableData = ({ attendance }) => {
-  console.log(attendance);
   const columns = useMemo(
     () => [
       {
@@ -24,6 +23,13 @@ const AttendanceTableData = ({ attendance }) => {
         Header: "Subject",
         accessor: "subject",
         SearchAble: true,
+        Filter: SelectColumnFilter,
+      },
+      {
+        Header: "Teacher",
+        accessor: "teacher",
+        SearchAble: true,
+        Filter: SelectColumnFilter,
       },
       {
         Header: "Attendance",

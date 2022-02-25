@@ -5,28 +5,36 @@ import TableContainer from "./../../common/Table/TableContainer";
 import { useDispatch, useSelector } from "react-redux";
 import {
   GetStudentSubmittedAssignment,
-  GetTeacherGivenAssignment,
+  GetTeacherAssignmentFilter,
 } from "./../../../redux/actions/teacher/teacheractions";
 import moment from "moment";
-import reverseArray from "../../common/ReverseArray";
 import Loading from "../../common/Loading";
+import axiosInstance from "../../../axios";
 
 const StudentAssignmentViewTable = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(GetTeacherGivenAssignment());
     dispatch(GetStudentSubmittedAssignment());
   }, []);
 
+  useEffect(() => {
+    axiosInstance
+      .get(`/student?user=${user.id}`)
+      .then(({ data: { results } }) => {
+        dispatch(
+          GetTeacherAssignmentFilter(
+            `?ordering=-id&grade=${results[0].current_grade.id}`
+          )
+        );
+      });
+  }, []);
+
   const dispatch = useDispatch();
-  const { student } = useSelector((state) => state.students);
   const { user } = useSelector((state) => state.auth);
-  const { assignments, submittedAssignment } = useSelector(
+  const { assignmentFilter, submittedAssignment } = useSelector(
     (state) => state.teachers
   );
-
-  const data = assignments && reverseArray(assignments);
 
   const handleView = (row) => {
     navigate(`/student/assignment/upload/assignmentId=${row.original.id}`);
@@ -84,10 +92,10 @@ const StudentAssignmentViewTable = () => {
     []
   );
 
-  return assignments ? (
+  return assignmentFilter ? (
     <>
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        {data && <TableContainer columns={columns} data={data} />}
+        <TableContainer columns={columns} data={assignmentFilter} />
       </div>
     </>
   ) : (
