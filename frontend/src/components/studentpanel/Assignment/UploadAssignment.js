@@ -73,18 +73,20 @@ function UploadAssignment() {
                 <div className="info">
                   <h4>Class</h4>
                   <div className="content">
-                    {assignmentId.for_grade.slice(0, 2)}
+                    {assignmentId.for_grade.class_name}
                   </div>
                 </div>
                 <div className="info">
                   <h4>Section</h4>
                   <div className="content">
-                    {assignmentId.for_grade.slice(3)}
+                    {assignmentId.for_grade.section}
                   </div>
                 </div>
                 <div className="info">
                   <h4>Teacher</h4>
-                  <div className="content">{assignmentId.created_by}</div>
+                  <div className="content">
+                    {assignmentId.created_by.username}
+                  </div>
                 </div>
               </div>
               <div className="assignment_right">

@@ -16,15 +16,15 @@ function NavBar({ onClickHandler, username, show, image, name }) {
 
   const [showDropDownNotification, setDropDownNotification] = useState(false);
 
-  const adminnotices = useSelector((state) => state.admins);
-  const teachernotices = useSelector((state) => state.teachers);
+  const adminInitialState = useSelector((state) => state.admins);
+  const teacherInitialState = useSelector((state) => state.teachers);
 
   return (
     <>
       {/* For showing announcement info card  */}
       {name === "student"
-        ? teachernotices.isOpen && <AnnouncementCard name="student" />
-        : adminnotices.isOpen && <AnnouncementCard />}
+        ? teacherInitialState.isOpen && <AnnouncementCard name="student" />
+        : adminInitialState.isOpen && <AnnouncementCard />}
 
       <div className={show ? "navigation" : "navigation close"}>
         <div className="navbar">
@@ -45,7 +45,7 @@ function NavBar({ onClickHandler, username, show, image, name }) {
                   setDropDownNotification(!showDropDownNotification);
                   dispatch(OpenNotification());
                 }}>
-                {!adminnotices.showNewNotification ? (
+                {!adminInitialState.showNewNotification ? (
                   <VscIcons.VscBell className="notification__icon" />
                 ) : (
                   <VscIcons.VscBellDot className="notification__icon" />

@@ -19,6 +19,9 @@ import {
   ADD_TEACHER_ASSIGNMENT,
   CHANGE_TEACHER_ASSIGNMENT,
   ADD_LECTURE_NOTES,
+  GET_LECTURE_NOTES_FILTER,
+  GET_TEACHER_ASSIGNMENT_FILTER,
+  GET_TEACHER_ANNOUNCEMENT_FILTER,
 } from "./../../actiontypes/teacher/teacherdatatype";
 
 export const TeacherDetail = () => {
@@ -160,6 +163,20 @@ export const GetLectureNotes = (id) => {
   };
 };
 
+export const GetLectureNotesFilter = (filter) => {
+  return function (dispatch) {
+    axiosInstance
+      .get(`/lecturenotes${filter}`)
+      .then(({ data: { results } }) => {
+        dispatch({
+          type: GET_LECTURE_NOTES_FILTER,
+          payload: results,
+        });
+      })
+      .catch((error) => console.log(error));
+  };
+};
+
 export const DeleteLectureNotes = (id, teacherId) => {
   return function (dispatch) {
     axiosInstance
@@ -189,6 +206,22 @@ export const GetTeacherGivenAssignment = (username) => {
       .then(({ data: { results } }) => {
         dispatch({
           type: GET_TEACHER_GIVEN_ASSIGNMENT,
+          payload: results,
+        });
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
+  };
+};
+
+export const GetTeacherAssignmentFilter = (filter) => {
+  return function (dispatch) {
+    axiosInstance
+      .get(`/givenassignments${filter}`)
+      .then(({ data: { results } }) => {
+        dispatch({
+          type: GET_TEACHER_ASSIGNMENT_FILTER,
           payload: results,
         });
       })
@@ -303,6 +336,20 @@ export const GetTeacherAnnouncement = (username) => {
           .catch((err) => {
             dispatch(returnErrors(err.response.data, err.response.status));
           });
+  };
+};
+
+export const GetTeacherFilterAnnouncement = (filter) => {
+  return function (dispatch) {
+    axiosInstance
+      .get(`/teachernotices?${filter}`)
+      .then(({ data: { results } }) => {
+        dispatch({
+          type: GET_TEACHER_ANNOUNCEMENT_FILTER,
+          payload: results,
+        });
+      })
+      .catch((error) => console.log(error));
   };
 };
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import InnerHeader from "../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
 import * as FaIcons from "react-icons/fa";
@@ -6,78 +6,107 @@ import CardData from "../common/DashboardCardData";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { GetClass } from "../../redux/actions/classactions";
 import Moment from "react-moment";
-import reverseArray from "../common/ReverseArray";
-import { GET_DETAILS } from "../../redux/actions/student/studentactions";
-import { GetTeacherAnnouncement } from "./../../redux/actions/teacher/teacheractions";
+import {
+  GetLectureNotesFilter,
+  GetTeacherAssignmentFilter,
+  GetTeacherFilterAnnouncement,
+} from "./../../redux/actions/teacher/teacheractions";
 import Loading from "../common/Loading";
-import { GetAdminAnnouncement } from "../../redux/actions/admin/announcementaction";
+import { GetAdminFilterAnnouncement } from "../../redux/actions/admin/announcementaction";
+import axiosInstance from "../../axios";
 
 function Dashboard() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(GetClass());
-    dispatch(GetAdminAnnouncement("all"));
-    dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
-    dispatch(GET_DETAILS("/teacher", "GET_TEACHER_DETAIL"));
-    dispatch(GetTeacherAnnouncement());
+    dispatch(GetAdminFilterAnnouncement("for=all"));
   }, [dispatch]);
 
-  const { teacherDetail, teachernotices } = useSelector(
-    (state) => state.teachers
-  );
-  const { student } = useSelector((state) => state.students);
+  const { teacherNoticesFilter, assignmentFilter, lectureNotesFilter } =
+    useSelector((state) => state.teachers);
+  const { adminfilternotices } = useSelector((state) => state.admins);
 
+  //For Attendance Percentage
   const { user } = useSelector((state) => state.auth);
+  const [attendance, setAttendance] = useState([]);
+  useEffect(() => {
+    axiosInstance
+      .get(`/student?user=${user.id}`)
+      .then(({ data: { results } }) => {
+        dispatch(
+          GetTeacherFilterAnnouncement(
+            `ordering=id&classname=${results[0].current_grade.id}`
+          )
+        );
+        dispatch(
+          GetTeacherAssignmentFilter(
+            `?ordering=-id&grade=${results[0].current_grade.id}`
+          )
+        );
+        dispatch(
+          GetLectureNotesFilter(
+            `?ordering=-id&grade=${results[0].current_grade.id}`
+          )
+        );
+        axiosInstance
+          .get(`/attendance?student=${results[0].id}`)
+          .then(({ data: { results } }) => {
+            setAttendance(results);
+          });
+      });
+  }, []);
 
-  const currentStudentDetail =
-    student && student.results.find((value) => (value.user.id = user.id));
+  let totalAbsent = 0;
+  let totalPresent = 0;
+  if (attendance) {
+    for (let i = 0; i < attendance.length; i++) {
+      attendance[i].attendance_status == "ABSENT"
+        ? totalAbsent++
+        : totalPresent++;
+    }
+  }
 
-  const teachernoticesReverse =
-    teachernotices &&
-    reverseArray(teachernotices).filter(
-      (value) =>
-        value.announcement_for_class.class_name ==
-          currentStudentDetail?.current_grade.class_name &&
-        value.announcement_for_class.section ==
-          currentStudentDetail?.current_grade.section
-    );
+  const totalPercentage = (
+    (totalPresent * 100) /
+    (totalAbsent + totalPresent)
+  ).toFixed(2);
 
-  return student ? (
+  const isBothNotices = adminfilternotices && teacherNoticesFilter;
+
+  return (
     <div>
       <InnerHeader icon={<MdIcons.MdDashboard />} name={"Dashboard"} />
       <div className="main-content">
         <div className="cardelement">
-          {student && (
+          {
             <CardData
-              number={student.length}
+              number={`${totalPercentage}%`}
               name={"Attendance"}
               icon={<FaIcons.FaUsers style={{ color: "#FFC36D" }} />}
             />
-          )}
+          }
 
-          {
+          {assignmentFilter && (
             <CardData
-              number={teacherDetail?.length}
+              number={assignmentFilter?.length}
               name={"Assignments"}
               icon={<FaIcons.FaUserSecret style={{ color: "#FF7676" }} />}
             />
-          }
-          {teachernotices && (
+          )}
+          {isBothNotices && (
             <CardData
-              number={teachernoticesReverse?.length}
+              number={teacherNoticesFilter?.length + adminfilternotices?.count}
               name={"Announcements"}
               icon={<FaIcons.FaBullhorn style={{ color: "#009DDC" }} />}
             />
           )}
-          {
+          {lectureNotesFilter && (
             <CardData
-              number={111}
+              number={lectureNotesFilter?.length}
               name={"Lecture Notes"}
               icon={<FaIcons.FaFile style={{ color: "#27AE60" }} />}
             />
-          }
+          )}
         </div>
         <div className="card-section">
           <div className="heading">
@@ -87,8 +116,8 @@ function Dashboard() {
             <span className="title">ANNOUNCEMENT</span>
           </div>
           <div className="content-section" style={{ paddingTop: 30 }}>
-            {teachernotices ? (
-              teachernoticesReverse.slice(0, 3).map((rowData, index) => {
+            {teacherNoticesFilter ? (
+              teacherNoticesFilter.slice(0, 3).map((rowData, index) => {
                 const dates = <Moment fromNow>{rowData.created_at}</Moment>;
                 return (
                   <div
@@ -141,8 +170,8 @@ function Dashboard() {
               <p>No data available</p>
             )}
 
-            {teachernotices ? (
-              teachernoticesReverse.length > 3 && (
+            {teacherNoticesFilter ? (
+              teacherNoticesFilter.length > 3 && (
                 <Link to="/student/announcements" className="btn-text">
                   <div className="morebutton">Load More</div>
                 </Link>
@@ -154,8 +183,6 @@ function Dashboard() {
         </div>
       </div>
     </div>
-  ) : (
-    <Loading />
   );
 }
 

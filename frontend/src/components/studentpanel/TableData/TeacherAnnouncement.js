@@ -13,7 +13,9 @@ const AnnouncementTeacher = () => {
       .get(`/student?user=${user.id}`)
       .then(({ data: { results } }) => {
         axiosInstance
-          .get(`/teachernotices?classname=${results[0].current_grade.id}`)
+          .get(
+            `/teachernotices?ordering=-id&classname=${results[0].current_grade.id}`
+          )
           .then(({ data: { results } }) => {
             setAnnouncements(results);
           });
@@ -86,7 +88,6 @@ const AnnouncementTeacher = () => {
 
   return (
     <>
-      {console.log(teachernotices)}
       <div>
         {teachernotices && (
           <TableContainer
