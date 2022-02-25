@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import NotificationMessage from "./NotificationMessage";
 import Moment from "react-moment";
 import { useDispatch, useSelector } from "react-redux";
-import reverseArray from "../ReverseArray";
 import { GET_DETAILS } from "./../../../redux/actions/student/studentactions";
 import {
   AdminAnnouncementById,
   GetAdminFilterAnnouncement,
   GetAdminNotices_forTeacher,
-  GetTeacherAnnouncement,
   TeacherAnnouncementById,
 } from "./../../../redux/actions/admin/announcementaction";
+import axiosInstance from "../../../axios";
+import { GetTeacherFilterAnnouncement } from "./../../../redux/actions/teacher/teacheractions";
 
 function NavBarNotification({ showDropDown, setDropDown, name }) {
   const dispatch = useDispatch();
@@ -18,8 +18,15 @@ function NavBarNotification({ showDropDown, setDropDown, name }) {
     if (name === "admin") {
       dispatch(GetAdminFilterAnnouncement("ordering=-id&for=all"));
     } else if (name === "student") {
-      dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
-      dispatch(GetTeacherAnnouncement("?ordering=-id"));
+      axiosInstance
+        .get(`/student?user=${user.id}`)
+        .then(({ data: { results } }) => {
+          dispatch(
+            GetTeacherFilterAnnouncement(
+              `ordering=id&classname=${results[0].current_grade.id}`
+            )
+          );
+        });
     } else dispatch(GetAdminNotices_forTeacher("ordering=-id"));
   }, [dispatch]);
 
@@ -29,35 +36,18 @@ function NavBarNotification({ showDropDown, setDropDown, name }) {
 
   const { adminfilternotices } = useSelector((state) => state.admins);
   const { teacherfilternotices } = useSelector((state) => state.admins);
-  const { teachernotices: teacherForStudent } = useSelector(
-    (state) => state.teachers
-  );
-  const { student } = useSelector((state) => state.students);
-
+  const { teacherNoticesFilter } = useSelector((state) => state.teachers);
   const { user } = useSelector((state) => state.auth);
-  const currentStudentDetail =
-    student && student.results.find((value) => (value.user.id = user.id));
 
   const adminnotices = adminfilternotices && adminfilternotices.results;
   const teachernotices = teacherfilternotices && teacherfilternotices.results;
-  const studentnotices = teacherForStudent && teacherForStudent.results;
-
-  const studentfilternotices =
-    studentnotices &&
-    studentnotices.filter(
-      (value) =>
-        value.announcement_for_class.class_name ==
-          currentStudentDetail?.current_grade.class_name &&
-        value.announcement_for_class.section ==
-          currentStudentDetail?.current_grade.section
-    );
 
   const notices =
     name === "admin"
       ? adminnotices
       : name === "teacher"
       ? teachernotices
-      : studentfilternotices;
+      : teacherNoticesFilter;
 
   const handleChange = (data) => {
     setDropDown(false);
