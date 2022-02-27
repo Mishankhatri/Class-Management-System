@@ -1,7 +1,8 @@
-from rest_framework  import viewsets,permissions,parsers,filters
+from rest_framework  import viewsets,permissions,parsers,filters,status
 from .permissions import *
 from core.models import Grade,Subject,Student,Parent,Teacher,AssignTeacherToSubjects,AdminAnnouncement,TeachersAnnouncement,GivenAssignments,SubmittedAssignments,LectureNotes,Attendance,TimeTable
 from .serializers import *
+from rest_framework.response import Response
 
 class GradeAPI(viewsets.ModelViewSet):
     serializer_class = GradeSerializer
@@ -542,7 +543,16 @@ class AttendanceAPI(viewsets.ModelViewSet):
         if teacher_id is not None:
             queryset = queryset.filter(teacher__id=teacher_id)
         return queryset
-        
+
+class BulkAttendanceAPI(viewsets.ViewSet):
+    
+    def create(self,request):
+        serializer = BulkAttendancePOSTSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'Success':'Attendance created'},status = status.HTTP_201_CREATED)
+        else:
+            return Response({'Error': 'Data must be of format:{"date":"DDDD-MM-DD","teacher":teacher_id,"subject":subject_id,"grade":grade_id,"students":[[student_id, "ABSENT"],[student_id, "PRESENT"]...]}'},status = status.HTTP_400_BAD_REQUEST)
 
 class TimeTableAPI(viewsets.ModelViewSet):
     serializer_class = TimeTableLISTSerializer

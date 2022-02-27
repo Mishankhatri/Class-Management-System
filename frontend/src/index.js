@@ -46,9 +46,9 @@ ReactDOM.render(
           <Route path="/*" element={<PrivateRoute navigate="/login" />} />
           <Route path={"/login"} element={<Login />} />
           <Route path={"/logout"} element={<Logout />} />
-          <Route path={"/register/admin/"} element={<Register />} />
-          <Route path={"/forget"} element={<ForgetPassword />} />
-          <Route path={"/set"} element={<SetPassword />} />
+          {/* <Route path={"/register/admin/"} element={<Register />} /> */}
+          <Route path={"/forgetpassword"} element={<ForgetPassword />} />
+          <Route path={"/setpassword/:uidb64/:token/"} element={<SetPassword />} />
         </Routes>
       </AlertProvider>
     </Provider>

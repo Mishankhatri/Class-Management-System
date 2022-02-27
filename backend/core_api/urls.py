@@ -1,4 +1,4 @@
-from .views import AdminAnnoucementAPI, AssignTeacherToSubjectsAPI, AttendanceAPI, GivenAssignmentsAPI, GradeAPI, LectureNotesAPI, ParentAPI, StudentAPI, StudentUserAPI, SubjectAPI, SubmittedAssignmentsAPI, TeacherAnnoucementAPI, TeacherAPI,TeacherUserAPI, TimeTableAPI
+from .views import AdminAnnoucementAPI, AssignTeacherToSubjectsAPI, AttendanceAPI, BulkAttendanceAPI, GivenAssignmentsAPI, GradeAPI, LectureNotesAPI, ParentAPI, StudentAPI, StudentUserAPI, SubjectAPI, SubmittedAssignmentsAPI, TeacherAnnoucementAPI, TeacherAPI,TeacherUserAPI, TimeTableAPI
 from rest_framework.routers import DefaultRouter
 
 app_name = 'core_api'
@@ -18,5 +18,6 @@ router.register('givenassignments', GivenAssignmentsAPI, basename='givenassignme
 router.register('submittedassignments', SubmittedAssignmentsAPI, basename='submittedassignments')
 router.register('lecturenotes', LectureNotesAPI, basename='lecturenotes')
 router.register('attendance', AttendanceAPI, basename='attendance')
+router.register('blukattendance', BulkAttendanceAPI, basename='bulkattendance')
 router.register('timetable', TimeTableAPI, basename='timetable')
 urlpatterns = router.urls

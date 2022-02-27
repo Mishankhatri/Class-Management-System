@@ -4,7 +4,7 @@ import Logo from "../assets/logo/Image_Logo.png";
 import CampusLogo from "../assets/logo/campusLogo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/actions/authactions";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import * as FiIcons from "react-icons/fi";
 
 function Login() {
@@ -84,13 +84,9 @@ function Login() {
               </div>
             </div>
             <div className="section">
-              <span className="section__remember">
-                <input type="checkbox" name="remember" id="remember" />
-                <label htmlFor="remember">Remember Me</label>
-              </span>
-              <a href="/#" className="links">
+            <Link to="/forgetpassword" className="links">
                 Forget Password?
-              </a>
+              </Link>
             </div>
             <button className="login__btn" onClick={handleSubmit}>
               Login
@@ -98,7 +94,7 @@ function Login() {
             <div className="account">
               <span>
                 Don't have an account?{" "}
-                <a href="/#" className="links">
+                <a href="mailto:classmanagementsystem2022@gmail.com" className="links">
                   Contact Us
                 </a>
               </span>

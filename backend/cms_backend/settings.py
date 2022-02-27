@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os 
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -98,12 +102,20 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cms',
-        'USER': 'root',
-        'PASSWORD': '123456789',
+        'NAME': 'testdb-cms',
+        'USER': 'cms_admin',
+        'PASSWORD': 'cmsdatabase',
         'HOST': 'localhost',
         'PORT': '3306',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'cms',
+    #     'USER': 'root',
+    #     'PASSWORD': '123456789',
+    #     'HOST': 'localhost',
+    #     'PORT': '3306',
+    # }
 }
 
 
@@ -163,6 +175,12 @@ MEDIA_URL= '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#Email Settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),

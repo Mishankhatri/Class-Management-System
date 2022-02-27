@@ -1,4 +1,5 @@
 from core.models import  Grade,Subject,Student,Parent,Teacher,AssignTeacherToSubjects,AdminAnnouncement,TeachersAnnouncement,GivenAssignments,SubmittedAssignments,LectureNotes,Attendance,TimeTable
+from datetime import date as datetime_date
 from rest_framework import serializers
 from users.serializers import CMS_UsersSerializer
 from django.contrib.auth import get_user_model
@@ -117,7 +118,7 @@ class AssignTeacherToSubjectsPOSTSerializer(serializers.ModelSerializer):
         teacher = data.get('teacher')
         subject = data.get('subject')
         grade = data.get('grade')
-        if self.Meta.model.objects.filter(teacher = teacher).filter(subject=subject).filter(grade=grade):
+        if self.Meta.model.objects.filter(teacher = teacher).filter(subject=subject).filter(grade=grade).exists():
             raise serializers.ValidationError('Data already exists.')
         return data
     
@@ -202,10 +203,47 @@ class AttendancePOSTSerializer(serializers.ModelSerializer):
         subject = data.get('subject')
         grade = data.get('grade')
         date = data.get('date')
-        if self.Meta.model.objects.filter(student=student).filter(teacher = teacher).filter(subject=subject).filter(grade=grade).filter(date=date):
+        if date > datetime_date.today():
+            raise serializers.ValidationError('Invalid date: Future date is not valid.')
+        if self.Meta.model.objects.filter(student=student).filter(teacher = teacher).filter(subject=subject).filter(grade=grade).filter(date=date).exists():
             raise serializers.ValidationError('Data already exists.')
         return data
 
+class BulkAttendancePOSTSerializer(serializers.Serializer):
+    teacher = serializers.PrimaryKeyRelatedField(queryset=Teacher.objects.all())
+    grade = serializers.PrimaryKeyRelatedField(queryset=Grade.objects.all())
+    subject = serializers.PrimaryKeyRelatedField(queryset=Subject.objects.all())
+    date = serializers.DateField()
+    students = serializers.ListField(child = serializers.ListField(),write_only=True)
+    class Meta:
+        fields = ['teacher,grade,subject,date,students']
+    # example of data from frontend
+    # {
+    # 	"date": "2024-04-02",
+    # 	"teacher": 2,
+    # 	"subject": 1,
+    # 	"grade": 1,
+    # 	"students": [
+    # 		[3, "ABSENT"],
+    # 		[5, "PRESENT"]
+    # 	]
+    # }
+    # 'Data must be of format:{"date":"DDDD-MM-DD","teacher":teacher_id,"subject":subject_id,"grade":grade_id,"students":[[student_id, "ABSENT"],[student_id, "PRESENT"]...]}'
+    def save(self):
+        teacher = self.validated_data.get('teacher')
+        grade = self.validated_data.get('grade')
+        subject = self.validated_data.get('subject')
+        date = self.validated_data.get('date')
+        if date > datetime_date.today():
+            raise serializers.ValidationError('Future date is not valid in attendances.')
+        students_list = self.validated_data.get('students')
+        for std in students_list:
+            std_id,attendance_status = std
+            student = Student.objects.get(id = int(std_id))
+            if Attendance.objects.filter(teacher=teacher).filter(grade=grade).filter(subject=subject).filter(student=student).filter(date=date).exists():
+                raise serializers.ValidationError('Data already exits.')
+            else:
+                Attendance.objects.get_or_create(teacher=teacher,grade=grade,subject=subject,student=student,attendance_status=attendance_status,date=date)
 class TimeTableLISTSerializer(serializers.ModelSerializer):
     assigned = AssignTeacherToSubjectsLISTSerializer(read_only=True)
     class Meta:
@@ -222,6 +260,6 @@ class TimeTablePOSTSerializer(serializers.ModelSerializer):
         startTime = data.get('startTime')
         endTime = data.get('endTime')
         day = data.get('day')
-        if self.Meta.model.objects.filter(assigned = assigned).filter(day=day).filter(startTime=startTime).filter(endTime=endTime):
+        if self.Meta.model.objects.filter(assigned = assigned).filter(day=day).filter(startTime=startTime).filter(endTime=endTime).exists():
             raise serializers.ValidationError('Data already exists.')
         return data

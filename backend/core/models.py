@@ -1,4 +1,6 @@
+from datetime import date as datetime_date
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 CMS_Users = settings.AUTH_USER_MODEL
@@ -171,16 +173,28 @@ class LectureNotes(models.Model):
     def __str__(self):
             return '%s: %s,%s,%s' % (self.grade,self.title,self.subject,self.teacher)
 
+def is_future_date(value):
+    if value > datetime_date.today():
+        raise ValidationError('Future date is not valid in attendances.')
 class Attendance(models.Model):
     student= models.ForeignKey(Student,related_name='attendances',on_delete=models.CASCADE)
     teacher= models.ForeignKey(Teacher,related_name='attendances_teachers',on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject,related_name='attendance_subject',on_delete=models.CASCADE)
-    date = models.DateField()
+    date = models.DateField(validators=[is_future_date])
     grade = models.ForeignKey(Grade,on_delete=models.CASCADE,related_name='attendance_grade')
     attendance_status = models.CharField(max_length=55,choices=attendance_choices,default='ABSENT',null=False,blank=False)
     
     def __str__(self):
         return '%s,%s,%s:%s' % (self.student,self.subject,self.date,self.attendance_status)
+
+    def clean(self):
+        student = self.student
+        teacher = self.teacher
+        subject = self.subject
+        grade = self.grade
+        date = self.date
+        if self.objects.filter(student=student).filter(teacher = teacher).filter(subject=subject).filter(grade=grade).filter(date=date).exists():
+            raise ValidationError('Data already exists.')
 
 class TimeTable(models.Model):
     day = models.CharField(max_length=255,choices=day_choices,null=False,blank=False)
@@ -190,3 +204,13 @@ class TimeTable(models.Model):
 
     def __str__(self):
         return '%s,%s,%s:%s' % (self.day,self.startTime,self.endTime,self.assigned)
+
+    def clean(self):
+        assigned = self.assigned
+        startTime = self.startTime
+        endTime = self.endTime
+        day = self.day
+        if self.objects.filter(assigned = assigned).filter(day=day).filter(startTime=startTime).filter(endTime=endTime).exists():
+            raise ValidationError('Data already exists.')
+        if startTime > endTime:
+            raise ValidationError('startTime cannot be after endTime.')
