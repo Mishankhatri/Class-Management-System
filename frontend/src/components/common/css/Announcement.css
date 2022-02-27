@@ -40,8 +40,8 @@
   font-weight: "bold";
 }
 
-.announcementtable .profilephoto img {
+.announcementtable .profilephoto img,
+.profilephoto img {
   width: 60px;
-  /* height: 65px; */
   border-radius: 4px;
 }

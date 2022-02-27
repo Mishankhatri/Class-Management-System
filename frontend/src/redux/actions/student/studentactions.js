@@ -195,7 +195,7 @@ export const ChangeStudentParentDetail = (s_id, p_id, postdata) => {
   };
 };
 
-export const AddStudentSubmitAssignment = (postData) => {
+export const AddStudentSubmitAssignment = (postData, user, id) => {
   return function (dispatch) {
     const body = postData;
     axiosInstance
@@ -209,6 +209,9 @@ export const AddStudentSubmitAssignment = (postData) => {
         dispatch(
           createMessage({ addAssignment: "Assignment Uploaded Successfully" })
         );
+        dispatch(
+          GetSubmittedAssignmentFilter(`student=${user.id}&assignment=${id}`)
+        );
       })
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));
@@ -216,7 +219,7 @@ export const AddStudentSubmitAssignment = (postData) => {
   };
 };
 
-export const ChangeSubmittedAssignment = (postData, id, userId) => {
+export const ChangeSubmittedAssignment = (postData, id, userId, assId) => {
   return function (dispatch) {
     const body = postData;
     axiosInstance
@@ -228,12 +231,12 @@ export const ChangeSubmittedAssignment = (postData, id, userId) => {
       })
       .then(() => {
         dispatch(
-          GetSubmittedAssignmentFilter(`?student=${userId}&assignment=${id}`)
-        );
-        dispatch(
           createMessage({
             addAssignment: "Assignment File Re-Submitted Successfully",
           })
+        );
+        dispatch(
+          GetSubmittedAssignmentFilter(`student=${userId}&assignment=${assId}`)
         );
       })
       .catch((err) => {

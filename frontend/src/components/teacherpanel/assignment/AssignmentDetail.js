@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   AssignmentGivenById,
   ChangeTeacherAssignment,
-  GetStudentSubmittedAssignment,
 } from "./../../../redux/actions/teacher/teacheractions";
 import Loading from "../../common/Loading";
 import moment from "moment";
@@ -16,22 +15,35 @@ import AssignmentEditModal from "./AssignmentEditModal";
 import { useForm, Controller } from "react-hook-form";
 import { createMessage } from "../../../redux/actions/alertactions";
 import axiosInstance from "../../../axios";
+import { GetPaginatedFilterPromise } from "../../GetOptions";
+import AssignmentPendingList from "./AssignmentPendingList";
 
 function AssignmentDetail() {
   const [click, setClick] = useState(false);
+  const [submitted, setSubmitted] = useState(true);
   const [remarkClick, setRemarkClick] = useState(false);
+  const [assignmentSubmitted, setAssignment] = useState([]);
   const { id } = useParams();
 
   const { handleSubmit, control, register } = useForm();
 
   const dispatch = useDispatch();
-  const { assignmentId, submittedAssignment } = useSelector(
-    (state) => state.teachers
-  );
+
+  const { assignmentId } = useSelector((state) => state.teachers);
 
   useEffect(() => {
     dispatch(AssignmentGivenById(id));
-    dispatch(GetStudentSubmittedAssignment());
+  }, []);
+
+  useEffect(() => {
+    const getOptions = async () => {
+      const data = await GetPaginatedFilterPromise(
+        `submittedassignments/?assignment=${id}`
+      );
+      setAssignment(data);
+    };
+
+    getOptions();
   }, []);
 
   const onSubmit = (data) => {
@@ -155,7 +167,7 @@ function AssignmentDetail() {
                 <div className="info">
                   <h4>Time Due</h4>
                   <div className="content">
-                    {moment(assignmentId.time_due, "HH").format("LT")}
+                    {moment(assignmentId.time_due, "HH:mm").format("LT")}
                   </div>
                 </div>
                 <div className="info">
@@ -181,17 +193,45 @@ function AssignmentDetail() {
             </div>
           </div>
         </div>
+
         {/* <button className="btn-edit" onClick={() => setClick(!click)}>
           Edit
         </button> */}
 
         <div className="card-section">
-          <h2 className="heading">Student Performance</h2>
+          <h2 className="heading">
+            Student Performance
+            <span style={{ float: "right" }}>
+              <button
+                className={`btn-custom ${submitted ? "btn-active" : ""}`}
+                onClick={() => {
+                  setSubmitted(true);
+                }}>
+                Submitted
+              </button>
+              |
+              <button
+                className={`btn-custom ${!submitted ? "btn-active" : ""}`}
+                onClick={() => {
+                  setSubmitted(false);
+                }}>
+                Pending
+              </button>
+            </span>
+          </h2>
           <div className="content-section">
-            <AssignmentStudentTable
-              remarkClick={remarkClick}
-              setRemarkClick={setRemarkClick}
-            />
+            {submitted ? (
+              <AssignmentStudentTable
+                remarkClick={remarkClick}
+                setRemarkClick={setRemarkClick}
+                data={assignmentSubmitted}
+              />
+            ) : (
+              <AssignmentPendingList
+                data={assignmentSubmitted}
+                assignment={assignmentId}
+              />
+            )}
           </div>
         </div>
       </div>

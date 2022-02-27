@@ -88,6 +88,7 @@ class StudentAPI(viewsets.ModelViewSet):
         last_name = self.request.query_params.get('last_name')
         email = self.request.query_params.get('email')
         address = self.request.query_params.get('address')
+        grade_id = self.request.query_params.get('grade')
         srn = self.request.query_params.get('SRN')
         gender = self.request.query_params.get('gender')
         if user_id is not None:
@@ -106,6 +107,8 @@ class StudentAPI(viewsets.ModelViewSet):
             queryset = queryset.filter(SRN=srn)
         if gender is not None:
             queryset = queryset.filter(gender=gender)
+        if grade_id is not None:
+            queryset = queryset.filter(current_grade__id=grade_id)
         return queryset
     
 class StudentUserAPI(viewsets.ModelViewSet):
@@ -137,6 +140,7 @@ class StudentUserAPI(viewsets.ModelViewSet):
         last_name = self.request.query_params.get('last_name')
         email = self.request.query_params.get('email')
         address = self.request.query_params.get('address')
+        grade_id = self.request.query_params.get('grade')
         srn = self.request.query_params.get('SRN')
         gender = self.request.query_params.get('gender')
         if user_id is not None:
@@ -155,6 +159,8 @@ class StudentUserAPI(viewsets.ModelViewSet):
             queryset = queryset.filter(SRN=srn)
         if gender is not None:
             queryset = queryset.filter(gender=gender)
+        if grade_id is not None:
+            queryset = queryset.filter(current_grade__id=grade_id)
         return queryset
     
 class ParentAPI(viewsets.ModelViewSet):

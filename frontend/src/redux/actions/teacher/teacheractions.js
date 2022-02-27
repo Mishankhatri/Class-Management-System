@@ -272,7 +272,7 @@ export const ChangeTeacherAssignment = (postdata, id) => {
   return function (dispatch) {
     const body = postdata;
     axiosInstance
-      .patch(`/givenassignments/${id}`, body)
+      .patch(`/givenassignments/${id}/`, body)
       .then(({ data }) => {
         dispatch({
           type: CHANGE_TEACHER_ASSIGNMENT,
