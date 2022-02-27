@@ -1,101 +1,45 @@
-import axios from "axios";
 import React, { useMemo } from "react";
-import { SelectColumnFilter } from "../../common/Table/filters";
 import TableContainer from "./../../common/Table/TableContainer";
+import moment from "moment";
 
-const AssignmentStudentTable = ({ remarkClick, setRemarkClick }) => {
-  const data = [
-    {
-      roll: 1,
-      name: "Prabin",
-      status: "Submitted",
-      date: "2022-12-02",
-      time: "12:20",
-      id: 1,
-    },
-    {
-      roll: 2,
-      name: "Anu",
-      status: "Submitted",
-      date: "2022-12-02",
-      time: "12:20",
-      id: 2,
-    },
-    {
-      roll: 3,
-      name: "Mishan",
-      status: "Pending",
-      date: "2022-12-02",
-      time: "12:20",
-      id: 3,
-    },
-    {
-      roll: 4,
-      name: "Paras",
-      status: "Pending",
-      date: "2022-12-02",
-      time: "12:20",
-      id: 4,
-    },
-    {
-      roll: 5,
-      name: "Kushal",
-      status: "Submitted",
-      date: "2022-12-02",
-      time: "12:20",
-      id: 5,
-    },
-    {
-      roll: 6,
-      name: "Pranu",
-      status: "Pending",
-      date: "2022-12-02",
-      time: "12:20",
-      id: 6,
-    },
-    {
-      roll: 7,
-      name: "Pranisha",
-      status: "Submitted",
-      date: "2022-12-02",
-      time: "12:20",
-      id: 7,
-    },
-  ];
-
-  const handleView = (row) => {
-    console.log(row.original);
-  };
-
+const AssignmentStudentTable = ({ remarkClick, setRemarkClick, data }) => {
   const columns = useMemo(
     () => [
       {
-        Header: "Roll No",
-        accessor: "roll",
-        SearchAble: true,
+        Header: "Photo",
+        accessor: (d) => {
+          return (
+            <div className="profilephoto">
+              <img src={d.student.profile_image} alt="profile" />
+            </div>
+          );
+        },
+        SearchAble: false,
       },
       {
         Header: "Student Name",
-        accessor: "name",
+        accessor: "student.username",
         SearchAble: true,
       },
-
       {
-        Header: "Status",
-        accessor: "status",
+        Header: "Email",
+        accessor: "student.email",
         SearchAble: true,
-        Filter: SelectColumnFilter,
-        filter: "includes",
       },
 
       {
         Header: "Submitted Date",
-        accessor: "date",
+        accessor: (d) => {
+          return d.created_at.slice(0, 10);
+        },
         SearchAble: false,
       },
       {
         Header: "Submitted Time",
-        accessor: "time",
+        accessor: (d) => {
+          const time = moment(d.created_at.slice(11, 19), "HH:mm").format("LT");
+          return time;
+        },
         SearchAble: false,
       },
       {
@@ -103,33 +47,33 @@ const AssignmentStudentTable = ({ remarkClick, setRemarkClick }) => {
         SearchAble: false,
         Cell: ({ row }) => {
           return (
-            row.original.status === "Submitted" && (
-              <button
-                className="btn-custom btn-1 btn-primary"
-                onClick={() => handleView(row)}>
-                View
-              </button>
-            )
+            <a
+              href={row.original.submitted_files}
+              target="_blank"
+              className="btn-primary btn-custom"
+              style={{ textDecoration: "none" }}>
+              View
+            </a>
           );
         },
       },
-      {
-        Header: "Remark",
-        SearchAble: false,
-        className: "col_remark",
-        Cell: ({ row }) => {
-          return (
-            <>
-              <button
-                className="btn-custom btn-danger"
-                style={{ backgroundColor: "teal" }}
-                onClick={() => setRemarkClick(!remarkClick)}>
-                Remark
-              </button>
-            </>
-          );
-        },
-      },
+      // {
+      //   Header: "Remark",
+      //   SearchAble: false,
+      //   className: "col_remark",
+      //   Cell: ({ row }) => {
+      //     return (
+      //       <>
+      //         <button
+      //           className="btn-custom btn-danger"
+      //           style={{ backgroundColor: "teal" }}
+      //           onClick={() => setRemarkClick(!remarkClick)}>
+      //           Remark
+      //         </button>
+      //       </>
+      //     );
+      //   },
+      // },
     ],
     []
   );

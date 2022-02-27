@@ -92,23 +92,41 @@ function Dashboard() {
             />
           )}
 
-          {assignmentFilter && (
+          {assignmentFilter ? (
             <CardData
               number={assignmentFilter?.length}
               name={"Assignments"}
               icon={<MdIcons.MdHomeWork style={{ color: "#FF7676" }} />}
             />
+          ) : (
+            <CardData
+              number={"No Data"}
+              name={"Assignments"}
+              icon={<MdIcons.MdHomeWork style={{ color: "#FF7676" }} />}
+            />
           )}
-          {isBothNotices && (
+          {isBothNotices ? (
             <CardData
               number={teacherNoticesFilter?.length + adminfilternotices?.count}
               name={"Announcements"}
               icon={<FaIcons.FaBullhorn style={{ color: "#009DDC" }} />}
             />
+          ) : (
+            <CardData
+              number={"No data"}
+              name={"Announcements"}
+              icon={<FaIcons.FaBullhorn style={{ color: "#009DDC" }} />}
+            />
           )}
-          {lectureNotesFilter && (
+          {lectureNotesFilter ? (
             <CardData
               number={lectureNotesFilter?.length}
+              name={"Lecture Notes"}
+              icon={<FaIcons.FaFile style={{ color: "#27AE60" }} />}
+            />
+          ) : (
+            <CardData
+              number={"No Data"}
               name={"Lecture Notes"}
               icon={<FaIcons.FaFile style={{ color: "#27AE60" }} />}
             />
@@ -176,14 +194,10 @@ function Dashboard() {
               <p>No data available</p>
             )}
 
-            {teacherNoticesFilter ? (
-              teacherNoticesFilter.length > 3 && (
-                <Link to="/student/announcements" className="btn-text">
-                  <div className="morebutton">Load More</div>
-                </Link>
-              )
-            ) : (
-              <Loading />
+            {teacherNoticesFilter && teacherNoticesFilter.length > 3 && (
+              <Link to="/student/announcements" className="btn-text">
+                <div className="morebutton">Load More</div>
+              </Link>
             )}
           </div>
         </div>

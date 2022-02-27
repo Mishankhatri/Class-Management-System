@@ -6,7 +6,6 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./forms/Login";
 import Logout from "./forms/Logout";
-import Register from "./forms/Register";
 import "./forms/Table.css";
 import PrivateRoute from "./components/common/PrivateRoute";
 import store from "./redux/store";
@@ -48,7 +47,10 @@ ReactDOM.render(
           <Route path={"/logout"} element={<Logout />} />
           {/* <Route path={"/register/admin/"} element={<Register />} /> */}
           <Route path={"/forgetpassword"} element={<ForgetPassword />} />
-          <Route path={"/setpassword/:uidb64/:token/"} element={<SetPassword />} />
+          <Route
+            path={"/setpassword/:uidb64/:token/"}
+            element={<SetPassword />}
+          />
         </Routes>
       </AlertProvider>
     </Provider>

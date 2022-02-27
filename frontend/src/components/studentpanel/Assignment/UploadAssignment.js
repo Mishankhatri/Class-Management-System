@@ -26,7 +26,7 @@ function UploadAssignment() {
   useEffect(() => {
     dispatch(AssignmentGivenById(id));
     dispatch(
-      GetSubmittedAssignmentFilter(`?student=${user.id}&assignment=${id}`)
+      GetSubmittedAssignmentFilter(`student=${user.id}&assignment=${id}`)
     );
   }, []);
 
@@ -47,8 +47,7 @@ function UploadAssignment() {
     postData.append("submitted_files", data.assigmentFile);
     postData.append("assignment", id);
     postData.append("student", user.id);
-    dispatch(AddStudentSubmitAssignment(postData));
-
+    dispatch(AddStudentSubmitAssignment(postData, user, id));
     e.target.reset();
   };
 
@@ -59,7 +58,8 @@ function UploadAssignment() {
       ChangeSubmittedAssignment(
         postData,
         filterStudentAssignment.results[0].id,
-        user.id
+        user.id,
+        id
       )
     );
     e.target.reset();
