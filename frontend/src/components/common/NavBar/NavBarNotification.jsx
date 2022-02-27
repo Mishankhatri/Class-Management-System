@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import NotificationMessage from "./NotificationMessage";
 import Moment from "react-moment";
 import { useDispatch, useSelector } from "react-redux";
-import { GET_DETAILS } from "./../../../redux/actions/student/studentactions";
 import {
   AdminAnnouncementById,
   GetAdminFilterAnnouncement,
@@ -23,7 +22,7 @@ function NavBarNotification({ showDropDown, setDropDown, name }) {
         .then(({ data: { results } }) => {
           dispatch(
             GetTeacherFilterAnnouncement(
-              `ordering=id&classname=${results[0].current_grade.id}`
+              `ordering=-id&classname=${results[0].current_grade.id}`
             )
           );
         });

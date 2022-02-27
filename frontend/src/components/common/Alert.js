@@ -72,6 +72,7 @@ export class Alerts extends Component {
       if (message?.accountCreate) alert.success(`${message.accountCreate}`);
       if (message?.assignmentAdded) alert.success(`${message.assignmentAdded}`);
       if (message?.addLectureNotes) alert.success(`${message.addLectureNotes}`);
+      if (message?.addAssignment) alert.success(`${message.addAssignment}`);
 
       //Error
       if (message?.allfields) alert.error(`${message.allfields}`);

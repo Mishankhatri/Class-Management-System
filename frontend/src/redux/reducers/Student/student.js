@@ -1,6 +1,9 @@
 import {
   UPDATE_STUDENT_PARENT_DETAIL,
   UPDATE_STUDENT_ACADEMIC_DETAIL,
+  SUBMIT_ASSIGNMENTS,
+  CHANGE_SUBMIT_ASSIGNMENTS,
+  GET_STUDENT_ASSIGNMENT_FILTER,
 } from "../../actiontypes/student/studentdatatype";
 
 import {
@@ -50,6 +53,9 @@ export default function studentReducer(state = initialState, action) {
     case GET_STUDENT_USERID:
       return { ...state, studentUserID: action.payload };
 
+    case GET_STUDENT_ASSIGNMENT_FILTER:
+      return { ...state, filterStudentAssignment: action.payload };
+
     case DELETE_STUDENT:
     case DELETE_ATTENDANCE:
     case ADD_STUDENT_DETAIL:
@@ -58,6 +64,8 @@ export default function studentReducer(state = initialState, action) {
     case UPDATE_STUDENT_DETAIL:
     case UPDATE_STUDENT_ACADEMIC_DETAIL:
     case UPDATE_STUDENT_PARENT_DETAIL:
+    case SUBMIT_ASSIGNMENTS:
+    case CHANGE_SUBMIT_ASSIGNMENTS:
       return { ...state };
 
     default:

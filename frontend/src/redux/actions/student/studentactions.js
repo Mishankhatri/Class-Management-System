@@ -6,6 +6,9 @@ import {
   DELETE_STUDENT,
   GET_STUDENT_USERID,
   UPDATE_STUDENT_PARENT_DETAIL,
+  SUBMIT_ASSIGNMENTS,
+  CHANGE_SUBMIT_ASSIGNMENTS,
+  GET_STUDENT_ASSIGNMENT_FILTER,
 } from "../../actiontypes/student/studentdatatype";
 
 export const GET_DETAILS = (url, type, filter) => {
@@ -185,6 +188,69 @@ export const ChangeStudentParentDetail = (s_id, p_id, postdata) => {
             parentChange: "Student Parent Detail Changed Succesfully",
           })
         );
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
+  };
+};
+
+export const AddStudentSubmitAssignment = (postData) => {
+  return function (dispatch) {
+    const body = postData;
+    axiosInstance
+      .post(`submittedassignments/`, body)
+      .then(() => {
+        dispatch({
+          type: SUBMIT_ASSIGNMENTS,
+        });
+      })
+      .then(() => {
+        dispatch(
+          createMessage({ addAssignment: "Assignment Uploaded Successfully" })
+        );
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
+  };
+};
+
+export const ChangeSubmittedAssignment = (postData, id, userId) => {
+  return function (dispatch) {
+    const body = postData;
+    axiosInstance
+      .patch(`submittedassignments/${id}/`, body)
+      .then(() => {
+        dispatch({
+          type: CHANGE_SUBMIT_ASSIGNMENTS,
+        });
+      })
+      .then(() => {
+        dispatch(
+          GetSubmittedAssignmentFilter(`?student=${userId}&assignment=${id}`)
+        );
+        dispatch(
+          createMessage({
+            addAssignment: "Assignment File Re-Submitted Successfully",
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
+  };
+};
+
+export const GetSubmittedAssignmentFilter = (filter) => {
+  return function (dispatch) {
+    axiosInstance
+      .get(`/submittedassignments?${filter}`)
+      .then(({ data }) => {
+        dispatch({
+          type: GET_STUDENT_ASSIGNMENT_FILTER,
+          payload: data,
+        });
       })
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));

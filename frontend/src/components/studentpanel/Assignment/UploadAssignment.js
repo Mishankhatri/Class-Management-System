@@ -2,60 +2,71 @@ import React, { useEffect, useState } from "react";
 import InnerHeader from "./../../common/InnerHeader";
 import * as MdIcons from "react-icons/md";
 import { useParams } from "react-router-dom";
-import ChangeInput from "./../../common/Modal/ChangeInput";
-import { AssignmentInputValue } from "./../../values/TeacherPanel/AssignmentInputValue";
+
 import { Controller, useForm } from "react-hook-form";
 import { FileInput } from "../../common/InputField/FileInput";
 import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import { AssignmentGivenById } from "../../../redux/actions/teacher/teacheractions";
 import Loading from "../../common/Loading";
+import {
+  AddStudentSubmitAssignment,
+  ChangeSubmittedAssignment,
+  GetSubmittedAssignmentFilter,
+} from "../../../redux/actions/student/studentactions";
 
 function UploadAssignment() {
-  const [click, setClick] = useState(false);
   const { handleSubmit, control } = useForm();
+  const { handleSubmit: reHandleSubmit, control: reControl } = useForm();
   const { id } = useParams();
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  let submittedFiles = [];
 
   useEffect(() => {
     dispatch(AssignmentGivenById(id));
+    dispatch(
+      GetSubmittedAssignmentFilter(`?student=${user.id}&assignment=${id}`)
+    );
   }, []);
 
-  const { assignmentId, submittedAssignment } = useSelector(
-    (state) => state.teachers
-  );
+  const { assignmentId } = useSelector((state) => state.teachers);
+  const { filterStudentAssignment } = useSelector((state) => state.students);
 
   const date =
     assignmentId && assignmentId.date_due + "T" + assignmentId.time_due;
 
   const isOnTime = assignmentId && moment(date).isSameOrAfter(new Date());
 
-  const onSubmit = (data) => {
-    console.log(data);
-    setClick(false);
+  if (filterStudentAssignment && filterStudentAssignment.count !== 0) {
+    submittedFiles = filterStudentAssignment.results[0];
+  }
+
+  const onSubmitAssignment = (data, e) => {
+    const postData = new FormData();
+    postData.append("submitted_files", data.assigmentFile);
+    postData.append("assignment", id);
+    postData.append("student", user.id);
+    dispatch(AddStudentSubmitAssignment(postData));
+
+    e.target.reset();
   };
 
-  const onSubmitAssignment = (data) => {
-    console.log(data);
+  const reSubmitAssignment = (data, e) => {
+    const postData = new FormData();
+    postData.append("submitted_files", data.reSubmitFile);
+    dispatch(
+      ChangeSubmittedAssignment(
+        postData,
+        filterStudentAssignment.results[0].id,
+        user.id
+      )
+    );
+    e.target.reset();
   };
 
   return assignmentId ? (
     <React.Fragment>
-      {click && (
-        <ChangeInput
-          onSubmit={onSubmit}
-          valueArray={AssignmentInputValue()}
-          click={click}
-          setClick={setClick}
-          heading={"Edit Assignment"}
-          isCustom2={true}
-          hasFile={true}
-          fileName={"assignmentFile"}
-          fileTitle={"Upload File"}
-          fileIcon={<MdIcons.MdFileUpload className="mid-icon" />}
-        />
-      )}
-
       <InnerHeader
         icon={<MdIcons.MdUploadFile />}
         name={`Assignments No: ${id}`}
@@ -123,41 +134,93 @@ function UploadAssignment() {
             </div>
             <div className="instruction_info">
               <h4>Upload Assignment</h4>
-              {isOnTime ? (
-                <form onSubmit={handleSubmit(onSubmitAssignment)}>
-                  <Controller
-                    name={"assigmentFile"}
-                    control={control}
-                    defaultValue=""
-                    render={(props) => (
-                      <FileInput
-                        name={"assigmentFile"}
-                        title={"Upload File"}
-                        icon={<MdIcons.MdFileCopy className="mid-icon" />}
-                        isRequired={true}
-                        isImageFile={false}
-                        onChange={(event) =>
-                          props.field.onChange(event.target.files)
-                        }
-                      />
-                    )}
-                  />
-                  <button className="btn-edit" style={{ marginTop: 20 }}>
-                    Submit
-                  </button>
-                </form>
+
+              {filterStudentAssignment &&
+              filterStudentAssignment.count === 0 ? (
+                isOnTime ? (
+                  <form onSubmit={handleSubmit(onSubmitAssignment)}>
+                    <Controller
+                      name={"assigmentFile"}
+                      control={control}
+                      defaultValue=""
+                      render={(props) => (
+                        <FileInput
+                          name={"assigmentFile"}
+                          title={"Upload File"}
+                          icon={<MdIcons.MdFileCopy className="mid-icon" />}
+                          isRequired={true}
+                          isImageFile={false}
+                          onChange={(event) =>
+                            props.field.onChange(event.target.files[0])
+                          }
+                        />
+                      )}
+                    />
+                    <button className="btn-edit" style={{ marginTop: 20 }}>
+                      Submit
+                    </button>
+                  </form>
+                ) : (
+                  <h5
+                    style={{
+                      marginTop: 20,
+                      color: "#a94442",
+                      backgroundColor: "#f2dede",
+                      padding: 10,
+                      borderRadius: 4,
+                    }}>
+                    Submitted Date has already Passed. Please consult respective
+                    teacher.
+                  </h5>
+                )
               ) : (
-                <h5
-                  style={{
-                    marginTop: 20,
-                    color: "#a94442",
-                    backgroundColor: "#f2dede",
-                    padding: 10,
-                    borderRadius: 4,
-                  }}>
-                  Submitted Date has already Passed. Please consult respective
-                  teacher.
-                </h5>
+                <>
+                  <h5 className="message">
+                    Assignment has been submitted already. Wanna change
+                    submitted files?
+                    <a
+                      href={submittedFiles.submitted_files}
+                      target="_blank"
+                      style={{ marginLeft: 10, textDecoration: "none" }}
+                      className="btn-custom btn-primary">
+                      View Submitted Files
+                    </a>
+                  </h5>
+
+                  {isOnTime ? (
+                    <form onSubmit={reHandleSubmit(reSubmitAssignment)}>
+                      <Controller
+                        name={"reSubmitFile"}
+                        control={reControl}
+                        defaultValue=""
+                        render={(props) => (
+                          <FileInput
+                            name={"reSubmitFile"}
+                            isImageFile={false}
+                            onChange={(event) =>
+                              props.field.onChange(event.target.files[0])
+                            }
+                          />
+                        )}
+                      />
+                      <button className="btn-edit" style={{ marginTop: 20 }}>
+                        Submit
+                      </button>
+                    </form>
+                  ) : (
+                    <h5
+                      style={{
+                        marginTop: 20,
+                        color: "#428aa9",
+                        backgroundColor: "#deedf2",
+                        padding: 10,
+                        borderRadius: 4,
+                      }}>
+                      Submitted Date has already Passed. You can't resubmited
+                      the files.
+                    </h5>
+                  )}
+                </>
               )}
             </div>
           </div>

@@ -443,7 +443,7 @@ class SubmittedAssignmentsAPI(viewsets.ModelViewSet):
             "or override the `get_serializer_class()` method."
             % self.__class__.__name__
         )
-        if self.request.method in ('POST'):
+        if self.request.method in ('POST', 'PUT', 'PATCH'):
                 return SubmittedAssignmentPOSTSerializer
         else:
             return self.serializer_class
@@ -451,12 +451,15 @@ class SubmittedAssignmentsAPI(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset= SubmittedAssignments.objects.all()
         student_id = self.request.query_params.get('student')
+        assignment_id = self.request.query_params.get('assignment')
         subject_id = self.request.query_params.get('subject')
         created_by = self.request.query_params.get('teacher')
         title = self.request.query_params.get('title')
         created_at = self.request.query_params.get('created_at')
         if student_id is not None:
             queryset = queryset.filter(student__id=student_id)
+        if assignment_id is not None:
+            queryset = queryset.filter(assignment__id=assignment_id)
         if subject_id is not None:
             queryset = queryset.filter(assignment__subject__id=subject_id)
         if title is not None:

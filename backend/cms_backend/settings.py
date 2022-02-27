@@ -102,7 +102,7 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'testdb-cms',
+        'NAME': 'cms',
         'USER': 'cms_admin',
         'PASSWORD': 'cmsdatabase',
         'HOST': 'localhost',
