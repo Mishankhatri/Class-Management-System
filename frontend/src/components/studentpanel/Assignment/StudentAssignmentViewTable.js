@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SelectColumnFilter } from "../../common/Table/filters";
 import TableContainer from "./../../common/Table/TableContainer";
@@ -10,12 +10,23 @@ import {
 import moment from "moment";
 import Loading from "../../common/Loading";
 import axiosInstance from "../../../axios";
+import { GetPaginatedPromise } from "../../GetOptions";
 
 const StudentAssignmentViewTable = () => {
   const navigate = useNavigate();
+  const [submittedData, setSubmitted] = useState([]);
 
   useEffect(() => {
+    const GetOptions = async () => {
+      try {
+        const got = await GetPaginatedPromise("submittedassignments");
+        setSubmitted(got);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     dispatch(GetStudentSubmittedAssignment());
+    GetOptions();
   }, []);
 
   useEffect(() => {
@@ -32,9 +43,7 @@ const StudentAssignmentViewTable = () => {
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { assignmentFilter, submittedAssignment } = useSelector(
-    (state) => state.teachers
-  );
+  const { assignmentFilter } = useSelector((state) => state.teachers);
 
   const handleView = (row) => {
     navigate(`/student/assignment/upload/assignmentId=${row.original.id}`);
@@ -56,6 +65,13 @@ const StudentAssignmentViewTable = () => {
       },
 
       {
+        Header: "Teacher",
+        accessor: "created_by.username",
+        SearchAble: true,
+        Filter: SelectColumnFilter,
+      },
+
+      {
         Header: "Date due",
         accessor: "date_due",
         SearchAble: false,
@@ -67,11 +83,6 @@ const StudentAssignmentViewTable = () => {
           return moment(d.time_due, "HH,mm").format("LT");
         },
         SearchAble: false,
-      },
-      {
-        Header: "Status",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
       },
       {
         Header: "Action",

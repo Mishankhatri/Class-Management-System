@@ -35,7 +35,7 @@ function Dashboard() {
       .then(({ data: { results } }) => {
         dispatch(
           GetTeacherFilterAnnouncement(
-            `ordering=id&classname=${results[0].current_grade.id}`
+            `ordering=-id&classname=${results[0].current_grade.id}`
           )
         );
         dispatch(
@@ -56,20 +56,20 @@ function Dashboard() {
       });
   }, []);
 
-  let totalAbsent = 0;
-  let totalPresent = 0;
+  let totalAbsent;
+  let totalPresent;
+
   if (attendance) {
-    for (let i = 0; i < attendance.length; i++) {
+    totalAbsent = totalPresent = 0;
+    for (let i = 0; i < attendance?.length; i++) {
       attendance[i].attendance_status == "ABSENT"
         ? totalAbsent++
         : totalPresent++;
     }
   }
 
-  const totalPercentage = (
-    (totalPresent * 100) /
-    (totalAbsent + totalPresent)
-  ).toFixed(2);
+  const totalPercentage =
+    attendance && ((totalPresent * 100) / attendance.length).toFixed(1);
 
   const isBothNotices = adminfilternotices && teacherNoticesFilter;
 
@@ -78,19 +78,25 @@ function Dashboard() {
       <InnerHeader icon={<MdIcons.MdDashboard />} name={"Dashboard"} />
       <div className="main-content">
         <div className="cardelement">
-          {
+          {attendance.length !== 0 ? (
             <CardData
               number={`${totalPercentage}%`}
               name={"Attendance"}
               icon={<FaIcons.FaUsers style={{ color: "#FFC36D" }} />}
             />
-          }
+          ) : (
+            <CardData
+              number={`No data`}
+              name={"Attendance"}
+              icon={<FaIcons.FaUsers style={{ color: "#FFC36D" }} />}
+            />
+          )}
 
           {assignmentFilter && (
             <CardData
               number={assignmentFilter?.length}
               name={"Assignments"}
-              icon={<FaIcons.FaUserSecret style={{ color: "#FF7676" }} />}
+              icon={<MdIcons.MdHomeWork style={{ color: "#FF7676" }} />}
             />
           )}
           {isBothNotices && (
@@ -136,7 +142,7 @@ function Dashboard() {
                           <span className="announced">
                             Announced By:{"  "}
                             <span className="createdby">
-                              {rowData.created_by.fullname}
+                              {rowData.created_by.username}
                             </span>
                           </span>
                           <span>

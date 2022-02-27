@@ -195,8 +195,9 @@ body {
 }
 
 .section .photo img {
-  width: 40px;
-  border-radius: 50%;
+  max-width: 40px;
+  max-height: 50px;
+  border-radius: 6px;
 }
 
 .section .photo {

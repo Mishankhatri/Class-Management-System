@@ -45,21 +45,21 @@ const ClassTableData = () => {
         SearchAble: true,
         Filter: SelectColumnFilter,
       },
-      {
-        Header: "Action",
-        SearchAble: false,
-        Cell: ({ row }) => {
-          return (
-            <>
-              <button
-                className="btn-danger btn-custom"
-                onClick={() => handleDelete(row.original.id)}>
-                Delete
-              </button>
-            </>
-          );
-        },
-      },
+      // {
+      //   Header: "Action",
+      //   SearchAble: false,
+      //   Cell: ({ row }) => {
+      //     return (
+      //       <>
+      //         <button
+      //           className="btn-danger btn-custom"
+      //           onClick={() => handleDelete(row.original.id)}>
+      //           Delete
+      //         </button>
+      //       </>
+      //     );
+      //   },
+      // },
     ],
     []
   );
