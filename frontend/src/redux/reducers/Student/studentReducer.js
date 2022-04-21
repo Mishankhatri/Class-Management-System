@@ -21,6 +21,8 @@ import {
   GET_STUDENT_ATTENDANCE_FILTER,
   UPDATE_STUDENT_PHOTO,
   UPDATE_STUDENT_DETAIL,
+  STUDENT_DATA_LOADING,
+  GET_STUDENTS_FOR_ATTENDANCE,
 } from "../../actiontypes/student/studentdatatype";
 
 const initialState = {
@@ -32,29 +34,35 @@ export default function studentReducer(state = initialState, action) {
     case GET_STUDENT_DETAIL:
       return { ...state, isLoading: false, student: action.payload };
 
+    case STUDENT_DATA_LOADING:
+      return { ...state, isLoading: true,};
+
+    case GET_STUDENTS_FOR_ATTENDANCE:
+      return { ...state, isLoading: false, students_for_attendance: action.payload };
+
     case GET_STUDENT_CLASS:
-      return { ...state, classes: action.payload };
+      return { ...state, isLoading: false,  classes: action.payload };
 
     case GET_STUDENTCLASS_SID:
-      return { ...state, studentId: action.payload };
+      return { ...state, isLoading: false,  studentId: action.payload };
 
     case GET_STUDENT_PARENTS:
-      return { ...state, studentParent: action.payload };
+      return { ...state, isLoading: false,  studentParent: action.payload };
 
     case GET_STUDENT_PARENTS_BYID:
-      return { ...state, studentParentID: action.payload };
+      return { ...state, isLoading: false, studentParentID: action.payload };
 
     case GET_STUDENT_ATTENDANCE:
-      return { ...state, attendance: action.payload };
+      return { ...state, isLoading: false, attendance: action.payload };
 
     case GET_STUDENT_ATTENDANCE_FILTER:
-      return { ...state, attendanceFilter: action.payload };
+      return { ...state, isLoading: false, attendanceFilter: action.payload };
 
     case GET_STUDENT_USERID:
-      return { ...state, studentUserID: action.payload };
+      return { ...state, isLoading: false,  studentUserID: action.payload };
 
     case GET_STUDENT_ASSIGNMENT_FILTER:
-      return { ...state, filterStudentAssignment: action.payload };
+      return { ...state, isLoading: false, filterStudentAssignment: action.payload };
 
     case DELETE_STUDENT:
     case DELETE_ATTENDANCE:

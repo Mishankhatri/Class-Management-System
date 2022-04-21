@@ -28,6 +28,7 @@ export class Alerts extends Component {
         alert.error(`${error.msg?.old_password?.old_password}`);
       if (error.msg?.subject_code) alert.error(`${error.msg.subject_code}`);
       if (error.msg?.files_by_admin) alert.error(`${error.msg.files_by_admin}`);
+      if (error.msg) alert.error(`${error.msg}`);
 
       //Student Add
       if (error.msg?.SRN) alert.error(`${error.msg.SRN}`);
@@ -73,6 +74,7 @@ export class Alerts extends Component {
       if (message?.assignmentAdded) alert.success(`${message.assignmentAdded}`);
       if (message?.addLectureNotes) alert.success(`${message.addLectureNotes}`);
       if (message?.addAssignment) alert.success(`${message.addAssignment}`);
+      if (message?.createBulkAttendace) alert.success(`${message.createBulkAttendace}`);
 
       //Error
       if (message?.allfields) alert.error(`${message.allfields}`);

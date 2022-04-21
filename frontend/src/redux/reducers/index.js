@@ -4,7 +4,7 @@ import success from "./success";
 import messages from "./messages";
 import auth from "./auth";
 import data from "./data";
-import studentReducer from "./Student/student";
+import studentReducer from "./Student/studentReducer";
 import teacherReducer from "./Teacher/teacherReducer";
 import classReducer from "./classReducer";
 import adminReducer from "./Admin/adminReducer";

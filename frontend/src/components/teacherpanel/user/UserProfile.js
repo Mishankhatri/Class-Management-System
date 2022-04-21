@@ -23,7 +23,7 @@ function UserProfile({ image }) {
 
   const teacher =
     teacherDetail &&
-    teacherDetail.results.find((value) => value.user.id == user.id);
+    teacherDetail.results.find((value) => value.user.id === user.id);
 
   useEffect(() => {
     dispatch(GET_DETAILS("/teacher", "GET_TEACHER_DETAIL"));
@@ -40,7 +40,6 @@ function UserProfile({ image }) {
     const postdata = new FormData();
     postdata.append("username", data.username);
     postdata.append("email", data.email);
-    postdata.append("fullname", data.fullname);
     dispatch(UpdateUserInfo(postdata));
   };
 
@@ -73,7 +72,7 @@ function UserProfile({ image }) {
                   <img
                     className="content-image img-user"
                     src={user.profile_image}
-                    alt="Profile-Image"
+                    alt="Profile"
                     title="Change Profile Picture"
                   />
                   <div className="content-details fadeIn-bottom">
@@ -90,13 +89,6 @@ function UserProfile({ image }) {
                   <form onSubmit={handleSubmit(ChangeUserInfo)}>
                     <div className="information__info">
                       <ViewModal
-                        title={"Full Name"}
-                        disabled={false}
-                        value={user.fullname}
-                        name={"fullname"}
-                        register={register}
-                      />
-                      <ViewModal
                         title={"Email"}
                         disabled={false}
                         value={user.email}
@@ -109,11 +101,6 @@ function UserProfile({ image }) {
                         value={user.username}
                         name={"username"}
                         register={register}
-                      />
-                      <ViewModal
-                        title={"Role"}
-                        disabled={false}
-                        value={"Teacher"}
                       />
                     </div>
                     <button className="morebutton btn btn-custom-selection">

@@ -24,6 +24,7 @@ import {
   UPDATE_TEACHER_PHOTO,
   POST_TEACHER_ANNOUNCEMENT,
   GET_TEACHER_ASSIGN,
+  ADD_BULK_ATTENDANCE
 } from "../../actiontypes/teacher/teacherdatatype";
 
 const initialState = {
@@ -46,6 +47,7 @@ export default function teacherReducer(state = initialState, action) {
     case POST_TEACHER_ANNOUNCEMENT:
     case ADD_TEACHER_ASSIGNMENT:
     case CHANGE_TEACHER_ASSIGNMENT:
+    case ADD_BULK_ATTENDANCE:
       return { ...state };
 
     case GET_TEACHER_BYID:

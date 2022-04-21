@@ -22,6 +22,7 @@ import {
   GET_LECTURE_NOTES_FILTER,
   GET_TEACHER_ASSIGNMENT_FILTER,
   GET_TEACHER_ANNOUNCEMENT_FILTER,
+  ADD_BULK_ATTENDANCE
 } from "./../../actiontypes/teacher/teacherdatatype";
 
 export const TeacherDetail = () => {
@@ -459,6 +460,29 @@ export const AddLectureNotes = (postdata) => {
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));
         console.log(err.request);
+      });
+  };
+};
+
+export const CreateBulkAttendance = (postdata) => {
+  return function (dispatch) {
+    const body = postdata;
+    axiosInstance
+      .post("blukattendance/", body)
+      .then(() => {
+        dispatch({
+          type: ADD_BULK_ATTENDANCE,
+        });
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            createBulkAttendace: "Attendance Saved Successully",
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
       });
   };
 };

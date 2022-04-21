@@ -61,7 +61,6 @@ export default function (state = initialState, action) {
     case AUTH_ERR:
     case LOGIN_FAILED:
     case LOGOUT_SUCCESS:
-    case REGISTER_FAILED:
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
       return {

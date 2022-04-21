@@ -41,8 +41,14 @@ export const getUser = () => (dispatch) => {
         "JWT " + localStorage.getItem("access_token");
     })
     .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({ type: AUTH_ERR });
+      if (typeof err.response === "undefined"){
+        dispatch({ type: USER_LOADING });
+        console.log(err)
+      }
+      else{
+        dispatch(returnErrors(err.response.data, err.response.status));
+        dispatch({ type: USER_LOADING });
+      }
     });
 };
 

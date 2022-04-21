@@ -9,10 +9,12 @@ import {
   SUBMIT_ASSIGNMENTS,
   CHANGE_SUBMIT_ASSIGNMENTS,
   GET_STUDENT_ASSIGNMENT_FILTER,
+  STUDENT_DATA_LOADING,
 } from "../../actiontypes/student/studentdatatype";
 
 export const GET_DETAILS = (url, type, filter) => {
   return function (dispatch) {
+    dispatch({ type: STUDENT_DATA_LOADING });
     filter
       ? axiosInstance
           .get(`${url}/?${filter}`)
@@ -23,7 +25,12 @@ export const GET_DETAILS = (url, type, filter) => {
             });
           })
           .catch((err) => {
-            dispatch(returnErrors(err.response.data, err.response.status));
+            if (typeof err.response === "undefined"){
+              console.log(err)
+            }
+            else{
+              dispatch(returnErrors(err.response.data, err.response.status));
+            }
           })
       : axiosInstance
           .get(url)
@@ -34,7 +41,12 @@ export const GET_DETAILS = (url, type, filter) => {
             });
           })
           .catch((err) => {
-            dispatch(returnErrors(err.response.data, err.response.status));
+            if (typeof err.response === "undefined"){
+              console.log(err)
+            }
+            else{
+              dispatch(returnErrors(err.response.data, err.response.status));
+            }
           });
   };
 };

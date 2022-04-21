@@ -2,6 +2,7 @@ import {
   DELETE_ATTENDANCE,
   GET_STUDENT_ATTENDANCE,
   GET_STUDENT_ATTENDANCE_FILTER,
+  STUDENT_DATA_LOADING,
 } from "../actiontypes/student/studentdatatype";
 import axiosInstance from "./../../axios";
 import { returnSuccess, returnErrors, createMessage } from "./alertactions";

@@ -55,7 +55,7 @@ export function GetPaginatedAssignedPromise(
         return wholeArray;
       }
       // return wholeArray;
-      return GetPaginatedPromise(url, userid, page, wholeArray);
+      return GetPaginatedAssignedPromise(url, userid, page, wholeArray);
     })
     .catch((error) => {
       if (error.response) console.log(error.response);
@@ -64,9 +64,9 @@ export function GetPaginatedAssignedPromise(
     });
 }
 
-export function GetPaginatedFilterPromise(url, page = 1, previousData = []) {
+export function GetPaginatedFilterPromise(url,filter,page = 1, previousData = []) {
   return axiosInstance
-    .get(`/${url}&page=${page}`)
+    .get(`/${url}&page=${page}?${filter}`)
     .then(({ data }) => {
       const { results } = data;
       const wholeArray = [...previousData, ...results];
@@ -75,7 +75,7 @@ export function GetPaginatedFilterPromise(url, page = 1, previousData = []) {
         return wholeArray;
       }
       // return wholeArray;
-      return GetPaginatedPromise(url, page, wholeArray);
+      return GetPaginatedFilterPromise(url,filter, page, wholeArray);
     })
     .catch((error) => {
       if (error.response) console.log(error.response);
