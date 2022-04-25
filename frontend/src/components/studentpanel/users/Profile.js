@@ -7,36 +7,40 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import ViewModal from "./../../common/Modal/ViewModal";
 import Loading from "./../../common/Loading";
-import { GET_DETAILS } from "../../../redux/actions/student/studentactions";
-import { UpdateUserInfo } from "../../../redux/actions/admin/adminaction";
+import {
+  AddStudentParentDetail,
+  GET_DETAILS,
+} from "../../../redux/actions/student/studentactions";
+import { ChangeUserImage, UpdateUserInfo } from "../../../redux/actions/admin/adminaction";
 
 function UserProfile() {
   const [click, setClick] = useState(false);
   const [previousImage, setPreviosImage] = useState(BlankProfile);
   const [uploadedImage, setUploadedImage] = useState("");
 
+  const { user } = useSelector((state) => state.auth);
+  const { studentDetails, studentParent } = useSelector(
+    (state) => state.students
+  );
+  const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(GET_DETAILS("/parent", "GET_STUDENT_PARENTS"));
-  }, []);
+    if (studentDetails){
+      const s_id = studentDetails[0]?.id;
+      dispatch(GET_DETAILS("/parent", "GET_STUDENT_PARENTS", `student=${s_id}`));
+    }
+  }, [dispatch, studentDetails]);
 
-  const { register, handleSubmit } = useForm();
-  const { student, studentParent } = useSelector((state) => state.students);
-
-  const { user } = useSelector((state) => state.auth);
-
-  const studentDetail =
-    student && student.results.find((value) => value.user.id == user.id);
-
-  const parents =
-    studentParent &&
-    studentParent.results.find((value) => value.student.user.id == user.id);
+  const parents = studentParent && studentParent.results[0]
 
   const onSubmitImage = (e) => {
     e.preventDefault();
     setPreviosImage(BlankProfile);
     setClick(false);
-    console.log(uploadedImage);
+    
+    const postData = new FormData();
+    postData.append("profile_image", uploadedImage);
+    dispatch(ChangeUserImage(postData));
   };
 
   const ChangeUserInfo = (data) => {
@@ -47,7 +51,23 @@ function UserProfile() {
     dispatch(UpdateUserInfo(postdata));
   };
 
-  return student ? (
+  const submitParentInfo = (data) => {
+    const parentData = new FormData();
+    parentData.append("father_name", data.father_name);
+    parentData.append("mother_name", data.mother_name);
+    parentData.append("parent_address", data.parent_address);
+    parentData.append("parent_state", data.parent_state);
+    parentData.append("parent_contact_no", data.parent_contact_no);
+    parentData.append(
+      "parent_additional_contact_no",
+      data.parent_additional_contact_no
+    );
+    parentData.append("parent_email", data.parent_email);
+    parentData.append("student", studentDetails[0].id);
+    dispatch(AddStudentParentDetail(studentDetails[0]?.id,parentData));
+  };
+
+  return studentDetails ? (
     <React.Fragment>
       <ChangePhoto
         click={click}
@@ -71,12 +91,13 @@ function UserProfile() {
               <div className="custom-info-show">
                 <div
                   className="content-image-p userprofile"
-                  onClick={() => setClick(!click)}>
+                  onClick={() => setClick(!click)}
+                >
                   <div className="content-overlay"></div>
                   <img
                     className="content-image img-user"
                     src={user.profile_image}
-                    alt="Profile-Image"
+                    alt="Profile"
                     title="Change Profile Picture"
                   />
                   <div className="content-details fadeIn-bottom">
@@ -93,10 +114,10 @@ function UserProfile() {
                   <form onSubmit={handleSubmit(ChangeUserInfo)}>
                     <div className="information__info">
                       <ViewModal
-                        title={"Full Name"}
+                        title={"Username"}
                         disabled={false}
-                        value={user.fullname}
-                        name={"fullname"}
+                        value={user.username}
+                        name={"username"}
                         register={register}
                       />
                       <ViewModal
@@ -105,18 +126,6 @@ function UserProfile() {
                         value={user.email}
                         name={"email"}
                         register={register}
-                      />
-                      <ViewModal
-                        title={"UserName"}
-                        disabled={false}
-                        value={user.username}
-                        name={"username"}
-                        register={register}
-                      />
-                      <ViewModal
-                        title={"Role"}
-                        disabled={false}
-                        value={"Student"}
                       />
                     </div>
                     <button className="morebutton btn btn-custom-selection">
@@ -138,29 +147,37 @@ function UserProfile() {
           </div>
           <div className="content-section">
             <div className="allinputfield">
-              <ViewModal title={"SRN"} value={studentDetail.SRN} />
+              <ViewModal title={"SRN"} value={studentDetails[0].SRN} />
               <ViewModal
                 title={"FIRST NAME"}
-                value={studentDetail.first_name}
+                value={studentDetails[0].first_name}
               />
               <ViewModal
                 title={"MIDDLE NAME"}
                 value={
-                  studentDetail.middle_name ? studentDetail.middle_name : "-"
+                  studentDetails[0].middle_name
+                    ? studentDetails[0].middle_name
+                    : "-"
                 }
               />
-              <ViewModal title={"LAST NAME"} value={studentDetail.last_name} />
-              <ViewModal title={"GENDER"} value={studentDetail.gender} />
-              <ViewModal title={"DATE OF BIRTH"} value={studentDetail.DOB} />
-              <ViewModal title={"PHONE"} value={studentDetail.contact_no} />
-              <ViewModal title={"LOCATION"} value={studentDetail.address} />
+              <ViewModal
+                title={"LAST NAME"}
+                value={studentDetails[0].last_name}
+              />
+              <ViewModal title={"GENDER"} value={studentDetails[0].gender} />
+              <ViewModal
+                title={"DATE OF BIRTH"}
+                value={studentDetails[0].DOB}
+              />
+              <ViewModal title={"PHONE"} value={studentDetails[0].contact_no} />
+              <ViewModal title={"LOCATION"} value={studentDetails[0].address} />
               <ViewModal
                 title={"Class"}
-                value={studentDetail.current_grade.class_name}
+                value={studentDetails[0].current_grade.class_name}
               />
               <ViewModal
                 title={"Section"}
-                value={studentDetail.current_grade.section}
+                value={studentDetails[0].current_grade.section}
               />
             </div>
           </div>
@@ -176,7 +193,7 @@ function UserProfile() {
               {/*Custom  */}
             </div>
             <div className="content-section">
-              {studentParent ? (
+              {parents ? (
                 <div className="allinputfield">
                   <ViewModal
                     title={"Father Name"}
@@ -212,7 +229,62 @@ function UserProfile() {
                   <ViewModal title={"State"} value={parents.parent_state} />
                 </div>
               ) : (
-                <div>Fetching Data...</div>
+                <form onSubmit={handleSubmit(submitParentInfo)}>
+                  <div className="allinputfield">
+                    <ViewModal
+                      title={"Father Name"}
+                      name={"father_name"}
+                      register={register}
+                      disabled={false}
+                      isRequired={true}
+                      />
+                    <ViewModal
+                      title={"Mother Name"}
+                      name={"mother_name"}
+                      register={register}
+                      disabled={false}
+                      isRequired={true}
+                      />
+                    <ViewModal
+                      title={"Phone"}
+                      name={"parent_contact_no"}
+                      disabled={false}
+                      register={register}
+                      isRequired={true}
+                      />
+                    <ViewModal
+                      title={"Alternate Phone"}
+                      name={"parent_additional_contact_no"}
+                      register={register}
+                      disabled={false}
+                      isRequired={true}
+                      />
+                    <ViewModal
+                      title={"Email"}
+                      name={"parent_email"}
+                      register={register}
+                      disabled={false}
+                      isRequired={true}
+                      />
+                    <ViewModal
+                      title={"Address"}
+                      name={"parent_address"}
+                      register={register}
+                      disabled={false}
+                      isRequired={true}
+                      />
+                    <ViewModal
+                      title={"State"}
+                      name={"parent_state"}
+                      register={register}
+                      disabled={false}
+                      isRequired={true}
+                    />
+                  </div>
+                  <button className="morebutton btn btn-custom-selection">
+                    Save
+                  </button>
+                </form>
               )}
             </div>
           </div>

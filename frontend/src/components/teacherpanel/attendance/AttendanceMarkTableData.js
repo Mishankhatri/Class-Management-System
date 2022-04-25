@@ -1,13 +1,10 @@
-import axios from "axios";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { GET_DETAILS } from "../../../redux/actions/student/studentactions";
 import ToggleSwitch from "../../common/InputField/ToggleSwitch";
 import TableContainer from "../../common/Table/TableContainer";
 import { useForm, Controller } from "react-hook-form";
 import { createMessage } from "../../../redux/actions/alertactions";
-import axiosInstance from "../../../axios";
 import { FaCalendar } from "react-icons/fa";
 import InputField from "../../common/InputField/InputField";
 import { CreateBulkAttendance } from "../../../redux/actions/teacher/teacheractions";

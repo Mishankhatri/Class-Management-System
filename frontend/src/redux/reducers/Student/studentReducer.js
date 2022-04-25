@@ -27,6 +27,8 @@ import {
 
 const initialState = {
   isLoading: false,
+  studentDetails:null,
+  studentParent:null,
 };
 
 export default function studentReducer(state = initialState, action) {
@@ -59,7 +61,7 @@ export default function studentReducer(state = initialState, action) {
       return { ...state, isLoading: false, attendanceFilter: action.payload };
 
     case GET_STUDENT_USERID:
-      return { ...state, isLoading: false,  studentUserID: action.payload };
+      return { ...state, isLoading: false,  studentDetails: action.payload };
 
     case GET_STUDENT_ASSIGNMENT_FILTER:
       return { ...state, isLoading: false, filterStudentAssignment: action.payload };

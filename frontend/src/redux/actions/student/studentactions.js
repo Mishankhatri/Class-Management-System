@@ -10,6 +10,7 @@ import {
   CHANGE_SUBMIT_ASSIGNMENTS,
   GET_STUDENT_ASSIGNMENT_FILTER,
   STUDENT_DATA_LOADING,
+  ADD_STUDENT_PARENT_DETAIL,
 } from "../../actiontypes/student/studentdatatype";
 
 export const GET_DETAILS = (url, type, filter) => {
@@ -183,10 +184,34 @@ export const ChangeStudentClassDetail = (url, id, type, postdata) => {
   };
 };
 
+export const AddStudentParentDetail = (s_id, postdata) => {
+  return function (dispatch) {
+    const body = postdata;
+    axiosInstance
+      .post(`parent/`, body)
+      .then(() => {
+        dispatch({ type: ADD_STUDENT_PARENT_DETAIL });
+        dispatch(
+          GET_DETAILS("/parent", "GET_STUDENT_PARENTS_BYID", `student=${s_id}`)
+        );
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            DetailsAdded: "Parents Details Added Succesfully",
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
+  };
+};
+
 export const ChangeStudentParentDetail = (s_id, p_id, postdata) => {
   return function (dispatch) {
     const body = postdata;
-    axiosInstanceMultipart
+    axiosInstance
       .patch(`parent/${p_id}/`, body)
       .then(() => {
         dispatch({ type: UPDATE_STUDENT_PARENT_DETAIL });

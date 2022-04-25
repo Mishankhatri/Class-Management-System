@@ -3,6 +3,7 @@ import {
   DATA_LOADED,
   DATA_LOADING,
   FETCH_ERROR,
+  GET_COUNT,
 } from "../actiontypes/datatypes";
 import { returnErrors } from "./alertactions";
 
@@ -33,4 +34,19 @@ export const getData = (data, page) => (dispatch) => {
         dispatch({ type: FETCH_ERROR });
       });
   }
+};
+
+export const getTotalCount = () => {
+  return function (dispatch) {
+    dispatch({ type: DATA_LOADING });
+    axiosInstance
+      .get(`count/`)
+      .then(( res ) => {
+        dispatch({ type: GET_COUNT, payload: res.data });
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+        dispatch({ type: FETCH_ERROR });
+      });
+  };
 };

@@ -1,11 +1,12 @@
 import Sidebar from "./components/common/SideBar/Sidebar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./components/common/NavBar/NavBar";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Loading from "./components/common/Loading";
 import { getMenuValues } from "./components/common/SideBar/SideMenuValue";
 import Error404 from "./components/common/Error404";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getTotalCount } from "./redux/actions/dataactions";
 
 const Dashboard = React.lazy(() =>
   import("./components/adminpanel/pages/Dashboard")
@@ -87,6 +88,10 @@ const TeacherFullDetail = React.lazy(() =>
 function AdminPanel() {
   const user = useSelector((state) => state.auth.user);
   const [showSideBar, setSideBar] = useState(true);
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getTotalCount());
+  },[dispatch])
 
   const SideBarHandler = () => {
     setSideBar(!showSideBar);

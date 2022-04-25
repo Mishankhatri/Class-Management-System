@@ -1,5 +1,6 @@
-from .views import AdminAnnoucementAPI, AssignTeacherToSubjectsAPI, AttendanceAPI, BulkAttendanceAPI, GivenAssignmentsAPI, GradeAPI, LectureNotesAPI, ParentAPI, StudentAPI, StudentUserAPI, SubjectAPI, SubmittedAssignmentsAPI, TeacherAnnoucementAPI, TeacherAPI,TeacherUserAPI, TimeTableAPI
+from .views import AdminAnnoucementAPI, AssignTeacherToSubjectsAPI, AttendanceAPI, BulkAttendanceAPI, GivenAssignmentsAPI, GradeAPI, LectureNotesAPI, ParentAPI, StudentAPI, StudentUserAPI, SubjectAPI, SubmittedAssignmentsAPI, TeacherAnnoucementAPI, TeacherAPI,TeacherUserAPI, TimeTableAPI,CountAPIview
 from rest_framework.routers import DefaultRouter
+from django.urls import path
 
 app_name = 'core_api'
 
@@ -20,4 +21,8 @@ router.register('lecturenotes', LectureNotesAPI, basename='lecturenotes')
 router.register('attendance', AttendanceAPI, basename='attendance')
 router.register('blukattendance', BulkAttendanceAPI, basename='bulkattendance')
 router.register('timetable', TimeTableAPI, basename='timetable')
-urlpatterns = router.urls
+urlpatterns = [
+    path("count/", CountAPIview.as_view(), name="total_count")
+]
+
+urlpatterns += router.urls

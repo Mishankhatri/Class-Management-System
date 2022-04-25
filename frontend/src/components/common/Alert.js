@@ -20,7 +20,6 @@ export class Alerts extends Component {
         alert.error(`ERROR: ${error.msg.non_field_errors.join()}`);
       if (error.msg.username) alert.error(`Username:${error.msg.username}`);
       if (error.msg.password) alert.error(`Password:${error.msg.password}`);
-      if (error.msg.password) alert.error(`${error.msg.password}`);
       if (error.msg.detail) alert.error(`${error.msg.detail}`);
       if (error.msg.statusText) alert.error(`${error.msg.statusText}`);
       if (error.msg?.class_name) alert.error(`${error.msg?.class_name[0]}`);
@@ -28,7 +27,6 @@ export class Alerts extends Component {
         alert.error(`${error.msg?.old_password?.old_password}`);
       if (error.msg?.subject_code) alert.error(`${error.msg.subject_code}`);
       if (error.msg?.files_by_admin) alert.error(`${error.msg.files_by_admin}`);
-      if (error.msg) alert.error(`${error.msg}`);
 
       //Student Add
       if (error.msg?.SRN) alert.error(`${error.msg.SRN}`);
@@ -75,6 +73,7 @@ export class Alerts extends Component {
       if (message?.addLectureNotes) alert.success(`${message.addLectureNotes}`);
       if (message?.addAssignment) alert.success(`${message.addAssignment}`);
       if (message?.createBulkAttendace) alert.success(`${message.createBulkAttendace}`);
+      if (message?.DetailsAdded) alert.success(`${message.DetailsAdded}`);
 
       //Error
       if (message?.allfields) alert.error(`${message.allfields}`);

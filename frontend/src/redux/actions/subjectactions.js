@@ -2,10 +2,9 @@ import {
   DELETE_ATTENDANCE,
   GET_STUDENT_ATTENDANCE,
   GET_STUDENT_ATTENDANCE_FILTER,
-  STUDENT_DATA_LOADING,
 } from "../actiontypes/student/studentdatatype";
 import axiosInstance from "./../../axios";
-import { returnSuccess, returnErrors, createMessage } from "./alertactions";
+import { returnErrors, createMessage } from "./alertactions";
 import {
   ADD_SUBJECT,
   DELETE_SUBJECTS,
@@ -24,7 +23,7 @@ export const ViewSubjects = () => {
 
 export const ViewSubjectsFilter = (filter) => {
   return function (dispatch) {
-    axiosInstance.get(`/subjects/${filter}`).then(({ data }) => {
+    axiosInstance.get(`/subjects/?${filter}`).then(({ data }) => {
       dispatch({ type: VIEW_SUBJECTS_ID, payload: data });
     });
   };

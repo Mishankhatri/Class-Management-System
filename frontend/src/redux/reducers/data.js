@@ -4,6 +4,7 @@ import {
   DATA_LOADED,
   DATA_LOADING,
   FETCH_ERROR,
+  GET_COUNT,
 } from "../actiontypes/datatypes";
 
 const initialState = {
@@ -28,6 +29,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: false,
+      };
+    case GET_COUNT:
+      return {
+        ...state,
+        isLoading: false,
+        total_count : action.payload
       };
     default:
       return state;

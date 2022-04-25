@@ -1,5 +1,5 @@
 import Sidebar from "./components/common/SideBar/Sidebar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./components/common/NavBar/NavBar";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Loading from "./components/common/Loading";
@@ -7,7 +7,9 @@ import { menuStudentValue } from "./components/common/SideBar/SideMenuValue";
 import Error404 from "./components/common/Error404";
 import Settings from "./components/studentpanel/users/Settings";
 import UserProfile from "./components/studentpanel/users/Profile";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getTotalCount } from "./redux/actions/dataactions";
+import { StudentByUserId } from "./redux/actions/student/studentactions";
 
 const UploadAssignment = React.lazy(() =>
   import("./components/studentpanel/Assignment/UploadAssignment")
@@ -40,6 +42,11 @@ const ViewTimetables = React.lazy(() =>
 function StudentPanel() {
   const user = useSelector((state) => state.auth.user);
   const [showSideBar, setSideBar] = useState(true);
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getTotalCount());
+    dispatch(StudentByUserId(user.id))
+  },[dispatch])
 
   const SideBarHandler = () => {
     setSideBar(!showSideBar);

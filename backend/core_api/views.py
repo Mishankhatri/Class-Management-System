@@ -3,6 +3,7 @@ from .permissions import *
 from core.models import Grade,Subject,Student,Parent,Teacher,AssignTeacherToSubjects,AdminAnnouncement,TeachersAnnouncement,GivenAssignments,SubmittedAssignments,LectureNotes,Attendance,TimeTable
 from .serializers import *
 from rest_framework.response import Response
+from rest_framework.views import APIView 
 
 class GradeAPI(viewsets.ModelViewSet):
     serializer_class = GradeSerializer
@@ -606,3 +607,17 @@ class TimeTableAPI(viewsets.ModelViewSet):
         if end is not None:
             queryset = queryset.filter(endTime=end)
         return queryset
+    
+class CountAPIview(APIView):
+    def get(self, request):
+        try:
+            count_bundle = {}
+            count_bundle.update({"class_count":Grade.objects.count()})
+            count_bundle.update({"subjects_count":Subject.objects.count()})
+            count_bundle.update({"admin_announcement_count":AdminAnnouncement.objects.count()})
+            count_bundle.update({"teachers_announcement_count":TeachersAnnouncement.objects.count()})
+            count_bundle.update({"teachers_count":Teacher.objects.count()})
+            count_bundle.update({"students_count":Student.objects.count()})
+            return Response(count_bundle, status=status.HTTP_200_OK)
+        except:
+            return Response({'error': True, 'message': 'Not Found'}, status=status.HTTP_404_NOT_FOUND)
