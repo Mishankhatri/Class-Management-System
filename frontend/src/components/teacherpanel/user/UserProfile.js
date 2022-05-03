@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ViewModal from "./../../common/Modal/ViewModal";
 import Loading from "./../../common/Loading";
 import { GET_DETAILS } from "../../../redux/actions/student/studentactions";
-import { UpdateUserInfo } from "../../../redux/actions/admin/adminaction";
+import { ChangeUserImage, UpdateUserInfo } from "../../../redux/actions/admin/adminaction";
 
 function UserProfile({ image }) {
   const [click, setClick] = useState(false);
@@ -33,7 +33,10 @@ function UserProfile({ image }) {
     e.preventDefault();
     setPreviosImage(BlankProfile);
     setClick(false);
-    console.log(uploadedImage);
+    
+    const postData = new FormData();
+    postData.append("profile_image", uploadedImage);
+    dispatch(ChangeUserImage(postData));
   };
 
   const ChangeUserInfo = (data) => {
