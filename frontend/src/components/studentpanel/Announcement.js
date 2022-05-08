@@ -31,25 +31,7 @@ function Announcement() {
           </button>
         </h4>
 
-        {showAdmin ? (
-          <div className="card-section">
-            <h2 className="heading">Announcement From Admin</h2>
-            <div className="content-section">
-              <div className="mid-content">
-                <AnnouncementTable />
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="card-section">
-            <h2 className="heading">Announcement From Teacher</h2>
-            <div className="content-section">
-              <div className="mid-content">
-                <AnnouncementTeacher />
-              </div>
-            </div>
-          </div>
-        )}
+        {showAdmin ? <AnnouncementTable /> : <AnnouncementTeacher />}
       </div>
     </div>
   );

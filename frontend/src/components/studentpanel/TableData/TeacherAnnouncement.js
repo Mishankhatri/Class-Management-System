@@ -1,39 +1,33 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import TableContainer from "../../common/Table/TableContainer";
+
 import Moment from "react-moment";
 import axiosInstance from "../../../axios";
+import MaterialTableContainer from "../../../common/MaterialTableFilter";
+import Loading from "../../common/Loading";
 
 const AnnouncementTeacher = () => {
   const { user } = useSelector((state) => state.auth);
-  const [teachernotices, setAnnouncements] = useState([]);
+  const [gradeId, setGradeId] = useState(null);
 
   useEffect(() => {
     axiosInstance
       .get(`/student?user=${user.id}`)
       .then(({ data: { results } }) => {
-        axiosInstance
-          .get(
-            `/teachernotices?ordering=-id&classname=${results[0].current_grade.id}`
-          )
-          .then(({ data: { results } }) => {
-            setAnnouncements(results);
-          });
+        setGradeId(results[0].current_grade.id);
       });
-  }, []);
+  }, [user]);
 
-  // console.log(data.reverse());
   const columns = useMemo(
     () => [
       {
-        Header: "SN",
-        SearchAble: false,
-        Cell: ({ row }) => row.index + 1,
+        title: "SN",
+        width: 100,
+        render: ({ tableData }) => tableData.id + 1,
       },
       {
-        Header: "Details",
-        className: "detail-column",
-        accessor: (rowData) => {
+        title: "Details",
+        render: (rowData) => {
           const dates = <Moment fromNow>{rowData.created_at}</Moment>;
 
           return (
@@ -50,7 +44,7 @@ const AnnouncementTeacher = () => {
                     <span className="announced">
                       Announced By:{"  "}
                       <span className="createdby">
-                        {rowData.created_by.fullname}
+                        {rowData.created_by.username}
                       </span>
                     </span>
                     <span>
@@ -67,12 +61,14 @@ const AnnouncementTeacher = () => {
         },
       },
       {
-        Header: "Files",
-        accessor: (rowData) => {
+        title: "Files",
+        width: 100,
+        render: (rowData) => {
           return rowData.files_by_teachers ? (
             <a
               href={rowData.files_by_teachers}
               target="_blank"
+              rel="noreferrer"
               className="btn-primary btn-custom"
               style={{ textDecoration: "none" }}>
               Download
@@ -86,18 +82,19 @@ const AnnouncementTeacher = () => {
     []
   );
 
-  return (
+  return gradeId ? (
     <>
       <div>
-        {teachernotices && (
-          <TableContainer
-            columns={columns}
-            data={teachernotices}
-            showSearch={false}
-          />
-        )}
+        <MaterialTableContainer
+          columns={columns}
+          url="teachernotices"
+          title={"Teacher Announcements"}
+          filter={`classname=${gradeId}&ordering=-id`}
+        />
       </div>
     </>
+  ) : (
+    <Loading />
   );
 };
 

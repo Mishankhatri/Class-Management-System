@@ -14,6 +14,10 @@ const Dashboard = React.lazy(() =>
   import("./components/teacherpanel/Dashboard")
 );
 
+const AttendanceModal = React.lazy(() =>
+  import("./components/teacherpanel/attendance/AttendanceEdit")
+);
+
 const ViewTimetables = React.lazy(() =>
   import("./components/teacherpanel/Timetables")
 );
@@ -57,10 +61,10 @@ const AssignmentDetail = React.lazy(() =>
 function TeacherPanel() {
   const user = useSelector((state) => state.auth.user);
   const [showSideBar, setSideBar] = useState(true);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTotalCount());
-  },[dispatch])
+  }, [dispatch]);
 
   const SideBarHandler = () => {
     setSideBar(!showSideBar);
@@ -116,6 +120,10 @@ function TeacherPanel() {
             <Route
               path="teacher/attendance/view"
               element={<ViewAttendance />}
+            />
+            <Route
+              path="teacher/attendance/edit/id=:id"
+              element={<AttendanceModal />}
             />
             <Route
               path="teacher/attendance/mark"

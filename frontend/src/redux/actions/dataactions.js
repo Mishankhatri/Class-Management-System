@@ -41,11 +41,12 @@ export const getTotalCount = () => {
     dispatch({ type: DATA_LOADING });
     axiosInstance
       .get(`count/`)
-      .then(( res ) => {
+      .then((res) => {
         dispatch({ type: GET_COUNT, payload: res.data });
       })
       .catch((err) => {
-        dispatch(returnErrors(err.response.data, err.response.status));
+        // dispatch(returnErrors(err.response.data, err.response.status));
+
         dispatch({ type: FETCH_ERROR });
       });
   };

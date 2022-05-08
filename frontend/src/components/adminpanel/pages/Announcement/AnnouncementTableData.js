@@ -1,15 +1,13 @@
 import React, { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import { SelectColumnFilter } from "../../../common/Table/filters";
-import TableContainer from "../../../common/Table/TableContainer";
+
 import Moment from "react-moment";
 
 import CustomConfirm from "../../../common/CustomConfirm";
 import { AdminAnnouncementDelete } from "../../../../redux/actions/admin/announcementaction";
+import MaterialTableContainer from "../../../../common/MaterialTableFilter";
 
 const AnnouncementTableData = () => {
-  const { adminfilternotices } = useSelector((state) => state.admins);
-
   const { user } = useSelector((state) => state.auth);
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
@@ -19,21 +17,18 @@ const AnnouncementTableData = () => {
     setClickDelete(true);
   };
 
-  const results = adminfilternotices && adminfilternotices.results;
   const columns = useMemo(
     () => [
       {
-        Header: "Accessor",
-        accessor: "type",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
-        className: "subject-column",
+        title: "Type",
+        field: "type",
+        width: 120,
       },
 
       {
-        Header: "Details",
+        title: "Details",
         className: "detail-column",
-        accessor: (rowData) => {
+        render: (rowData) => {
           const dates = <Moment fromNow>{rowData.created_at}</Moment>;
 
           return (
@@ -67,8 +62,9 @@ const AnnouncementTableData = () => {
         },
       },
       {
-        Header: "Files",
-        accessor: (rowData) => {
+        title: "Files",
+        width: 120,
+        render: (rowData) => {
           return rowData.files_by_admin ? (
             <a
               href={rowData.files_by_admin}
@@ -84,8 +80,9 @@ const AnnouncementTableData = () => {
       },
 
       {
-        Header: "Action",
-        accessor: (data) => {
+        title: "Action",
+        width: 100,
+        render: (data) => {
           if (data.created_by.username == user.username)
             return (
               <button
@@ -115,7 +112,12 @@ const AnnouncementTableData = () => {
         />
       )}
       <div>
-        {results && <TableContainer columns={columns} data={results} />}
+        <MaterialTableContainer
+          columns={columns}
+          url={"adminnotices"}
+          title="Announcement"
+          filter={`for=all`}
+        />
       </div>
     </>
   );

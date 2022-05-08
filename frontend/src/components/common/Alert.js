@@ -70,9 +70,13 @@ export class Alerts extends Component {
       if (message?.changeSubject) alert.success(`${message.changeSubject}`);
       if (message?.accountCreate) alert.success(`${message.accountCreate}`);
       if (message?.assignmentAdded) alert.success(`${message.assignmentAdded}`);
+      if (message?.attendanceChanged)
+        alert.success(`${message.attendanceChanged}`);
       if (message?.addLectureNotes) alert.success(`${message.addLectureNotes}`);
       if (message?.addAssignment) alert.success(`${message.addAssignment}`);
-      if (message?.createBulkAttendace) alert.success(`${message.createBulkAttendace}`);
+      if (message?.teacherAdd) alert.success(`${message.teacherAdd}`);
+      if (message?.createBulkAttendace)
+        alert.success(`${message.createBulkAttendace}`);
       if (message?.DetailsAdded) alert.success(`${message.DetailsAdded}`);
 
       //Error

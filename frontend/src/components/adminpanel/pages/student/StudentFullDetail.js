@@ -26,7 +26,6 @@ function StudentFullDetail() {
   }, [id]);
 
   const [clickStudent, setClickStudent] = useState(false);
-  const [clickUser, setCLickUser] = useState(false);
 
   //React Hook form Initialization fot editing
   const { handleSubmit, control, register } = useForm();

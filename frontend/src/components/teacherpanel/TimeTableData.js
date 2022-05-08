@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import TableContainer from "../common/Table/TableContainer";
+import { useSelector } from "react-redux";
+import MaterialTableContainer from "../../common/MaterialTableFilter";
 
 import moment from "moment";
 import { SelectColumnFilter } from "../common/Table/filters";
@@ -25,42 +25,35 @@ const TimeTableData = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "SN",
-        SearchAble: false,
-        Cell: ({ row: { index } }) => {
+        title: "SN",
+        render: ({ tableData: { id: index } }) => {
           return index + 1;
         },
       },
       {
-        Header: "Day",
-        accessor: "day",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
+        title: "Day",
+        field: "day",
       },
       {
-        Header: "Time",
-        accessor: (d) => {
+        title: "Time",
+        render: (d) => {
           const startTime = moment(d.startTime, "HH,mm").format("LT");
           const endTime = moment(d.endTime, "HH,mm").format("LT");
           return `${startTime} to ${endTime}`;
         },
-        SearchAble: true,
       },
 
       {
         Header: "Subject",
-        accessor: (data) => {
+        render: (data) => {
           return `${data.assigned.subject.subject_name} : ${data.assigned.subject.subject_code}`;
         },
-        SearchAble: true,
       },
       {
-        Header: "Class",
-        accessor: (data) => {
+        title: "Class",
+        render: (data) => {
           return `${data.assigned.subject.grade.class_name} : ${data.assigned.subject.grade.section}`;
         },
-        SearchAble: true,
-        Filter: SelectColumnFilter,
       },
     ],
     []
@@ -69,9 +62,12 @@ const TimeTableData = () => {
   return (
     <>
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        {timetablesData && (
-          <TableContainer columns={columns} data={timetablesData} />
-        )}
+        <MaterialTableContainer
+          columns={columns}
+          url={"timetable"}
+          filter={`teacher=${user.username}`}
+          title="Teacher Timetables"
+        />
       </div>
     </>
   );

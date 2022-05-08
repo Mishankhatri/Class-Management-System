@@ -93,9 +93,9 @@ class TeacherUserPOSTSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        user = self.context['request'].user
-        if not user.admin:
-            raise serializers.ValidationError({"Authorization": "You dont have permission to this api."})
+        # user = self.context['request'].user   
+        # if not user.admin:
+        #     raise serializers.ValidationError({"Authorization": "You dont have permission to this api."})
         user_data = validated_data.pop('user')
         user = CMS_Users.objects.create_teacher(**user_data)
         teacher = Teacher.objects.create(user=user,**validated_data)
@@ -184,10 +184,10 @@ class LectureNotesPOSTSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class AttendanceListSerializer(serializers.ModelSerializer):
-    grade = serializers.StringRelatedField()
-    subject = serializers.StringRelatedField()
-    teacher = serializers.StringRelatedField()
-    student = serializers.StringRelatedField()
+    grade = GradeSerializer(read_only=True)
+    subject = SubjectsLISTSerializer(read_only=True)
+    teacher = TeacherSerializer(read_only=True)
+    student = StudentSerializer(read_only=True)
     class Meta:
         model= Attendance
         fields = '__all__'

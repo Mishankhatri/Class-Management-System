@@ -35,7 +35,6 @@ function UserProfile() {
   const ChangeUserInfo = (data) => {
     const postdata = new FormData();
     postdata.append("username", data.username);
-    postdata.append("email", data.email);
 
     dispatch(UpdateUserInfo(postdata, user.id));
   };
@@ -87,7 +86,7 @@ function UserProfile() {
                     <div className="information__info">
                       <ViewModal
                         title={"Email"}
-                        disabled={false}
+                        disabled={true}
                         value={user.email}
                         name={"email"}
                         register={register}

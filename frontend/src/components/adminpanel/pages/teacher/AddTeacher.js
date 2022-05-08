@@ -8,7 +8,6 @@ import { useForm, Controller } from "react-hook-form";
 import CustomController from "./../../../common/Controller";
 import { useDispatch } from "react-redux";
 import { AddTeacherDetail } from "../../../../redux/actions/teacher/teacheractions";
-import PasswordInputField from "./../../../common/InputField/PasswordInputField";
 import InputField from "../../../common/InputField/InputField";
 import { FileInput } from "../../../common/InputField/FileInput";
 import { createMessage } from "./../../../../redux/actions/alertactions";
@@ -46,7 +45,7 @@ function AddTeacher() {
       postData.append("gender", data.teacherGender.value);
 
       //Assigning Login Info
-      postData.append("user.password", `CMST${teacherTRN_GEN}`);
+      postData.append("user.password", `CMS${teacherTRN_GEN}`);
       postData.append("user.username", data.teacherUsername);
       postData.append("user.email", data.teacherEmail);
       postData.append("user.profile_image", data.teacherPhoto);
@@ -80,9 +79,14 @@ function AddTeacher() {
               <span className="title-icon">
                 <FaIcons.FaBook />
               </span>
-              <span className="title">STUDENT LOGIN INFO</span>
+              <span className="title">TEACHER LOGIN INFO</span>
             </div>
             <div className="content-section">
+              <div className="message">
+                By Default, Password will be <b>CMS'TRN'</b> <b>Eg: CMST001</b>.
+                If length of TRN is less than 3 (i.e. TRN = T0), password will
+                be CMS<b>0</b>T0
+              </div>
               <div className="custom-selection">
                 <Controller
                   name={"teacherEmail"}

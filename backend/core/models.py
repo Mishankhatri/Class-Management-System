@@ -173,14 +173,14 @@ class LectureNotes(models.Model):
     def __str__(self):
             return '%s: %s,%s,%s' % (self.grade,self.title,self.subject,self.teacher)
 
-def is_future_date(value):
-    if value > datetime_date.today():
-        raise ValidationError('Future date is not valid in attendances.')
+# def is_future_date(value):
+#     if value > datetime_date.today():
+#         raise ValidationError('Future date is not valid in attendances.')
 class Attendance(models.Model):
     student= models.ForeignKey(Student,related_name='attendances',on_delete=models.CASCADE)
     teacher= models.ForeignKey(Teacher,related_name='attendances_teachers',on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject,related_name='attendance_subject',on_delete=models.CASCADE)
-    date = models.DateField(validators=[is_future_date])
+    date = models.DateField()
     grade = models.ForeignKey(Grade,on_delete=models.CASCADE,related_name='attendance_grade')
     attendance_status = models.CharField(max_length=55,choices=attendance_choices,default='ABSENT',null=False,blank=False)
     

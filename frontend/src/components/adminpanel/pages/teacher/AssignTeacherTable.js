@@ -25,10 +25,14 @@ function AssignTeacherTable() {
     },
   ];
 
-  const url = `${baseURL}AssignTeacherToSubjectsAPI?`;
+  const url = `${baseURL}AssignTeacherToSubjectsAPI`;
   return (
     <React.Fragment>
-      <MaterialTableContainer columns={columns} url={url} />
+      <MaterialTableContainer
+        columns={columns}
+        url={url}
+        title={"Assign Teachers"}
+      />
     </React.Fragment>
   );
 }

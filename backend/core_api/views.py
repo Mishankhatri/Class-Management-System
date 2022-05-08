@@ -66,7 +66,7 @@ class StudentAPI(viewsets.ModelViewSet):
     parser_classes = [parsers.MultiPartParser,parsers.FormParser,parsers.FileUploadParser]
     permissions_classes= [IsStudentOrAdminOrReadOnly]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
-    search_fields = ['first_name','last_name','email','SRN']
+    search_fields = ['first_name','last_name','SRN', 'address', 'gender', 'middle_name', 'current_grade__class_name']
     ordering_fields = ['id','first_name','SRN']
     ordering=['SRN']
 
@@ -117,7 +117,7 @@ class StudentUserAPI(viewsets.ModelViewSet):
     parser_classes = [parsers.MultiPartParser,parsers.FormParser,parsers.FileUploadParser]
     permissions_classes= [permissions.IsAdminUser,]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
-    search_fields = ['first_name','last_name','email','SRN']
+    search_fields = ['first_name','last_name','SRN']
     ordering_fields = ['id','first_name','SRN']
     ordering=['SRN']
     
@@ -152,8 +152,6 @@ class StudentUserAPI(viewsets.ModelViewSet):
             queryset = queryset.filter(middle_name=middle_name)
         if last_name is not None:
             queryset = queryset.filter(last_name=last_name)
-        if email is not None:
-            queryset = queryset.filter(email=email)
         if address is not None:
             queryset = queryset.filter(address=address)
         if srn is not None:
@@ -205,7 +203,7 @@ class TeacherAPI(viewsets.ModelViewSet):
     serializer_class = TeacherSerializer
     permissions_classes= [IsTeacherOrAdminOrReadOnly]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
-    search_fields = ['first_name','last_name','email','TRN']
+    search_fields = ['first_name','last_name','TRN', 'address', 'gender', 'middle_name']
     ordering_fields = ['id','first_name','TRN']
     ordering=['TRN']
 
@@ -503,7 +501,7 @@ class LectureNotesAPI(viewsets.ModelViewSet):
         class_name = self.request.query_params.get('classname')
         section = self.request.query_params.get('section')
         subject_id = self.request.query_params.get('subject')
-        teacher_id = self.request.query_params.get('teacher')
+        teacher_name = self.request.query_params.get('teacher')
         title = self.request.query_params.get('title')
         if grade_id is not None:
             queryset = queryset.filter(grade__id=grade_id)
@@ -515,16 +513,16 @@ class LectureNotesAPI(viewsets.ModelViewSet):
             queryset = queryset.filter(subject__id=subject_id)
         if title is not None:
             queryset = queryset.filter(title=title)
-        if teacher_id is not None:
-            queryset = queryset.filter(teacher__id=teacher_id)
+        if teacher_name is not None:
+            queryset = queryset.filter(teacher__user__username=teacher_name)
         return queryset
     
 class AttendanceAPI(viewsets.ModelViewSet):
     serializer_class= AttendanceListSerializer
     permissions_classes= [IsTeacherOrReadOnly]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
-    search_fields = ['student__first_name', 'student__last_name','grade__class_name','grade__section','teacher__first_name','subject__subject_name']
-    ordering_fields = ['student__first_name', 'student__last_name','grade__class_name','grade__section','teacher__first_name','subject__subject_name']
+    search_fields = ['student__first_name', 'student__last_name','grade__class_name','grade__section','teacher__first_name','subject__subject_name', 'date']
+    ordering_fields = ['student__first_name', 'student__last_name','grade__class_name','grade__section','teacher__first_name','subject__subject_name', 'date']
     ordering=['id']
     
     def get_serializer_class(self):
@@ -542,16 +540,19 @@ class AttendanceAPI(viewsets.ModelViewSet):
         queryset = Attendance.objects.all()
         grade_id = self.request.query_params.get('grade')
         subject_id = self.request.query_params.get('subject')
-        student_id = self.request.query_params.get('student')
-        teacher_id = self.request.query_params.get('teacher')
+        student_name = self.request.query_params.get('student')
+        teacher_name = self.request.query_params.get('teacher')
+        date = self.request.query_params.get('date')
         if grade_id is not None:
             queryset = queryset.filter(grade__id=grade_id)
         if subject_id is not None:
             queryset = queryset.filter(subject__id=subject_id)
-        if student_id is not None:
-            queryset = queryset.filter(student__id=student_id)
-        if teacher_id is not None:
-            queryset = queryset.filter(teacher__id=teacher_id)
+        if student_name is not None:
+            queryset = queryset.filter(student__user__username=student_name)
+        if teacher_name is not None:
+            queryset = queryset.filter(teacher__user__username=teacher_name)
+        if date is not None:
+            queryset = queryset.filter(date=date)
         return queryset
 
 class BulkAttendanceAPI(viewsets.ViewSet):
@@ -568,7 +569,7 @@ class TimeTableAPI(viewsets.ModelViewSet):
     serializer_class = TimeTableLISTSerializer
     permissions_classes= [permissions.IsAdminUser,]
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
-    search_fields = ['assigned__teacher__first_name', 'assigned__teacher__last_name','assigned__grade__class_name','assigned__grade__section','assigned__subject__subject_name','day']
+    search_fields = ['assigned__teacher__first_name', 'assigned__teacher__last_name','assigned__grade__class_name','assigned__grade__section','assigned__subject__subject_name','day', 'startTime', 'endTime']
     ordering_fields = ['id','day','assigned__teacher_id','assigned__grade__class_name']
     ordering=['id']
 
@@ -588,7 +589,8 @@ class TimeTableAPI(viewsets.ModelViewSet):
         assign_id = self.request.query_params.get('assign')
         subject_id = self.request.query_params.get('subject')
         grade_id = self.request.query_params.get('grade')
-        teacher_id = self.request.query_params.get('teacher')
+        # teacher_id = self.request.query_params.get('teacher')
+        teacher_username = self.request.query_params.get('teacher')
         day = self.request.query_params.get('day')
         start = self.request.query_params.get('start')
         end = self.request.query_params.get('end')
@@ -598,8 +600,10 @@ class TimeTableAPI(viewsets.ModelViewSet):
             queryset = queryset.filter(assigned__subject__id=subject_id)
         if grade_id is not None:
             queryset = queryset.filter(assigned__grade__id=grade_id)
-        if teacher_id is not None:
-            queryset = queryset.filter(assigned__teacher__id=teacher_id)
+        # if teacher_id is not None:
+        #     queryset = queryset.filter(assigned__teacher__id=teacher_id)
+        if teacher_username is not None:
+            queryset = queryset.filter(assigned__teacher__user__username=teacher_username)
         if day is not None:
             queryset = queryset.filter(day=day)
         if start is not None:

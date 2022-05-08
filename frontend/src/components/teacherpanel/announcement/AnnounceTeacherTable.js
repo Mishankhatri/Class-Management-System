@@ -1,10 +1,9 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SelectColumnFilter } from "../../common/Table/filters";
-import TableContainer from "../../common/Table/TableContainer";
+
+import MaterialTableContainer from "../../../common/MaterialTableFilter";
 import Moment from "react-moment";
 
-import reverseArray from "../../common/ReverseArray";
 import CustomConfirm from "../../common/CustomConfirm";
 
 import {
@@ -24,8 +23,6 @@ const AnnouncementTeacherTable = () => {
     dispatch(GetTeacherAnnouncement(user.username));
   }, [dispatch]);
 
-  const newArray = data && reverseArray(data);
-
   const handleDelete = ({ id }) => {
     setdeleteId(id);
     setClickDelete(true);
@@ -34,16 +31,15 @@ const AnnouncementTeacherTable = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "Class",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
-        accessor: (d) =>
+        title: "Class",
+        width: 100,
+        render: (d) =>
           `${d.announcement_for_class.class_name}: ${d.announcement_for_class.section}`,
       },
       {
-        Header: "Details",
+        title: "Details",
         className: "detail-column",
-        accessor: (rowData) => {
+        render: (rowData) => {
           const dates = <Moment fromNow>{rowData.created_at}</Moment>;
 
           return (
@@ -68,8 +64,9 @@ const AnnouncementTeacherTable = () => {
         },
       },
       {
-        Header: "Files",
-        accessor: (rowData) => {
+        title: "Files",
+        width: 100,
+        render: (rowData) => {
           return rowData.files_by_teachers ? (
             <a
               href={rowData.files_by_teachers}
@@ -84,8 +81,9 @@ const AnnouncementTeacherTable = () => {
         },
       },
       {
-        Header: "Action",
-        accessor: (row) => (
+        title: "Action",
+        width: 100,
+        render: (row) => (
           <button
             onClick={() => handleDelete(row)}
             className="btn-danger btn-custom">
@@ -111,7 +109,16 @@ const AnnouncementTeacherTable = () => {
           PeformDelete={DeleteTeacherAnnouncements}
         />
       )}
-      <div>{data && <TableContainer columns={columns} data={newArray} />}</div>
+      <div>
+        {data && (
+          <MaterialTableContainer
+            columns={columns}
+            url="teachernotices"
+            filter={`teacher=${user.username}`}
+            title="Announcement"
+          />
+        )}
+      </div>
     </>
   );
 };

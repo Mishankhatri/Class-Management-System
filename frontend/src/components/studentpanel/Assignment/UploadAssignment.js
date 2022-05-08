@@ -118,12 +118,16 @@ function UploadAssignment() {
                 <div className="info">
                   <h4>File</h4>
                   <div className="content">
-                    <a
-                      href={assignmentId.related_files}
-                      style={{ textDecoration: "none" }}
-                      className="btn-edit">
-                      Preview File
-                    </a>
+                    {assignmentId.related_files ? (
+                      <a
+                        href={assignmentId.related_files}
+                        style={{ textDecoration: "none" }}
+                        className="btn-edit">
+                        Preview File
+                      </a>
+                    ) : (
+                      <p>No file Provided</p>
+                    )}
                   </div>
                 </div>
               </div>

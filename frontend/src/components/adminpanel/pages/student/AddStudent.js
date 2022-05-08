@@ -38,6 +38,7 @@ function AddStudent() {
     const GetOptions = async () => {
       try {
         const got = await GetPaginatedGradePromise();
+
         setGrade(got);
       } catch (error) {
         console.log(error);
@@ -50,7 +51,7 @@ function AddStudent() {
 
   const getSection = (data) => {
     const sectionOptions = grade.filter(
-      (value) => value.class_name == data.value
+      (value) => value.class_name === data.value
     );
 
     return sectionOptions.map((value) => ({
@@ -213,7 +214,7 @@ function AddStudent() {
             <div className="content-section">
               <div className="message">
                 By Default, Password will be{" "}
-                <b>CMS'class_name' 'section' 'SRN'</b> <b>Eg: CMS012A012</b>
+                <b>CMS'class_name' 'section' 'SRN'</b> <b>Eg: CMS012A012</b>.
               </div>
               <div className="custom-selection">
                 <Controller

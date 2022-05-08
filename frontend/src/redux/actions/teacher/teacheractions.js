@@ -22,7 +22,9 @@ import {
   GET_LECTURE_NOTES_FILTER,
   GET_TEACHER_ASSIGNMENT_FILTER,
   GET_TEACHER_ANNOUNCEMENT_FILTER,
-  ADD_BULK_ATTENDANCE
+  ADD_BULK_ATTENDANCE,
+  GET_ATTENDANCE_BYID,
+  CHANGE_STUDENT_ATTENDANCE,
 } from "./../../actiontypes/teacher/teacherdatatype";
 
 export const TeacherDetail = () => {
@@ -122,9 +124,11 @@ export const TeacherDelete = (id) => {
       .then(() => {
         console.log("deleted");
         dispatch({ type: DELETE_TEACHER_DETAIL });
-        dispatch(TeacherDetail());
       })
       .then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
         dispatch(
           createMessage({
             deleteTeacher: "Teacher Deleted Successully",
@@ -187,6 +191,9 @@ export const DeleteLectureNotes = (id, teacherId) => {
         dispatch(GetLectureNotes(teacherId));
       })
       .then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
         dispatch(
           createMessage({
             deleteLecture: "Lecture Notes Deleted Successully",
@@ -241,6 +248,9 @@ export const DeleteTeacherGivenAssignment = (id, user) => {
         dispatch(GetTeacherGivenAssignment(user.username));
       })
       .then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
         dispatch(
           createMessage({
             deleteTeacherAssignment: "Assignment Deleted Successully",
@@ -260,6 +270,22 @@ export const AssignmentGivenById = (id) => {
       .then(({ data }) => {
         dispatch({
           type: GET_TEACHER_ASSIGNMENT_BYID,
+          payload: data,
+        });
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+      });
+  };
+};
+
+export const AttendanceById = (id) => {
+  return function (dispatch) {
+    axiosInstance
+      .get(`/attendance/${id}`)
+      .then(({ data }) => {
+        dispatch({
+          type: GET_ATTENDANCE_BYID,
           payload: data,
         });
       })
@@ -363,6 +389,9 @@ export const DeleteTeacherAnnouncements = (id, user) => {
         dispatch(GetTeacherAnnouncement(user.username));
       })
       .then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
         dispatch(
           createMessage({
             deleteteacherAnnouncement: "Announcement Deleted Successully",
@@ -483,6 +512,33 @@ export const CreateBulkAttendance = (postdata) => {
       })
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));
+      });
+  };
+};
+
+export const ChangeStudentAttendance = (postdata, id) => {
+  return function (dispatch) {
+    const body = postdata;
+    axiosInstance
+      .patch(`/attendance/${id}/`, body)
+      .then(({ data }) => {
+        dispatch({
+          type: CHANGE_STUDENT_ATTENDANCE,
+          payload: data,
+        });
+      })
+      .then(() => {
+        dispatch(
+          createMessage({
+            attendanceChanged: "Attendance Details Changed Successfully",
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status));
+        if (err.response) console.log(err.response);
+        else if (err.request) console.log(err.request);
+        else console.log(err);
       });
   };
 };

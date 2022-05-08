@@ -9,12 +9,7 @@ function ViewTimetables() {
   return (
     <div>
       <InnerHeader icon={<MdIcons.MdPersonAdd />} name={"View Timetables"} />
-      <div className="main-content">
-        <div className="timetable">
-          <h2 className="h3">View All Slots</h2>
-          <TimeTableData />
-        </div>
-      </div>
+      <TimeTableData />
     </div>
   );
 }

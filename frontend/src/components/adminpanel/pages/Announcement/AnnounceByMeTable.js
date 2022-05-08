@@ -1,29 +1,16 @@
-import React, { useMemo, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 
-import TableContainer from "../../../common/Table/TableContainer";
+import MaterialTableContainer from "../../../../common/MaterialTableFilter";
 import Moment from "react-moment";
 import CustomConfirm from "../../../common/CustomConfirm";
 
-import {
-  AdminAnnouncementDeleteSpecific,
-  GetAdminAnnouncement,
-} from "../../../../redux/actions/admin/announcementaction";
-import { SelectColumnFilter } from "../../../common/Table/filters";
+import { AdminAnnouncementDeleteSpecific } from "../../../../redux/actions/admin/announcementaction";
 
 const AnnounceByMeTable = () => {
-  const { adminnotices } = useSelector((state) => state.admins);
-
   const { user } = useSelector((state) => state.auth);
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(GetAdminAnnouncement(`admin=${user.username}&ordering=-id`));
-  }, [dispatch]);
-
-  const newArray = adminnotices && adminnotices.results;
 
   const handleDelete = (id) => {
     setdeleteId(id);
@@ -33,17 +20,15 @@ const AnnounceByMeTable = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "Accessor",
-        accessor: "type",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
-        className: "subject-column",
+        title: "Type",
+        field: "type",
+        width: 120,
       },
 
       {
-        Header: "Details",
-        className: "detail-column",
-        accessor: (rowData) => {
+        title: "Details",
+        field: "detail-column",
+        render: (rowData) => {
           const dates = <Moment fromNow>{rowData.created_at}</Moment>;
 
           return (
@@ -88,8 +73,9 @@ const AnnounceByMeTable = () => {
         },
       },
       {
-        Header: "Files",
-        accessor: (rowData) => {
+        title: "Files",
+        width: 120,
+        render: (rowData) => {
           return rowData.files_by_admin ? (
             <a
               href={rowData.files_by_admin}
@@ -105,8 +91,9 @@ const AnnounceByMeTable = () => {
       },
 
       {
-        Header: "Action",
-        accessor: (data) => {
+        title: "Action",
+        width: 100,
+        render: (data) => {
           if (data.created_by.username == user.username)
             return (
               <button
@@ -137,7 +124,12 @@ const AnnounceByMeTable = () => {
         />
       )}
       <div>
-        {adminnotices && <TableContainer columns={columns} data={newArray} />}
+        <MaterialTableContainer
+          columns={columns}
+          url={"adminnotices"}
+          title="Announcment"
+          filter={`admin=${user.username}&ordering=-id`}
+        />
       </div>
     </>
   );

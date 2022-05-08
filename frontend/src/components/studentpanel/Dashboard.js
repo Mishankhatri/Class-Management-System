@@ -12,7 +12,6 @@ import {
   GetTeacherAssignmentFilter,
   GetTeacherFilterAnnouncement,
 } from "./../../redux/actions/teacher/teacheractions";
-import Loading from "../common/Loading";
 import { GetAdminFilterAnnouncement } from "../../redux/actions/admin/announcementaction";
 import axiosInstance from "../../axios";
 
@@ -49,7 +48,7 @@ function Dashboard() {
           )
         );
         axiosInstance
-          .get(`/attendance?student=${results[0].id}`)
+          .get(`/attendance?student=${user.username}`)
           .then(({ data: { results } }) => {
             setAttendance(results);
           });
@@ -169,9 +168,9 @@ function Dashboard() {
                         </div>
                       </div>
                     </div>
-                    {rowData.files_by_admin ? (
+                    {rowData.files_by_teachers ? (
                       <a
-                        href={rowData.files_by_admin}
+                        href={rowData.files_by_teachers}
                         target="_blank"
                         className="btn-custom btn-primary"
                         style={{ textDecoration: "none" }}>

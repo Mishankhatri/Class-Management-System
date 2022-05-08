@@ -1,15 +1,11 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectColumnFilter } from "../../common/Table/filters";
-import TableContainer from "../../common/Table/TableContainer";
+
 import Moment from "react-moment";
-import { getData } from "../../../redux/actions/dataactions";
-import reverseArray from "../../common/ReverseArray";
-import CustomConfirm from "../../common/CustomConfirm";
-import {
-  AdminAnnouncementDelete,
-  GetAdminAnnouncement,
-} from "../../../redux/actions/admin/announcementaction";
+
+import { GetAdminAnnouncement } from "../../../redux/actions/admin/announcementaction";
+import MaterialTableContainer from "../../../common/MaterialTableFilter";
 
 const AnnouncementTableData = () => {
   const { adminnotices } = useSelector((state) => state.admins);
@@ -25,17 +21,15 @@ const AnnouncementTableData = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "Accessor",
-        accessor: "type",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
-        className: "subject-column",
+        title: "Type",
+        field: "type",
+        width: 100,
       },
 
       {
-        Header: "Details",
+        title: "Details",
         className: "detail-column",
-        accessor: (rowData) => {
+        render: (rowData) => {
           const dates = <Moment fromNow>{rowData.created_at}</Moment>;
 
           return (
@@ -69,8 +63,9 @@ const AnnouncementTableData = () => {
         },
       },
       {
-        Header: "Files",
-        accessor: (rowData) => {
+        title: "Files",
+        width: 100,
+        render: (rowData) => {
           return rowData.files_by_admin ? (
             <a
               href={rowData.files_by_admin}
@@ -91,7 +86,12 @@ const AnnouncementTableData = () => {
   return (
     <>
       <div>
-        {results && <TableContainer columns={columns} data={results} />}
+        <MaterialTableContainer
+          columns={columns}
+          url="adminnotices"
+          filter={`ordering=-id`}
+          title="Announcement"
+        />
       </div>
     </>
   );

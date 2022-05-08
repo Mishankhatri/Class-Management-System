@@ -51,6 +51,9 @@ export const AdminAnnouncementDelete = (id) => {
         dispatch(GetAdminFilterAnnouncement("ordering=-id&for=all"));
       })
       .then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
         dispatch(
           createMessage({
             deleteAnnouncement: "Announcement Deleted Successully",
@@ -72,6 +75,9 @@ export const AdminAnnouncementDeleteSpecific = (id, user) => {
         dispatch(GetAdminAnnouncement(`admin=${user.username}&ordering=-id`));
       })
       .then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
         dispatch(
           createMessage({
             deleteAnnouncement: "Announcement Deleted Successully",

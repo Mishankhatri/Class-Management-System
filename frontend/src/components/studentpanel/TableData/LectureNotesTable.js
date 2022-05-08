@@ -1,59 +1,50 @@
 import React, { useEffect, useState, useMemo } from "react";
-import TableContainer from "../../common/Table/TableContainer";
-import { SelectColumnFilter } from "../../common/Table/filters";
+import MaterialTableContainer from "../../../common/MaterialTableFilter";
 import { useDispatch, useSelector } from "react-redux";
 import { GetLectureNotesFilter } from "./../../../redux/actions/teacher/teacheractions";
 import axiosInstance from "./../../../axios";
+import Loading from "../../common/Loading";
 
 const LectureNotesTable = () => {
   const dispatch = useDispatch();
-  const { lectureNotesFilter } = useSelector((state) => state.teachers);
+  const [gradeId, setGradeId] = useState(null);
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     axiosInstance
       .get(`/student?user=${user.id}`)
       .then(({ data: { results } }) => {
-        dispatch(
-          GetLectureNotesFilter(
-            `?ordering=-id&grade=${results[0].current_grade.id}`
-          )
-        );
+        setGradeId(results[0].current_grade.id);
       });
   }, []);
 
   const columns = useMemo(
     () => [
       {
-        Header: "SN",
-        SearchAble: false,
-        Cell: ({ row: { index } }) => {
+        title: "SN",
+        width: 100,
+        render: ({ tableData: { id: index } }) => {
           return index + 1;
         },
       },
       {
-        Header: "Course",
-        accessor: "subject",
-        Filter: SelectColumnFilter,
-        SearchAble: true,
+        title: "Course",
+        field: "subject",
       },
       {
-        Header: "Teacher",
-        accessor: "teacher",
-        SearchAble: true,
+        title: "Teacher",
+        field: "teacher",
       },
       {
-        Header: "Description",
-        accessor: "description",
-        SearchAble: false,
+        title: "Description",
+        field: "description",
       },
       {
-        Header: "File",
-        SearchAble: false,
-        Cell: ({ row }) => {
-          return row.original.notes_files ? (
+        title: "File",
+        render: (row) => {
+          return row.notes_files ? (
             <a
-              href={row.original.notes_files}
+              href={row.notes_files}
               target="_blank"
               className="btn-primary  btn-custom"
               style={{ background: "#012346", textDecoration: "none" }}>
@@ -68,14 +59,19 @@ const LectureNotesTable = () => {
     []
   );
 
-  return (
+  return gradeId ? (
     <>
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        {lectureNotesFilter && (
-          <TableContainer columns={columns} data={lectureNotesFilter} />
-        )}
+        <MaterialTableContainer
+          columns={columns}
+          url={"lecturenotes"}
+          title="View Lecture Notes"
+          filter={`grade=${gradeId}&ordering=-id`}
+        />
       </div>
     </>
+  ) : (
+    <Loading />
   );
 };
 
