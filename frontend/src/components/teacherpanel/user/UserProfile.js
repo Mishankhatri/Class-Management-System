@@ -8,7 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import ViewModal from "./../../common/Modal/ViewModal";
 import Loading from "./../../common/Loading";
 import { GET_DETAILS } from "../../../redux/actions/student/studentactions";
-import { ChangeUserImage, UpdateUserInfo } from "../../../redux/actions/admin/adminaction";
+import {
+  ChangeUserImage,
+  UpdateUserInfo,
+} from "../../../redux/actions/admin/adminaction";
 
 function UserProfile({ image }) {
   const [click, setClick] = useState(false);
@@ -33,7 +36,7 @@ function UserProfile({ image }) {
     e.preventDefault();
     setPreviosImage(BlankProfile);
     setClick(false);
-    
+
     const postData = new FormData();
     postData.append("profile_image", uploadedImage);
     dispatch(ChangeUserImage(postData));
@@ -42,7 +45,6 @@ function UserProfile({ image }) {
   const ChangeUserInfo = (data) => {
     const postdata = new FormData();
     postdata.append("username", data.username);
-    postdata.append("email", data.email);
     dispatch(UpdateUserInfo(postdata));
   };
 
@@ -93,7 +95,7 @@ function UserProfile({ image }) {
                     <div className="information__info">
                       <ViewModal
                         title={"Email"}
-                        disabled={false}
+                        disabled={true}
                         value={user.email}
                         name={"email"}
                         register={register}

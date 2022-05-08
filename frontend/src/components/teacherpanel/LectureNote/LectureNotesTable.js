@@ -1,13 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { SelectColumnFilter } from "./../../common/Table/filters";
-import TableContainer from "./../../common/Table/TableContainer";
+
+import MaterialTableContainer from "./../../../common/MaterialTableFilter";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  DeleteLectureNotes,
-  GetLectureNotes,
-  TeacherDetail,
-} from "../../../redux/actions/teacher/teacheractions";
-import Loading from "./../../common/Loading";
+import { DeleteLectureNotes } from "../../../redux/actions/teacher/teacheractions";
+
 import CustomConfirm from "../../common/CustomConfirm";
 import axiosInstance from "../../../axios";
 
@@ -15,17 +11,14 @@ const LectureNotesTable = () => {
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
   const { user } = useSelector((state) => state.auth);
-  const { lecturenotes } = useSelector((state) => state.teachers);
-  const [teacherId, setTeacherId] = useState(null);
 
-  const dispatch = useDispatch();
+  const [teacherId, setTeacherId] = useState(null);
 
   useEffect(() => {
     axiosInstance
       .get(`/teacher?user=${user.id}`)
       .then(({ data: { results } }) => {
         setTeacherId(results[0].id);
-        dispatch(GetLectureNotes(results[0].id));
       });
   }, []);
 
@@ -37,35 +30,31 @@ const LectureNotesTable = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "SN",
-        SearchAble: false,
-        Cell: ({ row: { index } }) => {
+        title: "SN",
+        width: 100,
+        render: ({ tableData: { id: index } }) => {
           return index + 1;
         },
       },
       {
-        Header: "Subject",
-        accessor: "subject",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
-        filter: "includes",
+        title: "Subject",
+        field: "subject",
+        maxWidth: 200,
       },
       {
-        Header: "Class",
-        accessor: "grade",
-        SearchAble: true,
+        title: "Class",
+        field: "grade",
+        width: 100,
       },
 
       {
-        Header: "Description",
-        accessor: "description",
-        Filter: SelectColumnFilter,
-        filter: "includes",
-        SearchAble: false,
+        title: "Description",
+        field: "description",
       },
       {
-        Header: "Files",
-        accessor: ({ notes_files }) => {
+        title: "Files",
+        width: 100,
+        render: ({ notes_files }) => {
           return notes_files ? (
             <a
               href={notes_files}
@@ -81,14 +70,14 @@ const LectureNotesTable = () => {
       },
 
       {
-        Header: "Action",
-        SearchAble: false,
-        Cell: ({ row }) => {
+        title: "Action",
+        width: 100,
+        render: (row) => {
           return (
             <>
               <button
                 className="btn-danger btn-custom"
-                onClick={() => handleDelete(row.original.id)}>
+                onClick={() => handleDelete(row.id)}>
                 Delete
               </button>
             </>
@@ -99,7 +88,7 @@ const LectureNotesTable = () => {
     []
   );
 
-  return lecturenotes ? (
+  return (
     <>
       {clickDelete && (
         <CustomConfirm
@@ -114,11 +103,14 @@ const LectureNotesTable = () => {
         />
       )}
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        <TableContainer columns={columns} data={lecturenotes} />
+        <MaterialTableContainer
+          columns={columns}
+          url={"lecturenotes"}
+          title="Lecture Notes"
+          filter={`teacher=${user.username}`}
+        />
       </div>
     </>
-  ) : (
-    <Loading />
   );
 };
 

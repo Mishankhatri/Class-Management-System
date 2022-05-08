@@ -23,7 +23,7 @@ export const ViewSubjects = () => {
 
 export const ViewSubjectsFilter = (filter) => {
   return function (dispatch) {
-    axiosInstance.get(`/subjects/?${filter}`).then(({ data }) => {
+    axiosInstance.get(`/subjects/${filter}`).then(({ data }) => {
       dispatch({ type: VIEW_SUBJECTS_ID, payload: data });
     });
   };
@@ -38,6 +38,9 @@ export const SubjectDelete = (id) => {
         dispatch(ViewSubjects());
       })
       .then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
         dispatch(
           createMessage({
             deleteSubject: "Selected Subjects Deleted Successully",

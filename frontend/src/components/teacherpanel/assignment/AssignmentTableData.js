@@ -1,35 +1,22 @@
-import React, { useMemo, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  DeleteTeacherGivenAssignment,
-  GetTeacherGivenAssignment,
-} from "../../../redux/actions/teacher/teacheractions";
+import { DeleteTeacherGivenAssignment } from "../../../redux/actions/teacher/teacheractions";
 import CustomConfirm from "../../common/CustomConfirm";
-import Loading from "../../common/Loading";
-import TableContainer from "./../../common/Table/TableContainer";
+import MaterialTableContainer from "../../../common/MaterialTableFilter";
 import moment from "moment";
-import { SelectColumnFilter } from "../../common/Table/filters";
-import reverseArray from "./../../common/ReverseArray";
 
 const AssignmentTableData = () => {
   const navigate = useNavigate();
 
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
-  const dispatch = useDispatch();
-  const { assignments } = useSelector((state) => state.teachers);
+
   const { user } = useSelector((state) => state.auth);
 
-  const filterAssignment = assignments && reverseArray(assignments);
-
   const handleView = (row) => {
-    navigate(`/teacher/assignment/view/id=${row.original.id}`);
+    navigate(`/teacher/assignment/view/id=${row.id}`);
   };
-
-  useEffect(() => {
-    dispatch(GetTeacherGivenAssignment(user.username));
-  }, []);
 
   const handleDelete = (id) => {
     setdeleteId(id);
@@ -39,39 +26,34 @@ const AssignmentTableData = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "Class",
-        accessor: (d) => `${d.for_grade.class_name}: ${d.for_grade.section}`,
-        SearchAble: true,
-        Filter: SelectColumnFilter,
+        title: "Class",
+        width: 150,
+        render: (d) => `${d.for_grade.class_name}: ${d.for_grade.section}`,
       },
       {
-        Header: "Subject",
-        accessor: "subject",
-        SearchAble: true,
+        title: "Subject",
+        minwidth: 200,
+        field: "subject",
       },
       {
-        Header: "Title",
-        accessor: "title",
-        SearchAble: false,
+        title: "Title",
+        field: "title",
       },
 
       {
-        Header: "Date due",
-        accessor: "date_due",
-        SearchAble: false,
+        title: "Date due",
+        field: "date_due",
       },
 
       {
-        Header: "Time due",
-        accessor: (d) => {
+        title: "Time due",
+        render: (d) => {
           return moment(d.time_due, "HH,mm").format("LT");
         },
-        SearchAble: false,
       },
       {
-        Header: "Action",
-        SearchAble: false,
-        Cell: ({ row }) => {
+        title: "Action",
+        render: (row) => {
           return (
             <>
               <button
@@ -81,7 +63,7 @@ const AssignmentTableData = () => {
               </button>
               <button
                 className="btn-custom btn-danger"
-                onClick={() => handleDelete(row.original.id)}>
+                onClick={() => handleDelete(row.id)}>
                 Delete
               </button>
             </>
@@ -92,7 +74,7 @@ const AssignmentTableData = () => {
     []
   );
 
-  return filterAssignment ? (
+  return (
     <>
       {clickDelete && (
         <CustomConfirm
@@ -107,11 +89,14 @@ const AssignmentTableData = () => {
         />
       )}
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        <TableContainer columns={columns} data={filterAssignment} />
+        <MaterialTableContainer
+          columns={columns}
+          url={"givenassignments"}
+          title="View Assignments"
+          filter={`teacher=${user.username}&ordering=-id`}
+        />
       </div>
     </>
-  ) : (
-    <Loading />
   );
 };
 

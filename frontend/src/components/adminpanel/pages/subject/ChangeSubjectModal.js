@@ -9,10 +9,8 @@ import { GetPaginatedGradePromise } from "./../../../GetOptions";
 import { UniqueArray } from "../../../common/ReverseArray";
 
 function ChangeSubjectModal({ register, data, Controller, control }) {
-  const [selectClassRef, setClassRef] = useState(null);
   const [selectSectionRef, setSectionRef] = useState(null);
 
-  const refClearClass = (ref) => setClassRef(ref);
   const refClearSection = (ref) => setSectionRef(ref);
 
   const [grade, setGrade] = useState([]);
@@ -33,14 +31,16 @@ function ChangeSubjectModal({ register, data, Controller, control }) {
   const uniqueGrade = UniqueArray(grade, "class_name");
 
   const getSection = (data) => {
-    const sectionOptions = grade.filter(
-      (value) => value.class_name == data.value
-    );
+    if (data) {
+      const sectionOptions = grade.filter(
+        (value) => value.class_name == data.value
+      );
 
-    return sectionOptions.map((value) => ({
-      label: value.section,
-      value: value.section,
-    }));
+      return sectionOptions.map((value) => ({
+        label: value.section,
+        value: value.section,
+      }));
+    }
   };
 
   const classOptions = uniqueGrade.map((value) => ({
@@ -84,7 +84,6 @@ function ChangeSubjectModal({ register, data, Controller, control }) {
                 title={"Class"}
                 name="subjectClass"
                 hasValue={true}
-                refClear={refClearClass}
                 onChangeHandler={(data) => {
                   selectSectionRef.clearValue();
                   handleSection(data);
@@ -117,11 +116,7 @@ function ChangeSubjectModal({ register, data, Controller, control }) {
                   label: data.grade.section,
                   value: data.grade.section,
                 }}
-                options={[
-                  { value: "A", label: "A" },
-                  { value: "B", label: "B" },
-                  { value: "C", label: "C" },
-                ]}
+                options={section}
               />
             )}
           />

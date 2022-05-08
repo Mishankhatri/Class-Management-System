@@ -4,9 +4,9 @@ import * as FaIcons from "react-icons/fa";
 import InnerHeader from "../common/InnerHeader";
 import AttendanceTableData from "./TableData/AttendanceTableData";
 import TextInput from "../common/InputField/TextInput";
-import { useDispatch, useSelector } from "react-redux";
-import { ViewStudentAttendanceByFilter } from "../../redux/actions/subjectactions";
+
 import axiosInstance from "../../axios";
+import { useSelector } from "react-redux";
 
 function ViewAttendance() {
   const { user } = useSelector((state) => state.auth);
@@ -14,13 +14,9 @@ function ViewAttendance() {
 
   useEffect(() => {
     axiosInstance
-      .get(`/student?user=${user.id}`)
+      .get(`/attendance?student=${user.username}`)
       .then(({ data: { results } }) => {
-        axiosInstance
-          .get(`/attendance?student=${results[0].id}`)
-          .then(({ data: { results } }) => {
-            setAttendance(results);
-          });
+        setAttendance(results);
       });
   }, []);
 

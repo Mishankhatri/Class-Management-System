@@ -26,10 +26,9 @@ export const GET_DETAILS = (url, type, filter) => {
             });
           })
           .catch((err) => {
-            if (typeof err.response === "undefined"){
-              console.log(err)
-            }
-            else{
+            if (typeof err.response === "undefined") {
+              console.log(err);
+            } else {
               dispatch(returnErrors(err.response.data, err.response.status));
             }
           })
@@ -42,10 +41,9 @@ export const GET_DETAILS = (url, type, filter) => {
             });
           })
           .catch((err) => {
-            if (typeof err.response === "undefined"){
-              console.log(err)
-            }
-            else{
+            if (typeof err.response === "undefined") {
+              console.log(err);
+            } else {
               dispatch(returnErrors(err.response.data, err.response.status));
             }
           });
@@ -84,16 +82,18 @@ export const StudentByUserId = (id) => {
   };
 };
 
-export const StudentDelete = (id) => {
+export const StudentDelete = (id, url, query) => {
   return function (dispatch) {
     axiosInstance
       .delete(`/student/${id}`)
-      .then(({ data }) => {
-        console.log("deleted");
+      .then(() => {
         dispatch({ type: DELETE_STUDENT });
-        dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
+        // dispatch(GET_DETAILS("/student", "GET_STUDENT_DETAIL"));
       })
       .then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
         dispatch(
           createMessage({ deleteStudent: "Student Deleted Successfully" })
         );

@@ -1,26 +1,17 @@
-import React, { useState, useMemo, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import TableContainer from "../../../common/Table/TableContainer";
+import React, { useState, useMemo } from "react";
+import MaterialTableContainer from "../../../../common/MaterialTableContainer";
 import moment from "moment";
-import { SelectColumnFilter } from "../../../common/Table/filters";
 import CustomConfirm from "../../../common/CustomConfirm";
-import {
-  DeleteTimetables,
-  GetAdminTimetables,
-} from "../../../../redux/actions/admin/adminaction";
+import { DeleteTimetables } from "../../../../redux/actions/admin/adminaction";
 import { useNavigate } from "react-router-dom";
+import InnerHeader from "../../../common/InnerHeader";
+import { MdPersonAdd } from "react-icons/md";
 
 const ViewTimetableAdmin = () => {
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
-
-  const { timetables } = useSelector((state) => state.admins);
-
-  useEffect(() => {
-    dispatch(GetAdminTimetables());
-  }, []);
 
   const handleDelete = (id) => {
     setdeleteId(id);
@@ -30,67 +21,60 @@ const ViewTimetableAdmin = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "SN",
-        SearchAble: false,
-        Cell: ({ row: { index } }) => {
+        title: "SN",
+        width: 100,
+        render: ({ tableData: { id: index } }) => {
           return index + 1;
         },
       },
       {
-        Header: "Day",
-        accessor: "day",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
+        title: "Day",
+        field: "day",
       },
       {
-        Header: "Time",
-        accessor: (d) => {
+        title: "Time",
+        width: 250,
+        render: (d) => {
           const startTime = moment(d.startTime, "HH,mm").format("LT");
           const endTime = moment(d.endTime, "HH,mm").format("LT");
           return `${startTime} to ${endTime}`;
         },
-        SearchAble: true,
       },
       {
-        Header: "Class",
-        accessor: (data) => {
+        title: "Class",
+        render: (data) => {
           return `${data.assigned.grade?.class_name} : ${data.assigned.grade?.section}`;
         },
-        SearchAble: true,
-        Filter: SelectColumnFilter,
       },
       {
-        Header: "Subject",
-        accessor: (data) => {
+        title: "Subject",
+        render: (data) => {
           return `${data.assigned.subject.subject_name}:${data.assigned.subject.subject_code}`;
         },
-        SearchAble: true,
       },
       {
-        Header: "Teacher",
-        accessor: (d) => {
+        title: "Teacher",
+        render: (d) => {
           return `${d.assigned.teacher.first_name} ${
             d.assigned.teacher.middle_name ? d.assigned.teacher.middle_name : ""
           } ${d.assigned.teacher.last_name}`;
         },
-        SearchAble: true,
       },
       {
-        Header: "Action",
-        SearchAble: false,
-        Cell: ({ row }) => {
+        title: "Action",
+        render: (row) => {
           return (
             <>
               <button
                 onClick={() => {
-                  navigate(`${row.original.id}`);
+                  navigate(`${row.id}`);
                 }}
                 className="btn-primary btn-1 btn-custom">
                 View
               </button>
               <button
                 className="btn-danger btn-custom"
-                onClick={() => handleDelete(row.original.id)}>
+                onClick={() => handleDelete(row.id)}>
                 Delete
               </button>
             </>
@@ -114,8 +98,13 @@ const ViewTimetableAdmin = () => {
           PeformDelete={DeleteTimetables}
         />
       )}
+      <InnerHeader icon={<MdPersonAdd />} name={"View Timetables"} />
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        {timetables && <TableContainer columns={columns} data={timetables} />}
+        <MaterialTableContainer
+          columns={columns}
+          url={"timetable"}
+          title="View Timetables"
+        />
       </div>
     </>
   );

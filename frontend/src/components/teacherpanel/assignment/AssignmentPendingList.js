@@ -8,7 +8,8 @@ const AssignmentPendingList = ({ data, assignment }) => {
   useEffect(() => {
     const getOptions = async () => {
       const studentList = await GetPaginatedFilterPromise(
-        `student/?grade=${assignment.for_grade.id}`
+        "student",
+        `grade=${assignment.for_grade.id}`
       );
       if (data.length === 0) return setStudent(studentList);
       else {

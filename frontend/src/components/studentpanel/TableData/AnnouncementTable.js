@@ -1,35 +1,19 @@
-import React, { useMemo, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { SelectColumnFilter } from "../../common/Table/filters";
-import TableContainer from "../../common/Table/TableContainer";
+import React, { useMemo } from "react";
 import Moment from "react-moment";
-import reverseArray from "../../common/ReverseArray";
-import { GetAdminFilterAnnouncement } from "./../../../redux/actions/admin/announcementaction";
+import MaterialTableContainer from "../../../common/MaterialTableFilter";
 
 const AnnouncementTable = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(GetAdminFilterAnnouncement("ordering=-id&for=all"));
-  }, [dispatch]);
-
-  const { adminfilternotices } = useSelector((state) => state.admins);
-  const data = adminfilternotices && adminfilternotices.results;
-
-  // console.log(data.reverse());
   const columns = useMemo(
     () => [
       {
-        Header: "Type",
-        accessor: "type",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
-        className: "subject-column",
+        title: "Type",
+        width: 100,
+        field: "type",
       },
 
       {
-        Header: "Details",
-        className: "detail-column",
-        accessor: (rowData) => {
+        title: "Details",
+        render: (rowData) => {
           const dates = <Moment fromNow>{rowData.created_at}</Moment>;
 
           return (
@@ -46,7 +30,7 @@ const AnnouncementTable = () => {
                     <span className="announced">
                       Announced By:{"  "}
                       <span className="createdby">
-                        {rowData.created_by.fullname}
+                        {rowData.created_by.username}
                       </span>
                     </span>
                     <span>
@@ -63,12 +47,14 @@ const AnnouncementTable = () => {
         },
       },
       {
-        Header: "Files",
-        accessor: (rowData) => {
+        title: "Files",
+        width: 100,
+        render: (rowData) => {
           return rowData.files_by_admin ? (
             <a
               href={rowData.files_by_admin}
               target="_blank"
+              rel="noopener noreferrer"
               className="btn-primary btn-custom"
               style={{ textDecoration: "none" }}>
               Download
@@ -84,7 +70,14 @@ const AnnouncementTable = () => {
 
   return (
     <>
-      <div>{data && <TableContainer columns={columns} data={data} />}</div>
+      <div>
+        <MaterialTableContainer
+          columns={columns}
+          url="adminnotices"
+          title={"Admin Announcements"}
+          filter={`for=all&ordering=-id`}
+        />
+      </div>
     </>
   );
 };

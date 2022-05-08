@@ -6,9 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import AttendanceTableData from "./AttendanceMarkTableData";
 import { UniqueArray } from "../../common/ReverseArray";
-import {
-  GetPaginatedAssignedPromise,
-} from "../../GetOptions";
+import { GetPaginatedAssignedPromise } from "../../GetOptions";
 import axiosInstance from "../../../axios";
 import {
   createMessage,
@@ -38,7 +36,7 @@ function MarkAttendance() {
   //Setting reference of class
   const [classRef, setClassRef] = useState([]);
   const [sectionRef, setSectionRef] = useState([]);
-  let teacherId  = useRef(null)
+  let teacherId = useRef(null);
   useEffect(() => {
     const GetOptions = async () => {
       try {
@@ -46,7 +44,6 @@ function MarkAttendance() {
           "AssignTeacherToSubjectsAPI",
           user.id
         );
-
         setAssignedTeacher(got);
       } catch (error) {
         console.log(error);
@@ -54,11 +51,11 @@ function MarkAttendance() {
     };
     GetOptions();
   }, []);
-  
-  if (Object.keys(assignedTeacher).length !== 0){
-    teacherId.current = assignedTeacher[0].teacher.id
+
+  if (Object.keys(assignedTeacher).length !== 0) {
+    teacherId.current = assignedTeacher[0].teacher.id;
   }
-  
+
   const uniqueGrade = UniqueArray(assignedTeacher, "grade");
   const classOptions = UniqueArray(uniqueGrade, "class_name")
     .sort()
@@ -74,7 +71,10 @@ function MarkAttendance() {
   };
 
   const getSubjects = (data) => {
-    const subjects = data.map((value) => [value.subject.id,value.subject.subject_name]);
+    const subjects = data.map((value) => [
+      value.subject.id,
+      value.subject.subject_name,
+    ]);
     return subjects.map((section) => ({
       id: section[0],
       label: section[1],
@@ -243,7 +243,7 @@ function MarkAttendance() {
             <AttendanceTableData
               attendanceClassDetails={attendanceClassDetails}
               fetchStudents={fetchStudents}
-              teacherId = {teacherId.current}
+              teacherId={teacherId.current}
             />
           </div>
         </div>

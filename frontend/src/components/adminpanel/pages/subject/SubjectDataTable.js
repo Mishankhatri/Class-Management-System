@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import TableContainer from "../../../common/Table/TableContainer";
+import MaterialTableContainer from "../../../../common/MaterialTableContainer";
 import { useSelector, useDispatch } from "react-redux";
 import {
   SubjectDelete,
@@ -28,46 +28,41 @@ const SubjectDataTable = ({ click, setClick }) => {
   const columns = useMemo(
     () => [
       {
-        Header: "SN",
-        SearchAble: false,
-        Cell: ({ row: { index } }) => {
+        title: "SN",
+        render: ({ tableData: { id: index } }) => {
           return index + 1;
         },
       },
       {
-        Header: "Subject",
-        accessor: "subject_name",
-        SearchAble: true,
+        title: "Subject",
+        field: "subject_name",
       },
       {
-        Header: "SubjectCode",
-        accessor: "subject_code",
-        SearchAble: true,
+        title: "SubjectCode",
+        field: "subject_code",
       },
       {
-        Header: "Class",
-        accessor: (d) => {
+        title: "Class",
+        render: (d) => {
           return `${d.grade.class_name}:${d.grade.section}`;
         },
-        SearchAble: true,
       },
 
       {
-        Header: "Action",
-        SearchAble: false,
-        Cell: ({ row }) => {
+        title: "Action",
+        render: (row) => {
           return (
             <>
               <button
                 onClick={() => {
-                  navigate(`${row.original.id}`);
+                  navigate(`${row.id}`);
                 }}
                 className="btn-primary btn-1 btn-custom">
                 View
               </button>
               <button
                 className="btn-danger btn-custom"
-                onClick={() => handleDelete(row.original.id)}>
+                onClick={() => handleDelete(row.id)}>
                 Delete
               </button>
             </>
@@ -92,7 +87,11 @@ const SubjectDataTable = ({ click, setClick }) => {
         />
       )}
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        <TableContainer columns={columns} data={data} />
+        <MaterialTableContainer
+          columns={columns}
+          url={"subjects"}
+          title="View Subjects"
+        />
       </div>
     </>
   ) : (

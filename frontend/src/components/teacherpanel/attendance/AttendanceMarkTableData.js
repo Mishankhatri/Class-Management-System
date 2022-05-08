@@ -1,25 +1,40 @@
-import React, { useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GET_DETAILS } from "../../../redux/actions/student/studentactions";
 import ToggleSwitch from "../../common/InputField/ToggleSwitch";
-import TableContainer from "../../common/Table/TableContainer";
-import { useForm, Controller } from "react-hook-form";
-import { createMessage } from "../../../redux/actions/alertactions";
-import { FaCalendar } from "react-icons/fa";
-import InputField from "../../common/InputField/InputField";
-import { CreateBulkAttendance } from "../../../redux/actions/teacher/teacheractions";
+import TableContainer from "../../common/Table/TableContainerAttendance";
+import { useForm } from "react-hook-form";
 
-const AttendanceTableData = ({ attendanceClassDetails, fetchStudents, teacherId}) => {
-  const { handleSubmit, control } = useForm();
+import { CreateBulkAttendance } from "../../../redux/actions/teacher/teacheractions";
+import moment from "moment";
+import { GetPaginatedFilterPromise } from "../../GetOptions";
+
+const AttendanceTableData = ({
+  attendanceClassDetails,
+  fetchStudents,
+  teacherId,
+}) => {
+  const { handleSubmit } = useForm();
   const studentsData = useSelector((state) => state.students);
   const dispatch = useDispatch();
   let renderData = [];
   let attendanceMap = {};
+  const [attendance, setAttendance] = useState([]);
 
   useEffect(() => {
     if (fetchStudents === true) {
       let filter = `grade=${attendanceClassDetails.grade}`;
       dispatch(GET_DETAILS("/student", "GET_STUDENTS_FOR_ATTENDANCE", filter));
+
+      const GetOptions = async () => {
+        const got = await GetPaginatedFilterPromise(
+          "student",
+          `grade=${attendanceClassDetails.grade}`
+        );
+        setAttendance(got);
+      };
+
+      GetOptions();
     }
   }, [attendanceClassDetails.grade, dispatch, fetchStudents]);
 
@@ -43,84 +58,64 @@ const AttendanceTableData = ({ attendanceClassDetails, fetchStudents, teacherId}
       attendanceMap = { ...initialAttendanceMap };
       return [cleanedData, attendanceMap];
     };
-    [renderData, attendanceMap] = createDataToRender(
-      studentsData?.students_for_attendance.results
-    );
+    [renderData, attendanceMap] = createDataToRender(attendance);
   }
   const handleChange = (obtainedId, checked) => {
     attendanceMap[obtainedId] = checked === true ? "PRESENT" : "ABSENT";
   };
-  const createArrayFromObject =(data_obj)=>{
-    let returnArray  = []
-    for (let [ k,v] of Object.entries(data_obj)){
-      let individualArr = []
+  const createArrayFromObject = (data_obj) => {
+    let returnArray = [];
+    for (let [k, v] of Object.entries(data_obj)) {
+      let individualArr = [];
       individualArr.push(k);
-      individualArr.push(v)
-      returnArray.push(individualArr)
+      individualArr.push(v);
+      returnArray.push(individualArr);
     }
-    return returnArray
-  } 
-  const onSubmitForm = (data, e) => {
-    if (!data.date) {
-      dispatch(createMessage({ dateRequired: "Date field is required" }));
-    }
-    else{
-      // const postDataSample = {
-      // "date": "2024-04-02",
-      // "teacher": 2,
-      // "subject": 2,
-      // "grade": 1,
-      // "students": [
-      // [3, "ABSENT"],
-      // [5, "PRESENT"]
-      // ]
-      // }
-      let postObj = {}
-      postObj["date"] = data.date
-      postObj["teacher"] = teacherId
-      postObj["subject"] = attendanceClassDetails.subject
-      postObj["grade"] = attendanceClassDetails.grade
-      let studentsAttandanceArray = createArrayFromObject(attendanceMap)
-      postObj["students"] = studentsAttandanceArray
-      Object.freeze(postObj)
-      const postData = JSON.stringify(postObj);
-      dispatch(CreateBulkAttendance(postData))
-    }
+    return returnArray;
   };
-  const columns =[
-      {
-        Header: "SRN No",
-        accessor: "SRN",
-        SearchAble: false,
-      },
-      {
-        Header: "First Name",
-        accessor: "first_name",
-        SearchAble: false,
-      },
-      {
-        Header: "Second Name",
-        accessor: "last_name",
-        SearchAble: false,
-      },
+  const onSubmitForm = (data, e) => {
+    const todayDate = moment().format("YYYY-MM-DD");
+    let postObj = {};
+    postObj["date"] = todayDate;
+    postObj["teacher"] = teacherId;
+    postObj["subject"] = attendanceClassDetails.subject;
+    postObj["grade"] = attendanceClassDetails.grade;
+    let studentsAttandanceArray = createArrayFromObject(attendanceMap);
+    postObj["students"] = studentsAttandanceArray;
+    Object.freeze(postObj);
+    const postData = JSON.stringify(postObj);
+    dispatch(CreateBulkAttendance(postData));
+  };
+  const columns = [
+    {
+      Header: "SRN No",
+      accessor: "SRN",
+    },
+    {
+      Header: "First Name",
+      accessor: "first_name",
+    },
+    {
+      Header: "Second Name",
+      accessor: "last_name",
+    },
 
-      {
-        Header: "Action",
-        SearchAble: false,
-        Cell: ({ row }) => {
-          return (
-            <>
-              <ToggleSwitch
-                id={row.original.student_id}
-                name={"attendance"}
-                onChangeHandler={handleChange}
-                optionLabels={["P", "A"]}
-              />
-            </>
-          );
-        },
+    {
+      Header: "Action",
+      Cell: ({ row }) => {
+        return (
+          <>
+            <ToggleSwitch
+              id={row.original.student_id}
+              name={"attendance"}
+              onChangeHandler={handleChange}
+              optionLabels={["P", "A"]}
+            />
+          </>
+        );
       },
-    ];
+    },
+  ];
 
   return (
     <>
@@ -128,7 +123,7 @@ const AttendanceTableData = ({ attendanceClassDetails, fetchStudents, teacherId}
         <TableContainer columns={columns} data={renderData} />
       </div>
       <form onSubmit={handleSubmit(onSubmitForm)}>
-        <Controller
+        {/* <Controller
           name={"date"}
           control={control}
           defaultValue=""
@@ -142,12 +137,11 @@ const AttendanceTableData = ({ attendanceClassDetails, fetchStudents, teacherId}
               isRequired={true}
             />
           )}
-        />
+        /> */}
         <button
           className="morebutton btn"
           style={{ margin: "20px 30px 10px" }}
-          type="submit"
-        >
+          type="submit">
           Save
         </button>
       </form>

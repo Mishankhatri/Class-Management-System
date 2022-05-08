@@ -1,41 +1,34 @@
 import React, { useMemo } from "react";
-import TableContainer from "../../common/Table/TableContainer";
-import {
-  DateRangeColumnFilter,
-  SelectColumnFilter,
-} from "./../../common/Table/filters";
+import { useSelector } from "react-redux";
+import MaterialTableContainer from "../../../common/MaterialTableFilter";
 
-const AttendanceTableData = ({ attendance }) => {
+const AttendanceTableData = () => {
+  const { user } = useSelector((state) => state.auth);
   const columns = useMemo(
     () => [
       {
-        Header: "SN",
-        Cell: ({ row }) => row.index + 1,
+        title: "SN",
+        render: ({ tableData: row }) => row.id + 1,
       },
       {
-        Header: "Date",
-        accessor: "date",
-        Filter: DateRangeColumnFilter,
-        filter: "dateBetween",
-        SearchAble: true,
+        title: "Date",
+        field: "date",
       },
       {
-        Header: "Subject",
-        accessor: "subject",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
+        title: "Subject",
+        render: (d) => {
+          return `${d.subject?.subject_name}: ${d.subject?.subject_code}`;
+        },
       },
       {
-        Header: "Teacher",
-        accessor: "teacher",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
+        title: "Teacher",
+        render: (d) => {
+          return `${d.teacher.first_name} ${d.teacher.middle_name} ${d.teacher.last_name}`;
+        },
       },
       {
-        Header: "Attendance",
-        accessor: "attendance_status",
-        Filter: SelectColumnFilter,
-        SearchAble: true,
+        title: "Attendance",
+        field: "attendance_status",
       },
     ],
     []
@@ -44,10 +37,11 @@ const AttendanceTableData = ({ attendance }) => {
   return (
     <>
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        <TableContainer
+        <MaterialTableContainer
           columns={columns}
-          data={attendance}
-          isRangeSearch={true}
+          url="attendance"
+          title={"Attendance"}
+          filter={`student=${user.username}`}
         />
       </div>
     </>

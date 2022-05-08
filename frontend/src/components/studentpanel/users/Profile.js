@@ -11,7 +11,10 @@ import {
   AddStudentParentDetail,
   GET_DETAILS,
 } from "../../../redux/actions/student/studentactions";
-import { ChangeUserImage, UpdateUserInfo } from "../../../redux/actions/admin/adminaction";
+import {
+  ChangeUserImage,
+  UpdateUserInfo,
+} from "../../../redux/actions/admin/adminaction";
 
 function UserProfile() {
   const [click, setClick] = useState(false);
@@ -25,19 +28,21 @@ function UserProfile() {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   useEffect(() => {
-    if (studentDetails){
+    if (studentDetails) {
       const s_id = studentDetails[0]?.id;
-      dispatch(GET_DETAILS("/parent", "GET_STUDENT_PARENTS", `student=${s_id}`));
+      dispatch(
+        GET_DETAILS("/parent", "GET_STUDENT_PARENTS", `student=${s_id}`)
+      );
     }
   }, [dispatch, studentDetails]);
 
-  const parents = studentParent && studentParent.results[0]
+  const parents = studentParent && studentParent.results[0];
 
   const onSubmitImage = (e) => {
     e.preventDefault();
     setPreviosImage(BlankProfile);
     setClick(false);
-    
+
     const postData = new FormData();
     postData.append("profile_image", uploadedImage);
     dispatch(ChangeUserImage(postData));
@@ -46,8 +51,6 @@ function UserProfile() {
   const ChangeUserInfo = (data) => {
     const postdata = new FormData();
     postdata.append("username", data.username);
-    postdata.append("email", data.email);
-    postdata.append("fullname", data.fullname);
     dispatch(UpdateUserInfo(postdata));
   };
 
@@ -64,7 +67,7 @@ function UserProfile() {
     );
     parentData.append("parent_email", data.parent_email);
     parentData.append("student", studentDetails[0].id);
-    dispatch(AddStudentParentDetail(studentDetails[0]?.id,parentData));
+    dispatch(AddStudentParentDetail(studentDetails[0]?.id, parentData));
   };
 
   return studentDetails ? (
@@ -91,8 +94,7 @@ function UserProfile() {
               <div className="custom-info-show">
                 <div
                   className="content-image-p userprofile"
-                  onClick={() => setClick(!click)}
-                >
+                  onClick={() => setClick(!click)}>
                   <div className="content-overlay"></div>
                   <img
                     className="content-image img-user"
@@ -122,7 +124,7 @@ function UserProfile() {
                       />
                       <ViewModal
                         title={"Email"}
-                        disabled={false}
+                        disabled={true}
                         value={user.email}
                         name={"email"}
                         register={register}
@@ -237,42 +239,42 @@ function UserProfile() {
                       register={register}
                       disabled={false}
                       isRequired={true}
-                      />
+                    />
                     <ViewModal
                       title={"Mother Name"}
                       name={"mother_name"}
                       register={register}
                       disabled={false}
                       isRequired={true}
-                      />
+                    />
                     <ViewModal
                       title={"Phone"}
                       name={"parent_contact_no"}
                       disabled={false}
                       register={register}
                       isRequired={true}
-                      />
+                    />
                     <ViewModal
                       title={"Alternate Phone"}
                       name={"parent_additional_contact_no"}
                       register={register}
                       disabled={false}
                       isRequired={true}
-                      />
+                    />
                     <ViewModal
                       title={"Email"}
                       name={"parent_email"}
                       register={register}
                       disabled={false}
                       isRequired={true}
-                      />
+                    />
                     <ViewModal
                       title={"Address"}
                       name={"parent_address"}
                       register={register}
                       disabled={false}
                       isRequired={true}
-                      />
+                    />
                     <ViewModal
                       title={"State"}
                       name={"parent_state"}

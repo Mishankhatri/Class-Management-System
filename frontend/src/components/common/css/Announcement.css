@@ -1,12 +1,13 @@
 .announcementtable {
   display: grid;
-  grid-template-columns: 1fr 90px 60px;
+  grid-template-columns: 1fr 90px;
   align-items: center;
   gap: 40px;
 }
 
 .dasboardannouncement {
   border-bottom: 0.7px solid #c8cbd9;
+  grid-template-columns: 1fr 90px 60px;
   padding-bottom: 20px;
   margin-bottom: 20px;
 }

@@ -6,6 +6,15 @@ Consists Styling of
   => Input Field
 */
 
+.MuiToolbar-regular {
+  padding-top: 25px !important;
+  padding-bottom: 16px !important;
+}
+
+.MuiPaper-rounded {
+  border-radius: 10px !important;
+}
+
 /* *******************************************Main Container Starts********************************************************* */
 .main-container {
   margin-left: 15.3rem;

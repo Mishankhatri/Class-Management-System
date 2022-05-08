@@ -1,98 +1,35 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { SelectColumnFilter } from "../../../common/Table/filters";
-import TableContainer from "../../../common/Table/TableContainer";
-import { useSelector, useDispatch } from "react-redux";
-import CustomConfirm from "./../../../common/CustomConfirm";
-import Loading from "./../../../common/Loading";
-import {
-  DeleteClassSec,
-  GetClass,
-} from "../../../../redux/actions/classactions";
+import React, { useMemo } from "react";
+import MaterialTableContainer from "../../../../common/MaterialTableContainer";
 
 const ClassTableData = () => {
-  const { grades } = useSelector((state) => state.classes);
-  const dispatch = useDispatch();
-  const [clickDelete, setClickDelete] = useState(false);
-  const [deleteId, setdeleteId] = useState(null);
-
-  useEffect(() => {
-    dispatch(GetClass());
-  }, []);
-
-  const handleDelete = (id) => {
-    setdeleteId(id);
-    setClickDelete(true);
-  };
-
   const columns = useMemo(
     () => [
       {
-        Header: "SN",
-        SearchAble: false,
-        Cell: ({ row: { index } }) => {
+        title: "SN",
+        render: ({ tableData: { id: index } }) => {
           return index + 1;
         },
       },
       {
-        Header: "Class",
-        accessor: "class_name",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
+        title: "Class",
+        field: "class_name",
       },
       {
-        Header: "Section",
-        accessor: "section",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
+        title: "Section",
+        field: "section",
       },
-      // {
-      //   Header: "Action",
-      //   SearchAble: false,
-      //   Cell: ({ row }) => {
-      //     return (
-      //       <>
-      //         <button
-      //           className="btn-danger btn-custom"
-      //           onClick={() => handleDelete(row.original.id)}>
-      //           Delete
-      //         </button>
-      //       </>
-      //     );
-      //   },
-      // },
     ],
     []
   );
 
   return (
-    <>
-      {clickDelete && (
-        <CustomConfirm
-          title={"Delete User"}
-          msg={"Are you sure you want to delete?"}
-          trueActivity={"Yes"}
-          falseActivity={"Cancel"}
-          setDelete={setClickDelete}
-          id={deleteId}
-          PeformDelete={DeleteClassSec}
-        />
-      )}
-      <div className="main-content">
-        <div className="card-section">
-          <div className="heading">
-            <span className="title-icon"></span>
-            <span className="title">View Class With Section</span>
-          </div>
-          <div className="content-section" style={{ margin: "20px 30px" }}>
-            {grades ? (
-              <TableContainer columns={columns} data={grades.results} />
-            ) : (
-              <Loading />
-            )}
-          </div>
-        </div>
-      </div>
-    </>
+    <div style={{ margin: "20px 30px" }}>
+      <MaterialTableContainer
+        columns={columns}
+        url="grades"
+        title="View Class"
+      />
+    </div>
   );
 };
 

@@ -24,7 +24,9 @@ import {
   UPDATE_TEACHER_PHOTO,
   POST_TEACHER_ANNOUNCEMENT,
   GET_TEACHER_ASSIGN,
-  ADD_BULK_ATTENDANCE
+  ADD_BULK_ATTENDANCE,
+  GET_ATTENDANCE_BYID,
+  CHANGE_STUDENT_ATTENDANCE,
 } from "../../actiontypes/teacher/teacherdatatype";
 
 const initialState = {
@@ -48,6 +50,7 @@ export default function teacherReducer(state = initialState, action) {
     case ADD_TEACHER_ASSIGNMENT:
     case CHANGE_TEACHER_ASSIGNMENT:
     case ADD_BULK_ATTENDANCE:
+    case CHANGE_STUDENT_ATTENDANCE:
       return { ...state };
 
     case GET_TEACHER_BYID:
@@ -64,6 +67,9 @@ export default function teacherReducer(state = initialState, action) {
 
     case GET_TEACHER_ASSIGNMENT_FILTER:
       return { ...state, assignmentFilter: action.payload };
+
+    case GET_ATTENDANCE_BYID:
+      return { ...state, attendanceById: action.payload };
 
     case GET_TEACHER_ANNOUNCEMENTS_BYID:
       return { ...state, teacherNoticeId: action.payload, isOpen: true };

@@ -6,8 +6,10 @@ import {
   ADD_TIMETABLES,
   CHANGE_ADMIN_PASSWORD,
   DELETE_TIMETABLES,
+  GET_TABLE_DATA,
   GET_TIMETABLES,
   GET_TIMETABLES_ID,
+  SAVE_QUERY_DATA,
   UPDATE_ADMIN_INFO,
   UPDATE_TIMETABLES,
   UPDATE_USER_IMAGE,
@@ -113,11 +115,11 @@ export const DeleteTimetables = (id, reverse = false) => {
       .delete(`/timetable/${id}`)
       .then(() => {
         dispatch({ type: DELETE_TIMETABLES });
-        reverse
-          ? dispatch(GetAdminTimetables("ordering=-id"))
-          : dispatch(GetAdminTimetables());
       })
       .then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
         dispatch(
           createMessage({
             deleteTimetables: "Selected Timetable Deleted  Successully",
@@ -183,5 +185,39 @@ export const ChangeTimetableDetail = (id, postdata) => {
       .catch((err) => {
         dispatch(returnErrors(err.response.data, err.response.status));
       });
+  };
+};
+
+export const SaveQueryData = (query) => {
+  return function (dispatch) {
+    dispatch({ type: SAVE_QUERY_DATA, payload: query });
+  };
+};
+
+export const LoadDataTable = (url, query) => {
+  return function (dispatch) {
+    return axiosInstance(
+      query.search != ""
+        ? `${url}?page=${query.page + 1}&search=${query.search}`
+        : `${url}?page=${query.page + 1}`
+    ).then((response) => {
+      const data = response.data;
+      dispatch({ type: GET_TABLE_DATA, payload: data });
+      return data;
+    });
+  };
+};
+
+export const LoadDataTableFilter = (url, query, filter) => {
+  return function (dispatch) {
+    return axiosInstance(
+      query.search != ""
+        ? `${url}?page=${query.page + 1}&search=${query.search}&${filter}`
+        : `${url}?page=${query.page + 1}&${filter}`
+    ).then((response) => {
+      const data = response.data;
+      dispatch({ type: GET_TABLE_DATA, payload: data });
+      return data;
+    });
   };
 };

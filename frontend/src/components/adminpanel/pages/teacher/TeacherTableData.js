@@ -1,27 +1,16 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import TableContainer from "./../../../common/Table/TableContainer";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  TeacherDelete,
-  TeacherDetail,
-} from "../../../../redux/actions/teacher/teacheractions";
+
+import { TeacherDelete } from "../../../../redux/actions/teacher/teacheractions";
 import CustomConfirm from "../../../common/CustomConfirm";
-import Loading from "./../../../common/Loading";
+
+import MaterialTableContainer from "../../../../common/MaterialTableContainer";
 
 const TeacherTableData = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [clickDelete, setClickDelete] = useState(false);
   const [deleteId, setdeleteId] = useState(null);
-
-  const { teacherDetail } = useSelector((state) => state.teachers);
-  const data = teacherDetail && teacherDetail.results;
-
-  useEffect(() => {
-    dispatch(TeacherDetail());
-  }, []);
 
   const onOpen = (post) => {
     navigate(`${post.id}`);
@@ -35,50 +24,45 @@ const TeacherTableData = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "SN",
-        SearchAble: false,
-        Cell: ({ row: { index } }) => {
+        title: "SN",
+        width: 100,
+        render: ({ tableData: { id: index } }) => {
           return index + 1;
         },
       },
       {
-        Header: "Full Name",
-        accessor: (d) => {
+        title: "Full Name",
+        render: (d) => {
           return `${d.first_name} ${d.middle_name ? d.middle_name : ""} ${
             d.last_name
           }`;
         },
-        SearchAble: true,
       },
       {
-        Header: "Phone",
-        accessor: "contact_no",
-        SearchAble: true,
+        title: "Phone",
+        field: "contact_no",
       },
       {
-        Header: "TRN NO",
-        accessor: "TRN",
-        SearchAble: true,
+        title: "TRN NO",
+        field: "TRN",
       },
       {
-        Header: "Address",
-        accessor: "address",
-        SearchAble: true,
+        title: "Address",
+        field: "address",
       },
       {
-        Header: "Action",
-        SearchAble: false,
-        Cell: ({ row }) => {
+        title: "Action",
+        render: (row) => {
           return (
             <>
               <button
-                onClick={() => onOpen(row.original)}
+                onClick={() => onOpen(row)}
                 className="btn-primary btn-1 btn-custom">
                 Open
               </button>
               <button
                 className="btn-danger btn-custom"
-                onClick={() => handleDelete(row.original.id)}>
+                onClick={() => handleDelete(row.id)}>
                 Delete
               </button>
             </>
@@ -103,7 +87,11 @@ const TeacherTableData = () => {
         />
       )}
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        {data ? <TableContainer columns={columns} data={data} /> : <Loading />}
+        <MaterialTableContainer
+          columns={columns}
+          title={"View Teachers"}
+          url="teacher"
+        />
       </div>
     </>
   );

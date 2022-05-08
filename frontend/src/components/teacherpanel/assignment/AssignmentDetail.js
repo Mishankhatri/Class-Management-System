@@ -38,7 +38,8 @@ function AssignmentDetail() {
   useEffect(() => {
     const getOptions = async () => {
       const data = await GetPaginatedFilterPromise(
-        `submittedassignments/?assignment=${id}`
+        "submittedassignments",
+        `assignment=${id}`
       );
       setAssignment(data);
     };

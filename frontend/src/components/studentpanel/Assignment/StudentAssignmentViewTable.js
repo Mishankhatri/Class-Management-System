@@ -1,93 +1,63 @@
 import React, { useMemo, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { SelectColumnFilter } from "../../common/Table/filters";
-import TableContainer from "./../../common/Table/TableContainer";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  GetStudentSubmittedAssignment,
-  GetTeacherAssignmentFilter,
-} from "./../../../redux/actions/teacher/teacheractions";
+import MaterialTableContainer from "./../../../common/MaterialTableFilter";
+import { useSelector } from "react-redux";
+
 import moment from "moment";
 import Loading from "../../common/Loading";
 import axiosInstance from "../../../axios";
-import { GetPaginatedPromise } from "../../GetOptions";
 
 const StudentAssignmentViewTable = () => {
   const navigate = useNavigate();
-  const [submittedData, setSubmitted] = useState([]);
+  const [gradeId, setGradeId] = useState(null);
 
-  useEffect(() => {
-    const GetOptions = async () => {
-      try {
-        const got = await GetPaginatedPromise("submittedassignments");
-        setSubmitted(got);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    dispatch(GetStudentSubmittedAssignment());
-    GetOptions();
-  }, []);
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     axiosInstance
       .get(`/student?user=${user.id}`)
       .then(({ data: { results } }) => {
-        dispatch(
-          GetTeacherAssignmentFilter(
-            `?ordering=-id&grade=${results[0].current_grade.id}`
-          )
-        );
+        setGradeId(results[0].current_grade.id);
       });
   }, []);
 
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  const { assignmentFilter } = useSelector((state) => state.teachers);
-
   const handleView = (row) => {
-    navigate(`/student/assignment/upload/assignmentId=${row.original.id}`);
+    navigate(`/student/assignment/upload/assignmentId=${row.id}`);
   };
 
   const columns = useMemo(
     () => [
       {
-        Header: "SN",
-        Cell: ({ row }) => {
-          return row.index + 1;
+        title: "SN",
+        width: 100,
+        render: ({ tableData }) => {
+          return tableData.id + 1;
         },
       },
       {
-        Header: "Subject",
-        accessor: "subject",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
+        title: "Subject",
+        field: "subject",
       },
 
       {
-        Header: "Teacher",
-        accessor: "created_by.username",
-        SearchAble: true,
-        Filter: SelectColumnFilter,
+        title: "Teacher",
+        field: "created_by.username",
       },
 
       {
-        Header: "Date due",
-        accessor: "date_due",
-        SearchAble: false,
+        title: "Date due",
+        field: "date_due",
       },
 
       {
-        Header: "Time due",
-        accessor: (d) => {
+        title: "Time due",
+        render: (d) => {
           return moment(d.time_due, "HH,mm").format("LT");
         },
-        SearchAble: false,
       },
       {
-        Header: "Action",
-        SearchAble: false,
-        Cell: ({ row }) => {
+        title: "Action",
+        render: (row) => {
           return (
             <>
               <button
@@ -103,10 +73,15 @@ const StudentAssignmentViewTable = () => {
     []
   );
 
-  return assignmentFilter ? (
+  return gradeId ? (
     <>
       <div style={{ margin: "20px 30px", marginBottom: 50 }}>
-        <TableContainer columns={columns} data={assignmentFilter} />
+        <MaterialTableContainer
+          columns={columns}
+          url="givenassignments"
+          filter={`grade=${gradeId}&ordering=-id`}
+          title="View Assignment"
+        />
       </div>
     </>
   ) : (

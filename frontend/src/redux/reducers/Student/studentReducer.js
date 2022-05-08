@@ -27,8 +27,8 @@ import {
 
 const initialState = {
   isLoading: false,
-  studentDetails:null,
-  studentParent:null,
+  studentDetails: null,
+  studentParent: null,
 };
 
 export default function studentReducer(state = initialState, action) {
@@ -37,19 +37,23 @@ export default function studentReducer(state = initialState, action) {
       return { ...state, isLoading: false, student: action.payload };
 
     case STUDENT_DATA_LOADING:
-      return { ...state, isLoading: true,};
+      return { ...state, isLoading: true };
 
     case GET_STUDENTS_FOR_ATTENDANCE:
-      return { ...state, isLoading: false, students_for_attendance: action.payload };
+      return {
+        ...state,
+        isLoading: false,
+        students_for_attendance: action.payload,
+      };
 
     case GET_STUDENT_CLASS:
-      return { ...state, isLoading: false,  classes: action.payload };
+      return { ...state, isLoading: false, classes: action.payload };
 
     case GET_STUDENTCLASS_SID:
-      return { ...state, isLoading: false,  studentId: action.payload };
+      return { ...state, isLoading: false, studentId: action.payload };
 
     case GET_STUDENT_PARENTS:
-      return { ...state, isLoading: false,  studentParent: action.payload };
+      return { ...state, isLoading: false, studentParent: action.payload };
 
     case GET_STUDENT_PARENTS_BYID:
       return { ...state, isLoading: false, studentParentID: action.payload };
@@ -61,10 +65,14 @@ export default function studentReducer(state = initialState, action) {
       return { ...state, isLoading: false, attendanceFilter: action.payload };
 
     case GET_STUDENT_USERID:
-      return { ...state, isLoading: false,  studentDetails: action.payload };
+      return { ...state, isLoading: false, studentDetails: action.payload };
 
     case GET_STUDENT_ASSIGNMENT_FILTER:
-      return { ...state, isLoading: false, filterStudentAssignment: action.payload };
+      return {
+        ...state,
+        isLoading: false,
+        filterStudentAssignment: action.payload,
+      };
 
     case DELETE_STUDENT:
     case DELETE_ATTENDANCE:

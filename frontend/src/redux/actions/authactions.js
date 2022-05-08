@@ -41,11 +41,10 @@ export const getUser = () => (dispatch) => {
         "JWT " + localStorage.getItem("access_token");
     })
     .catch((err) => {
-      if (typeof err.response === "undefined"){
+      if (typeof err.response === "undefined") {
         dispatch({ type: USER_LOADING });
-        console.log(err)
-      }
-      else{
+        console.log(err);
+      } else {
         dispatch(returnErrors(err.response.data, err.response.status));
         dispatch({ type: USER_LOADING });
       }
@@ -74,11 +73,11 @@ export const getUser = () => (dispatch) => {
 
 export const registeradmin = (postData) => (dispatch) => {
   const body = postData;
-  console.log(body);
+
   axiosInstanceMultipart
     .post(`user/register/admin/`, body)
     .then((res) => {
-      dispatch({ type: REGISTER_SUCCESS, payload: res.data });
+      dispatch({ type: REGISTER_SUCCESS });
       dispatch(
         createMessage({ accountCreate: "Account Created Successfully" })
       );

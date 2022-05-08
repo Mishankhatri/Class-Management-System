@@ -50,9 +50,9 @@ function AnnouncementCard({ name }) {
                       </div>
                     </div>
                   </div>
-                  {rowData.files_by_admin ? (
+                  {rowData.files_by_admin || rowData.files_by_teachers ? (
                     <a
-                      href={rowData.files_by_admin}
+                      href={rowData.files_by_admin || rowData.files_by_teachers}
                       target="_blank"
                       className="btn-custom btn-primary"
                       style={{ textDecoration: "none" }}>

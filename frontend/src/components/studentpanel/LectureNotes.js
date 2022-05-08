@@ -8,19 +8,7 @@ function LectureNotes() {
   return (
     <React.Fragment>
       <InnerHeader icon={<MdIcons.MdFileCopy />} name={"Download Notes"} />
-      <div className="main-content">
-        <div className="card-section">
-          <div className="heading">
-            <span className="title-icon">
-              <FaIcons.FaFileArchive />
-            </span>
-            <span className="title">VIEW LECTURE NOTES</span>
-          </div>
-          <div className="content-section">
-            <LectureNotesTable />
-          </div>
-        </div>
-      </div>
+      <LectureNotesTable />
     </React.Fragment>
   );
 }

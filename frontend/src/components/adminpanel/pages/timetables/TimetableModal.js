@@ -20,12 +20,10 @@ function TimetableModal({ register, data, Controller, control }) {
   const gradeName = +data.assigned.grade.class_name;
 
   //Resetting Select Value after submit
-  const [classReference, setClassReference] = useState(null);
   const [sectionReference, setSectionReference] = useState(null);
   const [subjectReference, setSubjectReference] = useState(null);
   const [teacherReference, setTeacherReference] = useState(null);
 
-  const refClearClass = (ref) => setClassReference(ref);
   const refClearSection = (ref) => setSectionReference(ref);
   const refClearSubject = (ref) => setSubjectReference(ref);
   const refClearTeacher = (ref) => setTeacherReference(ref);
@@ -188,7 +186,6 @@ function TimetableModal({ register, data, Controller, control }) {
                 title={"Class"}
                 name="class"
                 hasValue={false}
-                refClear={refClearClass}
                 onChangeHandler={(data) => {
                   sectionReference.clearValue();
                   subjectReference.clearValue();

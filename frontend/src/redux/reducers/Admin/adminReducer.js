@@ -6,6 +6,8 @@ import {
   UPDATE_ADMIN_INFO,
   UPDATE_TIMETABLES,
   UPDATE_USER_IMAGE,
+  SAVE_QUERY_DATA,
+  GET_TABLE_DATA,
 } from "../../actiontypes/admin/admindatatype";
 
 import {
@@ -22,6 +24,13 @@ import {
 const initialState = {
   isOpen: false,
   showNewNotification: true,
+  query: {
+    filters: [],
+    page: 0,
+    pageSize: 10,
+    search: "",
+    totalCount: 0,
+  },
 };
 
 export default function adminReducer(state = initialState, action) {
@@ -55,6 +64,12 @@ export default function adminReducer(state = initialState, action) {
 
     case OPEN_NOTIFICATION:
       return { ...state, showNewNotification: false };
+
+    case SAVE_QUERY_DATA:
+      return { ...state, query: action.payload };
+
+    case GET_TABLE_DATA:
+      return { ...state, tableData: action.payload };
 
     case GET_TIMETABLES:
       return { ...state, timetables: action.payload };
