@@ -6,6 +6,12 @@ const AssignmentStudentTable = ({ remarkClick, setRemarkClick, data }) => {
   const columns = useMemo(
     () => [
       {
+        Header: "SN",
+        Cell: ({ row }) => {
+          return row.index + 1;
+        },
+      },
+      {
         Header: "Photo",
         accessor: (d) => {
           return (

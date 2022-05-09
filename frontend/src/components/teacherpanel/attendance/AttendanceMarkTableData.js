@@ -29,7 +29,7 @@ const AttendanceTableData = ({
       const GetOptions = async () => {
         const got = await GetPaginatedFilterPromise(
           "student",
-          `grade=${attendanceClassDetails.grade}`
+          `grade=${attendanceClassDetails.grade}&ordering=first_name`
         );
         setAttendance(got);
       };

@@ -104,6 +104,7 @@ function CreateAssignment() {
   };
 
   const onSubmitForm = (data, e) => {
+    console.log(data);
     if (!data.studentClass) {
       dispatch(createMessage({ classRequired: "Class Field is Required" }));
     } else if (!data.studentSection) {
@@ -297,7 +298,7 @@ function CreateAssignment() {
                       isRequired={false}
                       isImageFile={false}
                       onChange={(event) =>
-                        props.field.onChange(event.target.files)
+                        props.field.onChange(event.target.files[0])
                       }
                     />
                   )}

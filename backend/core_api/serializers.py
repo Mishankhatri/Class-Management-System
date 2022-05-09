@@ -49,8 +49,8 @@ class StudentUserPOSTSerializer(serializers.ModelSerializer):
         
     def create(self, validated_data):
         user = self.context['request'].user
-        if not user.admin:
-            raise serializers.ValidationError({"Authorization": "You dont have permission to this api."})
+        # if not user.admin:
+        #     raise serializers.ValidationError({"Authorization": "You dont have permission to this api."})
         user_data = validated_data.pop('user')
         grade_data = validated_data.pop('current_grade')
         user = CMS_Users.objects.create_student(**user_data)

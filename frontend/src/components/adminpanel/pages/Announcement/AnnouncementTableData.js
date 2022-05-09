@@ -116,7 +116,7 @@ const AnnouncementTableData = () => {
           columns={columns}
           url={"adminnotices"}
           title="Announcement"
-          filter={`for=all`}
+          filter={`for=all&ordering=-id`}
         />
       </div>
     </>
