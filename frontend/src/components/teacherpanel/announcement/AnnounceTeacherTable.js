@@ -114,7 +114,7 @@ const AnnouncementTeacherTable = () => {
           <MaterialTableContainer
             columns={columns}
             url="teachernotices"
-            filter={`teacher=${user.username}`}
+            filter={`teacher=${user.username}&ordering=-id`}
             title="Announcement"
           />
         )}

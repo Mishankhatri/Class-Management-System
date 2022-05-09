@@ -27,6 +27,9 @@ export class Alerts extends Component {
         alert.error(`${error.msg?.old_password?.old_password}`);
       if (error.msg?.subject_code) alert.error(`${error.msg.subject_code}`);
       if (error.msg?.files_by_admin) alert.error(`${error.msg.files_by_admin}`);
+      if (error.msg?.user?.username)
+        alert.error(`${error.msg.user?.username[0]}`);
+      if (error.msg?.user?.email) alert.error(`${error.msg.user?.email[0]}`);
 
       //Student Add
       if (error.msg?.SRN) alert.error(`${error.msg.SRN}`);

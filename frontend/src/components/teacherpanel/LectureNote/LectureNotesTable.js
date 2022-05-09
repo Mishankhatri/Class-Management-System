@@ -107,7 +107,7 @@ const LectureNotesTable = () => {
           columns={columns}
           url={"lecturenotes"}
           title="Lecture Notes"
-          filter={`teacher=${user.username}`}
+          filter={`teacher=${user.username}&ordering=-id`}
         />
       </div>
     </>
