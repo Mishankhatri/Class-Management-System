@@ -88,10 +88,10 @@ const TeacherFullDetail = React.lazy(() =>
 function AdminPanel() {
   const user = useSelector((state) => state.auth.user);
   const [showSideBar, setSideBar] = useState(true);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTotalCount());
-  },[dispatch])
+  }, [dispatch]);
 
   const SideBarHandler = () => {
     setSideBar(!showSideBar);
